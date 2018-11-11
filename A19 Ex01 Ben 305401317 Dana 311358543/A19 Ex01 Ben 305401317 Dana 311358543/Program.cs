@@ -9,7 +9,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         static void Main()
         {
             using (var game = new SpaceInvaders())
-                game.Run();//test
+                game.Run();
         }
     }
 #endif

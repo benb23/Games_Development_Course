@@ -41,6 +41,14 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bullet.cs" />
+    <Compile Include="Enemy.cs" />
+    <Compile Include="EnemysGroup.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="MotherSpaceShip.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="SpaceShip.cs" />
+    <Compile Include="Gun.cs" />
     <Compile Include="SpaceInvaders.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

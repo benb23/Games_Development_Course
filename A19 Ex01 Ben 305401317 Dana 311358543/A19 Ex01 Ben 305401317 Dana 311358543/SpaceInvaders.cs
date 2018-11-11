@@ -1,24 +1,25 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class SpaceInvaders : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
-        Texture2D m_TextureBackground;
-        Texture2D m_TextureShip;
-
-        Vector2 m_PositionBackground;
-        Vector2 m_PositionShip;
-
-        Color m_TintBackground = Color.White;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private Texture2D m_TextureBackground;
+        private Vector2 m_PositionBackground;
+        private Color m_TintBackground = Color.White;
+        private SpaceShip m_spaceShip;
+        private MotherSpaceShip m_motherSpaceShip;
+        private EnemysGroup m_enemysGroup;
 
         public SpaceInvaders()
         {
@@ -28,6 +29,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             this.IsMouseVisible = true;
         }
 
+        
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -50,6 +52,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             // Offset for ship start point:
             y -= (m_TextureShip.Height * 1.5f);
 
+            
             m_PositionShip = new Vector2(x, y);
 
 
@@ -86,6 +89,25 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+        }
+
+        MouseState? m_PrevMouseState;
+
+        private Vector2 GetMousePositionDelta()
+        {
+            Vector2 retVal = Vector2.Zero;
+
+            MouseState currState = Mouse.GetState();
+
+            if (m_PrevMouseState != null)
+            {
+                retVal.X = (currState.X - m_PrevMouseState.Value.X);
+                retVal.Y = (currState.Y - m_PrevMouseState.Value.Y);
+            }
+
+            m_PrevMouseState = currState;
+
+            return retVal;
         }
 
         /// <summary>
