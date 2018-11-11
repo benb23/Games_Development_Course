@@ -7,7 +7,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class SpaceInvaders : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -20,7 +20,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         Color m_TintBackground = Color.White;
 
-        public Game1()
+        public SpaceInvaders()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
