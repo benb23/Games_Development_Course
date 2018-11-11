@@ -95,13 +95,32 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            // get the current input devices state:
+            GamePadState currGamePadState = GamePad.GetState(PlayerIndex.One);
+            KeyboardState currKeyboardState = Keyboard.GetState();
 
+            // Allows the game to exit by GameButton 'back' button or Esc:
+            if (currGamePadState.Buttons.Back == ButtonState.Pressed
+                || currKeyboardState.IsKeyDown(Keys.Escape))
+            {
+                this.Exit();
+            }
 
-            // clamp the position between screen boundries:
-           // m_PositionShip.X = MathHelper.Clamp(m_PositionShip.X, 0, this.GraphicsDevice.Viewport.Width - m_TextureShip.Width);
-            // TODO: Add your update logic here
+            // move the ship using the GamePad left thumb stick and set viberation according to movement:
+            m_PositionShip.X += currGamePadState.ThumbSticks.Left.X * 120 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            GamePad.SetVibration(PlayerIndex.One, 0, Math.Abs(currGamePadState.ThumbSticks.Left.X));
+
+            // move the ship using the mouse:
+            m_PositionShip.X += GetMousePositionDelta().X;
+
+            // clam the position between screen boundries:
+            m_PositionShip.X = MathHelper.Clamp(m_PositionShip.X, 0, this.GraphicsDevice.Viewport.Width - m_TextureShip.Width);
+
+            // if we hit the wall, lets change direction:
+            if (m_PositionShip.X == 0 || m_PositionShip.X == this.GraphicsDevice.Viewport.Width - m_TextureShip.Width)
+            {
+                m_ShipDirection *= -1f;
+            }
 
             base.Update(gameTime);
         }
