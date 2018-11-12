@@ -16,7 +16,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private float m_NumOfBullets;
         private Gun m_Gun;
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             KeyboardState currKeyboardState = Keyboard.GetState();
 
@@ -61,7 +61,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
 
         }
-        public override void Move()
+        private void move()
         {
             
         }

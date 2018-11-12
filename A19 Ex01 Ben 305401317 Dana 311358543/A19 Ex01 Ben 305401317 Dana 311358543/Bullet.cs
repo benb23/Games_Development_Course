@@ -12,7 +12,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class Bullet : GameObject
     {
-        public override void Move()
+        public override void Update(GameTime gameTime)
         {
            
         }

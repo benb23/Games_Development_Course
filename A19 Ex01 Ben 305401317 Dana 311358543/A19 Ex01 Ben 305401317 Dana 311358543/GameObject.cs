@@ -18,13 +18,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         protected float m_Direction = 1f;
         Gun m_Gun;
 
-        /*
-        public GraphicsDevice GraphicsDevice
-        {
-            get { return m_GraphicsDevice; }
-            set { m_GraphicsDevice = value; }
-        }*/
-
         public float Direction
         {
             get { return m_Direction; }
@@ -44,6 +37,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             set { m_Texture = value; }
         }
 
-        public abstract void Move();
+        public abstract void Update(GameTime gameTime);
     }
 }

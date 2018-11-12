@@ -43,18 +43,40 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public float LeftBorder()
         {
-            int x = 0;
-            int col = 0, row = 0;
+            float leftBorderX = 0;
 
-            for(int i=0 ; i<=5 ; i++)
+            for(int col=0 ; col < 9; col++)//TODO: CONST
             {
-
+                for(int row=0; row < 5; row++)//TODO: CONST
+                {
+                    if(m_enemiesMatrix[col, row].m_visible)
+                    {
+                        leftBorderX = m_enemiesMatrix[col, row].Position.X;
+                        break;
+                    }
+                }
             }
+
+            return leftBorderX;
         }
 
         public float RightBorder()
         {
+            float rightBorderX = 0;
 
+            for (int col = 8; col >= 0 ; col--)//TODO: CONST
+            {
+                for (int row = 0; row < 5; row++)//TODO: CONST
+                {
+                    if (m_enemiesMatrix[col, row].m_visible)
+                    {
+                        rightBorderX = m_enemiesMatrix[col, row].Position.X + m_enemiesMatrix[col, row].Texture.Width;
+                        break;
+                    }
+                }
+            }
+
+            return rightBorderX;
         }
 
         public void Move()

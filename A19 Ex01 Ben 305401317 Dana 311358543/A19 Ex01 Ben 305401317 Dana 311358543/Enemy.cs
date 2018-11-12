@@ -12,14 +12,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class Enemy : GameObject
     {
+        public bool m_visible;
         private Gun m_Gun; 
 
         public void Shoot()
         {
 
         }
-
-        public override void Move()
+        public override void Update(GameTime gameTime)
         {
             
         }
