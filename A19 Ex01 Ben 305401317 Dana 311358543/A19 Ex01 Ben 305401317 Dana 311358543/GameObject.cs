@@ -12,8 +12,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     abstract class GameObject
     {
-        float m_Height;
-        float m_Width;
         private Texture2D m_Texture;
         private Vector2 m_Position;
         private float m_Direction = 1f;
@@ -29,7 +27,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             get { return m_Position; }
 
-            set { }
+            set { m_Position = value; }
         }
         public Texture2D Texture
         {

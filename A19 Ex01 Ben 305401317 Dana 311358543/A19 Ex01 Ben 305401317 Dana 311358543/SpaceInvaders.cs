@@ -50,10 +50,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             float y = (float)GraphicsDevice.Viewport.Height;
 
             // Offset for ship start point:
-            y -= (m_TextureShip.Height * 1.5f);
+            y -= (m_spaceShip.Texture.Height * 1.5f);
 
             
-            m_PositionShip = new Vector2(x, y);
+            m_spaceShip.Position = new Vector2(x, y);
 
 
             // 2. Init the enemy position
@@ -77,7 +77,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
-            m_TextureShip = Content.Load<Texture2D>(@"Sprites\Ship01_32x32");
+            m_spaceShip.Texture = Content.Load<Texture2D>(@"Sprites\Ship01_32x32");
             InitPositions();
             // TODO: use this.Content to load your game content here
         }
@@ -129,19 +129,19 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
 
             // move the ship using the GamePad left thumb stick and set viberation according to movement:
-            m_PositionShip.X += currGamePadState.ThumbSticks.Left.X * 120 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_spaceShip.Position = new Vector2(m_spaceShip.Position.X + currGamePadState.ThumbSticks.Left.X * 120 * (float)gameTime.ElapsedGameTime.TotalSeconds, m_spaceShip.Position.Y);// m_PositionShip.X += currGamePadState.ThumbSticks.Left.X * 120 * (float)gameTime.ElapsedGameTime.TotalSeconds;
             GamePad.SetVibration(PlayerIndex.One, 0, Math.Abs(currGamePadState.ThumbSticks.Left.X));
 
             // move the ship using the mouse:
-            m_PositionShip.X += GetMousePositionDelta().X;
+            m_spaceShip.Position = new Vector2(m_spaceShip.Position.X + GetMousePositionDelta().X,m_spaceShip.Position.Y);// m_PositionShip.X += GetMousePositionDelta().X;
 
             // clam the position between screen boundries:
-            m_PositionShip.X = MathHelper.Clamp(m_PositionShip.X, 0, this.GraphicsDevice.Viewport.Width - m_TextureShip.Width);
+            m_spaceShip.Position = new Vector2( MathHelper.Clamp(m_spaceShip.Position.X, 0, this.GraphicsDevice.Viewport.Width - m_spaceShip.Texture.Width),m_spaceShip.Position.Y);// m_PositionShip.X = MathHelper.Clamp(m_PositionShip.X, 0, this.GraphicsDevice.Viewport.Width - m_TextureShip.Width);
 
             // if we hit the wall, lets change direction:
-            if (m_PositionShip.X == 0 || m_PositionShip.X == this.GraphicsDevice.Viewport.Width - m_TextureShip.Width)
+            if (m_spaceShip.Position.X == 0 || m_spaceShip.Position.X == this.GraphicsDevice.Viewport.Width - m_spaceShip.Texture.Width)
             {
-                m_ShipDirection *= -1f;
+                m_spaceShip.Direction *= -1f;
             }
 
             base.Update(gameTime);
@@ -157,7 +157,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             spriteBatch.Begin();
             spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
-            spriteBatch.Draw(m_TextureShip, m_PositionShip, Color.White); //no tinting
+            spriteBatch.Draw(m_spaceShip.Texture, m_spaceShip.Position, Color.White); //no tinting
             spriteBatch.End();
             // TODO: Add your drawing code here
 
