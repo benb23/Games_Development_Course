@@ -45,6 +45,7 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="EnemysGroup.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="InputManager.cs" />
     <Compile Include="MotherSpaceShip.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="SpaceShip.cs" />

@@ -12,10 +12,18 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     abstract class GameObject
     {
+        //static protected GraphicsDevice m_GraphicsDevice;
         protected Texture2D m_Texture;
         protected Vector2 m_Position;
         protected float m_Direction = 1f;
         Gun m_Gun;
+
+        /*
+        public GraphicsDevice GraphicsDevice
+        {
+            get { return m_GraphicsDevice; }
+            set { m_GraphicsDevice = value; }
+        }*/
 
         public float Direction
         {

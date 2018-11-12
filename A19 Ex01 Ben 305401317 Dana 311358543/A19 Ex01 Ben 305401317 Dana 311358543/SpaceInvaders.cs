@@ -13,7 +13,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     public class SpaceInvaders : Game
     {
         private readonly float r_KeyboardVelocity = 120;//TODO: move
-        private GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private Texture2D m_TextureBackground;
         private Vector2 m_PositionBackground;
@@ -103,7 +103,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         protected override void Update(GameTime gameTime)
         {
-
             // get the current input devices state:
             KeyboardState currKeyboardState = Keyboard.GetState();
 
@@ -120,18 +119,20 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
 
             //update enemysGroup position
-            if()//normal move
+            //move{
+            if(m_EnemysGroup.LeftBorder() == 0f || m_EnemysGroup.RightBorder() == this.GraphicsDevice.Viewport.Width)
+            {
+                
+            }
+            else if(m_EnemysGroup.LeftBorder() < 0.5*m_EnemysGroup.Texture().Width || m_EnemysGroup.RightBorder() > this.GraphicsDevice.Viewport.Width - 0.5 * m_EnemysGroup.Texture().Width)
             {
 
             }
-            else if()//less then 2 jums drom the wall 
+            else
             {
 
             }
-            else// 2 
-            {
-
-            }
+            //}
 
             //update spaceship bullets position
             if(m_SpaceShip.Gun.BulletsList.Count != 0)
