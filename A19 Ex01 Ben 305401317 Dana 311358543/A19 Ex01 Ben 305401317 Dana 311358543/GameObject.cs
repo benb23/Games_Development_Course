@@ -12,16 +12,16 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     abstract class GameObject
     {
-        private Texture2D m_Texture;
-        private Vector2 m_Position;
-        private float m_Direction = 1f;
+        protected Texture2D m_Texture;
+        protected Vector2 m_Position;
+        protected float m_Direction = 1f;
         Gun m_Gun;
 
         public float Direction
         {
             get { return m_Direction; }
 
-            set { }
+            set { m_Direction = value; }
         }
         public Vector2 Position
         {
@@ -33,7 +33,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             get { return m_Texture; }
 
-            set { }
+            set { m_Texture = value; }
         }
 
         public abstract void Move();

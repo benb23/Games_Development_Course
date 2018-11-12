@@ -13,7 +13,17 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     class SpaceShip : GameObject
     {
         private float m_NumOfBullets;
+        private Gun m_Gun;
 
+        public Gun Gun
+        {
+            get{ return m_Gun; }
+        }
+
+        public SpaceShip()
+        {
+            m_Direction = 1f;
+        }
         public void Init()
         {
 
@@ -22,5 +32,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             
         }
+
+        public void  Shoot()
+        {
+
+        }
+
+
     }
 }

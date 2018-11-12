@@ -14,5 +14,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     {
         private float m_score;
         private float m_numOfSouls;
+
+        public Player()
+        {
+            m_score = 0;
+            m_numOfSouls = 3;
+        }
     }
 }

@@ -10,11 +10,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class Enemy  : GameObject
+    class Enemy  
     {
-        Gun m_Gun;
-
-        public override void Move()
+        
+        public void Shoot()
         {
 
         }

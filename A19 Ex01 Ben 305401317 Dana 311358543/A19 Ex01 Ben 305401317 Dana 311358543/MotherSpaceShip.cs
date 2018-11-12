@@ -12,6 +12,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class MotherSpaceShip : GameObject
     {
+        public MotherSpaceShip()
+        {
+            m_Direction = 1f;
+        }
+
         public override void Move()
         {
             

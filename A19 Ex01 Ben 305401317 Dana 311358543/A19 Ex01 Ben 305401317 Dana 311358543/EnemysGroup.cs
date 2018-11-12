@@ -10,19 +10,24 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class EnemysGroup
+    class EnemysGroup : GameObject
     {
+        private Gun m_Gun;
         private Enemy[,] m_enemiesMatrix = new Enemy[9, 5];
-        private float m_JumpingSpeed;
+        private float m_JumpingVelocity;
 
-        public EnemysGroup()
+        public override void Move()
         {
 
         }
-
-        public void Move()
+        public Gun Gun
         {
+            get { return m_Gun; }
+        }
 
+        public EnemysGroup()
+        {
+            //matrix of enemy
         }
 
         public void Init()
