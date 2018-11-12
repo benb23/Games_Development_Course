@@ -12,75 +12,41 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class SpaceShip : GameObject
     {
+        private readonly float r_KeyboardVelocity = 120;//??
         private float m_NumOfBullets;
         private Gun m_Gun;
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-                // get the current input devices state:
             KeyboardState currKeyboardState = Keyboard.GetState();
-
-            // Allows the game to exit by GameButton 'back' button or Esc:
-            if (currKeyboardState.IsKeyDown(Keys.Escape))   
-            {
-                //TODO: msg box
-                this.Exit();
-            }
-
-            if(currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter))
-            {
-                m_SpaceShip.Shoot();
-            }
-
-            //update enemysGroup position
-            if(m_EnemysGroup.LeftBorder() == 0f || m_EnemysGroup.RightBorder() == this.GraphicsDevice.Viewport.Width)
-            {
-                
-            }
-            else if(m_EnemysGroup.LeftBorder() < ?? || m_EnemysGroup.RightBorder() > this.GraphicsDevice.Viewport.Width - ??)
-            {
-
-            }
-            else
-            {
-
-            }
-
-            //update spaceship bullets position
-            if(m_SpaceShip.Gun.BulletsList.Count != 0)
-            {
-
-            }
-
-            //update enemies bullets position
-            if (m_EnemysGroup.Gun.BulletsList.Count != 0)
-            {
-
-            }
 
             // move the ship using the keyboard:
             if (currKeyboardState.IsKeyDown(Keys.Left))
             {
-                m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X - r_KeyboardVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds, m_SpaceShip.Position.Y);
+                Position = new Vector2(Position.X - r_KeyboardVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
             }
-            else if(currKeyboardState.IsKeyDown(Keys.Right))
+            else if (currKeyboardState.IsKeyDown(Keys.Right))
             {
-                m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X + r_KeyboardVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds, m_SpaceShip.Position.Y);
+                Position = new Vector2(Position.X + r_KeyboardVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
             }
 
             // move the ship using the mouse:
-            m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X + GetMousePositionDelta().X,m_SpaceShip.Position.Y);
+            Position = new Vector2(Position.X + InputManager.GetMousePositionDelta().X, Position.Y);
 
             // clam the position between screen boundries:
-            m_SpaceShip.Position = new Vector2( MathHelper.Clamp(m_SpaceShip.Position.X, 0, this.GraphicsDevice.Viewport.Width - m_SpaceShip.Texture.Width),m_SpaceShip.Position.Y);
+            Position = new Vector2(MathHelper.Clamp(Position.X, 0, SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - Texture.Width), Position.Y);
 
             // if we hit the wall, lets change direction:
-            if (m_SpaceShip.Position.X == 0 || m_SpaceShip.Position.X == this.GraphicsDevice.Viewport.Width - m_SpaceShip.Texture.Width)
+            if (Position.X == 0 || Position.X == SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - Texture.Width)
             {
-                m_SpaceShip.Direction *= -1f;
+                Direction *= -1f;
             }
 
-            base.Update(gameTime);
+            //update spaceship bullets position
+            if (Gun.BulletsList.Count != 0)
+            {
+
+            }
         }
         public Gun Gun
         {

@@ -15,9 +15,30 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private Enemy[,] m_enemiesMatrix = new Enemy[9, 5];
         private float m_JumpingVelocity;
 
-        public Texture2D Texture()
+        public void Update(GameTime gameTime)
         {
-            return m_enemiesMatrix[0,0].Texture;
+            //update enemysGroup position
+            //move{
+            if (LeftBorder() == 0f || RightBorder() == SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
+            {
+
+            }
+            else if (LeftBorder() < 0.5 * m_enemiesMatrix[0, 0].Texture.Width || RightBorder() > SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - 0.5 * m_enemiesMatrix[0, 0].Texture.Width)
+            {
+
+            }
+            else
+            {
+
+            }
+            //}
+
+            //update enemies bullets position
+            /*
+            if (Gun.BulletsList.Count != 0)
+            {
+
+            }*/
         }
 
         public float LeftBorder()
