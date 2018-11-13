@@ -51,6 +51,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 }
             }
         }
+
         public Gun Gun
         {
             get{ return m_Gun; }
@@ -74,9 +75,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
 
         }
-        public void Draw()
-        {
-            m_SpriteBatch.Draw(Texture, Position, Color.White); //no tinting
-        }
+        //public void Draw()
+        //{
+        //    m_SpriteBatch.Draw(Texture, Position, Color.White); //no tinting
+        //}
     }
 }

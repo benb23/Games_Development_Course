@@ -12,16 +12,17 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class MotherSpaceShip : Sprite
     {
-        public MotherSpaceShip(Game game) : base(game)
+        public MotherSpaceShip(Game i_Game) : base(i_Game)
         {
             m_AssetName = @"Sprites\MotherShip_32x120";
+            m_Tint = Color.Red;
             m_visible = false;
             m_Direction = 1f;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Initialize()
         {
-
+            base.Initialize();
         }
     }
 }

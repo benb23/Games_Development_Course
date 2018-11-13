@@ -14,7 +14,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     {
         private Gun m_Gun; 
 
-        public Enemy(Game game): base(game)
+        public Enemy(Game i_Game) : base(i_Game)
         {
             
         }

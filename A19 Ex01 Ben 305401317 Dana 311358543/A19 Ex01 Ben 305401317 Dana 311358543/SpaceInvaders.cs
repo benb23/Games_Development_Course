@@ -16,7 +16,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private SpriteBatch m_SpriteBatch;
         private SpaceShip m_SpaceShip;
         private MotherSpaceShip m_MotherSpaceShip;
-        private EnemysGroup m_EnemysGroup;
+        private EnemiesGroup m_EnemysGroup;
         private Player m_Player;
         private Background m_Background;
         KeyboardState m_PastKey;//??
@@ -32,7 +32,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             Components.Add(m_SpaceShip);
             m_MotherSpaceShip = new MotherSpaceShip(this);
             Components.Add(m_MotherSpaceShip);
-            m_EnemysGroup = new EnemysGroup(this);
+            m_EnemysGroup = new EnemiesGroup(this);
             Components.Add(m_EnemysGroup);
             m_Player = new Player();
             this.IsMouseVisible = true;
