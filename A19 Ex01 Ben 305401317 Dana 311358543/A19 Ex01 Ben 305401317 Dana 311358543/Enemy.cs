@@ -10,11 +10,14 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class Enemy : GameObject
+    class Enemy : Sprite
     {
-        public bool m_visible;
         private Gun m_Gun; 
 
+        public Enemy(Game game): base(game)
+        {
+            
+        }
         public void Shoot()
         {
 

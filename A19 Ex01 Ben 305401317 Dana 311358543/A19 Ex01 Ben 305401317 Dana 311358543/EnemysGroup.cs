@@ -84,9 +84,16 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         }
 
-        public EnemysGroup()
+        public EnemysGroup(Game game)
         {
             //matrix of enemy
+            for (int row=0 ; row<5 ; row++)
+            {
+                for (int col=0 ; col<9 ; col++)
+                {
+                    m_enemiesMatrix[col, row] = new Enemy(game);
+                }
+            }
         }
 
         public void Init()
@@ -95,6 +102,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         }
 
         private void changeDirection()
+        {
+
+        }
+
+        public void LoadContent()
         {
 
         }

@@ -10,11 +10,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class SpaceShip : GameObject
+    class SpaceShip : Sprite
     {
-        private readonly float r_KeyboardVelocity = 120;//??
-        private float m_NumOfBullets;
-        private Gun m_Gun;
+        private readonly float r_KeyboardVelocity = 120;//TODO: ctor?
+        private float m_NumOfBullets = 3;//TODO: ctor?
+        private Gun m_Gun = new Gun();//TODO: ctor?
 
         public override void Update(GameTime gameTime)
         {
@@ -45,7 +45,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             //update spaceship bullets position
             if (Gun.BulletsList.Count != 0)
             {
-
+                foreach (Bullet element in Gun.BulletsList)
+                {
+                    element.Update(gameTime);
+                }
             }
         }
         public Gun Gun
@@ -53,8 +56,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             get{ return m_Gun; }
         }
 
-        public SpaceShip()
+        public SpaceShip(Game game):base(game)
         {
+            m_AssetName = @"Sprites\Ship01_32x32";
             m_Direction = 1f;
         }
         public void Init()
@@ -70,7 +74,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
 
         }
-
-
+        public void Draw()
+        {
+            m_SpriteBatch.Draw(Texture, Position, Color.White); //no tinting
+        }
     }
 }

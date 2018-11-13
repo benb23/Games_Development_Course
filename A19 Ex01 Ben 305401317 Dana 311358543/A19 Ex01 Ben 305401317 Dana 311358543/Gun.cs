@@ -12,7 +12,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class Gun
     {
-        private List<Bullet> m_BulletsList = new List<Bullet>(3);
+        private List<Bullet> m_BulletsList = new List<Bullet>();
 
         public List<Bullet> BulletsList
         {

@@ -10,18 +10,19 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class MotherSpaceShip : Sprite
+    class Background : Sprite
     {
-        public MotherSpaceShip(Game game) : base(game)
+
+        public Background(Game game):base(game)
         {
-            m_AssetName = @"Sprites\MotherShip_32x120";
-            m_visible = false;
-            m_Direction = 1f;
+            m_AssetName = @"Sprites\BG_Space01_1024x768";
+            m_Tint = Color.White;
+            m_Position = Vector2.Zero;
         }
 
-        public void Update(GameTime gameTime)
+        public void Draw()
         {
-
+            m_SpriteBatch.Draw(m_Texture, m_Position, m_Tint); // tinting with alpha channel
         }
     }
 }

@@ -13,33 +13,36 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     public class SpaceInvaders : Game
     {
         public static GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
-        private Texture2D m_TextureBackground;
-        private Vector2 m_PositionBackground;
-        private Color m_TintBackground = Color.White;//??
+        private SpriteBatch m_SpriteBatch;
         private SpaceShip m_SpaceShip;
         private MotherSpaceShip m_MotherSpaceShip;
         private EnemysGroup m_EnemysGroup;
         private Player m_Player;
+        private Background m_Background;
         KeyboardState m_PastKey;//??
 
 
         public SpaceInvaders()
         {
+            m_Background = new Background(this);
+            Components.Add(m_Background);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            m_SpaceShip = new SpaceShip(this);
+            Components.Add(m_SpaceShip);
+            m_MotherSpaceShip = new MotherSpaceShip(this);
+            Components.Add(m_MotherSpaceShip);
+            m_EnemysGroup = new EnemysGroup(this);
+            Components.Add(m_EnemysGroup);
+            m_Player = new Player();
             this.IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            m_SpaceShip = new SpaceShip();
-            m_MotherSpaceShip = new MotherSpaceShip();
-            m_EnemysGroup = new EnemysGroup();
-            m_Player = new Player();
+            m_SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-
+            this.Services.AddService(typeof(SpriteBatch), m_SpriteBatch);
             base.Initialize();
         }
 
@@ -57,23 +60,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             // 2. Init the enemy position
 
-            // 3. Init the bg position:
-            m_PositionBackground = Vector2.Zero;
-
-            //create an alpah channel for background:
-            Vector4 bgTint = Vector4.One;
-            bgTint.W = 0.4f; // set the alpha component to 0.2
-            m_TintBackground = new Color(bgTint);
-        }
-
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
-            m_SpaceShip.Texture = Content.Load<Texture2D>(@"Sprites\Ship01_32x32");
-            InitPositions();
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void UnloadContent()
@@ -85,6 +71,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             // get the current input devices state:
             KeyboardState currKeyboardState = Keyboard.GetState();
+            MouseState currMouseState = Mouse.GetState();
 
             // Allows the game to exit by GameButton 'back' button or Esc:
             if (currKeyboardState.IsKeyDown(Keys.Escape))   
@@ -93,7 +80,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 this.Exit();
             }
 
-            if(currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter))
+            if(currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter) || currMouseState.LeftButton.Equals(ButtonState.Pressed))
             {
                 m_SpaceShip.Shoot();
             }
@@ -108,12 +95,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
-            spriteBatch.Begin();
-            spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
-            spriteBatch.Draw(m_SpaceShip.Texture, m_SpaceShip.Position, Color.White); //no tinting
-            spriteBatch.End();
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

@@ -10,13 +10,33 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class Bullet : GameObject
+    class Bullet : Sprite
     {
+        private readonly float r_BulletVelocity = 155;
+
         public override void Update(GameTime gameTime)
         {
-           
+           if(isBulletHitElement())//collision 
+           {
+                //destroy element
+                m_visible = false;
+           }
+           else
+           {
+                Position = new Vector2(Position.X,Position.Y + Direction*r_BulletVelocity* (float)gameTime.ElapsedGameTime.TotalSeconds);
+           }
         }
 
+        public Bullet(Game game):base(game)
+        {
+            m_AssetName = @"Sprites\Bullet";
+        }
+
+        private bool isBulletHitElement()//TODO: change name!
+        {
+
+            return false;
+        }
 
     }
 }
