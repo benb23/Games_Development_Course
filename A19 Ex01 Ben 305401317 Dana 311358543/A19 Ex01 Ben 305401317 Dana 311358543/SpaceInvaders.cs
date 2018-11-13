@@ -95,8 +95,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
+            m_SpriteBatch.Begin();
             base.Draw(gameTime);
+            m_SpriteBatch.End();
         }
     }
 }

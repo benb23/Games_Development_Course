@@ -10,21 +10,18 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    public class Sprite :  DrawableGameComponent
+    public abstract class Sprite :  DrawableGameComponent
     {
         
         protected SpriteBatch m_SpriteBatch;
         protected Texture2D m_Texture;
+        protected Vector2 m_Position;
         protected Color m_Tint;
         protected string m_AssetName;
-
-
-        protected Vector2 m_Position;
         public bool m_visible = true;
-         
+     
         protected float m_Direction = 1f;
         
-
         public Sprite(Game i_game):base(i_game)
         {
         }
@@ -38,7 +35,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Draw(GameTime i_GameTime)
         {
-            this.SpriteBatch.Draw(this.Texture, this.Position, this.Tint);
+            if (m_visible)
+            {
+                this.SpriteBatch.Draw(this.Texture, this.Position, this.Tint);
+            }
+           
             base.Draw(i_GameTime);
         }
 
@@ -49,7 +50,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public SpriteBatch SpriteBatch
         {
-            get { return SpriteBatch; }
+            get { return m_SpriteBatch; }
             set { m_SpriteBatch = value; }
         }
 
@@ -84,8 +85,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             set { m_AssetName = value; }
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            initPosition();
+        }
 
-
-
+        public abstract void initPosition();
     }
 }

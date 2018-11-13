@@ -10,21 +10,24 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class Enemy : Sprite
+    class MotherSpaceShip : Sprite
     {
-        private Gun m_Gun; 
-
-        public Enemy(Game i_Game) : base(i_Game)
+        public MotherSpaceShip(Game i_Game) : base(i_Game)
         {
-            
+            m_AssetName = @"Sprites\MotherShip_32x120";
+            m_Tint = Color.Red;
+            m_visible = false;
+            m_Direction = 1f;
         }
-        public void Shoot()
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+
+        public override void initPosition()
         {
 
-        }
-        public override void Update(GameTime gameTime)
-        {
-            
         }
     }
 }

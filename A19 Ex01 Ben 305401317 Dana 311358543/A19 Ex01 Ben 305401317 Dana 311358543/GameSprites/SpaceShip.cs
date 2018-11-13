@@ -57,15 +57,19 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             get{ return m_Gun; }
         }
 
-        public SpaceShip(Game game):base(game)
+        public SpaceShip(Game game) : base(game)
         {
             m_AssetName = @"Sprites\Ship01_32x32";
             m_Direction = 1f;
+            m_Tint = Color.White;
         }
-        public void Init()
+        public override void initPosition()
         {
+            m_Position.X = 0f;
+            m_Position.Y = Game.GraphicsDevice.Viewport.Height - (Texture.Height / 2) - 30;
 
         }
+
         private void move()
         {
             

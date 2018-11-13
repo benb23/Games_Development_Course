@@ -38,5 +38,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return false;
         }
 
+        public override void initPosition()
+        {
+
+        }
     }
 }
