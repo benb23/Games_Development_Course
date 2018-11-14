@@ -12,7 +12,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class SpaceShip : Sprite
     {
-        private readonly int r_MaxNumOfBullets=3;
+        public static readonly int r_MaxNumOfBullets=3;
         private List<Bullet> m_BulletList = new List<Bullet>(3);
         private readonly float r_KeyboardVelocity = 120;//TODO: ctor?
         private Gun m_Gun = new Gun();//TODO: ctor?
@@ -58,7 +58,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void moveUsingMouse()
         {
-            Position = new Vector2(Position.X + InputManager.GetMousePositionDelta().X, Position.Y);
+            Position = new Vector2(Position.X +SpaceInvaders.m_InputManager.GetMousePositionDelta().X, Position.Y);
         }
 
         private void moveUsingKeyboard(GameTime i_GameTime)
@@ -97,19 +97,26 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             Bullet currBullet;
 
-            if (m_BulletList.Count < r_MaxNumOfBullets)
-            {
-                currBullet = new Bullet(i_game, Bullet.BulletType.SpaceShipBullet, m_Position);
-                m_BulletList.Add(currBullet);
-            }
-            else
-            {
-                currBullet = getUnVisibleBulletFromList();
-                currBullet.m_visible = true;
-                currBullet.initBulletPosition(Position);
-            }
+            currBullet = getBullet(i_game);
+            m_Gun.Shoot(currBullet);
+        }
 
-            currBullet.AddComponent();
+        private Bullet getBullet(Game i_game)
+        {
+                Bullet currBullet;
+
+                if (m_BulletList.Count < r_MaxNumOfBullets)
+                {
+                    currBullet = new Bullet(i_game, Bullet.BulletType.SpaceShipBullet, m_Position);
+                    m_BulletList.Add(currBullet);
+                }
+                else
+                {
+                    currBullet = getUnVisibleBulletFromList();
+                    currBullet.m_visible = true;
+                    currBullet.initBulletPosition(Position);
+                }
+            return currBullet;
         }
 
         private Bullet getUnVisibleBulletFromList()
