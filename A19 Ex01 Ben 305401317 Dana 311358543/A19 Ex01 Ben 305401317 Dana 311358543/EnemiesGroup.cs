@@ -16,11 +16,16 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private Enemy[,] m_EnemiesMatrix = new Enemy[5, 9];
         private float m_JumpingVelocity;
+        private float m_Direction = 1f;
+        private float m_currTopLeftX;
+        private float m_currTopLeftY;
+
 
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
+        private const float k_enemyHeight = 32f;
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime i_GameTime)
         {
             ////update enemysGroup position
             ////move{
@@ -44,45 +49,48 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             //{
 
             //}*/
+
+            m_currTopLeftX += m_Direction*(30 * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
+            horizontalStep();
         }
 
-        //public float LeftBorder()
-        //{
-        //    //float leftBorderX = 0;
+        public float getTopLeftX()  // ?? : Use as a first alive function
+        {
+            float leftTopX = 0;
 
-        //    //for(int col=0 ; col < 9; col++)//TODO: CONST
-        //    //{
-        //    //    for(int row=0; row < 5; row++)//TODO: CONST
-        //    //    {
-        //    //        if(m_enemiesMatrix[col, row].m_visible)
-        //    //        {
-        //    //            leftBorderX = m_enemiesMatrix[col, row].Position.X;
-        //    //            break;
-        //    //        }
-        //    //    }
-        //    //}
+            for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
+            {
+                for (int col = 0; col < k_EnemiesColumns; col++)//TODO: CONST
+                {
+                    if (m_EnemiesMatrix[row, col].m_visible)
+                    {
+                        leftTopX = m_EnemiesMatrix[col, row].Position.X;
+                        break;
+                    }
+                }
+            }
 
-        //    //return leftBorderX;
-        //}
+            return leftTopX;
+        }
 
-        //public float RightBorder()
-        //{
-        //    //float rightBorderX = 0;
+        public float getTopRightX()
+        {
+            float rightBorderX = 0;
 
-        //    //for (int col = 8; col >= 0 ; col--)//TODO: CONST
-        //    //{
-        //    //    for (int row = 0; row < 5; row++)//TODO: CONST
-        //    //    {
-        //    //        if (m_enemiesMatrix[col, row].m_visible)
-        //    //        {
-        //    //            rightBorderX = m_enemiesMatrix[col, row].Position.X + m_enemiesMatrix[col, row].Texture.Width;
-        //    //            break;
-        //    //        }
-        //    //    }
-        //    //}
+            for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
+            {
+                for (int col = k_EnemiesColumns - 1; col >= 0; col--)//TODO: CONST
+                {
+                    if (m_EnemiesMatrix[row, col].m_visible)
+                    {
+                        rightBorderX = m_EnemiesMatrix[row, col].Position.X + m_EnemiesMatrix[row, col].Texture.Width;
+                        break;
+                    }
+                }
+            }
 
-        //    //return rightBorderX;
-        //}
+            return rightBorderX;
+        }
 
         public void Move()
         {
@@ -95,9 +103,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
+            m_currTopLeftX = 0;
+            m_currTopLeftY = k_enemyHeight * 3f;
             this.InitEnemyGroup();
             base.Initialize();
-            initPosions();
+            initPosions(m_currTopLeftX, m_currTopLeftY);
 
         }
 
@@ -127,33 +137,36 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
-        public void initPosions()
+        public void initPosions(float i_X, float i_Y)
         {
-            float enemyHeight = 32f;
-            float enemiesGap = enemyHeight * 0.6f;
-            float startX = 0f;
-            float strartY = enemyHeight * 3f;
+            float enemiesGap = k_enemyHeight * 0.6f;
+            float startX = i_X;
+            float strartY = i_Y;
 
             for (int i = 0; i < k_EnemiesRows; i++)
             {
                 for (int j = 0; j < k_EnemiesColumns; j++)
                 { 
                     m_EnemiesMatrix[i, j].Position = new Vector2(startX, strartY);
-                    startX += enemyHeight + enemiesGap;
+                    startX += k_enemyHeight + enemiesGap;
                 }
-                startX = 0f;
-                strartY += enemyHeight + enemiesGap;
+                startX = i_X;
+                strartY += k_enemyHeight + enemiesGap;
             }
         }
 
-        private void changeDirection()
+        public void horizontalStep()
         {
-
+            initPosions(m_currTopLeftX + m_Direction * (m_EnemiesMatrix[0,0].Texture.Width), m_currTopLeftY);
+            if (getTopRightX() >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
+            {
+                m_Direction = -1f;
+            }
+            else if (getTopLeftX() <= 0f)
+            {
+                m_Direction = 1f;
+            }
         }
 
-        //public void LoadContent()
-        //{
-
-        //}
     }
 }

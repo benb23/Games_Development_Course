@@ -12,6 +12,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class MotherSpaceShip : Sprite
     {
+        Random randomNum = new Random();
+        int rnd = 100;
+        private readonly float k_MotherShipVelocity = 40;
+
         public MotherSpaceShip(Game i_Game) : base(i_Game)
         {
             m_AssetName = @"Sprites\MotherShip_32x120";
@@ -27,12 +31,24 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void initPosition()
         {
-
+            Position = new Vector2(0, m_Texture.Height);
         }
 
         public override void Update(GameTime i_GameTime)
         {
-            m_Position.X += 90 * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+            if (!m_visible)
+                rnd = randomNum.Next(0, 10000);
+            
+            if (rnd <= 10)
+            {
+                m_visible = true; 
+                m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+                if (m_Position.X >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
+                {
+                    m_visible = false;
+                    initPosition();
+                }
+            }
         }
     }
 }
