@@ -19,6 +19,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private float m_Direction = 1f;
         private float m_currTopLeftX;
         private float m_currTopLeftY;
+        private float m_JumpFrequency = 2;
+        private float m_FrequencRateIncreasment = 1.08f;
+
 
 
         private const int k_EnemiesRows = 5;
@@ -49,14 +52,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             //{
 
             //}*/
-
-            m_currTopLeftX += m_Direction*(30 * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
-            horizontalStep();
+            JumpHorizontalStep(i_GameTime);
+            
+            
         }
 
-        public float getTopLeftX()  // ?? : Use as a first alive function
+        public float getLeftGroupBorder()  // ?? : Use as a first alive function
         {
-            float leftTopX = 0;
+            float leftX = 0;
 
             for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
             {
@@ -64,16 +67,16 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 {
                     if (m_EnemiesMatrix[row, col].m_visible)
                     {
-                        leftTopX = m_EnemiesMatrix[col, row].Position.X;
+                        leftX = m_EnemiesMatrix[row, col].Position.X;
                         break;
                     }
                 }
             }
 
-            return leftTopX;
+            return leftX;
         }
 
-        public float getTopRightX()
+        public float getRightGroupBorder()
         {
             float rightBorderX = 0;
 
@@ -155,18 +158,26 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
-        public void horizontalStep()
+        private void JumpHorizontalStep(GameTime i_GameTime)
         {
-            initPosions(m_currTopLeftX + m_Direction * (m_EnemiesMatrix[0,0].Texture.Width), m_currTopLeftY);
-            if (getTopRightX() >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
+            if (getRightGroupBorder() >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
             {
                 m_Direction = -1f;
+                JumpDown();
             }
-            else if (getTopLeftX() <= 0f)
+            else if (getLeftGroupBorder() <= 0f)
             {
                 m_Direction = 1f;
+                JumpDown();
             }
+            initPosions(m_currTopLeftX, m_currTopLeftY);
+            m_currTopLeftX += m_Direction * (m_JumpFrequency * (float)i_GameTime.ElapsedGameTime.TotalSeconds * (m_EnemiesMatrix[0, 0].Texture.Width / 2));
         }
 
+        private void JumpDown()
+        {
+            m_currTopLeftY += m_EnemiesMatrix[0, 0].Texture.Width / 2;
+            m_JumpFrequency *= m_FrequencRateIncreasment;
+        }
     }
 }
