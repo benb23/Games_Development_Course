@@ -20,9 +20,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         }
         public override void Update(GameTime i_gameTime)
         {
-            int rnd = SpaceInvaders.m_RandomNum.Next(0, 10000);
+            int rnd = SpaceInvaders.m_RandomNum.Next(0, 55555);
             
-            if (rnd <= 4)
+            if (rnd <= 15)
             {
                 m_Gun.Shoot(new Bullet(Game,Bullet.BulletType.EnemyBullet,Position));//game?
             }

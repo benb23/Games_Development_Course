@@ -35,9 +35,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public override void Update(GameTime i_GameTime)
         {
             if (!m_visible)
-                rnd =SpaceInvaders.m_RandomNum.Next(0, 10000);
+                rnd =SpaceInvaders.m_RandomNum.Next(0, 55555);
             
-            if (rnd <= 10)
+            if (rnd <= 30)
             {
                 m_visible = true; 
                 m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
