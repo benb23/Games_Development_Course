@@ -31,30 +31,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public override void Update(GameTime i_GameTime)
         {
             ////update enemysGroup position
-            ////move{
-            //if (LeftBorder() == 0f || RightBorder() == SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
-            //{
-
-            //}
-            //else if (LeftBorder() < 0.5 * m_enemiesMatrix[0, 0].Texture.Width || RightBorder() > SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - 0.5 * m_enemiesMatrix[0, 0].Texture.Width)
-            //{
-
-            //}
-            //else
-            //{
-
-            //}
-            ////}
-
-            ////update enemies bullets position
-            ///*
-            //if (Gun.BulletsList.Count != 0)
-            //{
-
-            //}*/
+        
+             
             JumpHorizontalStep(i_GameTime);
-            
-            
         }
 
         public float getLeftGroupBorder()  // ?? : Use as a first alive function

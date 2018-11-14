@@ -78,7 +78,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 if (m_InputManager.IsShootingOrder())
                 {
-                    m_SpaceShip.Shoot(this);
+                    m_SpaceShip.Shoot();
                 }
             }
 

@@ -93,21 +93,21 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         }
 
-        public void  Shoot(Game i_game)
+        public void  Shoot()
         {
             Bullet currBullet;
 
-            currBullet = getBullet(i_game);
+            currBullet = getBullet();
             m_Gun.Shoot(currBullet);
         }
 
-        private Bullet getBullet(Game i_game)
+        private Bullet getBullet()
         {
                 Bullet currBullet;
 
                 if (m_BulletList.Count < r_MaxNumOfBullets)
                 {
-                    currBullet = new Bullet(i_game, Bullet.BulletType.SpaceShipBullet, m_Position);
+                    currBullet = new Bullet(Game, Bullet.BulletType.SpaceShipBullet, m_Position);
                     m_BulletList.Add(currBullet);
                 }
                 else

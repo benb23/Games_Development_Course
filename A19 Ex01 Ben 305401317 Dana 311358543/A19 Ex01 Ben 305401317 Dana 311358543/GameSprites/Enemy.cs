@@ -12,19 +12,22 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class Enemy : Sprite
     {
-        private Gun m_Gun; 
+        private Gun m_Gun = new Gun(); 
 
         public Enemy(Game i_Game) : base(i_Game)
         {
             
         }
-        public void Shoot()
+        public override void Update(GameTime i_gameTime)
         {
-
-        }
-        public override void Update(GameTime gameTime)
-        {
+            Random randomNum = new Random();
+            int rnd = randomNum.Next(0, 10000);
             
+            if (rnd <= 30)
+            {
+                m_Gun.Shoot(new Bullet(Game,Bullet.BulletType.EnemyBullet,Position));//game?
+            }
+
         }
 
         public override void Initialize()

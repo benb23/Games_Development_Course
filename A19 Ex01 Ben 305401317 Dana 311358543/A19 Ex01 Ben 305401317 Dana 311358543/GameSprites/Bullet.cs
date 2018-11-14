@@ -44,7 +44,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public Bullet(Game game, BulletType bulletType, Vector2 shooterPosition ) :base(game)
         {
             m_AssetName = @"Sprites\Bullet";
-            
+            m_Type = bulletType;
+
             if(m_Type == BulletType.EnemyBullet)
             {
                 m_Tint = Color.Green;
