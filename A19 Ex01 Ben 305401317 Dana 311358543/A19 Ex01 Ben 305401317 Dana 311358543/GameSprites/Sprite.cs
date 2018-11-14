@@ -30,6 +30,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             base.LoadContent();
         }
 
+
         public override void Draw(GameTime i_GameTime)
         {
             if (m_visible)

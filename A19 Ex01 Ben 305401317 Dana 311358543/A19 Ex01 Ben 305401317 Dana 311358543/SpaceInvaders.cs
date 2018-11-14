@@ -72,6 +72,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 //TODO: msg box
                 this.Exit();
+                
             }
 
             if(((currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter)) || (currMouseState.LeftButton.Equals(ButtonState.Pressed)&& m_pastMouseState.LeftButton.Equals(ButtonState.Pressed)))&& m_SpaceShip.CountNumOfVisibleBullets()<3)
@@ -82,10 +83,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             m_PastKey = Keyboard.GetState();
             m_pastMouseState = Mouse.GetState();
 
-            graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferHeight = 600;
-            graphics.ApplyChanges();
-
+            if (m_SpaceShip.Position.Y <= m_EnemysGroup.getBottomGroupBorder())
+            {
+                Exit();
+            }
+            
             base.Update(gameTime);
         }
 

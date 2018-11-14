@@ -60,6 +60,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public float getLeftGroupBorder()  // ?? : Use as a first alive function
         {
             float leftX = 0;
+            bool isFound = false;
 
             for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
             {
@@ -68,9 +69,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                     if (m_EnemiesMatrix[row, col].m_visible)
                     {
                         leftX = m_EnemiesMatrix[row, col].Position.X;
+                        isFound = true;
                         break;
                     }
                 }
+                if (isFound)
+                    break;
             }
 
             return leftX;
@@ -79,6 +83,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public float getRightGroupBorder()
         {
             float rightBorderX = 0;
+            bool isFound = false;
 
             for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
             {
@@ -87,12 +92,37 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                     if (m_EnemiesMatrix[row, col].m_visible)
                     {
                         rightBorderX = m_EnemiesMatrix[row, col].Position.X + m_EnemiesMatrix[row, col].Texture.Width;
+                        isFound = true;
                         break;
                     }
                 }
+                if (isFound)
+                    break;
             }
 
             return rightBorderX;
+        }
+
+        public float getBottomGroupBorder()
+        {
+            float bottomBorderY = 0;
+            bool isFound = false;
+
+            for (int row = k_EnemiesRows - 1; row >= 0; row--)//TODO: CONST
+            {
+                for (int col = 0; col < k_EnemiesColumns; col++)//TODO: CONST
+                {
+                    if (m_EnemiesMatrix[row, col].m_visible)
+                    {
+                        bottomBorderY = m_EnemiesMatrix[row, col].Position.Y + m_EnemiesMatrix[row, col].Texture.Height;
+                        isFound = true;
+                        break;
+                    }
+                }
+                if (isFound)
+                    break;
+            }
+            return bottomBorderY;
         }
 
         public void Move()
