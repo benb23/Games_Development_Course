@@ -29,5 +29,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
 
         }
+
+        public override void Update(GameTime i_GameTime)
+        {
+            m_Position.X += 90 * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+        }
     }
 }

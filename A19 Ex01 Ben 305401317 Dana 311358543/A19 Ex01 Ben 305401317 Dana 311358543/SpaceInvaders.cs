@@ -50,13 +50,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             // 1. init the ship position
             // Get the bottom and left:
-            float x = 0;
-            float y = (float)GraphicsDevice.Viewport.Height;
-
-            // Offset for ship start point:
-            y -= (m_SpaceShip.Texture.Height * 1.5f);
-
-            m_SpaceShip.Position = new Vector2(x, y);
+            
 
             // 2. Init the enemy position
 
@@ -88,6 +82,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             m_MotherSpaceShip.Update(gameTime);
             m_EnemysGroup.Update(gameTime);
             m_SpaceShip.Update(gameTime);
+
+            graphics.IsFullScreen = false;
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.ApplyChanges();
 
             base.Update(gameTime);
         }
