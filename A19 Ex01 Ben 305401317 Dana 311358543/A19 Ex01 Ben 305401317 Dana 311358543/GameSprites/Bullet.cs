@@ -48,7 +48,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             if(m_Type == BulletType.EnemyBullet)
             {
-                m_Tint = Color.Green;
+                m_Tint = Color.Blue;
             }
             else
             {

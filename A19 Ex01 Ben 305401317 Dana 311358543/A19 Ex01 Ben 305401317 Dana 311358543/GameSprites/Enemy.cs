@@ -23,7 +23,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             int rnd = m_RandomNum.Next(0, 10000);
             
-            if (rnd <= 5)
+            if (rnd <= 4)
             {
                 m_Gun.Shoot(new Bullet(Game,Bullet.BulletType.EnemyBullet,Position));//game?
             }
