@@ -12,13 +12,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class Gun
     {
-        private List<Bullet> m_BulletsList = new List<Bullet>();
-
-        public List<Bullet> BulletsList
-        {
-            get { return m_BulletsList; }
-        }
-
         public void Shoot(Bullet i_bullet)
         {
             i_bullet.AddComponent();

@@ -32,13 +32,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             //}
 
             //update spaceship bullets position
-            if (Gun.BulletsList.Count != 0)
-            {
-                foreach (Bullet element in Gun.BulletsList)
-                {
-                    element.Update(gameTime);
-                }
-            }
         }
 
         public int CountNumOfVisibleBullets()
