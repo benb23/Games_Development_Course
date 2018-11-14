@@ -37,7 +37,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             if (!m_visible)
                 rnd =SpaceInvaders.m_RandomNum.Next(0, 55555);
             
-            if (rnd <= 30)
+            if (rnd <= 40)
             {
                 m_visible = true; 
                 m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
