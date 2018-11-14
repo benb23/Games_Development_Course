@@ -110,6 +110,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 currBullet = getUnVisibleBulletFromList();
                 currBullet.m_visible = true;
+                currBullet.initBulletPosition(Position);
             }
 
             Game.Components.Add(currBullet);

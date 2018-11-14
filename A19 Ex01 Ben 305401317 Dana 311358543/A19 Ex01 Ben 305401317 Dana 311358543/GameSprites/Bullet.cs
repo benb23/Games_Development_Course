@@ -18,7 +18,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-           if(isBulletHitElement()|| isBulletHitTheScreenBorder())//collision 
+           if(isBulletHitElement() || isBulletHitTheScreenBorder())//collision 
            {
                 //destroy element
                 RemoveComponent();
@@ -32,7 +32,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private bool isBulletHitTheScreenBorder()
         {
-            if(m_Position.Y==0 || m_Position.Y==Game.GraphicsDevice.Viewport.Height)
+            if(m_Position.Y <= 0 || m_Position.Y >= Game.GraphicsDevice.Viewport.Height)
             {
                 return true;
             }
@@ -54,7 +54,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 m_Tint = Color.Red;
             }
 
-            m_Position = shooterPosition;
+            initBulletPosition(shooterPosition);
 
             m_visible = true;
             m_Type = bulletType;
@@ -66,9 +66,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return false;
         }
 
+        public void initBulletPosition(Vector2 i_ShooterPosition)
+        {
+            Position=new Vector2(i_ShooterPosition.X + 32/2, i_ShooterPosition.Y +(float)m_Type*10);//TODO: CONST 32 SHOOTER WIDTH
+        }
+
         public override void initPosition()
         {
-            Position=new Vector2(Position.X + 32/2, Position.Y +(float)m_Type*10);//TODO: CONST 32 SHOOTER WIDTH
+           
         }
     }
 }
