@@ -18,29 +18,17 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-            KeyboardState currKeyboardState = Keyboard.GetState();
-
-            // move the ship using the keyboard:
-            if (currKeyboardState.IsKeyDown(Keys.Left))
-            {
-                Position = new Vector2(Position.X - r_KeyboardVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
-            }
-            else if (currKeyboardState.IsKeyDown(Keys.Right))
-            {
-                Position = new Vector2(Position.X + r_KeyboardVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
-            }
-
-            // move the ship using the mouse:
-            Position = new Vector2(Position.X + InputManager.GetMousePositionDelta().X, Position.Y);
+            moveUsingKeyboard(gameTime);
+            moveUsingMouse();
 
             // clam the position between screen boundries:
             Position = new Vector2(MathHelper.Clamp(Position.X, 0, SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - Texture.Width), Position.Y);
 
             // if we hit the wall, lets change direction:
-            if (Position.X == 0 || Position.X == SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - Texture.Width)
-            {
-                Direction *= -1f;
-            }
+            //if (Position.X == 0 || Position.X == SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - Texture.Width)
+            //{
+            //    Direction *= -1f;
+            //}
 
             //update spaceship bullets position
             if (Gun.BulletsList.Count != 0)
@@ -49,6 +37,26 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 {
                     element.Update(gameTime);
                 }
+            }
+        }
+
+        private void moveUsingMouse()
+        {
+            Position = new Vector2(Position.X + InputManager.GetMousePositionDelta().X, Position.Y);
+        }
+
+        private void moveUsingKeyboard(GameTime i_GameTime)
+        {
+            KeyboardState currKeyboardState = Keyboard.GetState();
+
+            // move the ship using the keyboard:
+            if (currKeyboardState.IsKeyDown(Keys.Left))
+            {
+                Position = new Vector2(Position.X - r_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds, Position.Y);
+            }
+            else if (currKeyboardState.IsKeyDown(Keys.Right))
+            {
+                Position = new Vector2(Position.X + r_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds, Position.Y);
             }
         }
 
@@ -66,7 +74,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public override void initPosition()
         {
             m_Position.X = 0f;
-            m_Position.Y = Game.GraphicsDevice.Viewport.Height - (Texture.Height / 2) - 30;
+            m_Position.Y = Game.GraphicsDevice.Viewport.Height - (Texture.Height * 1.2f );
 
         }
 
