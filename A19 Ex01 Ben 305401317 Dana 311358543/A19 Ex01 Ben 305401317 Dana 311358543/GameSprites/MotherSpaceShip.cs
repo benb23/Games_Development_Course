@@ -29,7 +29,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void initPosition()
         {
-            Position = new Vector2(0, m_Texture.Height);
+            Position = new Vector2(-m_Texture.Width, m_Texture.Height);
         }
 
         public override void Update(GameTime i_GameTime)
