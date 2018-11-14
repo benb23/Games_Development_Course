@@ -79,9 +79,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 m_SpaceShip.Shoot();
             }
 
-            m_MotherSpaceShip.Update(gameTime);
-            m_EnemysGroup.Update(gameTime);
-            m_SpaceShip.Update(gameTime);
 
             graphics.IsFullScreen = false;
             graphics.PreferredBackBufferHeight = 600;
