@@ -77,7 +77,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public void  Shoot()
         {
-
+            Game.Components.Add(new Bullet(Game, Bullet.BulletType.SpaceShipBullet));//TODO:game?
         }
         //public void Draw()
         //{

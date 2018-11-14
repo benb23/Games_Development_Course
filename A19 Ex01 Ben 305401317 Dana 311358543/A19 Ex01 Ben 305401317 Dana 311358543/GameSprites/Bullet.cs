@@ -12,6 +12,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class Bullet : Sprite
     {
+        public enum BulletType { EnemyBullet, SpaceShipBullet };
+
+        private BulletType m_Type;
         private readonly float r_BulletVelocity = 155;
 
         public override void Update(GameTime gameTime)
@@ -27,9 +30,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
            }
         }
 
-        public Bullet(Game game):base(game)
+        public Bullet(Game game, BulletType bulletType ) :base(game)
         {
             m_AssetName = @"Sprites\Bullet";
+            m_Type = bulletType;
         }
 
         private bool isBulletHitElement()//TODO: change name!
@@ -38,6 +42,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return false;
         }
 
+        public void initialize()
+        {
+
+        }
         public override void initPosition()
         {
 
