@@ -12,6 +12,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class SpaceShip : Sprite
     {
+        private readonly int r_MaxNumOfBullets=3;
         private List<Bullet> m_BulletList = new List<Bullet>(3);
         private readonly float r_KeyboardVelocity = 120;//TODO: ctor?
         private Gun m_Gun = new Gun();//TODO: ctor?
@@ -92,18 +93,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         }
 
-        private void move()
-        {
-            
-        }
-
-        public void  Shoot()
+        public void  Shoot(Game i_game)
         {
             Bullet currBullet;
 
-            if (m_BulletList.Count<3)
+            if (m_BulletList.Count < r_MaxNumOfBullets)
             {
-                currBullet = new Bullet(Game, Bullet.BulletType.SpaceShipBullet, m_Position);
+                currBullet = new Bullet(i_game, Bullet.BulletType.SpaceShipBullet, m_Position);
                 m_BulletList.Add(currBullet);
             }
             else
@@ -113,7 +109,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 currBullet.initBulletPosition(Position);
             }
 
-            Game.Components.Add(currBullet);
+            currBullet.AddComponent();
         }
 
         private Bullet getUnVisibleBulletFromList()

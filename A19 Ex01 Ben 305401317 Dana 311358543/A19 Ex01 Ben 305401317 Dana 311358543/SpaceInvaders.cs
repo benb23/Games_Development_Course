@@ -20,7 +20,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private Player m_Player;
         private Background m_Background;
         KeyboardState m_PastKey;//??
-
+        MouseState m_pastMouseState;
 
         public SpaceInvaders()
         {
@@ -74,11 +74,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 this.Exit();
             }
 
-            if((currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter) || currMouseState.LeftButton.Equals(ButtonState.Pressed))&& m_SpaceShip.CountNumOfVisibleBullets()<3)
+            if(((currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter)) || (currMouseState.LeftButton.Equals(ButtonState.Pressed)&& m_pastMouseState.LeftButton.Equals(ButtonState.Pressed)))&& m_SpaceShip.CountNumOfVisibleBullets()<3)
             {
-                m_SpaceShip.Shoot();
+                m_SpaceShip.Shoot(this);
             }
 
+            m_PastKey = Keyboard.GetState();
+            m_pastMouseState = Mouse.GetState();
 
             graphics.IsFullScreen = false;
             graphics.PreferredBackBufferHeight = 600;
