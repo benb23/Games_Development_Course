@@ -12,8 +12,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class SpaceShip : Sprite
     {
+        private List<Bullet> m_BulletList = new List<Bullet>(3);
         private readonly float r_KeyboardVelocity = 120;//TODO: ctor?
-        private float m_NumOfBullets = 3;//TODO: ctor?
         private Gun m_Gun = new Gun();//TODO: ctor?
 
         public override void Update(GameTime gameTime)
@@ -38,6 +38,21 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                     element.Update(gameTime);
                 }
             }
+        }
+
+        public int CountNumOfVisibleBullets()
+        {
+            int numOfVisibleBullets = 0;
+            
+            foreach (Bullet element in m_BulletList)
+            {
+                if(element.m_visible==true)
+                {
+                    numOfVisibleBullets++;
+                }
+            }
+
+            return numOfVisibleBullets;
         }
 
         private void moveUsingMouse()
@@ -68,7 +83,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public SpaceShip(Game game) : base(game)
         {
             m_AssetName = @"Sprites\Ship01_32x32";
-            m_Direction = 1f;
             m_Tint = Color.White;
         }
         public override void initPosition()
@@ -85,7 +99,35 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public void  Shoot()
         {
+            Bullet currBullet;
 
+            if (m_BulletList.Count<3)
+            {
+                currBullet = new Bullet(Game, Bullet.BulletType.SpaceShipBullet, m_Position);
+                m_BulletList.Add(currBullet);
+            }
+            else
+            {
+                currBullet = getUnVisibleBulletFromList();
+                currBullet.m_visible = true;
+            }
+
+            Game.Components.Add(currBullet);
+        }
+
+        private Bullet getUnVisibleBulletFromList()
+        {
+            Bullet bullet = null;
+
+            foreach (Bullet element in m_BulletList)
+            {
+                if (element.m_visible == false)
+                {
+                    bullet = element;
+                }
+            }
+
+            return bullet;
         }
         //public void Draw()
         //{

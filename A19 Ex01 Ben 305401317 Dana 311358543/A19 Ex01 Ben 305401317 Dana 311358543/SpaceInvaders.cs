@@ -74,7 +74,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 this.Exit();
             }
 
-            if(currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter) || currMouseState.LeftButton.Equals(ButtonState.Pressed))
+            if((currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter) || currMouseState.LeftButton.Equals(ButtonState.Pressed))&& m_SpaceShip.CountNumOfVisibleBullets()<3)
             {
                 m_SpaceShip.Shoot();
             }

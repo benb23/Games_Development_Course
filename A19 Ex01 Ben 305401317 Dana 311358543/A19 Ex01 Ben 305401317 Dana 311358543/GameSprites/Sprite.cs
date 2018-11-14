@@ -12,15 +12,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public abstract class Sprite :  DrawableGameComponent
     {
-        
         protected SpriteBatch m_SpriteBatch;
         protected Texture2D m_Texture;
         protected Vector2 m_Position;
         protected Color m_Tint;
         protected string m_AssetName;
         public bool m_visible = true;
-     
-        protected float m_Direction = 1f;
         
         public Sprite(Game i_game):base(i_game)
         {
@@ -48,6 +45,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             Game.Components.Add(this);
         }
 
+        public virtual void RemoveComponent()
+        {
+            Game.Components.Remove(this);
+        }
+
         public SpriteBatch SpriteBatch
         {
             get { return m_SpriteBatch; }
@@ -64,13 +66,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             get { return m_Tint; }
             set { m_Tint = value; }
-        }
-
-        public float Direction
-        {
-            get { return m_Direction; }
-
-            set { m_Direction = value; }
         }
 
         public Vector2 Position

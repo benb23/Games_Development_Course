@@ -21,7 +21,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             m_AssetName = @"Sprites\MotherShip_32x120";
             m_Tint = Color.Red;
             m_visible = false;
-            m_Direction = 1f;
         }
 
         public override void Initialize()
