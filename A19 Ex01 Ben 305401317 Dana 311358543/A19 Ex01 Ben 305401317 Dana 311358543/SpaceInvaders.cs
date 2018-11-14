@@ -12,6 +12,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public class SpaceInvaders : Game
     {
+        public static Random m_RandomNum = new Random();
         public static GraphicsDeviceManager graphics;
         private SpriteBatch m_SpriteBatch;
         private SpaceShip m_SpaceShip;

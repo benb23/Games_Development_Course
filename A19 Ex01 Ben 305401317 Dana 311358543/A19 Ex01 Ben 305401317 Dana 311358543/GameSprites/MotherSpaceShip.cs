@@ -12,7 +12,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class MotherSpaceShip : Sprite
     {
-        Random randomNum = new Random();
         int rnd = 100;
         private readonly float k_MotherShipVelocity = 40;
 
@@ -36,7 +35,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public override void Update(GameTime i_GameTime)
         {
             if (!m_visible)
-                rnd = randomNum.Next(0, 10000);
+                rnd =SpaceInvaders.m_RandomNum.Next(0, 10000);
             
             if (rnd <= 10)
             {

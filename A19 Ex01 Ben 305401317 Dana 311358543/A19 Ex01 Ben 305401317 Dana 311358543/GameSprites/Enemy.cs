@@ -12,7 +12,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class Enemy : Sprite
     {
-        static Random m_RandomNum = new Random();
         private Gun m_Gun = new Gun(); 
 
         public Enemy(Game i_Game) : base(i_Game)
@@ -21,7 +20,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         }
         public override void Update(GameTime i_gameTime)
         {
-            int rnd = m_RandomNum.Next(0, 10000);
+            int rnd = SpaceInvaders.m_RandomNum.Next(0, 10000);
             
             if (rnd <= 4)
             {
