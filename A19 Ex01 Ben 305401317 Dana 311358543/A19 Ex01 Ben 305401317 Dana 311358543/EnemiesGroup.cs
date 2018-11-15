@@ -15,7 +15,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
        
 
         private Enemy[,] m_EnemiesMatrix = new Enemy[5, 9];
-        private float m_JumpingVelocity;
         private float m_Direction = 1f;
         private float m_currTopLeftX;
         private float m_currTopLeftY;
@@ -174,7 +173,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 m_Direction = -1f;
                 JumpDown();
             }
-            else if (getLeftGroupBorder() <= 0f)
+            else if (getLeftGroupBorder() < 0f)
             {
                 m_Direction = 1f;
                 JumpDown();
@@ -185,8 +184,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void JumpDown()
         {
-            m_currTopLeftY += m_EnemiesMatrix[0, 0].Texture.Width / 2;
-            m_JumpFrequency *= m_FrequencRateIncreasment;
+                m_currTopLeftY += m_EnemiesMatrix[0, 0].Texture.Width / 2;
+                m_JumpFrequency *= m_FrequencRateIncreasment;
         }
     }
 }

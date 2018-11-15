@@ -24,6 +24,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public SpaceInvaders()
         {
+          
             m_Background = new Background(this);
             Components.Add(m_Background);
             graphics = new GraphicsDeviceManager(this);
@@ -41,7 +42,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         protected override void Initialize()
         {
             m_SpriteBatch = new SpriteBatch(GraphicsDevice);
-
+            graphics.IsFullScreen = false;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 640;
+            graphics.ApplyChanges();
             this.Services.AddService(typeof(SpriteBatch), m_SpriteBatch);
             base.Initialize();
         }
