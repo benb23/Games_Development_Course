@@ -20,10 +20,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             m_Position = Vector2.Zero;
         }
 
-        public void Draw()
-        {
-            m_SpriteBatch.Draw(m_Texture, m_Position, m_Tint); // tinting with alpha channel
-        }
 
         public override void initPosition()
         {
