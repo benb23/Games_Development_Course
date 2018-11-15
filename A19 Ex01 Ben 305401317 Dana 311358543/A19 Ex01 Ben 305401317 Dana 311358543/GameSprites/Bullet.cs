@@ -18,11 +18,17 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-           if(isBulletHitElement() || isBulletHitTheScreenBorder())//collision 
+           if(isBulletHitTheScreenBorder())
            {
                 //destroy element
                 RemoveComponent();
-                m_visible = false;
+                Visible = false;
+            }
+           else if(isBulletHitElement())
+           {
+                //destroy element
+                RemoveComponent();
+                Visible = false;
             }
            else
            {
@@ -57,15 +63,27 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             initBulletPosition(shooterPosition);
 
-            m_visible = true;
+            Visible = true;
             m_Type = bulletType;
         }
 
         private bool isBulletHitElement()//TODO: change name!
         {
+            foreach (DrawableGameComponent element in Game.Components)
+            {
+                if (element is Sprite)
+                {
+                    if (Position == ((Sprite)element).Position && !(element is Bullet))
+                    {
+                        element.Dispose();
+                    }
+                }
+            }
 
             return false;
         }
+
+        //(Position == ((Sprite)element).Position && !(element is Bullet)
 
         public void initBulletPosition(Vector2 i_ShooterPosition)
         {

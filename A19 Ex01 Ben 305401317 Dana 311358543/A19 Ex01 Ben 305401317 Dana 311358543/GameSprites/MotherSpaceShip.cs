@@ -19,7 +19,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             m_AssetName = @"Sprites\MotherShip_32x120";
             m_Tint = Color.Red;
-            m_visible = false;
+            Visible = false;
         }
 
         public override void Initialize()
@@ -34,16 +34,16 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime i_GameTime)
         {
-            if (!m_visible)
-                rnd =SpaceInvaders.m_RandomNum.Next(0, 10000);
+            if (!Visible)
+                rnd =SpaceInvaders.m_RandomNum.Next(0, 55555);
             
-            if (rnd <= 10)
+            if (rnd <= 40)
             {
-                m_visible = true; 
+                Visible = true; 
                 m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
                 if (m_Position.X >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
                 {
-                    m_visible = false;
+                    Visible = false;
                     initPosition();
                 }
             }
