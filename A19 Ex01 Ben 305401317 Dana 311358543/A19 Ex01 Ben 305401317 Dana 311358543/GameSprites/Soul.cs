@@ -10,26 +10,28 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class Background : Sprite
+    class Soul : Sprite
     {
-
-        public Background(Game game):base(game)
+        public Soul(Game game, Color i_Tint) : base(game)
         {
-            m_AssetName = @"Sprites\BG_Space01_1024x768";
-            m_Tint = Color.White;
+            m_AssetName = @"Sprites\Ship01_32x32";
+            m_Tint = i_Tint;
+            
         }
 
-
-        public override void initPosition()
+        public override void Draw(GameTime i_GameTime)
         {
-            m_Position = Vector2.Zero;
+            SpriteBatch.Draw(Texture, Position, null, m_Tint, 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 0f);
         }
 
         public override void Initialize()
         {
-            this.DrawOrder = int.MinValue;
             base.Initialize();
         }
 
+        public override void initPosition()
+        {
+            
+        }
     }
 }

@@ -41,6 +41,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameSprites\Soul.cs" />
+    <Compile Include="ScoreManager.cs" />
     <Compile Include="GameSprites\Background.cs" />
     <Compile Include="GameSprites\Bullet.cs" />
     <Compile Include="GameSprites\Enemy.cs" />
