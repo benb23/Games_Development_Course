@@ -12,7 +12,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public abstract class Sprite :  DrawableGameComponent
     {
-        //private Rectangle m_rectangle;
         protected SpriteBatch m_SpriteBatch;
         protected Texture2D m_Texture;
         protected Vector2 m_Position;

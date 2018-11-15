@@ -93,11 +93,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                     m_SpaceShip.Shoot();
                 }
             }
-
-            if (m_SpaceShip.Position.Y <= m_EnemysGroup.getBottomGroupBorder())
-            {
-                Exit();
-            }
             
             base.Update(gameTime);
         }

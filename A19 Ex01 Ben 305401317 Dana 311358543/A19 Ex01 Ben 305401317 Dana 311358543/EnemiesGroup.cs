@@ -33,6 +33,27 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         
              
             JumpHorizontalStep(i_GameTime);
+            
+            if(isEnemiesGroupTouchTheBotton())
+            {
+                Game.Exit();
+            }
+        }
+
+        private bool isEnemiesGroupTouchTheBotton()
+        {
+            bool isEnemiesGroupTouchTheBotton;
+
+            if (getBottomGroupBorder() >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Height)
+            {
+                isEnemiesGroupTouchTheBotton = true;
+            }
+            else
+            {
+                isEnemiesGroupTouchTheBotton = false;
+            }
+
+            return isEnemiesGroupTouchTheBotton;
         }
 
         public float getLeftGroupBorder()  // ?? : Use as a first alive function
