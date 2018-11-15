@@ -122,11 +122,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return bottomBorderY;
         }
 
-        public void Move()
-        {
-
-        }
-
         public EnemiesGroup(Game i_Game) : base(i_Game)
         {
         }
