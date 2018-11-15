@@ -126,9 +126,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             return bullet;
         }
-        //public void Draw()
-        //{
-        //    m_SpriteBatch.Draw(Texture, Position, Color.White); //no tinting
-        //}
+
     }
 }

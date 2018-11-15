@@ -22,6 +22,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private Background m_Background;
         public static InputManager m_InputManager= new InputManager();
 
+        SpriteFont arial;
+
         public SpaceInvaders()
         {
           
@@ -58,6 +60,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             // 2. Init the enemy position
 
+        }
+
+        protected override void LoadContent()
+        {
+            arial = Content.Load<SpriteFont>("Arial");
         }
 
         protected override void UnloadContent()
@@ -99,6 +106,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             GraphicsDevice.Clear(Color.Black);
             m_SpriteBatch.Begin();
+            m_SpriteBatch.DrawString(arial, "I PUT TEXT ONSCREEN!!", new Vector2(50, 275), Color.White);
             base.Draw(gameTime);
             m_SpriteBatch.End();
         }
