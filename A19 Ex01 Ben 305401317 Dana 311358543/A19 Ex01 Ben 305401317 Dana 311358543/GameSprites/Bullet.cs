@@ -18,17 +18,21 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-           if(isBulletHitTheScreenBorder())
+            Sprite hittenSprite;//TODO:name
+
+            hittenSprite = isBulletHitElement();
+
+           if (isBulletHitTheScreenBorder() || hittenSprite!=null)
            {
-                //destroy element
                 RemoveComponent();
                 Visible = false;
-            }
-           else if(isBulletHitElement())
-           {
-                //destroy element
-                RemoveComponent();
-                Visible = false;
+
+                if (hittenSprite != null)
+                {
+                    //destroy element
+                    hittenSprite.Dispose();
+                    hittenSprite.RemoveComponent();
+                }
             }
            else
            {
@@ -47,7 +51,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 return false;
             }
         }
-        public Bullet(Game game, BulletType bulletType, Vector2 shooterPosition ) :base(game)
+
+        public Bullet(Game game, BulletType bulletType, Sprite shooter ) :base(game)
         {
             m_AssetName = @"Sprites\Bullet";
             m_Type = bulletType;
@@ -61,33 +66,53 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 m_Tint = Color.Red;
             }
 
-            initBulletPosition(shooterPosition);
+            initBulletPosition(shooter);
 
             Visible = true;
             m_Type = bulletType;
         }
 
-        private bool isBulletHitElement()//TODO: change name!
+        private Sprite isBulletHitElement()//TODO: change name!
         {
-            foreach (DrawableGameComponent element in Game.Components)
+            Sprite hittenSprite = null;
+            Rectangle BulletRectangle = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
+
+            foreach (DrawableGameComponent sprite in Game.Components)
             {
-                if (element is Sprite)
+                if (isOpponent(sprite))
                 {
-                    if (Position == ((Sprite)element).Position && !(element is Bullet))
+                    Rectangle elementRectangle = new Rectangle((int)((Sprite)sprite).Position.X, (int)((Sprite)sprite).Position.Y, (int)((Sprite)sprite).Texture.Width, (int)((Sprite)sprite).Texture.Height);
+
+                    if (BulletRectangle.Intersects(elementRectangle))
                     {
-                        element.Dispose();
+                        hittenSprite = (Sprite)sprite;
                     }
                 }
             }
 
-            return false;
+            return hittenSprite;
         }
 
+        private bool isOpponent(DrawableGameComponent sprite)
+        {
+            bool isOpponent;
+
+            if((m_Type==BulletType.EnemyBullet && sprite is SpaceShip) || (m_Type == BulletType.SpaceShipBullet && (sprite is Enemy || sprite is MotherSpaceShip)))
+            {
+                isOpponent = true;
+            }
+            else
+            {
+                isOpponent = false;
+            }
+
+            return isOpponent;
+        }
         //(Position == ((Sprite)element).Position && !(element is Bullet)
 
-        public void initBulletPosition(Vector2 i_ShooterPosition)
+        public void initBulletPosition(Sprite i_Shooter)
         {
-            Position=new Vector2(i_ShooterPosition.X + 32/2, i_ShooterPosition.Y +(float)m_Type*10);//TODO: CONST 32 SHOOTER WIDTH
+            Position=new Vector2(i_Shooter.Position.X + i_Shooter.Texture.Width/ 2, i_Shooter.Position.Y +(float)m_Type*(1+i_Shooter.Texture.Height));//TODO: CONST 32 SHOOTER WIDTH
         }
 
         public override void initPosition()

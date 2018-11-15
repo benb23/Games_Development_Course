@@ -100,14 +100,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
                 if (m_BulletList.Count < r_MaxNumOfBullets)
                 {
-                    currBullet = new Bullet(Game, Bullet.BulletType.SpaceShipBullet, m_Position);
+                    currBullet = new Bullet(Game, Bullet.BulletType.SpaceShipBullet, this);
                     m_BulletList.Add(currBullet);
                 }
                 else
                 {
                     currBullet = getUnVisibleBulletFromList();
                     currBullet.Visible = true;
-                    currBullet.initBulletPosition(Position);
+                    currBullet.initBulletPosition(this);
                 }
             return currBullet;
         }
