@@ -12,17 +12,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class EnemiesGroup : DrawableGameComponent
     {
-       
-
         private Enemy[,] m_EnemiesMatrix = new Enemy[5, 9];
         private float m_Direction = 1f;
         private float m_currTopLeftX;
         private float m_currTopLeftY;
         private float m_JumpFrequency = 2;
         private float m_FrequencRateIncreasment = 1.08f;
-
-
-
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
         private const float k_enemyHeight = 32f;
@@ -59,9 +54,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             float leftX = 0;
             bool isFound = false;
 
-            for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
+            for (int col = 0; col < k_EnemiesColumns; col++)//TODO: CONST
             {
-                for (int col = 0; col < k_EnemiesColumns; col++)//TODO: CONST
+                for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
                 {
                     if (m_EnemiesMatrix[row, col].Visible)
                     {
@@ -82,9 +77,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             float rightBorderX = 0;
             bool isFound = false;
 
-            for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
+            for (int col = k_EnemiesColumns-1; col >=0; col--)//TODO: CONST
             {
-                for (int col = k_EnemiesColumns - 1; col >= 0; col--)//TODO: CONST
+                for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
                 {
                     if (m_EnemiesMatrix[row, col].Visible)
                     {
