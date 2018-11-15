@@ -45,7 +45,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 for (int col = 0; col < k_EnemiesColumns; col++)//TODO: CONST
                 {
-                    if (m_EnemiesMatrix[row, col].m_visible)
+                    if (m_EnemiesMatrix[row, col].Visible)
                     {
                         leftX = m_EnemiesMatrix[row, col].Position.X;
                         isFound = true;
@@ -68,7 +68,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 for (int col = k_EnemiesColumns - 1; col >= 0; col--)//TODO: CONST
                 {
-                    if (m_EnemiesMatrix[row, col].m_visible)
+                    if (m_EnemiesMatrix[row, col].Visible)
                     {
                         rightBorderX = m_EnemiesMatrix[row, col].Position.X + m_EnemiesMatrix[row, col].Texture.Width;
                         isFound = true;
@@ -91,7 +91,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 for (int col = 0; col < k_EnemiesColumns; col++)//TODO: CONST
                 {
-                    if (m_EnemiesMatrix[row, col].m_visible)
+                    if (m_EnemiesMatrix[row, col].Visible)
                     {
                         bottomBorderY = m_EnemiesMatrix[row, col].Position.Y + m_EnemiesMatrix[row, col].Texture.Height;
                         isFound = true;

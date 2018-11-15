@@ -40,7 +40,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             
             foreach (Bullet element in m_BulletList)
             {
-                if(element.m_visible==true)
+                if(element.Visible==true)
                 {
                     numOfVisibleBullets++;
                 }
@@ -106,7 +106,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 else
                 {
                     currBullet = getUnVisibleBulletFromList();
-                    currBullet.m_visible = true;
+                    currBullet.Visible = true;
                     currBullet.initBulletPosition(Position);
                 }
             return currBullet;
@@ -118,7 +118,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             foreach (Bullet element in m_BulletList)
             {
-                if (element.m_visible == false)
+                if (element.Visible == false)
                 {
                     bullet = element;
                 }
