@@ -52,7 +52,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             bool isEnemiesGroupTouchTheBotton;
 
-            if (getBottomGroupBorder() >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Height)
+            if (getBottomGroupBorder() >= GraphicsDevice.Viewport.Height)
             {
                 isEnemiesGroupTouchTheBotton = true;
             }
@@ -192,7 +192,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void JumpHorizontalStep(GameTime i_GameTime)
         {
-            if (getRightGroupBorder() >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
+            if (getRightGroupBorder() >= GraphicsDevice.Viewport.Width)
             {
                 m_Direction = -1f;
                 JumpDown();

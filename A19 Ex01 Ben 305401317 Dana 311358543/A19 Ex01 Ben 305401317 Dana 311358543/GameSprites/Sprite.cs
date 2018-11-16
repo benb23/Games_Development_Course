@@ -22,42 +22,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
         }
 
-        protected override void LoadContent()
-        {
-            m_SpriteBatch = this.Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
-            this.Texture = this.Game.Content.Load<Texture2D>(this.m_AssetName);
-            base.LoadContent();
-        }
-
-        public override void Draw(GameTime i_GameTime)
-        {
-            if (Visible)
-            {
-                this.SpriteBatch.Draw(this.Texture, this.Position, this.Tint);
-            }
-           
-            base.Draw(i_GameTime);
-        }
-
-        public virtual void AddComponent()
-        {
-            Game.Components.Add(this);
-        }
-
-
-        public virtual void RemoveComponent()
-        {
-            if(this is Enemy || this is SpaceShip || this is MotherSpaceShip)
-            {
-                ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
-                scoreManager.UpdateScoreAfterCollision(this);
-            }
-
-            Visible = false;
-            Dispose();
-            Game.Components.Remove(this);
-        }
-
         public SpriteBatch SpriteBatch
         {
             get { return m_SpriteBatch; }
@@ -88,14 +52,34 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             set { m_AssetName = value; }
         }
 
-        public override void Initialize()
+        protected override void LoadContent()
         {
-            if(this is Enemy || this is SpaceShip)
-            {
-                Visible = true;
-            }
-            base.Initialize();
+            m_SpriteBatch = this.Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
+            this.Texture = this.Game.Content.Load<Texture2D>(this.m_AssetName);
             initPosition();
+            base.LoadContent();
+        }
+
+        public override void Draw(GameTime i_GameTime)
+        {
+            if (Visible)
+            {
+                this.SpriteBatch.Draw(this.Texture, this.Position, this.Tint);
+            }
+           
+            base.Draw(i_GameTime);
+        }
+
+        public virtual void AddComponent()
+        {
+            Game.Components.Add(this);
+        }
+
+        public virtual void RemoveComponent()
+        {
+            Visible = false;
+            Dispose();//TODO:??
+            Game.Components.Remove(this);
         }
 
         public abstract void initPosition();

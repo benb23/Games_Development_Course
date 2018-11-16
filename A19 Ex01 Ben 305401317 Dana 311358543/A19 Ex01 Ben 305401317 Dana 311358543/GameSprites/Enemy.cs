@@ -24,7 +24,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             
             if (rnd <= 10)
             {
-                m_Gun.Shoot(new Bullet(Game,Bullet.BulletType.EnemyBullet,this));//game?
+                m_Gun.Shoot(new Bullet(Game,Bullet.eBulletType.EnemyBullet,this));//game?
             }
 
         }

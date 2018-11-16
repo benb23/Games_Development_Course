@@ -12,7 +12,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class ScoreManager : DrawableGameComponent
     {
-        public enum ScoreAddition{ KillingMotherShip = 850, LoosingSoul = -1100, KillingPinkEnemy =260, KillingBlueEnemy=140, KillingYellowEnemy=110 };
+        public enum eScoreValue
+        {
+            MotherShip = 850,
+            Soul = 1100,
+            PinkEnemy =260,
+            BlueEnemy =140,
+            YellowEnemy =110
+        };
         private SpriteBatch m_SpriteBatch;
         private List<Soul> m_Souls;
         private int m_Score = 0;
@@ -36,7 +43,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             m_Souls[m_Souls.Count - 1].RemoveComponent();
             m_Souls.RemoveAt(m_Souls.Count - 1);
-            m_Score = (int)MathHelper.Clamp(m_Score + (int)ScoreAddition.LoosingSoul, 0, float.PositiveInfinity);
+            m_Score = (int)MathHelper.Clamp(m_Score - (int)eScoreValue.Soul, 0, float.PositiveInfinity);
         }
 
         public void UpdateScoreAfterCollision(Sprite sprite)
@@ -58,19 +65,19 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void updateScoreAfterkillingEnemy(Color i_EnemyTint)
         {
-            ScoreManager.ScoreAddition scoreAddition;
+            ScoreManager.eScoreValue scoreAddition;
 
             if (i_EnemyTint == Color.Pink)
             {
-                scoreAddition = ScoreManager.ScoreAddition.KillingPinkEnemy;
+                scoreAddition = ScoreManager.eScoreValue.PinkEnemy;
             }
             else if (i_EnemyTint == Color.LightBlue)
             {
-                scoreAddition = ScoreManager.ScoreAddition.KillingBlueEnemy;
+                scoreAddition = ScoreManager.eScoreValue.BlueEnemy;
             }
             else
             {
-                scoreAddition = ScoreManager.ScoreAddition.KillingYellowEnemy;
+                scoreAddition = ScoreManager.eScoreValue.YellowEnemy;
             }
 
             m_Score += (int)scoreAddition;
@@ -78,7 +85,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void updateScoreAfterKillingMotherShip()
         {
-            m_Score += (int)ScoreAddition.KillingMotherShip;
+            m_Score += (int)eScoreValue.MotherShip;
         }
 
         public ScoreManager(Game i_Game) : base(i_Game)
@@ -116,7 +123,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 k--;
             }
             base.Initialize();
-
         }
 
     }

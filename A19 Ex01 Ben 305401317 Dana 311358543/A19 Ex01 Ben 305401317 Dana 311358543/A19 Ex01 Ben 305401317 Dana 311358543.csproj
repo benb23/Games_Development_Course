@@ -42,13 +42,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GameSprites\Soul.cs" />
-    <Compile Include="ScoreManager.cs" />
+    <Compile Include="Managers\ScoreManager.cs" />
     <Compile Include="GameSprites\Background.cs" />
     <Compile Include="GameSprites\Bullet.cs" />
     <Compile Include="GameSprites\Enemy.cs" />
     <Compile Include="EnemiesGroup.cs" />
     <Compile Include="GameSprites\Sprite.cs" />
-    <Compile Include="InputManager.cs" />
+    <Compile Include="Managers\InputManager.cs" />
     <Compile Include="GameSprites\MotherSpaceShip.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameSprites\SpaceShip.cs" />

@@ -14,6 +14,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     {
         private KeyboardState m_PastKey;
         private MouseState m_pastMouseState;
+        KeyboardState currKeyboardState;
 
         public static MouseState? m_PrevMouseState;
         //public static KeyboardState? m_PastKey;??
@@ -35,7 +36,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return retVal;
         }
 
-        public bool IsShootingOrder()
+        public bool IsUserAskedToShoot()
         {
             bool isShootingOrder;
             KeyboardState currKeyboardState = Keyboard.GetState();
@@ -53,6 +54,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             m_PastKey = Keyboard.GetState();
             m_pastMouseState = Mouse.GetState();
             return isShootingOrder;
+        }
+
+        public bool isUserAskedToExit()
+        {
+            currKeyboardState = Keyboard.GetState();
+            bool isUserAskedToExit = currKeyboardState.IsKeyDown(Keys.Escape);
+
+            return isUserAskedToExit;
         }
     }
 }

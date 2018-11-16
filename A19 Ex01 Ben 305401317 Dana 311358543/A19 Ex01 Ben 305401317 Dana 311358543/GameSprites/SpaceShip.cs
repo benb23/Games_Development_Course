@@ -23,7 +23,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             moveUsingMouse();
 
             // clam the position between screen boundries:
-            Position = new Vector2(MathHelper.Clamp(Position.X, 0, SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - Texture.Width), Position.Y);
+            Position = new Vector2(MathHelper.Clamp(Position.X, 0, GraphicsDevice.Viewport.Width - Texture.Width), Position.Y);
 
             // if we hit the wall, lets change direction:
             //if (Position.X == 0 || Position.X == SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - Texture.Width)
@@ -64,17 +64,18 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 scoreManager.UpdateScoreAfterCollision(this);
             }
         }
-
+        // move to INPUTMANAGER??
         private void moveUsingMouse()
         {
-            Position = new Vector2(Position.X +SpaceInvaders.m_InputManager.GetMousePositionDelta().X, Position.Y);
+            InputManager inputManger = Game.Services.GetService(typeof(InputManager)) as InputManager;
+            Position = new Vector2(Position.X + inputManger.GetMousePositionDelta().X, Position.Y);
         }
-
+        // move to INPUTMANAGER
         private void moveUsingKeyboard(GameTime i_GameTime)
         {
             KeyboardState currKeyboardState = Keyboard.GetState();
 
-            // move the ship using the keyboard:
+           
             if (currKeyboardState.IsKeyDown(Keys.Left))
             {
                 Position = new Vector2(Position.X - r_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds, Position.Y);
@@ -117,7 +118,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
                 if (m_BulletList.Count < r_MaxNumOfBullets)
                 {
-                    currBullet = new Bullet(Game, Bullet.BulletType.SpaceShipBullet, this);
+                    currBullet = new Bullet(Game, Bullet.eBulletType.SpaceShipBullet, this);
                     m_BulletList.Add(currBullet);
                 }
                 else

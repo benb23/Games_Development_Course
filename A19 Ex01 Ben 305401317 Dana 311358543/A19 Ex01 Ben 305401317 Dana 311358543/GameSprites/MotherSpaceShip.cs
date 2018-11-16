@@ -35,13 +35,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public override void Update(GameTime i_GameTime)
         {
             if (!Visible)
-                rnd =SpaceInvaders.m_RandomNum.Next(0, 55555);
+                rnd = SpaceInvaders.m_RandomNum.Next(0, 55555);
             
             if (rnd <= 40)
             {
                 Visible = true; 
                 m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
-                if (m_Position.X >= SpaceInvaders.graphics.GraphicsDevice.Viewport.Width)
+                if (m_Position.X >= GraphicsDevice.Viewport.Width)
                 {
                     Visible = false;
                     initPosition();

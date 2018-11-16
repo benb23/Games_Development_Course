@@ -12,8 +12,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class Bullet : Sprite
     {
-        public enum BulletType { SpaceShipBullet = -1, EnemyBullet = 1 };
-        private BulletType m_Type;
+        public enum eBulletType
+        {
+            SpaceShipBullet = -1,
+            EnemyBullet = 1
+        };
+        private eBulletType m_Type;
         private readonly float r_BulletVelocity = 155;
 
         public override void Update(GameTime gameTime)
@@ -27,7 +31,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 //remove bullet
                 RemoveComponent();
 
-                Visible = false;
                 //Dispose();
 
                 if (hittenSprite != null)
@@ -39,6 +42,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                     else
                     {
                         hittenSprite.RemoveComponent();
+
+                        if (hittenSprite is Enemy || hittenSprite is SpaceShip || hittenSprite is MotherSpaceShip)
+                        {
+                            ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
+                            scoreManager.UpdateScoreAfterCollision(hittenSprite);
+                        }
                     }
                 }
             }
@@ -60,12 +69,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
-        public Bullet(Game game, BulletType bulletType, Sprite shooter ) :base(game)
+        public Bullet(Game game, eBulletType bulletType, Sprite shooter ) :base(game)
         {
             m_AssetName = @"Sprites\Bullet";
             m_Type = bulletType;
 
-            if(m_Type == BulletType.EnemyBullet)
+            if(m_Type == eBulletType.EnemyBullet)
             {
                 m_Tint = Color.Blue;
             }
@@ -105,7 +114,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             bool isOpponent;
 
-            if((m_Type==BulletType.EnemyBullet && sprite is SpaceShip) || (m_Type == BulletType.SpaceShipBullet && (sprite is Enemy || sprite is MotherSpaceShip)))
+            if((m_Type==eBulletType.EnemyBullet && sprite is SpaceShip) || (m_Type == eBulletType.SpaceShipBullet && (sprite is Enemy || sprite is MotherSpaceShip)))
             {
                 isOpponent = true;
             }
