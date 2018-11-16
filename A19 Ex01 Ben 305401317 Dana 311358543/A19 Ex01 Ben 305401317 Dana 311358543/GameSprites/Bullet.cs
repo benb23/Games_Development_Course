@@ -32,7 +32,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
                 if (hittenSprite != null)
                 {
-                    hittenSprite.RemoveComponent();
+                    if (hittenSprite is SpaceShip)
+                    {
+                        ((SpaceShip)hittenSprite).RemoveSoul();
+                    }
+                    else
+                    {
+                        hittenSprite.RemoveComponent();
+                    }
                 }
             }
             else

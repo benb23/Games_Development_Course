@@ -49,10 +49,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return numOfVisibleBullets;
         }
 
-        public override void RemoveComponent()
+        public void RemoveSoul()
         {
             ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
-            if (scoreManager.Souls.Count == 0)
+            if (scoreManager.Souls.Count-1 == 0)
             {
                 Visible = false;
                 Dispose();
@@ -61,7 +61,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
             else
             {
-                scoreManager.UpdateScore(this);
+                scoreManager.UpdateScoreAfterCollision(this);
             }
         }
 

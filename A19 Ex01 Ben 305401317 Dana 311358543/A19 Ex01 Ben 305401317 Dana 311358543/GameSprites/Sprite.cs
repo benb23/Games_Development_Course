@@ -50,7 +50,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             if(this is Enemy || this is SpaceShip || this is MotherSpaceShip)
             {
                 ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
-                scoreManager.UpdateScore(this);
+                scoreManager.UpdateScoreAfterCollision(this);
             }
 
             Visible = false;

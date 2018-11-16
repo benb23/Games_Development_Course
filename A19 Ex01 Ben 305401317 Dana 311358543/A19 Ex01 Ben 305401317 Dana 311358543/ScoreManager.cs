@@ -34,11 +34,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public void updateScoreAfterLoosingSoul()
         {
-            //m_Souls.Remove(Soul);?????????????
+            m_Souls[m_Souls.Count - 1].RemoveComponent();
+            m_Souls.RemoveAt(m_Souls.Count - 1);
             m_Score = (int)MathHelper.Clamp(m_Score + (int)ScoreAddition.LoosingSoul, 0, float.PositiveInfinity);
         }
 
-        public void UpdateScore(Sprite sprite)
+        public void UpdateScoreAfterCollision(Sprite sprite)
         {
             if(sprite is Enemy)
             {
