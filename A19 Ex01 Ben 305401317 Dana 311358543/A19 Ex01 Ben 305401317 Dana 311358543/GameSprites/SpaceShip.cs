@@ -95,6 +95,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             m_AssetName = @"Sprites\Ship01_32x32";
             m_Tint = Color.White;
         }
+
         public override void initPosition()
         {
             m_Position.X = 0f;

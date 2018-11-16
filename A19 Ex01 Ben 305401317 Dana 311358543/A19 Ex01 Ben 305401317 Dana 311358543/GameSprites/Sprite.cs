@@ -90,6 +90,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
+            if(this is Enemy || this is SpaceShip)
+            {
+                Visible = true;
+            }
             base.Initialize();
             initPosition();
         }

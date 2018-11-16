@@ -22,16 +22,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             int rnd = SpaceInvaders.m_RandomNum.Next(0, 55555);
             
-            if (rnd <= 15)
+            if (rnd <= 10)
             {
                 m_Gun.Shoot(new Bullet(Game,Bullet.BulletType.EnemyBullet,this));//game?
             }
 
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
         }
 
         public override void initPosition()

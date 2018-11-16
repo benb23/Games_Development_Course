@@ -27,10 +27,25 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             ////update enemysGroup position
             JumpHorizontalStep(i_GameTime);
             
-            if(isEnemiesGroupTouchTheBotton())
+            if(isEnemiesGroupTouchTheBotton()|| isAllEnemiesUnvisible())
             {
                 Game.Exit();
             }
+        }
+
+        private bool isAllEnemiesUnvisible()
+        {
+            bool isAllEnemiesUnvisible = true;
+
+            foreach (Enemy enemy in m_EnemiesMatrix)
+            {
+                if(enemy.Visible)
+                {
+                    isAllEnemiesUnvisible = false;
+                }
+            }
+
+            return isAllEnemiesUnvisible;
         }
 
         private bool isEnemiesGroupTouchTheBotton()
