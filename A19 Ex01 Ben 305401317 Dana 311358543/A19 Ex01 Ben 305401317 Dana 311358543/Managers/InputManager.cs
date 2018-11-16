@@ -14,10 +14,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     {
         private KeyboardState m_PastKey;
         private MouseState m_pastMouseState;
-        KeyboardState currKeyboardState;
+        private KeyboardState m_CurrKeyboardState;
 
         public static MouseState? m_PrevMouseState;
-        //public static KeyboardState? m_PastKey;??
 
         public Vector2 GetMousePositionDelta()
         {
@@ -58,8 +57,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public bool isUserAskedToExit()
         {
-            currKeyboardState = Keyboard.GetState();
-            bool isUserAskedToExit = currKeyboardState.IsKeyDown(Keys.Escape);
+            m_CurrKeyboardState = Keyboard.GetState();
+            bool isUserAskedToExit = m_CurrKeyboardState.IsKeyDown(Keys.Escape);
 
             return isUserAskedToExit;
         }

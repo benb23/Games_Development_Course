@@ -17,21 +17,19 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private readonly float r_KeyboardVelocity = 120;//TODO: ctor?
         private Gun m_Gun = new Gun();//TODO: ctor?
 
-        public override void Update(GameTime gameTime)
+        public SpaceShip(Game game) : base(game)
         {
-            moveUsingKeyboard(gameTime);
+            m_AssetName = @"Sprites\Ship01_32x32";
+            m_Tint = Color.White;
+        }
+
+        public override void Update(GameTime i_GameTime)
+        {
+            moveUsingKeyboard(i_GameTime);
             moveUsingMouse();
 
-            // clam the position between screen boundries:
+            // clamp the position between screen boundries:
             Position = new Vector2(MathHelper.Clamp(Position.X, 0, GraphicsDevice.Viewport.Width - Texture.Width), Position.Y);
-
-            // if we hit the wall, lets change direction:
-            //if (Position.X == 0 || Position.X == SpaceInvaders.graphics.GraphicsDevice.Viewport.Width - Texture.Width)
-            //{
-            //    Direction *= -1f;
-            //}
-
-            //update spaceship bullets position
         }
 
         public int CountNumOfVisibleBullets()
@@ -70,6 +68,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             InputManager inputManger = Game.Services.GetService(typeof(InputManager)) as InputManager;
             Position = new Vector2(Position.X + inputManger.GetMousePositionDelta().X, Position.Y);
         }
+
         // move to INPUTMANAGER
         private void moveUsingKeyboard(GameTime i_GameTime)
         {
@@ -91,11 +90,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             get{ return m_Gun; }
         }
 
-        public SpaceShip(Game game) : base(game)
-        {
-            m_AssetName = @"Sprites\Ship01_32x32";
-            m_Tint = Color.White;
-        }
+
 
         public override void initPosition()
         {
@@ -114,19 +109,19 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private Bullet getBullet()
         {
-                Bullet currBullet;
+            Bullet currBullet;
 
-                if (m_BulletList.Count < r_MaxNumOfBullets)
-                {
-                    currBullet = new Bullet(Game, Bullet.eBulletType.SpaceShipBullet, this);
-                    m_BulletList.Add(currBullet);
-                }
-                else
-                {
-                    currBullet = getUnVisibleBulletFromList();
-                    currBullet.Visible = true;
-                    currBullet.initBulletPosition(this);
-                }
+            if (m_BulletList.Count < r_MaxNumOfBullets)
+            {
+                currBullet = new Bullet(Game, Bullet.eBulletType.SpaceShipBullet, this);
+                m_BulletList.Add(currBullet);
+            }
+            else
+            {
+                currBullet = getUnVisibleBulletFromList();
+                currBullet.Visible = true;
+                currBullet.initBulletPosition(this);
+            }
             return currBullet;
         }
 
