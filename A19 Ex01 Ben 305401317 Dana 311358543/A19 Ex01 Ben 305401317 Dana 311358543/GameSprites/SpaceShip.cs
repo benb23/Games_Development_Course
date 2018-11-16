@@ -49,6 +49,22 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return numOfVisibleBullets;
         }
 
+        public override void RemoveComponent()
+        {
+            ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
+            if (scoreManager.Souls.Count == 0)
+            {
+                Visible = false;
+                Dispose();
+                RemoveComponent();
+                Game.Exit();
+            }
+            else
+            {
+                scoreManager.UpdateScore(this);
+            }
+        }
+
         private void moveUsingMouse()
         {
             Position = new Vector2(Position.X +SpaceInvaders.m_InputManager.GetMousePositionDelta().X, Position.Y);

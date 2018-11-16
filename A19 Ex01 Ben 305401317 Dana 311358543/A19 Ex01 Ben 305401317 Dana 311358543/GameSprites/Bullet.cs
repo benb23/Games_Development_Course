@@ -22,27 +22,23 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             hittenSprite = isBulletHitElement();
 
-           if (isBulletHitTheScreenBorder() || hittenSprite!=null)
-           {
+            if (isBulletHitTheScreenBorder() || hittenSprite != null)
+            {
+                //remove bullet
                 RemoveComponent();
+
                 Visible = false;
+                //Dispose();
 
                 if (hittenSprite != null)
                 {
-                    //destroy element
-                    hittenSprite.Visible = false;
-                    hittenSprite.Dispose();
                     hittenSprite.RemoveComponent();
-                    if(hittenSprite is SpaceShip)
-                    {
-                        
-                    }
                 }
             }
-           else
-           {
-                Position = new Vector2(Position.X,Position.Y + (float)m_Type*r_BulletVelocity* (float)gameTime.ElapsedGameTime.TotalSeconds);
-           }
+            else
+            {
+                Position = new Vector2(Position.X, Position.Y + (float)m_Type * r_BulletVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
         }
 
         private bool isBulletHitTheScreenBorder()

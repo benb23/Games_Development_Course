@@ -29,7 +29,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             base.LoadContent();
         }
 
-
         public override void Draw(GameTime i_GameTime)
         {
             if (Visible)
@@ -45,8 +44,17 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             Game.Components.Add(this);
         }
 
+
         public virtual void RemoveComponent()
         {
+            if(this is Enemy || this is SpaceShip || this is MotherSpaceShip)
+            {
+                ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
+                scoreManager.UpdateScore(this);
+            }
+
+            Visible = false;
+            Dispose();
             Game.Components.Remove(this);
         }
 
