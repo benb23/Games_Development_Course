@@ -64,7 +64,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return isEnemiesGroupTouchTheBotton;
         }
 
-        public float getLeftGroupBorder()  // ?? : Use as a first alive function
+        public float getLeftGroupBorder()  
         {
             float leftX = 0;
             bool isFound = false;
