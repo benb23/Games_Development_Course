@@ -90,8 +90,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             get{ return m_Gun; }
         }
 
-
-
         public override void initPosition()
         {
             m_Position.X = 0f;

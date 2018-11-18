@@ -32,7 +32,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
-
         public override void Draw(GameTime i_GameTime)
         {
             float scaleRate = 0.8f;

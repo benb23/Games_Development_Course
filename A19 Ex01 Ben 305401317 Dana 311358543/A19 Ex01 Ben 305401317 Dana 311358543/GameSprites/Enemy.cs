@@ -16,8 +16,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public Enemy(Game i_Game) : base(i_Game)
         {
-            
         }
+
         public override void Update(GameTime i_gameTime)
         {
             int rnd = SpaceInvaders.m_RandomNum.Next(0, 55555);

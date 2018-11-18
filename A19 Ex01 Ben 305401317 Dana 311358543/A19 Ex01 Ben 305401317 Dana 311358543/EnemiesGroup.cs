@@ -12,17 +12,16 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class EnemiesGroup : DrawableGameComponent
     {
-        
+
         private float m_Direction = 1f;
         private float m_currTopLeftX;
         private float m_currTopLeftY;
-       // private float m_JumpFrequency = 2;
-       // private float m_FrequencRateIncreasment = 1.08f;
+        // private float m_JumpFrequency = 2;
+        // private float m_FrequencRateIncreasment = 1.08f;
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
         private Enemy[,] m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
         private const float k_enemyHeight = 32f;
-
         private bool m_isLastStepInRow = false;
         private float m_ElapsedTime = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
@@ -33,7 +32,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             m_ElapsedTime += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
-            if (m_ElapsedTime >= m_TimeUntilNextStepInSec )
+            if (m_ElapsedTime >= m_TimeUntilNextStepInSec)
             {
                 m_ElapsedTime = 0;
 
@@ -49,27 +48,33 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 }
             }
 
+            /*
+            if ((countNumOfVisibleEnemies() < k_EnemiesRows * k_EnemiesColumns) && ((k_EnemiesRows * k_EnemiesColumns - countNumOfVisibleEnemies()) % 4 == 0))
+            {
+                m_TimeUntilNextStepInSec -= (m_TimeUntilNextStepInSec * 0.04f);
+            }*/
+
             initPosions(m_currTopLeftX, m_currTopLeftY);
 
-            if (isEnemiesGroupTouchTheBotton()|| isAllEnemiesUnvisible())
+            if (isEnemiesGroupTouchTheBotton()|| countNumOfVisibleEnemies()==0)
             {
                 Game.Exit();
             }
         }
 
-        private bool isAllEnemiesUnvisible()
+        private int countNumOfVisibleEnemies()
         {
-            bool isAllEnemiesUnvisible = true;
+            int NumOfVisibleEnemies=0;
 
             foreach (Enemy enemy in m_EnemiesMatrix)
             {
                 if(enemy.Visible)
                 {
-                    isAllEnemiesUnvisible = false;
+                    NumOfVisibleEnemies++;
                 }
             }
 
-            return isAllEnemiesUnvisible;
+            return NumOfVisibleEnemies;
         }
 
         private bool isEnemiesGroupTouchTheBotton()
@@ -213,9 +218,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 strartY += k_enemyHeight + enemiesGap;
             }
         }
-
-        
-
       
         private void JumpHorizontalStep(GameTime i_GameTime)
         {
