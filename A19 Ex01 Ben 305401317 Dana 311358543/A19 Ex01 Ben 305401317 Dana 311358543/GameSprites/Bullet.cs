@@ -22,8 +22,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-            Sprite hittenSprite;//TODO:name
-
+            Sprite hittenSprite;
             hittenSprite = isBulletHitElement();
 
             if (isBulletHitTheScreenBorder() || hittenSprite != null)
@@ -114,7 +113,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             bool isOpponent;
 
-            if((m_Type==eBulletType.EnemyBullet && sprite is SpaceShip) || (m_Type == eBulletType.SpaceShipBullet && (sprite is Enemy || sprite is MotherSpaceShip)))
+            if((m_Type==eBulletType.EnemyBullet && (sprite is SpaceShip || (sprite is Bullet && ((Bullet)sprite).m_Type==eBulletType.SpaceShipBullet)))
+            || (m_Type == eBulletType.SpaceShipBullet && (sprite is Enemy || sprite is MotherSpaceShip)))
             {
                 isOpponent = true;
             }
