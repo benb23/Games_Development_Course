@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class Bullet : Sprite
+    public class Bullet : Sprite
     {
         public enum eBulletType
         {
@@ -21,37 +21,25 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private eBulletType m_Type;
         private readonly float r_BulletVelocity = 155;
 
+        public eBulletType Type
+        {
+            get { return m_Type; }
+        }
+
         public override void Update(GameTime gameTime)
         {
-            Sprite hittenSprite;
-            hittenSprite = isBulletHitElement();
+            ShootingManager shootingManager = (Game.Services.GetService(typeof(ShootingManager)) as ShootingManager);
 
             if (isBulletHitTheScreenBorder())
             {
                 RemoveComponent();
             }
 
+            Sprite hittenSprite = shootingManager.IsGameObjectWasHitten(this);
+
             if ( hittenSprite != null)
             {
-                (Game.Services.GetService(typeof(CollisionManager)) as CollisionManager).OnCollision(this,hittenSprite);
-
-                /*
-                RemoveComponent();
-          
-                    if (hittenSprite is SpaceShip)
-                    {
-                        ((SpaceShip)hittenSprite).RemoveSoul();
-                    }
-                    else
-                    {
-                        hittenSprite.RemoveComponent();
-
-                        if (hittenSprite is Enemy || hittenSprite is SpaceShip || hittenSprite is MotherSpaceShip)
-                        {
-                            ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
-                            scoreManager.UpdateScoreAfterCollision(hittenSprite);
-                        }
-                    }*/
+                shootingManager.OnHit(this,hittenSprite);
             }
             else
             {
@@ -83,51 +71,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             initBulletPosition(shooter);
         }
 
-        private Sprite isBulletHitElement()//TODO: change name!
-        {
-            Sprite hittenSprite = null;
-            Rectangle BulletRectangle = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
-
-            foreach (DrawableGameComponent sprite in Game.Components)
-            {
-                if (isOpponent(sprite))
-                {
-                    Rectangle elementRectangle = new Rectangle((int)((Sprite)sprite).Position.X, (int)((Sprite)sprite).Position.Y, (int)((Sprite)sprite).Texture.Width, (int)((Sprite)sprite).Texture.Height);
-
-                    if (BulletRectangle.Intersects(elementRectangle))
-                    {
-                        hittenSprite = (Sprite)sprite;
-                    }
-                }
-            }
-
-            return hittenSprite;
-        }
-
-        private bool isOpponent(DrawableGameComponent sprite)
-        {
-            bool isOpponent;
-
-            if((m_Type==eBulletType.EnemyBullet && (sprite is SpaceShip || (sprite is Bullet && ((Bullet)sprite).m_Type==eBulletType.SpaceShipBullet)))
-            || (m_Type == eBulletType.SpaceShipBullet && (sprite is Enemy || sprite is MotherSpaceShip)))
-            {
-                isOpponent = true;
-            }
-            else
-            {
-                isOpponent = false;
-            }
-
-            return isOpponent;
-        }
-        //(Position == ((Sprite)element).Position && !(element is Bullet)
-
-        public void initBulletPosition(Sprite i_Shooter)
+        public void initBulletPosition(Sprite i_Shooter) //TODO: ??
         {
             Position=new Vector2(i_Shooter.Position.X + i_Shooter.Texture.Width/ 2, i_Shooter.Position.Y +(float)m_Type*(1+i_Shooter.Texture.Height));//TODO: CONST 32 SHOOTER WIDTH
         }
 
-        public override void initPosition()
+        public override void initPosition() //TODO: ??
         {
            
         }

@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GameSprites\Soul.cs" />
-    <Compile Include="Managers\CollisionManager.cs" />
+    <Compile Include="Managers\ShootingManager.cs" />
     <Compile Include="Managers\ScoreManager.cs" />
     <Compile Include="GameSprites\Background.cs" />
     <Compile Include="GameSprites\Bullet.cs" />
