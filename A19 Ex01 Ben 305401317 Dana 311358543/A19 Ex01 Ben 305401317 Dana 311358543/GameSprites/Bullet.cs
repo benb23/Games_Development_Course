@@ -17,6 +17,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             SpaceShipBullet = -1,
             EnemyBullet = 1
         };
+
         private eBulletType m_Type;
         private readonly float r_BulletVelocity = 155;
 
@@ -25,15 +26,18 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             Sprite hittenSprite;
             hittenSprite = isBulletHitElement();
 
-            if (isBulletHitTheScreenBorder() || hittenSprite != null)
+            if (isBulletHitTheScreenBorder())
             {
-                //remove bullet
                 RemoveComponent();
+            }
 
-                //Dispose();
+            if ( hittenSprite != null)
+            {
+                (Game.Services.GetService(typeof(CollisionManager)) as CollisionManager).OnCollision(this,hittenSprite);
 
-                if (hittenSprite != null)
-                {
+                /*
+                RemoveComponent();
+          
                     if (hittenSprite is SpaceShip)
                     {
                         ((SpaceShip)hittenSprite).RemoveSoul();
@@ -47,8 +51,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                             ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
                             scoreManager.UpdateScoreAfterCollision(hittenSprite);
                         }
-                    }
-                }
+                    }*/
             }
             else
             {
@@ -58,14 +61,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private bool isBulletHitTheScreenBorder()
         {
-            if(m_Position.Y <= 0 || m_Position.Y >= Game.GraphicsDevice.Viewport.Height)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            bool isBulletHit = m_Position.Y <= 0 || m_Position.Y >= Game.GraphicsDevice.Viewport.Height;
+
+            return isBulletHit;
         }
 
         public Bullet(Game game, eBulletType bulletType, Sprite shooter ) :base(game)
@@ -83,9 +81,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
 
             initBulletPosition(shooter);
-
-            Visible = true;
-            m_Type = bulletType;
         }
 
         private Sprite isBulletHitElement()//TODO: change name!

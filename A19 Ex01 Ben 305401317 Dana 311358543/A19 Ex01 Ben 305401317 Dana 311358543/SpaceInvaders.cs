@@ -14,6 +14,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     {
         public static Random m_RandomNum;
         private InputManager m_InputManager;
+        private CollisionManager m_CollisionManager;
         private GraphicsDeviceManager m_Graphics;
         private ScoreManager m_ScoreManager;
         private SpriteBatch m_SpriteBatch;
@@ -26,6 +27,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public SpaceInvaders()
         {
             m_RandomNum = new Random();
+            m_CollisionManager = new CollisionManager(this);
+            this.Services.AddService(typeof(CollisionManager), m_CollisionManager);
             m_ScoreManager = new ScoreManager(this);
             this.Services.AddService(typeof(ScoreManager), m_ScoreManager);
             Components.Add(m_ScoreManager);

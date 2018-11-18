@@ -47,21 +47,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return numOfVisibleBullets;
         }
 
-        public void RemoveSoul()
-        {
-            ScoreManager scoreManager = Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
-            if (scoreManager.Souls.Count-1 == 0)
-            {
-                Visible = false;
-                Dispose();
-                RemoveComponent();
-                Game.Exit();
-            }
-            else
-            {
-                scoreManager.UpdateScoreAfterCollision(this);
-            }
-        }
         // move to INPUTMANAGER??
         private void moveUsingMouse()
         {
