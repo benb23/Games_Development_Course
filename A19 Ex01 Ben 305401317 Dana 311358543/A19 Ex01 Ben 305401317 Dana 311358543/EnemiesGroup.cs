@@ -12,22 +12,46 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     class EnemiesGroup : DrawableGameComponent
     {
-        private Enemy[,] m_EnemiesMatrix = new Enemy[5, 9];
+        
         private float m_Direction = 1f;
         private float m_currTopLeftX;
         private float m_currTopLeftY;
-        private float m_JumpFrequency = 2;
-        private float m_FrequencRateIncreasment = 1.08f;
+       // private float m_JumpFrequency = 2;
+       // private float m_FrequencRateIncreasment = 1.08f;
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
+        private Enemy[,] m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
         private const float k_enemyHeight = 32f;
+
+        private bool m_isLastStepInRow = false;
+        private float m_ElapsedTime = 0f;
+        private float m_TimeUntilNextStepInSec = 0.5f;
+
 
         public override void Update(GameTime i_GameTime)
         {
-            ////update enemysGroup position
-            JumpHorizontalStep(i_GameTime);
-            
-            if(isEnemiesGroupTouchTheBotton()|| isAllEnemiesUnvisible())
+
+            m_ElapsedTime += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+
+            if (m_ElapsedTime >= m_TimeUntilNextStepInSec )
+            {
+                m_ElapsedTime = 0;
+
+                if (m_isLastStepInRow)
+                {
+                    m_isLastStepInRow = false;
+                    JumpDown();
+                    m_Direction *= -1f;
+                }
+                else
+                {
+                    JumpHorizontalStep(i_GameTime);
+                }
+            }
+
+            initPosions(m_currTopLeftX, m_currTopLeftY);
+
+            if (isEnemiesGroupTouchTheBotton()|| isAllEnemiesUnvisible())
             {
                 Game.Exit();
             }
@@ -139,7 +163,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             m_currTopLeftX = 0;
-            m_currTopLeftY = k_enemyHeight * 3f;
+            m_currTopLeftY = k_enemyHeight  * 3f;
             this.InitEnemyGroup();
             base.Initialize();
             initPosions(m_currTopLeftX, m_currTopLeftY);
@@ -190,26 +214,48 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
+        
+
+      
         private void JumpHorizontalStep(GameTime i_GameTime)
         {
-            if (getRightGroupBorder() >= GraphicsDevice.Viewport.Width)
-            {
-                m_Direction = -1f;
-                JumpDown();
-            }
-            else if (getLeftGroupBorder() < 0f)
-            {
-                m_Direction = 1f;
-                JumpDown();
-            }
-            initPosions(m_currTopLeftX, m_currTopLeftY);
-            m_currTopLeftX += m_Direction * (m_JumpFrequency * (float)i_GameTime.ElapsedGameTime.TotalSeconds * (m_EnemiesMatrix[0, 0].Texture.Width / 2));
+                float lastRightJump = GraphicsDevice.Viewport.Width - getRightGroupBorder();
+                float lastLeftJump = getLeftGroupBorder();
+
+                
+                if (lastRightJump < (m_EnemiesMatrix[0, 0].Texture.Width / 2) && lastRightJump > 0)
+                {
+                    m_currTopLeftX += m_Direction * lastRightJump;
+                    m_isLastStepInRow = true;
+                }
+                else if (lastLeftJump < (m_EnemiesMatrix[0, 0].Texture.Width / 2) && lastLeftJump > 0 && m_Direction == -1f )
+                {
+                    m_currTopLeftX += m_Direction * lastLeftJump;
+                    m_isLastStepInRow = true;
+                }
+                else
+                {
+                    m_currTopLeftX += m_Direction * (m_EnemiesMatrix[0, 0].Texture.Width / 2);
+                }
+        }
+
+        private float getGroupWidth()
+        {
+            return getRightGroupBorder() - getLeftGroupBorder();
+        }
+
+
+        private bool isEnemiesGroupCollidedTheGameBorder()
+        {
+            bool isCollided = getRightGroupBorder() >= GraphicsDevice.Viewport.Width || getLeftGroupBorder() < 0f;
+
+            return isCollided;
         }
 
         private void JumpDown()
         {
-                m_currTopLeftY += m_EnemiesMatrix[0, 0].Texture.Width / 2;
-                m_JumpFrequency *= m_FrequencRateIncreasment;
+            m_currTopLeftY += m_EnemiesMatrix[0, 0].Texture.Width / 2;
+            m_TimeUntilNextStepInSec -=  ( m_TimeUntilNextStepInSec * 0.08f);
         }
     }
 }
