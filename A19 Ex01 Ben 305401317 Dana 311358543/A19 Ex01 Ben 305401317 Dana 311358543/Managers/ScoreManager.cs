@@ -95,8 +95,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             m_Score += (int)eScoreValue.MotherShip;
         }
 
-        
-
         protected override void LoadContent()
         {
             m_SpriteBatch = this.Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
