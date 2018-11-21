@@ -30,21 +30,18 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             this.m_Souls = new List<Soul>(3);
             this.m_Score = 0;
-
         }
 
         public int Score
         {
             get { return this.m_Score; }
             set { this.m_Score = value; }
-
         }
 
         public List<Soul> Souls
         {
             get { return this.m_Souls; }
             set { this.m_Souls = value; }
-
         }
 
         public void updateScoreAfterLoosingSoul()
@@ -68,7 +65,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 this.updateScoreAfterLoosingSoul();
             }
-
         }
 
         private void updateScoreAfterkillingEnemy(Color i_EnemyTint)
@@ -98,7 +94,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         protected override void LoadContent()
         {
-            this.m_SpriteBatch = SpaceInvaders.m_GameUtils.SpriteBatch;
+            this.m_SpriteBatch = SpaceInvaders.s_GameUtils.SpriteBatch;
             this.m_ArialFont = Game.Content.Load<SpriteFont>("Arial");
         }
 
@@ -118,6 +114,5 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             base.Initialize();
         }
-
     }
 }

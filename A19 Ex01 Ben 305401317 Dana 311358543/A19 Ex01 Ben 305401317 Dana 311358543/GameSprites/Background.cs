@@ -24,7 +24,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             base.Initialize();
         }
 
-        public override void initPosition()
+        public override void InitPosition()
         {
             this.m_Position = Vector2.Zero;
         }

@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public class ShootingManager  
@@ -36,12 +35,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void HandleSpaceShipHit(SpaceShip i_SpaceShip)
         {
-            ScoreManager scoreManager = SpaceInvaders.m_GameUtils.ScoreManager;
+            ScoreManager scoreManager = SpaceInvaders.s_GameUtils.ScoreManager;
 
             if (scoreManager.Souls.Count - 1 == 0)
             {
                 i_SpaceShip.RemoveComponent();
-                SpaceInvaders.m_GameUtils.InputManager.showGameOverMessage();
+                SpaceInvaders.s_GameUtils.InputManager.showGameOverMessage();
                 this.m_Game.Exit();
             }
             else
@@ -56,7 +55,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             if (i_Sprite is Enemy || i_Sprite is MotherSpaceShip)
             {
-                ScoreManager scoreManager = SpaceInvaders.m_GameUtils.ScoreManager;
+                ScoreManager scoreManager = SpaceInvaders.s_GameUtils.ScoreManager;
                 scoreManager.UpdateScoreAfterCollision(i_Sprite);
             }
         }
@@ -78,6 +77,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                     }
                 }
             }
+
             return hittenSprite;
         }
 
@@ -104,7 +104,5 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             return isOpponent;
         }
-
-
     }
 }

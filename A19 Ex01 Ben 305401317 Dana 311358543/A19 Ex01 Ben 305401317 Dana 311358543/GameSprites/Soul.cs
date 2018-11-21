@@ -12,7 +12,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public class Soul : Sprite
     {
-        private int m_SoulsNumber = 3;
+        private const int k_MaxSoulsNumber = 3;
+        private int m_CurrSoulsNumber = k_MaxSoulsNumber;
         private int m_SoulIndx;
 
         public Soul(Game game, Color i_Tint, int SoulIndex) : base(game)
@@ -36,11 +37,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             SpriteBatch.Draw(this.Texture, this.Position, null, this.m_Tint, 0f, Vector2.Zero, scaleRate, SpriteEffects.None, 0f);
         }
 
-        public override void initPosition()
+        public override void InitPosition()
         {
-            this.m_SoulsNumber -= this.m_SoulIndx;
+            this.m_CurrSoulsNumber -= this.m_SoulIndx;
             float soulsGap = Texture.Width * 0.2f;
-            this.Position = new Vector2(Game.GraphicsDevice.Viewport.Width - (this.m_SoulsNumber * (Texture.Width + soulsGap)), 1); 
+            this.Position = new Vector2(Game.GraphicsDevice.Viewport.Width - (this.m_CurrSoulsNumber * (Texture.Width + soulsGap)), 1); 
         }
     }
 }

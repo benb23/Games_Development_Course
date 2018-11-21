@@ -68,7 +68,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             System.Windows.Forms.MessageBox.Show(string.Format(
 @"Game Over
 Youre score is: {0}", 
-SpaceInvaders.m_GameUtils.ScoreManager.Score));
+SpaceInvaders.s_GameUtils.ScoreManager.Score));
         }
     }
 }

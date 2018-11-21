@@ -9,13 +9,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public class SpaceInvaders : Game
     {
-        public static GameUtils m_GameUtils;
-        public static Random m_RandomNum;
+        public static GameUtils s_GameUtils;
+        public static Random s_RandomNum;
         private GraphicsDeviceManager m_Graphics;
         private SpaceShip m_SpaceShip;
         private MotherSpaceShip m_MotherSpaceShip;
@@ -24,12 +23,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public SpaceInvaders()
         {
-            m_RandomNum = new Random();
-            m_GameUtils = new GameUtils();
-            m_GameUtils.ShootingManager = new ShootingManager(this);
-            m_GameUtils.ScoreManager = new ScoreManager(this);
-            Components.Add(m_GameUtils.ScoreManager);
-            m_GameUtils.InputManager = new InputManager();
+            s_RandomNum = new Random();
+            s_GameUtils = new GameUtils();
+            s_GameUtils.ShootingManager = new ShootingManager(this);
+            s_GameUtils.ScoreManager = new ScoreManager(this);
+            Components.Add(s_GameUtils.ScoreManager);
+            s_GameUtils.InputManager = new InputManager();
             this.m_Background = new Background(this);
             Components.Add(this.m_Background);
             this.m_Graphics = new GraphicsDeviceManager(this);
@@ -45,14 +44,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private bool isSpaceShipAllowedToShoot()
         {
-            bool isAllowed = this.m_SpaceShip.CountNumOfVisibleBullets() < SpaceShip.r_MaxNumOfBullets;
+            bool isAllowed = this.m_SpaceShip.CountNumOfVisibleBullets() < SpaceShip.k_MaxNumOfBullets;
 
             return isAllowed;
         }
 
         protected override void Initialize()
         {
-            m_GameUtils.SpriteBatch = new SpriteBatch(GraphicsDevice);
+            s_GameUtils.SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             this.m_Graphics.IsFullScreen = false;
             this.m_Graphics.PreferredBackBufferWidth = 800;
@@ -63,14 +62,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         protected override void Update(GameTime gameTime)
         {
-            if (m_GameUtils.InputManager.isUserAskedToExit())   
+            if (s_GameUtils.InputManager.isUserAskedToExit())   
             {
                 this.Exit();
             }
 
             if (this.isSpaceShipAllowedToShoot())
             {
-                if (m_GameUtils.InputManager.IsUserAskedToShoot())
+                if (s_GameUtils.InputManager.IsUserAskedToShoot())
                 {
                     this.m_SpaceShip.Shoot();
                 }
@@ -82,11 +81,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            m_GameUtils.SpriteBatch.Begin();
+            s_GameUtils.SpriteBatch.Begin();
             base.Draw(gameTime);
-            m_GameUtils.SpriteBatch.End();
+            s_GameUtils.SpriteBatch.End();
         }
-
-
     }
 }

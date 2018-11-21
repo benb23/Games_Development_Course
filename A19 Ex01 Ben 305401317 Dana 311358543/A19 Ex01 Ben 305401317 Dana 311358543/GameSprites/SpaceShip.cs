@@ -12,16 +12,17 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public class SpaceShip : Sprite
     {
-        private readonly float r_KeyboardVelocity = 120;    // TODO: ctor?
-        public static readonly int r_MaxNumOfBullets = 3;
+        private const float k_KeyboardVelocity = 120;
+        public const int k_MaxNumOfBullets = 3;
         private List<Bullet> m_BulletList = new List<Bullet>(3);
 
-        private Gun m_Gun = new Gun();  // TODO: ctor?
+        private Gun m_Gun;
 
-        public SpaceShip(Game game) : base(game)
+        public SpaceShip(Game i_Game) : base(i_Game)
         {
             this.m_AssetName = @"Sprites\Ship01_32x32";
             this.m_Tint = Color.White;
+            this.m_Gun = new Gun();
         }
 
         public override void Update(GameTime i_GameTime)
@@ -51,7 +52,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         // move to INPUTMANAGER??
         private void moveUsingMouse()
         {
-            InputManager inputManger = SpaceInvaders.m_GameUtils.InputManager;
+            InputManager inputManger = SpaceInvaders.s_GameUtils.InputManager;
             this.Position = new Vector2(this.Position.X + inputManger.GetMousePositionDelta().X, Position.Y);
         }
 
@@ -60,14 +61,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             KeyboardState currKeyboardState = Keyboard.GetState();
 
-           
             if (currKeyboardState.IsKeyDown(Keys.Left))
             {
-                this.Position = new Vector2(this.Position.X - (this.r_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
+                this.Position = new Vector2(this.Position.X - (k_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
             }
             else if (currKeyboardState.IsKeyDown(Keys.Right))
             {
-                this.Position = new Vector2(this.Position.X + (this.r_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
+                this.Position = new Vector2(this.Position.X + (k_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
             }
         }
 
@@ -79,7 +79,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
-        public override void initPosition()
+        public override void InitPosition()
         {
             m_Position.X = 0f;
             m_Position.Y = Game.GraphicsDevice.Viewport.Height - (Texture.Height * 1.2f );
@@ -97,7 +97,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             Bullet currBullet;
 
-            if (this.m_BulletList.Count < r_MaxNumOfBullets)
+            if (this.m_BulletList.Count < k_MaxNumOfBullets)
             {
                 currBullet = new Bullet(Game, Bullet.eBulletType.SpaceShipBullet, this);
                 this.m_BulletList.Add(currBullet);
@@ -108,6 +108,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 currBullet.Visible = true;
                 currBullet.initBulletPosition(this);
             }
+
             return currBullet;
         }
 
@@ -125,6 +126,5 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             return bullet;
         }
-
     }
 }

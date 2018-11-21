@@ -54,9 +54,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         protected override void LoadContent()
         {
-            this.m_SpriteBatch = SpaceInvaders.m_GameUtils.SpriteBatch;
+            this.m_SpriteBatch = SpaceInvaders.s_GameUtils.SpriteBatch;
             this.Texture = this.Game.Content.Load<Texture2D>(this.m_AssetName);
-            this.initPosition();
+            this.InitPosition();
             base.LoadContent();
         }
 
@@ -82,6 +82,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             Game.Components.Remove(this);
         }
 
-        public abstract void initPosition();
+        public abstract void InitPosition();
     }
 }

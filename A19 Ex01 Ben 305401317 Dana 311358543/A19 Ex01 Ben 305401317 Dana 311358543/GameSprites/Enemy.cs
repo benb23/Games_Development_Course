@@ -17,12 +17,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public Enemy(Game i_Game, Color i_Tint, string i_AssetName) : base(i_Game)
         {
             this.m_AssetName = i_AssetName;
-            m_Tint = i_Tint;
+            this.m_Tint = i_Tint;
         }
 
-        public override void Update(GameTime i_gameTime)
+        public override void Update(GameTime i_GameTime)
         {
-            int rnd = SpaceInvaders.m_RandomNum.Next(0, 55555);
+            int rnd = SpaceInvaders.s_RandomNum.Next(0, 55555);
             
             if (rnd <= 10)
             {
@@ -30,7 +30,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
-        public override void initPosition() // TODO: ??
+        public override void InitPosition() // TODO: ??
         {
         }
     }

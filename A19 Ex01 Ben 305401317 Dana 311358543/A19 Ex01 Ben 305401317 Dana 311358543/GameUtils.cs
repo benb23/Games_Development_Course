@@ -19,26 +19,26 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public SpriteBatch SpriteBatch
         {
-            get { return m_SpriteBatch; }
-            set { m_SpriteBatch = value; }
+            get { return this.m_SpriteBatch; }
+            set { this.m_SpriteBatch = value; }
         }
 
         public InputManager InputManager
         {
-            get { return m_InputManager; }
-            set { m_InputManager = value; }
+            get { return this.m_InputManager; }
+            set { this.m_InputManager = value; }
         }
 
         public ScoreManager ScoreManager
         {
-            get { return m_ScoreManager; }
-            set { m_ScoreManager = value; }
+            get { return this.m_ScoreManager; }
+            set { this.m_ScoreManager = value; }
         }
 
         public ShootingManager ShootingManager
         {
-            get { return m_ShootingManager; }
-            set { m_ShootingManager = value; }
+            get { return this.m_ShootingManager; }
+            set { this.m_ShootingManager = value; }
         }
     }
 }

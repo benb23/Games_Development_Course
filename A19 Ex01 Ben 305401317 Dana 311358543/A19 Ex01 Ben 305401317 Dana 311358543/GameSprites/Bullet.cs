@@ -18,18 +18,17 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             EnemyBullet = 1
         }
 
-        private readonly float r_BulletVelocity = 155;
+        private const float k_BulletVelocity = 155;
         private eBulletType m_Type;
-
 
         public eBulletType Type
         {
             get { return this.m_Type; }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime i_GameTime)
         {
-            ShootingManager shootingManager = SpaceInvaders.m_GameUtils.ShootingManager;
+            ShootingManager shootingManager = SpaceInvaders.s_GameUtils.ShootingManager;
 
             if (this.isBulletHitTheScreenBorder())
             {
@@ -44,7 +43,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
             else
             {
-                this.Position = new Vector2(this.Position.X, this.Position.Y + ((float)this.m_Type * this.r_BulletVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds));
+                this.Position = new Vector2(this.Position.X, this.Position.Y + ((float)this.m_Type * k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds));
             }
         }
 
@@ -55,12 +54,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return isBulletHit;
         }
 
-        public Bullet(Game game, eBulletType bulletType, Sprite shooter ) : base(game)
+        public Bullet(Game i_Game, eBulletType i_BulletType, Sprite i_Shooter) : base(i_Game)
         {
             this.m_AssetName = @"Sprites\Bullet";
-            this.m_Type = bulletType;
+            this.m_Type = i_BulletType;
 
-            if(this.m_Type == eBulletType.EnemyBullet)
+            if (this.m_Type == eBulletType.EnemyBullet)
             {
                 this.m_Tint = Color.Blue;
             }
@@ -69,7 +68,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 this.m_Tint = Color.Red;
             }
 
-            this.initBulletPosition(shooter);
+            this.initBulletPosition(i_Shooter);
         }
 
         // TODO: ??
@@ -79,7 +78,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         }
 
         // TODO: ??
-        public override void initPosition() 
+        public override void InitPosition() 
         {  
         }
     }
