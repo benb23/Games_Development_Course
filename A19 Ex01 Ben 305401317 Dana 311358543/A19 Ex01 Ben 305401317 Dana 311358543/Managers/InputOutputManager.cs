@@ -55,6 +55,20 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return isShootingOrder;
         }
 
+        public bool IsUserAskedToMoveLeft()
+        {
+            m_CurrKeyboardState = Keyboard.GetState();
+            bool IsUserAskedToMoveLeft = m_CurrKeyboardState.IsKeyDown(Keys.Left);
+            return IsUserAskedToMoveLeft;
+        }
+
+        public bool IsUserAskedToMoveRight()
+        {
+            m_CurrKeyboardState = Keyboard.GetState();
+            bool IsUserAskedToMoveRight = m_CurrKeyboardState.IsKeyDown(Keys.Right);
+            return IsUserAskedToMoveRight;
+        }
+
         public bool isUserAskedToExit()
         {
             this.m_CurrKeyboardState = Keyboard.GetState();

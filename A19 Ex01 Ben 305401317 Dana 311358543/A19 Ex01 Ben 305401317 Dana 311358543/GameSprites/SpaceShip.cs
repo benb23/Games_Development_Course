@@ -57,13 +57,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void moveUsingKeyboard(GameTime i_GameTime)
         {
-            KeyboardState currKeyboardState = Keyboard.GetState();
-
-            if (currKeyboardState.IsKeyDown(Keys.Left))
+            if (SpaceInvaders.s_GameUtils.InputManager.IsUserAskedToMoveLeft())
             {
                 this.Position = new Vector2(this.Position.X - (k_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
             }
-            else if (currKeyboardState.IsKeyDown(Keys.Right))
+            else if (SpaceInvaders.s_GameUtils.InputManager.IsUserAskedToMoveRight())
             {
                 this.Position = new Vector2(this.Position.X + (k_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
             }

@@ -13,7 +13,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     public class GameUtils
     {
         private SpriteBatch m_SpriteBatch;
-        private InputManager m_InputManager;
+        private InputManager m_InputOutputManager;
         private ShootingManager m_ShootingManager;
         private ScoreManager m_ScoreManager;
 
@@ -25,8 +25,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public InputManager InputManager
         {
-            get { return this.m_InputManager; }
-            set { this.m_InputManager = value; }
+            get { return this.m_InputOutputManager; }
+            set { this.m_InputOutputManager = value; }
         }
 
         public ScoreManager ScoreManager
