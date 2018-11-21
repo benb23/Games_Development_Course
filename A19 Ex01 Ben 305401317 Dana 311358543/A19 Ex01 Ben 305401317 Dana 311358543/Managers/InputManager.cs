@@ -26,8 +26,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             if (m_PrevMouseState != null)
             {
-                retVal.X = (currState.X - m_PrevMouseState.Value.X);
-                retVal.Y = (currState.Y - m_PrevMouseState.Value.Y);
+                retVal.X = currState.X - m_PrevMouseState.Value.X;
+                retVal.Y = currState.Y - m_PrevMouseState.Value.Y;
             }
 
             m_PrevMouseState = currState;
@@ -41,7 +41,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             KeyboardState currKeyboardState = Keyboard.GetState();
             MouseState currMouseState = Mouse.GetState();
 
-            if ((currKeyboardState.IsKeyDown(Keys.Enter) && m_PastKey.IsKeyUp(Keys.Enter)) || (currMouseState.LeftButton.Equals(ButtonState.Pressed) && m_pastMouseState.LeftButton.Equals(ButtonState.Released)))
+            if ((currKeyboardState.IsKeyDown(Keys.Enter) && this.m_PastKey.IsKeyUp(Keys.Enter)) || (currMouseState.LeftButton.Equals(ButtonState.Pressed) && this.m_pastMouseState.LeftButton.Equals(ButtonState.Released)))
             {
                 isShootingOrder = true;
             }
@@ -50,15 +50,15 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 isShootingOrder = false;
             }
 
-            m_PastKey = Keyboard.GetState();
-            m_pastMouseState = Mouse.GetState();
+            this.m_PastKey = Keyboard.GetState();
+            this.m_pastMouseState = Mouse.GetState();
             return isShootingOrder;
         }
 
         public bool isUserAskedToExit()
         {
-            m_CurrKeyboardState = Keyboard.GetState();
-            bool isUserAskedToExit = m_CurrKeyboardState.IsKeyDown(Keys.Escape);
+            this.m_CurrKeyboardState = Keyboard.GetState();
+            bool isUserAskedToExit = this.m_CurrKeyboardState.IsKeyDown(Keys.Escape);
 
             return isUserAskedToExit;
         }

@@ -10,63 +10,59 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class EnemiesGroup : DrawableGameComponent
+    public class EnemiesGroup : DrawableGameComponent
     {
-
+        private const float k_enemyHeight = 32f;
+        private const int k_EnemiesRows = 5;
+        private const int k_EnemiesColumns = 9;
         private float m_Direction = 1f;
         private float m_currTopLeftX;
         private float m_currTopLeftY;
-        // private float m_JumpFrequency = 2;
-        // private float m_FrequencRateIncreasment = 1.08f;
-        private const int k_EnemiesRows = 5;
-        private const int k_EnemiesColumns = 9;
-        private Enemy[,] m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
-        private const float k_enemyHeight = 32f;
-        private bool m_isLastStepInRow = false;
-        private float m_ElapsedTime = 0f;
-        private float m_TimeUntilNextStepInSec = 0.5f;
 
+        private Enemy[,] m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
+
+        private bool m_isLastStepInRow = false;
+        private float m_TimeCounter = 0f;
+        private float m_TimeUntilNextStepInSec = 0.5f;
 
         public override void Update(GameTime i_GameTime)
         {
+            this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
-            m_ElapsedTime += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
-
-            if (m_ElapsedTime >= m_TimeUntilNextStepInSec)
+            if (this.m_TimeCounter >= this.m_TimeUntilNextStepInSec)
             {
-                m_ElapsedTime = 0;
+                this.m_TimeCounter -= this.m_TimeUntilNextStepInSec;
 
-                if (m_isLastStepInRow)
+                if (this.m_isLastStepInRow)
                 {
-                    m_isLastStepInRow = false;
-                    JumpDown();
-                    m_Direction *= -1f;
+                    this.m_isLastStepInRow = false;
+                    this.JumpDown();
+                    this.m_Direction *= -1f;
                 }
                 else
                 {
-                    JumpHorizontalStep(i_GameTime);
+                    this.JumpHorizontalStep(i_GameTime);
                 }
             }
 
-            /*
-            if ((countNumOfVisibleEnemies() < k_EnemiesRows * k_EnemiesColumns) && ((k_EnemiesRows * k_EnemiesColumns - countNumOfVisibleEnemies()) % 4 == 0))
-            {
-                m_TimeUntilNextStepInSec -= (m_TimeUntilNextStepInSec * 0.04f);
-            }*/
+            this.initPosions(this.m_currTopLeftX, this.m_currTopLeftY);
 
-            initPosions(m_currTopLeftX, m_currTopLeftY);
-
-            if (isEnemiesGroupTouchTheBotton()|| countNumOfVisibleEnemies()==0)
+            if (this.isEnemiesGroupTouchTheBotton() || this.countNumOfVisibleEnemies() == 0)
             {
+                ///TODO: move to method gameOver (reuse)
+                /// Services usage;
+                System.Windows.Forms.MessageBox.Show(string.Format( 
+@"Game Over
+Youre score is: {0}" ));
                 Game.Exit();
             }
         }
 
         private int countNumOfVisibleEnemies()
         {
-            int NumOfVisibleEnemies=0;
+            int NumOfVisibleEnemies = 0;
 
-            foreach (Enemy enemy in m_EnemiesMatrix)
+            foreach (Enemy enemy in this.m_EnemiesMatrix)
             {
                 if(enemy.Visible)
                 {
@@ -81,7 +77,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             bool isEnemiesGroupTouchTheBotton;
 
-            if (getBottomGroupBorder() >= GraphicsDevice.Viewport.Height)
+            if (this.getBottomGroupBorder() >= GraphicsDevice.Viewport.Height)
             {
                 isEnemiesGroupTouchTheBotton = true;
             }
@@ -98,19 +94,21 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             float leftX = 0;
             bool isFound = false;
 
-            for (int col = 0; col < k_EnemiesColumns; col++)//TODO: CONST
+            for (int col = 0; col < k_EnemiesColumns; col++)
             {
-                for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
+                for (int row = 0; row < k_EnemiesRows; row++)
                 {
-                    if (m_EnemiesMatrix[row, col].Visible)
+                    if (this.m_EnemiesMatrix[row, col].Visible)
                     {
-                        leftX = m_EnemiesMatrix[row, col].Position.X;
+                        leftX = this.m_EnemiesMatrix[row, col].Position.X;
                         isFound = true;
                         break;
                     }
                 }
                 if (isFound)
+                { 
                     break;
+                }
             }
 
             return leftX;
@@ -121,19 +119,21 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             float rightBorderX = 0;
             bool isFound = false;
 
-            for (int col = k_EnemiesColumns-1; col >=0; col--)//TODO: CONST
+            for (int col = k_EnemiesColumns - 1; col >= 0; col--)  
             {
-                for (int row = 0; row < k_EnemiesRows; row++)//TODO: CONST
+                for (int row = 0; row < k_EnemiesRows; row++)   
                 {
-                    if (m_EnemiesMatrix[row, col].Visible)
+                    if (this.m_EnemiesMatrix[row, col].Visible)
                     {
-                        rightBorderX = m_EnemiesMatrix[row, col].Position.X + m_EnemiesMatrix[row, col].Texture.Width;
+                        rightBorderX = this.m_EnemiesMatrix[row, col].Position.X + this.m_EnemiesMatrix[row, col].Texture.Width;
                         isFound = true;
                         break;
                     }
                 }
                 if (isFound)
+                { 
                     break;
+                }
             }
 
             return rightBorderX;
@@ -144,19 +144,21 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             float bottomBorderY = 0;
             bool isFound = false;
 
-            for (int row = k_EnemiesRows - 1; row >= 0; row--)//TODO: CONST
+            for (int row = k_EnemiesRows - 1; row >= 0; row--)
             {
-                for (int col = 0; col < k_EnemiesColumns; col++)//TODO: CONST
+                for (int col = 0; col < k_EnemiesColumns; col++)
                 {
-                    if (m_EnemiesMatrix[row, col].Visible)
+                    if (this.m_EnemiesMatrix[row, col].Visible)
                     {
-                        bottomBorderY = m_EnemiesMatrix[row, col].Position.Y + m_EnemiesMatrix[row, col].Texture.Height;
+                        bottomBorderY = this.m_EnemiesMatrix[row, col].Position.Y + this.m_EnemiesMatrix[row, col].Texture.Height;
                         isFound = true;
                         break;
                     }
                 }
                 if (isFound)
+                { 
                     break;
+                }
             }
             return bottomBorderY;
         }
@@ -167,27 +169,27 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
-            m_currTopLeftX = 0;
-            m_currTopLeftY = k_enemyHeight  * 3f;
+            this.m_currTopLeftX = 0;
+            this.m_currTopLeftY = k_enemyHeight  * 3f;
             this.InitEnemyGroup();
             base.Initialize();
-            initPosions(m_currTopLeftX, m_currTopLeftY);
+            this.initPosions(this.m_currTopLeftX, this.m_currTopLeftY);
 
         }
 
         private void InitEnemyGroup()
         {
             // TODO: initilize the EnemiesGroup matrix
-            InitEnemiesRow(0, @"Sprites\Enemy0101_32x32", Color.Pink); //firstROW - Enemy0101_32x32
+            this.InitEnemiesRow(0, @"Sprites\Enemy0101_32x32", Color.Pink); 
             for (int i = 1; i < k_EnemiesRows; i++)
             {
-                if ( i < 3)
+                if (i < 3)
                 {
-                    InitEnemiesRow(i, @"Sprites\Enemy0201_32x32", Color.LightBlue);
+                    this.InitEnemiesRow(i, @"Sprites\Enemy0201_32x32", Color.LightBlue);
                 }
                 else 
                 {
-                    InitEnemiesRow(i, @"Sprites\Enemy0301_32x32", Color.LightYellow);
+                    this.InitEnemiesRow(i, @"Sprites\Enemy0301_32x32", Color.LightYellow);
                 }
             }
         }
@@ -196,8 +198,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
-                m_EnemiesMatrix[i_Row, colum] = new Enemy(Game) { AssetName = i_AssetName, Tint = i_Tint };
-                m_EnemiesMatrix[i_Row, colum].AddComponent();
+                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game) { AssetName = i_AssetName, Tint = i_Tint };
+                this.m_EnemiesMatrix[i_Row, colum].AddComponent();
             }
         }
 
@@ -210,10 +212,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             for (int i = 0; i < k_EnemiesRows; i++)
             {
                 for (int j = 0; j < k_EnemiesColumns; j++)
-                { 
-                    m_EnemiesMatrix[i, j].Position = new Vector2(startX, strartY);
+                {
+                    this.m_EnemiesMatrix[i, j].Position = new Vector2(startX, strartY);
                     startX += k_enemyHeight + enemiesGap;
                 }
+
                 startX = i_X;
                 strartY += k_enemyHeight + enemiesGap;
             }
@@ -221,43 +224,43 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
       
         private void JumpHorizontalStep(GameTime i_GameTime)
         {
-                float lastRightJump = GraphicsDevice.Viewport.Width - getRightGroupBorder();
-                float lastLeftJump = getLeftGroupBorder();
+                float lastRightJump = GraphicsDevice.Viewport.Width - this.getRightGroupBorder();
+                float lastLeftJump = this.getLeftGroupBorder();
 
                 
-                if (lastRightJump < (m_EnemiesMatrix[0, 0].Texture.Width / 2) && lastRightJump > 0)
+                if (lastRightJump < (this.m_EnemiesMatrix[0, 0].Texture.Width / 2) && lastRightJump > 0)
                 {
-                    m_currTopLeftX += m_Direction * lastRightJump;
-                    m_isLastStepInRow = true;
+                    this.m_currTopLeftX += this.m_Direction * lastRightJump;
+                    this.m_isLastStepInRow = true;
                 }
-                else if (lastLeftJump < (m_EnemiesMatrix[0, 0].Texture.Width / 2) && lastLeftJump > 0 && m_Direction == -1f )
+                else if (lastLeftJump < (this.m_EnemiesMatrix[0, 0].Texture.Width / 2) && lastLeftJump > 0 && this.m_Direction == -1f )
                 {
-                    m_currTopLeftX += m_Direction * lastLeftJump;
-                    m_isLastStepInRow = true;
+                    this.m_currTopLeftX += this.m_Direction * lastLeftJump;
+                    this.m_isLastStepInRow = true;
                 }
                 else
                 {
-                    m_currTopLeftX += m_Direction * (m_EnemiesMatrix[0, 0].Texture.Width / 2);
+                    this.m_currTopLeftX += this.m_Direction * (this.m_EnemiesMatrix[0, 0].Texture.Width / 2);
                 }
         }
 
         private float getGroupWidth()
         {
-            return getRightGroupBorder() - getLeftGroupBorder();
+            return this.getRightGroupBorder() - this.getLeftGroupBorder();
         }
 
 
         private bool isEnemiesGroupCollidedTheGameBorder()
         {
-            bool isCollided = getRightGroupBorder() >= GraphicsDevice.Viewport.Width || getLeftGroupBorder() < 0f;
+            bool isCollided = this.getRightGroupBorder() >= GraphicsDevice.Viewport.Width || this.getLeftGroupBorder() < 0f;
 
             return isCollided;
         }
 
         private void JumpDown()
         {
-            m_currTopLeftY += m_EnemiesMatrix[0, 0].Texture.Width / 2;
-            m_TimeUntilNextStepInSec -=  ( m_TimeUntilNextStepInSec * 0.08f);
+            this.m_currTopLeftY += this.m_EnemiesMatrix[0, 0].Texture.Width / 2;
+            this.m_TimeUntilNextStepInSec -= this.m_TimeUntilNextStepInSec * 0.08f;
         }
     }
 }

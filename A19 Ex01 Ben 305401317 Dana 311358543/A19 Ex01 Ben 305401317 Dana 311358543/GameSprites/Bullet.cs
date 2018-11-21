@@ -16,34 +16,35 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             SpaceShipBullet = -1,
             EnemyBullet = 1
-        };
+        }
 
-        private eBulletType m_Type;
         private readonly float r_BulletVelocity = 155;
+        private eBulletType m_Type;
+
 
         public eBulletType Type
         {
-            get { return m_Type; }
+            get { return this.m_Type; }
         }
 
         public override void Update(GameTime gameTime)
         {
-            ShootingManager shootingManager = (Game.Services.GetService(typeof(ShootingManager)) as ShootingManager);
+            ShootingManager shootingManager = Game.Services.GetService(typeof(ShootingManager)) as ShootingManager;
 
-            if (isBulletHitTheScreenBorder())
+            if (this.isBulletHitTheScreenBorder())
             {
-                RemoveComponent();
+                this.RemoveComponent();
             }
 
             Sprite hittenSprite = shootingManager.IsGameObjectWasHitten(this);
 
-            if ( hittenSprite != null)
+            if (hittenSprite != null)
             {
-                shootingManager.OnHit(this,hittenSprite);
+                shootingManager.OnHit(this, hittenSprite);
             }
             else
             {
-                Position = new Vector2(Position.X, Position.Y + (float)m_Type * r_BulletVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                this.Position = new Vector2(this.Position.X, this.Position.Y + ((float)this.m_Type * this.r_BulletVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds));
             }
         }
 
@@ -54,31 +55,32 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return isBulletHit;
         }
 
-        public Bullet(Game game, eBulletType bulletType, Sprite shooter ) :base(game)
+        public Bullet(Game game, eBulletType bulletType, Sprite shooter ) : base(game)
         {
-            m_AssetName = @"Sprites\Bullet";
-            m_Type = bulletType;
+            this.m_AssetName = @"Sprites\Bullet";
+            this.m_Type = bulletType;
 
-            if(m_Type == eBulletType.EnemyBullet)
+            if(this.m_Type == eBulletType.EnemyBullet)
             {
-                m_Tint = Color.Blue;
+                this.m_Tint = Color.Blue;
             }
             else
             {
-                m_Tint = Color.Red;
+                this.m_Tint = Color.Red;
             }
 
-            initBulletPosition(shooter);
+            this.initBulletPosition(shooter);
         }
 
-        public void initBulletPosition(Sprite i_Shooter) //TODO: ??
+        // TODO: ??
+        public void initBulletPosition(Sprite i_Shooter) 
         {
-            Position=new Vector2(i_Shooter.Position.X + i_Shooter.Texture.Width/ 2, i_Shooter.Position.Y +(float)m_Type*(1+i_Shooter.Texture.Height));//TODO: CONST 32 SHOOTER WIDTH
+            this.Position = new Vector2(i_Shooter.Position.X + (i_Shooter.Texture.Width / 2), i_Shooter.Position.Y + ((float)this.m_Type * (1 + i_Shooter.Texture.Height))); 
         }
 
-        public override void initPosition() //TODO: ??
-        {
-           
+        // TODO: ??
+        public override void initPosition() 
+        {  
         }
     }
 }

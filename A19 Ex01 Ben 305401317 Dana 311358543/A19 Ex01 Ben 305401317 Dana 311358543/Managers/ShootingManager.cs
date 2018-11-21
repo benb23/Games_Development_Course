@@ -13,11 +13,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public class ShootingManager  
     {
-        private Game m_game;
+        private Game m_Game;
 
-        public ShootingManager(Game i_game)
+        public ShootingManager(Game i_Game)
         {
-            m_game = i_game;
+            this.m_Game = i_Game;
         }  
 
         public void OnHit(Sprite i_Bullet, Sprite i_HittenSprite)
@@ -26,23 +26,23 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
                 if (i_HittenSprite is SpaceShip)
                 {
-                    HandleSpaceShipHit((SpaceShip)i_HittenSprite);
+                    this.HandleSpaceShipHit((SpaceShip)i_HittenSprite);
                 }
                 else
                 {
-                    HandleNonSpaceShipHit(i_HittenSprite);
+                    this.HandleNonSpaceShipHit(i_HittenSprite);
                 }
           }
 
         private void HandleSpaceShipHit(SpaceShip i_SpaceShip)
         {
-            ScoreManager scoreManager = m_game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
+            ScoreManager scoreManager = this.m_Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
 
             if (scoreManager.Souls.Count - 1 == 0)
             {
                 i_SpaceShip.RemoveComponent();
                 // TODO : MSGGGGGGG
-                m_game.Exit();
+                this.m_Game.Exit();
             }
             else
             {
@@ -56,19 +56,19 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             if (i_Sprite is Enemy || i_Sprite is MotherSpaceShip)
             {
-                ScoreManager scoreManager = m_game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
+                ScoreManager scoreManager = this.m_Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
                 scoreManager.UpdateScoreAfterCollision(i_Sprite);
             }
         }
 
-        public Sprite IsGameObjectWasHitten(Bullet i_Bullet)//TODO: change name!
+        public Sprite IsGameObjectWasHitten(Bullet i_Bullet) // TODO: change name!
         {
             Sprite hittenSprite = null;
             Rectangle BulletRectangle = new Rectangle((int)i_Bullet.Position.X, (int)i_Bullet.Position.Y, i_Bullet.Texture.Width, i_Bullet.Texture.Height);
 
-            foreach (DrawableGameComponent gameComponent in m_game.Components)
+            foreach (DrawableGameComponent gameComponent in this.m_Game.Components)
             {
-                if (isShootableComponent(gameComponent) && isOpponents((Sprite)gameComponent, i_Bullet))
+                if (this.isShootableComponent(gameComponent) && this.isOpponents((Sprite)gameComponent, i_Bullet))
                 {
                     Rectangle elementRectangle = new Rectangle((int)((Sprite)gameComponent).Position.X, (int)((Sprite)gameComponent).Position.Y, (int)((Sprite)gameComponent).Texture.Width, (int)((Sprite)gameComponent).Texture.Height);
 
@@ -88,7 +88,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return isShootableComponent;
         }
 
-        private bool isOpponents(Sprite i_Sprite ,Bullet i_Bullet)
+        private bool isOpponents(Sprite i_Sprite, Bullet i_Bullet)
         {
             bool isOpponent;
 

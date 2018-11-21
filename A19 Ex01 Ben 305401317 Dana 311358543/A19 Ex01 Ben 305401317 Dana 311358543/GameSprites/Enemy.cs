@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class Enemy : Sprite
+    public class Enemy : Sprite
     {
         private Gun m_Gun = new Gun(); 
 
@@ -24,7 +24,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             
             if (rnd <= 10)
             {
-                m_Gun.Shoot(new Bullet(Game,Bullet.eBulletType.EnemyBullet,this));//game?
+                this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet, this));    // game?
             }
 
         }

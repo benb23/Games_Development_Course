@@ -10,12 +10,12 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class Background : Sprite
+    public class Background : Sprite
     {
-        public Background(Game i_Game):base(i_Game)
+        public Background(Game i_Game) : base(i_Game)
         {
-            m_AssetName = @"Sprites\BG_Space01_1024x768";
-            m_Tint = Color.White;
+            this.m_AssetName = @"Sprites\BG_Space01_1024x768";
+            this.m_Tint = Color.White;
         }
 
         public override void Initialize()
@@ -26,7 +26,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void initPosition()
         {
-            m_Position = Vector2.Zero;
+            this.m_Position = Vector2.Zero;
         }
     }
 }
