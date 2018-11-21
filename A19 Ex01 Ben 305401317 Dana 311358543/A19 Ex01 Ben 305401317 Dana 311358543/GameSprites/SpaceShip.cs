@@ -49,14 +49,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return numOfVisibleBullets;
         }
 
-        // move to INPUTMANAGER??
         private void moveUsingMouse()
         {
             InputManager inputManger = SpaceInvaders.s_GameUtils.InputManager;
             this.Position = new Vector2(this.Position.X + inputManger.GetMousePositionDelta().X, Position.Y);
         }
 
-        // move to INPUTMANAGER
         private void moveUsingKeyboard(GameTime i_GameTime)
         {
             KeyboardState currKeyboardState = Keyboard.GetState();
@@ -68,14 +66,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             else if (currKeyboardState.IsKeyDown(Keys.Right))
             {
                 this.Position = new Vector2(this.Position.X + (k_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
-            }
-        }
-
-        public Gun Gun
-        {
-            get
-            {
-                return this.m_Gun;
             }
         }
 
