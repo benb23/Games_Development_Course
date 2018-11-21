@@ -36,12 +36,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void HandleSpaceShipHit(SpaceShip i_SpaceShip)
         {
-            ScoreManager scoreManager = this.m_Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
+            ScoreManager scoreManager = SpaceInvaders.m_GameUtils.ScoreManager;
 
             if (scoreManager.Souls.Count - 1 == 0)
             {
                 i_SpaceShip.RemoveComponent();
-                // TODO : MSGGGGGGG
+                SpaceInvaders.m_GameUtils.InputManager.showGameOverMessage();
                 this.m_Game.Exit();
             }
             else
@@ -56,7 +56,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             if (i_Sprite is Enemy || i_Sprite is MotherSpaceShip)
             {
-                ScoreManager scoreManager = this.m_Game.Services.GetService(typeof(ScoreManager)) as ScoreManager;
+                ScoreManager scoreManager = SpaceInvaders.m_GameUtils.ScoreManager;
                 scoreManager.UpdateScoreAfterCollision(i_Sprite);
             }
         }

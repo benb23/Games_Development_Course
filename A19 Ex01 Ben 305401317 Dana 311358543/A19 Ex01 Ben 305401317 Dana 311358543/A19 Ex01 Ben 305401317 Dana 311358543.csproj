@@ -49,10 +49,11 @@
     <Compile Include="GameSprites\Enemy.cs" />
     <Compile Include="EnemiesGroup.cs" />
     <Compile Include="GameSprites\Sprite.cs" />
-    <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\InputOutputManager.cs" />
     <Compile Include="GameSprites\MotherSpaceShip.cs" />
     <Compile Include="GameSprites\SpaceShip.cs" />
     <Compile Include="Gun.cs" />
+    <Compile Include="GameUtils.cs" />
     <Compile Include="SpaceInvaders.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

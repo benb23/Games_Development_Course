@@ -14,8 +14,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     {
         private Gun m_Gun = new Gun(); 
 
-        public Enemy(Game i_Game) : base(i_Game)
+        public Enemy(Game i_Game, Color i_Tint, string i_AssetName) : base(i_Game)
         {
+            this.m_AssetName = i_AssetName;
+            m_Tint = i_Tint;
         }
 
         public override void Update(GameTime i_gameTime)
@@ -26,7 +28,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet, this));    // game?
             }
-
         }
 
         public override void initPosition() // TODO: ??

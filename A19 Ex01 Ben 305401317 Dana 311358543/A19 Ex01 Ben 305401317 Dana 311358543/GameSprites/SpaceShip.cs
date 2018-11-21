@@ -51,7 +51,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         // move to INPUTMANAGER??
         private void moveUsingMouse()
         {
-            InputManager inputManger = Game.Services.GetService(typeof(InputManager)) as InputManager;
+            InputManager inputManger = SpaceInvaders.m_GameUtils.InputManager;
             this.Position = new Vector2(this.Position.X + inputManger.GetMousePositionDelta().X, Position.Y);
         }
 

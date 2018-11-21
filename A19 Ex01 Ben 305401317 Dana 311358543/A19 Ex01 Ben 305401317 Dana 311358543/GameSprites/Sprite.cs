@@ -54,7 +54,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         protected override void LoadContent()
         {
-            this.m_SpriteBatch = this.Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
+            this.m_SpriteBatch = SpaceInvaders.m_GameUtils.SpriteBatch;
             this.Texture = this.Game.Content.Load<Texture2D>(this.m_AssetName);
             this.initPosition();
             base.LoadContent();

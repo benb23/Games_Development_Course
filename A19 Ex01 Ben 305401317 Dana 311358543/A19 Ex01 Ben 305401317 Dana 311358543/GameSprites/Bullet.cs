@@ -29,7 +29,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-            ShootingManager shootingManager = Game.Services.GetService(typeof(ShootingManager)) as ShootingManager;
+            ShootingManager shootingManager = SpaceInvaders.m_GameUtils.ShootingManager;
 
             if (this.isBulletHitTheScreenBorder())
             {

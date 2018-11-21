@@ -18,7 +18,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private float m_Direction = 1f;
         private float m_currTopLeftX;
         private float m_currTopLeftY;
-
+        private int m_NumOfDeadEnemies = 0;
+        private bool m_IncreaseVelocityWhen4Dead = false;
         private Enemy[,] m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
 
         private bool m_isLastStepInRow = false;
@@ -28,6 +29,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         public override void Update(GameTime i_GameTime)
         {
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+            
+
+            if (m_IncreaseVelocityWhen4Dead)
+            {
+                m_IncreaseVelocityWhen4Dead = false;
+                increaseVelocity(0.04f);
+            }
+
 
             if (this.m_TimeCounter >= this.m_TimeUntilNextStepInSec)
             {
@@ -45,32 +54,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 }
             }
 
-            this.initPosions(this.m_currTopLeftX, this.m_currTopLeftY);
+            this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);
 
-            if (this.isEnemiesGroupTouchTheBotton() || this.countNumOfVisibleEnemies() == 0)
+            if (this.isEnemiesGroupTouchTheBotton() || m_NumOfDeadEnemies == k_EnemiesColumns * k_EnemiesRows)
             {
-                ///TODO: move to method gameOver (reuse)
-                /// Services usage;
-                System.Windows.Forms.MessageBox.Show(string.Format( 
-@"Game Over
-Youre score is: {0}" ));
+                SpaceInvaders.m_GameUtils.InputManager.showGameOverMessage();
                 Game.Exit();
             }
-        }
-
-        private int countNumOfVisibleEnemies()
-        {
-            int NumOfVisibleEnemies = 0;
-
-            foreach (Enemy enemy in this.m_EnemiesMatrix)
-            {
-                if(enemy.Visible)
-                {
-                    NumOfVisibleEnemies++;
-                }
-            }
-
-            return NumOfVisibleEnemies;
         }
 
         private bool isEnemiesGroupTouchTheBotton()
@@ -169,12 +159,8 @@ Youre score is: {0}" ));
 
         public override void Initialize()
         {
-            this.m_currTopLeftX = 0;
-            this.m_currTopLeftY = k_enemyHeight  * 3f;
             this.InitEnemyGroup();
             base.Initialize();
-            this.initPosions(this.m_currTopLeftX, this.m_currTopLeftY);
-
         }
 
         private void InitEnemyGroup()
@@ -192,18 +178,32 @@ Youre score is: {0}" ));
                     this.InitEnemiesRow(i, @"Sprites\Enemy0301_32x32", Color.LightYellow);
                 }
             }
+
+            this.m_currTopLeftX = 0;
+            this.m_currTopLeftY = k_enemyHeight * 3f;
+            updatePositions(m_currTopLeftX, m_currTopLeftY);
         }
 
         private void InitEnemiesRow(int i_Row, string i_AssetName, Color i_Tint)
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
-                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game) { AssetName = i_AssetName, Tint = i_Tint };
+                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_AssetName);
+                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += CountDeadEnemies;
                 this.m_EnemiesMatrix[i_Row, colum].AddComponent();
             }
         }
 
-        public void initPosions(float i_X, float i_Y)
+        private void CountDeadEnemies(object sender, EventArgs args)
+        {
+            m_NumOfDeadEnemies++;
+            if(m_NumOfDeadEnemies%4 == 0 && m_NumOfDeadEnemies != 0)
+            {
+                m_IncreaseVelocityWhen4Dead = true;
+            }
+        }
+
+        public void updatePositions(float i_X, float i_Y)
         {
             float enemiesGap = k_enemyHeight * 0.6f;
             float startX = i_X;
@@ -243,24 +243,16 @@ Youre score is: {0}" ));
                     this.m_currTopLeftX += this.m_Direction * (this.m_EnemiesMatrix[0, 0].Texture.Width / 2);
                 }
         }
-
-        private float getGroupWidth()
-        {
-            return this.getRightGroupBorder() - this.getLeftGroupBorder();
-        }
-
-
-        private bool isEnemiesGroupCollidedTheGameBorder()
-        {
-            bool isCollided = this.getRightGroupBorder() >= GraphicsDevice.Viewport.Width || this.getLeftGroupBorder() < 0f;
-
-            return isCollided;
-        }
-
+        
         private void JumpDown()
         {
             this.m_currTopLeftY += this.m_EnemiesMatrix[0, 0].Texture.Width / 2;
-            this.m_TimeUntilNextStepInSec -= this.m_TimeUntilNextStepInSec * 0.08f;
+            this.increaseVelocity(0.08f);
+        }
+
+        private void increaseVelocity(float i_timeToIncrease)
+        {
+            this.m_TimeUntilNextStepInSec -= this.m_TimeUntilNextStepInSec * i_timeToIncrease;
         }
     }
 }
