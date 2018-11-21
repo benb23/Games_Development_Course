@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    class MotherSpaceShip : Sprite
+    public class MotherSpaceShip : Sprite
     {
         private readonly float k_MotherShipVelocity = 40;
         private int m_CurrRandom = 100;
@@ -18,29 +18,31 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public MotherSpaceShip(Game i_Game) : base(i_Game)
         {
-            m_AssetName = @"Sprites\MotherShip_32x120";
-            m_Tint = Color.Red;
-            Visible = false;
+            this.m_AssetName = @"Sprites\MotherShip_32x120";
+            this.m_Tint = Color.Red;
+            this.Visible = false;
         }
 
         public override void initPosition()
         {
-            Position = new Vector2(-m_Texture.Width, m_Texture.Height);
+            this.Position = new Vector2(-m_Texture.Width, m_Texture.Height);
         }
 
         public override void Update(GameTime i_GameTime)
         {
-            if (!Visible)
-                m_CurrRandom = SpaceInvaders.m_RandomNum.Next(0, 55555);
-            
-            if (m_CurrRandom <= 40)
+            if (!this.Visible)
+            { 
+                this.m_CurrRandom = SpaceInvaders.m_RandomNum.Next(0, 55555);
+            }
+
+            if (this.m_CurrRandom <= 40)
             {
-                Visible = true; 
-                m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+                this.Visible = true;
+                this.m_Position.X += this.k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
                 if (m_Position.X >= GraphicsDevice.Viewport.Width)
                 {
-                    Visible = false;
-                    initPosition();
+                    this.Visible = false;
+                    this.initPosition();
                 }
             }
         }

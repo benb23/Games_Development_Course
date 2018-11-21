@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GameSprites\Soul.cs" />
+    <Compile Include="Managers\ShootingManager.cs" />
     <Compile Include="Managers\ScoreManager.cs" />
     <Compile Include="GameSprites\Background.cs" />
     <Compile Include="GameSprites\Bullet.cs" />
@@ -50,7 +51,6 @@
     <Compile Include="GameSprites\Sprite.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="GameSprites\MotherSpaceShip.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="GameSprites\SpaceShip.cs" />
     <Compile Include="Gun.cs" />
     <Compile Include="SpaceInvaders.cs" />
@@ -62,6 +62,7 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    public abstract class Sprite :  DrawableGameComponent
+    public abstract class Sprite : DrawableGameComponent
     {
         protected SpriteBatch m_SpriteBatch;
         protected Texture2D m_Texture;
@@ -18,51 +18,51 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         protected Color m_Tint;
         protected string m_AssetName;
         
-        public Sprite(Game i_game):base(i_game)
+        public Sprite(Game i_Game) : base(i_Game)
         {
         }
 
         public SpriteBatch SpriteBatch
         {
-            get { return m_SpriteBatch; }
-            set { m_SpriteBatch = value; }
+            get { return this.m_SpriteBatch; }
+            set { this.m_SpriteBatch = value; }
         }
 
         public Texture2D Texture
         {
-            get { return m_Texture; }
-            set { m_Texture = value; }
+            get { return this.m_Texture; }
+            set { this.m_Texture = value; }
         }
 
         public Color Tint
         {
-            get { return m_Tint; }
-            set { m_Tint = value; }
+            get { return this.m_Tint; }
+            set { this.m_Tint = value; }
         }
 
         public Vector2 Position
         {
-            get { return m_Position; }
-            set { m_Position = value; }
+            get { return this.m_Position; }
+            set { this.m_Position = value; }
         }
 
         public string AssetName
         {
-            get { return m_AssetName; }
-            set { m_AssetName = value; }
+            get { return this.m_AssetName; }
+            set { this.m_AssetName = value; }
         }
 
         protected override void LoadContent()
         {
-            m_SpriteBatch = this.Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
+            this.m_SpriteBatch = this.Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             this.Texture = this.Game.Content.Load<Texture2D>(this.m_AssetName);
-            initPosition();
+            this.initPosition();
             base.LoadContent();
         }
 
         public override void Draw(GameTime i_GameTime)
         {
-            if (Visible)
+            if (this.Visible)
             {
                 this.SpriteBatch.Draw(this.Texture, this.Position, this.Tint);
             }
@@ -77,8 +77,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public virtual void RemoveComponent()
         {
-            Visible = false;
-            Dispose();//TODO:??
+            this.Visible = false;
+            this.Dispose();  // TODO:??
             Game.Components.Remove(this);
         }
 
