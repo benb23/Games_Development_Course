@@ -14,7 +14,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     {
         private const float k_KeyboardVelocity = 120;
         public const int k_MaxNumOfBullets = 3;
-        private List<Bullet> m_BulletList = new List<Bullet>(3);
+        private List<Bullet> m_BulletList = new List<Bullet>(k_MaxNumOfBullets);
 
         private Gun m_Gun;
 
@@ -51,8 +51,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void moveUsingMouse()
         {
-            InputManager inputManger = SpaceInvaders.s_GameUtils.InputManager;
-            this.Position = new Vector2(this.Position.X + inputManger.GetMousePositionDelta().X, Position.Y);
+            this.Position = new Vector2(this.Position.X + SpaceInvaders.s_GameUtils.InputManager.GetMousePositionDelta().X, Position.Y);
         }
 
         private void moveUsingKeyboard(GameTime i_GameTime)

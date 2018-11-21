@@ -30,7 +30,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
-        public override void InitPosition() // TODO: ??
+        public override void InitPosition()
         {
         }
     }
