@@ -53,7 +53,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         protected override void Initialize()
         {
             m_GameUtils.SpriteBatch = new SpriteBatch(GraphicsDevice);
-            this.Services.AddService(typeof(SpriteBatch), m_GameUtils.SpriteBatch);
 
             this.m_Graphics.IsFullScreen = false;
             this.m_Graphics.PreferredBackBufferWidth = 800;
@@ -64,10 +63,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit by GameButton 'back' button or Esc:
             if (m_GameUtils.InputManager.isUserAskedToExit())   
             {
-                m_GameUtils.InputManager.showGameOverMessage(); // TODO: CHANGE MESSAGE: ARE YOU
                 this.Exit();
             }
 

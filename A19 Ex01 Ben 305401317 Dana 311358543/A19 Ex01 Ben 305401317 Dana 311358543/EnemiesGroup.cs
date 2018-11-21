@@ -26,6 +26,47 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private float m_TimeCounter = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
 
+        public EnemiesGroup(Game i_Game) : base(i_Game)
+        {
+        }
+
+        public override void Initialize()
+        {
+            this.InitEnemyGroup();
+            base.Initialize();
+        }
+
+        private void InitEnemyGroup()
+        {
+            // TODO: initilize the EnemiesGroup matrix
+            this.InitEnemiesRow(0, @"Sprites\Enemy0101_32x32", Color.Pink);
+            for (int i = 1; i < k_EnemiesRows; i++)
+            {
+                if (i < 3)
+                {
+                    this.InitEnemiesRow(i, @"Sprites\Enemy0201_32x32", Color.LightBlue);
+                }
+                else
+                {
+                    this.InitEnemiesRow(i, @"Sprites\Enemy0301_32x32", Color.LightYellow);
+                }
+            }
+
+            this.m_currTopLeftX = 0;
+            this.m_currTopLeftY = k_enemyHeight * 3f;
+            updatePositions(m_currTopLeftX, m_currTopLeftY);
+        }
+
+        private void InitEnemiesRow(int i_Row, string i_AssetName, Color i_Tint)
+        {
+            for (int colum = 0; colum < k_EnemiesColumns; colum++)
+            {
+                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_AssetName);
+                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += CountDeadEnemies;
+                this.m_EnemiesMatrix[i_Row, colum].AddComponent();
+            }
+        }
+
         public override void Update(GameTime i_GameTime)
         {
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
@@ -56,11 +97,42 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);
 
-            if (this.isEnemiesGroupTouchTheBotton() || m_NumOfDeadEnemies == k_EnemiesColumns * k_EnemiesRows)
+            if (this.isEnemiesGroupTouchTheBotton() || this.isAllEnemiesDead())
             {
                 SpaceInvaders.m_GameUtils.InputManager.showGameOverMessage();
                 Game.Exit();
             }
+        }
+
+        public void updatePositions(float i_X, float i_Y)
+        {
+            float enemiesGap = k_enemyHeight * 0.6f;
+            float startX = i_X;
+            float strartY = i_Y;
+
+            for (int i = 0; i < k_EnemiesRows; i++)
+            {
+                for (int j = 0; j < k_EnemiesColumns; j++)
+                {
+                    this.m_EnemiesMatrix[i, j].Position = new Vector2(startX, strartY);
+                    startX += k_enemyHeight + enemiesGap;
+                }
+
+                startX = i_X;
+                strartY += k_enemyHeight + enemiesGap;
+            }
+        }
+
+        private bool isAllEnemiesDead()
+        {
+            bool isAllDead = false;
+
+            if (m_NumOfDeadEnemies == k_EnemiesColumns * k_EnemiesRows)
+            {
+                isAllDead = true;
+            }
+
+            return isAllDead;
         }
 
         private bool isEnemiesGroupTouchTheBotton()
@@ -153,47 +225,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return bottomBorderY;
         }
 
-        public EnemiesGroup(Game i_Game) : base(i_Game)
-        {
-        }
-
-        public override void Initialize()
-        {
-            this.InitEnemyGroup();
-            base.Initialize();
-        }
-
-        private void InitEnemyGroup()
-        {
-            // TODO: initilize the EnemiesGroup matrix
-            this.InitEnemiesRow(0, @"Sprites\Enemy0101_32x32", Color.Pink); 
-            for (int i = 1; i < k_EnemiesRows; i++)
-            {
-                if (i < 3)
-                {
-                    this.InitEnemiesRow(i, @"Sprites\Enemy0201_32x32", Color.LightBlue);
-                }
-                else 
-                {
-                    this.InitEnemiesRow(i, @"Sprites\Enemy0301_32x32", Color.LightYellow);
-                }
-            }
-
-            this.m_currTopLeftX = 0;
-            this.m_currTopLeftY = k_enemyHeight * 3f;
-            updatePositions(m_currTopLeftX, m_currTopLeftY);
-        }
-
-        private void InitEnemiesRow(int i_Row, string i_AssetName, Color i_Tint)
-        {
-            for (int colum = 0; colum < k_EnemiesColumns; colum++)
-            {
-                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_AssetName);
-                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += CountDeadEnemies;
-                this.m_EnemiesMatrix[i_Row, colum].AddComponent();
-            }
-        }
-
         private void CountDeadEnemies(object sender, EventArgs args)
         {
             m_NumOfDeadEnemies++;
@@ -203,25 +234,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
         }
 
-        public void updatePositions(float i_X, float i_Y)
-        {
-            float enemiesGap = k_enemyHeight * 0.6f;
-            float startX = i_X;
-            float strartY = i_Y;
-
-            for (int i = 0; i < k_EnemiesRows; i++)
-            {
-                for (int j = 0; j < k_EnemiesColumns; j++)
-                {
-                    this.m_EnemiesMatrix[i, j].Position = new Vector2(startX, strartY);
-                    startX += k_enemyHeight + enemiesGap;
-                }
-
-                startX = i_X;
-                strartY += k_enemyHeight + enemiesGap;
-            }
-        }
-      
         private void JumpHorizontalStep(GameTime i_GameTime)
         {
                 float lastRightJump = GraphicsDevice.Viewport.Width - this.getRightGroupBorder();
