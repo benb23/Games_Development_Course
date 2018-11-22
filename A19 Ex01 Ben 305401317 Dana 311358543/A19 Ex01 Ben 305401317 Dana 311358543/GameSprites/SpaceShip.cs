@@ -93,7 +93,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             {
                 currBullet = this.getUnVisibleBulletFromList();
                 currBullet.Visible = true;
-                currBullet.initBulletPosition(this);
+                currBullet.InitBulletPosition(this);
             }
 
             return currBullet;

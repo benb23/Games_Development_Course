@@ -21,7 +21,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private int m_NumOfDeadEnemies = 0;
         private bool m_IncreaseVelocityWhen4Dead = false;
         private Enemy[,] m_EnemiesMatrix;
-
         private bool m_IsLastStepInRow = false;
         private float m_TimeCounter = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
