@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
@@ -16,11 +9,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private int m_CurrSoulsNumber = k_MaxSoulsNumber;
         private int m_SoulIndx;
 
-        public Soul(Game game, Color i_Tint, int SoulIndex) : base(game)
+        public Soul(Game i_Game, Color i_Tint, int i_SoulIndex) : base(i_Game)
         {
             this.m_AssetName = @"Sprites\Ship01_32x32";
             this.m_Tint = i_Tint;
-            this.m_SoulIndx = SoulIndex;
+            this.m_SoulIndx = i_SoulIndex;
         }
 
         public int SoulIndex

@@ -25,45 +25,18 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
                 if (i_HittenSprite is SpaceShip)
                 {
-                    this.HandleSpaceShipHit((SpaceShip)i_HittenSprite);
+                    this.handleSpaceShipHit((SpaceShip)i_HittenSprite);
                 }
                 else
                 {
-                    this.HandleNonSpaceShipHit(i_HittenSprite);
+                    this.handleNonSpaceShipHit(i_HittenSprite);
                 }
           }
 
-        private void HandleSpaceShipHit(SpaceShip i_SpaceShip)
-        {
-            ScoreManager scoreManager = SpaceInvaders.s_GameUtils.ScoreManager;
-
-            if (scoreManager.Souls.Count - 1 == 0)
-            {
-                i_SpaceShip.RemoveComponent();
-                SpaceInvaders.s_GameUtils.InputManager.showGameOverMessage();
-                this.m_Game.Exit();
-            }
-            else
-            {
-                scoreManager.UpdateScoreAfterCollision(i_SpaceShip);
-            }
-        }
-
-        private void HandleNonSpaceShipHit(Sprite i_Sprite)
-        {
-            i_Sprite.RemoveComponent();
-
-            if (i_Sprite is Enemy || i_Sprite is MotherSpaceShip)
-            {
-                ScoreManager scoreManager = SpaceInvaders.s_GameUtils.ScoreManager;
-                scoreManager.UpdateScoreAfterCollision(i_Sprite);
-            }
-        }
-
-        public Sprite IsGameObjectWasHitten(Bullet i_Bullet) // TODO: change name!
+        public Sprite IsGameObjectWasHitten(Bullet i_Bullet)
         {
             Sprite hittenSprite = null;
-            Rectangle BulletRectangle = new Rectangle((int)i_Bullet.Position.X, (int)i_Bullet.Position.Y, i_Bullet.Texture.Width, i_Bullet.Texture.Height);
+            Rectangle bulletRectangle = new Rectangle((int)i_Bullet.Position.X, (int)i_Bullet.Position.Y, i_Bullet.Texture.Width, i_Bullet.Texture.Height);
 
             foreach (DrawableGameComponent gameComponent in this.m_Game.Components)
             {
@@ -71,7 +44,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 {
                     Rectangle elementRectangle = new Rectangle((int)((Sprite)gameComponent).Position.X, (int)((Sprite)gameComponent).Position.Y, (int)((Sprite)gameComponent).Texture.Width, (int)((Sprite)gameComponent).Texture.Height);
 
-                    if (BulletRectangle.Intersects(elementRectangle))
+                    if (bulletRectangle.Intersects(elementRectangle))
                     {
                         hittenSprite = (Sprite)gameComponent;
                     }
@@ -81,9 +54,36 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return hittenSprite;
         }
 
-        private bool isShootableComponent(DrawableGameComponent gameComponent)
+        private void handleSpaceShipHit(SpaceShip i_SpaceShip)
         {
-            bool isShootableComponent = gameComponent is Enemy || gameComponent is Bullet || gameComponent is SpaceShip || gameComponent is MotherSpaceShip;
+            ScoreManager scoreManager = SpaceInvaders.s_GameUtils.ScoreManager;
+
+            if (scoreManager.Souls.Count - 1 == 0)
+            {
+                i_SpaceShip.RemoveComponent();
+                SpaceInvaders.s_GameUtils.InputManager.ShowGameOverMessage();
+                this.m_Game.Exit();
+            }
+            else
+            {
+                scoreManager.UpdateScoreAfterHit(i_SpaceShip);
+            }
+        }
+
+        private void handleNonSpaceShipHit(Sprite i_Sprite)
+        {
+            i_Sprite.RemoveComponent();
+
+            if (i_Sprite is Enemy || i_Sprite is MotherSpaceShip)
+            {
+                ScoreManager scoreManager = SpaceInvaders.s_GameUtils.ScoreManager;
+                scoreManager.UpdateScoreAfterHit(i_Sprite);
+            }
+        }
+
+        private bool isShootableComponent(DrawableGameComponent i_GameComponent)
+        {
+            bool isShootableComponent = i_GameComponent is Enemy || i_GameComponent is Bullet || i_GameComponent is SpaceShip || i_GameComponent is MotherSpaceShip;
 
             return isShootableComponent;
         }
@@ -92,15 +92,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             bool isOpponent;
 
-            if ((i_Bullet.Type == Bullet.eBulletType.EnemyBullet && (i_Sprite is SpaceShip || (i_Sprite is Bullet && ((Bullet)i_Sprite).Type == Bullet.eBulletType.SpaceShipBullet)))
-            || (i_Bullet.Type == Bullet.eBulletType.SpaceShipBullet && (i_Sprite is Enemy || i_Sprite is MotherSpaceShip)))
-            {
-                isOpponent = true;
-            }
-            else
-            {
-                isOpponent = false;
-            }
+            isOpponent = (i_Bullet.Type == Bullet.eBulletType.EnemyBullet && (i_Sprite is SpaceShip || (i_Sprite is Bullet && ((Bullet)i_Sprite).Type == Bullet.eBulletType.SpaceShipBullet)))
+            || (i_Bullet.Type == Bullet.eBulletType.SpaceShipBullet && (i_Sprite is Enemy || i_Sprite is MotherSpaceShip));
 
             return isOpponent;
         }
