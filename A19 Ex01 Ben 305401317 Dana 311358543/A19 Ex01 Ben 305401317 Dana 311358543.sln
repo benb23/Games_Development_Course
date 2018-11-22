@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A19 Ex01 Ben 305401317 Dana 311358543", "A19 Ex01 Ben 305401317 Dana 311358543\A19 Ex01 Ben 305401317 Dana 311358543.csproj", "{7003D013-93ED-400D-ABBB-14B88129F594}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D42BA751-BBE8-4EA4-90CE-37D36A1880E1}"
+	ProjectSection(SolutionItems) = preProject
+		A19 Ex01 Ben 305401317 Dana 311358543\Exercise Checking Report.txt = A19 Ex01 Ben 305401317 Dana 311358543\Exercise Checking Report.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86

@@ -1,7 +1,7 @@
 ==========================Exercise Checking Report==========================
 Exercise No...........: 1
-First Student Details.: 305401317- Ben Bublil
-Second Student Details: 305401317- Dana Keydar
+First Student Details.: 305401317 - Ben Bublil
+Second Student Details: 311358543 - Dana Keydar
 Delivery Date.........: 25 - November - 2018
 Delivered In Delay....: No
 Delay Reason..........: -
