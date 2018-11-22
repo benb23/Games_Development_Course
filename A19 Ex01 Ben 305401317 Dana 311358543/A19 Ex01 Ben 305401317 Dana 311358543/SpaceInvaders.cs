@@ -16,11 +16,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private const string k_GameName = "Space Invaders";
         public static GameUtils s_GameUtils;
         public static Random s_RandomNum;
+        public const int k_MaxRandomNumber = 50000;
         private GraphicsDeviceManager m_Graphics;
         private SpaceShip m_SpaceShip;
         private MotherSpaceShip m_MotherSpaceShip;
         private EnemiesGroup m_EnemysGroup;
         private Background m_Background;
+
 
         public SpaceInvaders()
         {

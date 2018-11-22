@@ -6,6 +6,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     public class MotherSpaceShip : Sprite
     {
         private const float k_MotherShipVelocity = 40;
+        private const int k_MaxRandomNumToDrawMotherShip = 40;
         private int m_CurrRandom = 100;
 
         public MotherSpaceShip(Game i_Game) : base(i_Game)
@@ -24,10 +25,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             if (!this.Visible)
             { 
-                this.m_CurrRandom = SpaceInvaders.s_RandomNum.Next(0, 55555);
+                this.m_CurrRandom = SpaceInvaders.s_RandomNum.Next(0, SpaceInvaders.k_MaxRandomNumber);
             }
 
-            if (this.m_CurrRandom <= 40)
+            if (this.m_CurrRandom <= k_MaxRandomNumToDrawMotherShip)
             {
                 this.Visible = true;
                 this.m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
