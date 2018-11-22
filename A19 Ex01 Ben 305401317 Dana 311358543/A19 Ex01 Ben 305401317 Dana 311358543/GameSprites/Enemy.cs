@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
@@ -22,11 +14,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime i_GameTime)
         {
-            int rnd = SpaceInvaders.s_RandomNum.Next(0, 55555);
+            int rnd = SpaceInvaders.s_RandomNum.Next(0, 30000);
             
             if (rnd <= 10)
             {
-                this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet, this));    // game?
+                this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet, this));
             }
         }
 

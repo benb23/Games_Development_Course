@@ -13,6 +13,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public class SpaceInvaders : Game
     {
+        private const string k_GameName = "Space Invaders";
         public static GameUtils s_GameUtils;
         public static Random s_RandomNum;
         private GraphicsDeviceManager m_Graphics;
@@ -42,27 +43,21 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             this.IsMouseVisible = true;
         }
 
-        private bool isSpaceShipAllowedToShoot()
-        {
-            bool isAllowed = this.m_SpaceShip.CountNumOfVisibleBullets() < SpaceShip.k_MaxNumOfBullets;
-
-            return isAllowed;
-        }
-
         protected override void Initialize()
         {
             s_GameUtils.SpriteBatch = new SpriteBatch(GraphicsDevice);
 
+            this.Window.Title = k_GameName;
             this.m_Graphics.IsFullScreen = false;
             this.m_Graphics.PreferredBackBufferWidth = 800;
-            this.m_Graphics.PreferredBackBufferHeight = 640;
+            this.m_Graphics.PreferredBackBufferHeight = 600;
             this.m_Graphics.ApplyChanges();
             base.Initialize();
         }
 
-        protected override void Update(GameTime gameTime)
+        protected override void Update(GameTime i_GameTime)
         {
-            if (s_GameUtils.InputManager.isUserAskedToExit())   
+            if (s_GameUtils.InputManager.IsUserAskedToExit())   
             {
                 this.Exit();
             }
@@ -75,15 +70,22 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 }
             }
             
-            base.Update(gameTime);
+            base.Update(i_GameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        protected override void Draw(GameTime i_GameTime)
         {
             GraphicsDevice.Clear(Color.Black);
             s_GameUtils.SpriteBatch.Begin();
-            base.Draw(gameTime);
+            base.Draw(i_GameTime);
             s_GameUtils.SpriteBatch.End();
+        }
+
+        private bool isSpaceShipAllowedToShoot()
+        {
+            bool isAllowed = this.m_SpaceShip.CountNumOfVisibleBullets() < SpaceShip.k_MaxNumOfBullets;
+
+            return isAllowed;
         }
     }
 }

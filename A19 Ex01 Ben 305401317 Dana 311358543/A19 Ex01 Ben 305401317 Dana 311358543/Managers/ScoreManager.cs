@@ -26,12 +26,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private List<Soul> m_Souls;
         private int m_Score;
 
-        public ScoreManager(Game i_Game) : base(i_Game)
-        {
-            this.m_Souls = new List<Soul>(3);
-            this.m_Score = 0;
-        }
-
         public int Score
         {
             get { return this.m_Score; }
@@ -44,6 +38,35 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             set { this.m_Souls = value; }
         }
 
+        public ScoreManager(Game i_Game) : base(i_Game)
+        {
+            this.m_Souls = new List<Soul>(3);
+            this.m_Score = 0;
+        }
+
+        public override void Initialize()
+        {
+            for (int i = 0; i < this.m_Souls.Capacity; i++)
+            {
+                this.m_Souls.Add(new Soul(Game, Color.Green, i));
+                this.m_Souls[i].AddComponent();
+            }
+
+            base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
+            this.m_SpriteBatch = SpaceInvaders.s_GameUtils.SpriteBatch;
+            this.m_ArialFont = Game.Content.Load<SpriteFont>("Arial");
+        }
+
+        public override void Draw(GameTime i_GameTime)
+        {
+            this.m_SpriteBatch.DrawString(this.m_ArialFont, "Score: " + this.m_Score, Vector2.One, Color.White);
+            this.m_SpriteBatch.DrawString(this.m_ArialFont, "Souls: ", new Vector2(Game.GraphicsDevice.Viewport.Width - 170, 1), Color.White);
+        }
+
         public void updateScoreAfterLoosingSoul()
         {
             this.m_Souls[this.m_Souls.Count - 1].RemoveComponent();
@@ -51,7 +74,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             this.m_Score = (int)MathHelper.Clamp(this.m_Score - (int)eScoreValue.Soul, 0, float.PositiveInfinity);
         }
 
-        public void UpdateScoreAfterCollision(Sprite sprite)
+        public void UpdateScoreAfterHit(Sprite sprite)
         {
             if(sprite is Enemy)
             {
@@ -90,29 +113,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private void updateScoreAfterKillingMotherShip()
         {
             this.m_Score += (int)eScoreValue.MotherShip;
-        }
-
-        protected override void LoadContent()
-        {
-            this.m_SpriteBatch = SpaceInvaders.s_GameUtils.SpriteBatch;
-            this.m_ArialFont = Game.Content.Load<SpriteFont>("Arial");
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            this.m_SpriteBatch.DrawString(this.m_ArialFont, "Score: " + this.m_Score, Vector2.One, Color.White);
-            this.m_SpriteBatch.DrawString(this.m_ArialFont, "Souls: ", new Vector2(Game.GraphicsDevice.Viewport.Width - 170, 1), Color.White);
-        }
-
-        public override void Initialize()
-        {
-            for (int i = 0; i < this.m_Souls.Capacity; i++)
-            {
-                this.m_Souls.Add(new Soul(Game, Color.Green, i));
-                this.m_Souls[i].AddComponent();
-            }
-
-            base.Initialize();
         }
     }
 }

@@ -15,7 +15,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private KeyboardState m_PastKey;
         private MouseState m_pastMouseState;
         private KeyboardState m_CurrKeyboardState;
-
         public static MouseState? m_PrevMouseState;
 
         public Vector2 GetMousePositionDelta()
@@ -57,19 +56,19 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         public bool IsUserAskedToMoveLeft()
         {
-            m_CurrKeyboardState = Keyboard.GetState();
-            bool IsUserAskedToMoveLeft = m_CurrKeyboardState.IsKeyDown(Keys.Left);
+            this.m_CurrKeyboardState = Keyboard.GetState();
+            bool IsUserAskedToMoveLeft = this.m_CurrKeyboardState.IsKeyDown(Keys.Left);
             return IsUserAskedToMoveLeft;
         }
 
         public bool IsUserAskedToMoveRight()
         {
-            m_CurrKeyboardState = Keyboard.GetState();
-            bool IsUserAskedToMoveRight = m_CurrKeyboardState.IsKeyDown(Keys.Right);
+            this.m_CurrKeyboardState = Keyboard.GetState();
+            bool IsUserAskedToMoveRight = this.m_CurrKeyboardState.IsKeyDown(Keys.Right);
             return IsUserAskedToMoveRight;
         }
 
-        public bool isUserAskedToExit()
+        public bool IsUserAskedToExit()
         {
             this.m_CurrKeyboardState = Keyboard.GetState();
             bool isUserAskedToExit = this.m_CurrKeyboardState.IsKeyDown(Keys.Escape);
@@ -77,7 +76,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             return isUserAskedToExit;
         }
 
-        public void showGameOverMessage()
+        public void ShowGameOverMessage()
         {
             System.Windows.Forms.MessageBox.Show(string.Format(
 @"Game Over

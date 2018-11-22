@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
@@ -20,11 +14,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private float m_currTopLeftY;
         private int m_NumOfDeadEnemies = 0;
         private bool m_IncreaseVelocityWhen4Dead = false;
-        private Enemy[,] m_EnemiesMatrix;
-
         private bool m_IsLastStepInRow = false;
         private float m_TimeCounter = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
+        private Enemy[,] m_EnemiesMatrix;
 
         public EnemiesGroup(Game i_Game) : base(i_Game)
         {
@@ -97,12 +90,12 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             if (this.isEnemiesGroupTouchTheBotton() || this.isAllEnemiesDead())
             {
-                SpaceInvaders.s_GameUtils.InputManager.showGameOverMessage();
+                SpaceInvaders.s_GameUtils.InputManager.ShowGameOverMessage();
                 Game.Exit();
             }
         }
 
-        public void updatePositions(float i_X, float i_Y)
+        private void updatePositions(float i_X, float i_Y)
         {
             float enemiesGap = k_enemyHeight * 0.6f;
             float startX = i_X;
@@ -263,9 +256,9 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             this.increaseVelocity(0.08f);
         }
 
-        private void increaseVelocity(float i_timeToIncrease)
+        private void increaseVelocity(float i_TimeToIncrease)
         {
-            this.m_TimeUntilNextStepInSec -= this.m_TimeUntilNextStepInSec * i_timeToIncrease;
+            this.m_TimeUntilNextStepInSec -= this.m_TimeUntilNextStepInSec * i_TimeToIncrease;
         }
     }
 }
