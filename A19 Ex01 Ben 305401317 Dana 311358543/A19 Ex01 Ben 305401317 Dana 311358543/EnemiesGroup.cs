@@ -22,11 +22,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             this.m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
         }
-
         
         public override void Initialize()
         {
             this.initEnemyGroup();
+
+            // initilize enemies positions
+            this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);
             base.Initialize();
         }
         
@@ -45,10 +47,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 }
             }
 
-            m_EnemiesMatrix[0, 0].LoadAsset();//for calculating positions according to enemy texture (generic) 
+            // For calculating positions according to enemy texture width (generic)
+            this.m_EnemiesMatrix[0, 0].LoadAsset();
+
             this.m_currTopLeftX = 0;          
-            this.m_currTopLeftY = m_EnemiesMatrix[0,0].Texture.Height * 3f;
-            this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);//init positions
+            this.m_currTopLeftY = this.m_EnemiesMatrix[0, 0].Texture.Width * 3f;
         }
 
         private void initEnemiesRow(int i_Row, string i_AssetName, Color i_Tint)
@@ -98,7 +101,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void updatePositions(float i_X, float i_Y)
         {
-            float enemiesGap = m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
+            float enemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
             float startX = i_X;
             float strartY = i_Y;
 
@@ -107,11 +110,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 for (int j = 0; j < k_EnemiesColumns; j++)
                 {
                     this.m_EnemiesMatrix[i, j].Position = new Vector2(startX, strartY);
-                    startX += m_EnemiesMatrix[0, 0].Texture.Height + enemiesGap;
+                    startX += this.m_EnemiesMatrix[0, 0].Texture.Height + enemiesGap;
                 }
 
                 startX = i_X;
-                strartY += m_EnemiesMatrix[0, 0].Texture.Height + enemiesGap;
+                strartY += this.m_EnemiesMatrix[0, 0].Texture.Height + enemiesGap;
             }
         }
 
