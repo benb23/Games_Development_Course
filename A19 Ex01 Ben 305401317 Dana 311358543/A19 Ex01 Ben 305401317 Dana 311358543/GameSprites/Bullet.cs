@@ -60,10 +60,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 this.m_Tint = Color.Red;
             }
 
-            this.initBulletPosition(i_Shooter);
+            this.InitBulletPosition(i_Shooter);
         }
 
-        public void initBulletPosition(Sprite i_Shooter) 
+        public void InitBulletPosition(Sprite i_Shooter) 
         {
             this.Position = new Vector2(i_Shooter.Position.X + (i_Shooter.Texture.Width / 2), i_Shooter.Position.Y + ((float)this.m_Type * (1 + i_Shooter.Texture.Height))); 
         }

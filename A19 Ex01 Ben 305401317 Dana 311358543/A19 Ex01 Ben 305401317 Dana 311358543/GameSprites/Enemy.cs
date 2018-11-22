@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
@@ -10,6 +11,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         {
             this.m_AssetName = i_AssetName;
             this.m_Tint = i_Tint;
+        }
+
+        public void LoadAsset()
+        {
+            this.Texture = this.Game.Content.Load<Texture2D>(this.m_AssetName);
         }
 
         public override void Update(GameTime i_GameTime)

@@ -6,7 +6,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
     public class EnemiesGroup : DrawableGameComponent
     {
-        private const float k_enemyHeight = 32f;
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
         private float m_Direction = 1f;
@@ -24,12 +23,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             this.m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
         }
 
+        
         public override void Initialize()
         {
             this.initEnemyGroup();
             base.Initialize();
         }
-
+        
         private void initEnemyGroup()
         {
             this.initEnemiesRow(0, @"Sprites\Enemy0101_32x32", Color.Pink);
@@ -45,9 +45,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 }
             }
 
-            this.m_currTopLeftX = 0;
-            this.m_currTopLeftY = k_enemyHeight * 3f;
-            this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);
+            m_EnemiesMatrix[0, 0].LoadAsset();//for calculating positions according to enemy texture (generic) 
+            this.m_currTopLeftX = 0;          
+            this.m_currTopLeftY = m_EnemiesMatrix[0,0].Texture.Height * 3f;
+            this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);//init positions
         }
 
         private void initEnemiesRow(int i_Row, string i_AssetName, Color i_Tint)
@@ -97,7 +98,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void updatePositions(float i_X, float i_Y)
         {
-            float enemiesGap = k_enemyHeight * 0.6f;
+            float enemiesGap = m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
             float startX = i_X;
             float strartY = i_Y;
 
@@ -106,11 +107,11 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 for (int j = 0; j < k_EnemiesColumns; j++)
                 {
                     this.m_EnemiesMatrix[i, j].Position = new Vector2(startX, strartY);
-                    startX += k_enemyHeight + enemiesGap;
+                    startX += m_EnemiesMatrix[0, 0].Texture.Height + enemiesGap;
                 }
 
                 startX = i_X;
-                strartY += k_enemyHeight + enemiesGap;
+                strartY += m_EnemiesMatrix[0, 0].Texture.Height + enemiesGap;
             }
         }
 
