@@ -6,7 +6,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
     public class MotherSpaceShip : Sprite
     {
         private const float k_MotherShipVelocity = 40;
-        private const int k_MaxRandomNumToDrawMotherShip = 40;
+        private const int k_MaxRandomNumToDrawMotherShip = 70;
         private int m_CurrRandom = 100;
 
         public MotherSpaceShip(Game i_Game) : base(i_Game)
@@ -34,10 +34,17 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 this.m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
                 if (m_Position.X >= GraphicsDevice.Viewport.Width)
                 {
-                    this.Visible = false;
-                    this.InitPosition();
+                    this.RemoveComponent();   
                 }
             }
+        }
+
+        public override void RemoveComponent()
+        {
+            this.Visible = false;
+
+            // init position for the next time the Mothership will appear
+            this.InitPosition();
         }
     }
 }
