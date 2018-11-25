@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
@@ -30,7 +24,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             s_GameUtils.ShootingManager = new ShootingManager(this);
             s_GameUtils.ScoreManager = new ScoreManager(this);
             Components.Add(s_GameUtils.ScoreManager);
-            s_GameUtils.InputManager = new InputManager();
+            s_GameUtils.InputOutputManager = new InputOutputManager();
             this.m_Background = new Background(this);
             Components.Add(this.m_Background);
             this.m_Graphics = new GraphicsDeviceManager(this);
@@ -46,8 +40,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         protected override void Initialize()
         {
+            Mouse.SetPosition((int)this.m_SpaceShip.Position.X, GraphicsDevice.Viewport.Height);
             s_GameUtils.SpriteBatch = new SpriteBatch(GraphicsDevice);
-
             this.Window.Title = k_GameName;
             this.m_Graphics.IsFullScreen = false;
             this.m_Graphics.PreferredBackBufferWidth = 800;
@@ -58,14 +52,14 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         protected override void Update(GameTime i_GameTime)
         {
-            if (s_GameUtils.InputManager.IsUserAskedToExit())   
+            if (s_GameUtils.InputOutputManager.IsUserAskedToExit())   
             {
                 this.Exit();
             }
 
             if (this.isSpaceShipAllowedToShoot())
             {
-                if (s_GameUtils.InputManager.IsUserAskedToShoot())
+                if (s_GameUtils.InputOutputManager.IsUserAskedToShoot())
                 {
                     this.m_SpaceShip.Shoot();
                 }

@@ -43,16 +43,16 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
         private void moveUsingMouse()
         {
-            this.Position = new Vector2(this.Position.X + SpaceInvaders.s_GameUtils.InputManager.GetMousePositionDelta().X, Position.Y);
+            this.Position = new Vector2(this.Position.X + SpaceInvaders.s_GameUtils.InputOutputManager.GetMousePositionDelta().X, Position.Y);
         }
 
         private void moveUsingKeyboard(GameTime i_GameTime)
         {
-            if (SpaceInvaders.s_GameUtils.InputManager.IsUserAskedToMoveLeft())
+            if (SpaceInvaders.s_GameUtils.InputOutputManager.IsUserAskedToMoveLeft())
             {
                 this.Position = new Vector2(this.Position.X - (k_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
             }
-            else if (SpaceInvaders.s_GameUtils.InputManager.IsUserAskedToMoveRight())
+            else if (SpaceInvaders.s_GameUtils.InputOutputManager.IsUserAskedToMoveRight())
             {
                 this.Position = new Vector2(this.Position.X + (k_KeyboardVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds), this.Position.Y);
             }

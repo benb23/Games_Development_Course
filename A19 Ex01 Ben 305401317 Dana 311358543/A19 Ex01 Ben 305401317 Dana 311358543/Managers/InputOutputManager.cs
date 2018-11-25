@@ -10,12 +10,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex01_Ben_305401317_Dana_311358543
 {
-    public class InputManager
+    public class InputOutputManager
     {
         private KeyboardState m_PastKey;
-        private MouseState m_pastMouseState;
         private KeyboardState m_CurrKeyboardState;
-        public static MouseState? m_PrevMouseState;
+        private MouseState m_PrevMouseState;
 
         public Vector2 GetMousePositionDelta()
         {
@@ -25,8 +24,8 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             if (m_PrevMouseState != null)
             {
-                retVal.X = currState.X - m_PrevMouseState.Value.X;
-                retVal.Y = currState.Y - m_PrevMouseState.Value.Y;
+                retVal.X = currState.X - m_PrevMouseState.X;
+                retVal.Y = currState.Y - m_PrevMouseState.Y;
             }
 
             m_PrevMouseState = currState;
@@ -40,17 +39,10 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             KeyboardState currKeyboardState = Keyboard.GetState();
             MouseState currMouseState = Mouse.GetState();
 
-            if ((currKeyboardState.IsKeyDown(Keys.Enter) && this.m_PastKey.IsKeyUp(Keys.Enter)) || (currMouseState.LeftButton.Equals(ButtonState.Pressed) && this.m_pastMouseState.LeftButton.Equals(ButtonState.Released)))
-            {
-                isShootingOrder = true;
-            }
-            else
-            {
-                isShootingOrder = false;
-            }
+            isShootingOrder = (currKeyboardState.IsKeyDown(Keys.Enter) && this.m_PastKey.IsKeyUp(Keys.Enter)) ||
+                              (currMouseState.LeftButton.Equals(ButtonState.Pressed) && this.m_PrevMouseState.LeftButton.Equals(ButtonState.Released));
 
             this.m_PastKey = Keyboard.GetState();
-            this.m_pastMouseState = Mouse.GetState();
             return isShootingOrder;
         }
 

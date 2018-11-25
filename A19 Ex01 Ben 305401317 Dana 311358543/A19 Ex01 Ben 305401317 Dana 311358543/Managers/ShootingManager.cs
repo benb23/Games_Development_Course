@@ -61,7 +61,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             if (scoreManager.Souls.Count - 1 == 0)
             {
                 i_SpaceShip.RemoveComponent();
-                SpaceInvaders.s_GameUtils.InputManager.ShowGameOverMessage();
+                SpaceInvaders.s_GameUtils.InputOutputManager.ShowGameOverMessage();
                 this.m_Game.Exit();
             }
             else

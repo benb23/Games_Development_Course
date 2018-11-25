@@ -94,7 +94,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             if (this.isEnemiesGroupTouchTheBotton() || this.isAllEnemiesDead())
             {
-                SpaceInvaders.s_GameUtils.InputManager.ShowGameOverMessage();
+                SpaceInvaders.s_GameUtils.InputOutputManager.ShowGameOverMessage();
                 Game.Exit();
             }
         }
