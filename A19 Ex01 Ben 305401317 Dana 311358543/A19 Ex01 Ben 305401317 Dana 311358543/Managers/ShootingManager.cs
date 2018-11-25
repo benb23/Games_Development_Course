@@ -66,6 +66,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             }
             else
             {
+                i_SpaceShip.InitPosition();
                 scoreManager.UpdateScoreAfterHit(i_SpaceShip);
             }
         }
