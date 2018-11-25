@@ -22,13 +22,13 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
 
             MouseState currState = Mouse.GetState();
 
-            if (m_PrevMouseState != null)
+            if (this.m_PrevMouseState != null)
             {
-                retVal.X = currState.X - m_PrevMouseState.X;
-                retVal.Y = currState.Y - m_PrevMouseState.Y;
+                retVal.X = currState.X - this.m_PrevMouseState.X;
+                retVal.Y = currState.Y - this.m_PrevMouseState.Y;
             }
 
-            m_PrevMouseState = currState;
+            this.m_PrevMouseState = currState;
 
             return retVal;
         }
