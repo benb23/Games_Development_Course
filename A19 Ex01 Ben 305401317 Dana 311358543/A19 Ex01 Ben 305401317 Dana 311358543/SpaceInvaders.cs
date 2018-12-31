@@ -17,7 +17,6 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
         private EnemiesGroup m_EnemysGroup;
         private Background m_Background;
 
-
         public SpaceInvaders()
         {
             s_RandomNum = new Random();
