@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-
+﻿using Microsoft.Xna.Framework;
 using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
@@ -33,23 +22,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime i_GameTime)
         {
-            ShootingManager shootingManager = SpaceInvaders.s_GameUtils.ShootingManager;
-
             if (this.isBulletHitTheScreenBorder())
             {
-                this.RemoveComponent();
+                this.Visible = false;
             }
 
-            Sprite hittenSprite = shootingManager.IsGameObjectWasHitten(this);
-
-            if (hittenSprite != null)
-            {
-                shootingManager.OnHit(this, hittenSprite);
-            }
-            else
-            {
-                this.Position = new Vector2(this.Position.X, this.Position.Y + ((float)this.m_Type * k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds));
-            }
+            this.Position = new Vector2(this.Position.X, this.Position.Y + ((float)this.m_Type * k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds));
         }
 
         private bool isBulletHitTheScreenBorder()
@@ -77,12 +55,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-
-        }
-
-        bool ICollidable.CheckCollision(ICollidable i_Source)
-        {
-            return false;
+            Visible = false;
         }
     }
 }

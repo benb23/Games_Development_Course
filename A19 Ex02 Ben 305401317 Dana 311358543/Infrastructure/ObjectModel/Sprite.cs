@@ -56,6 +56,8 @@ namespace Infrastructure
             }
         }
 
+        protected Vector2 m_Origin;
+
         protected Vector2 m_Position;
         public Vector2 Position
         {

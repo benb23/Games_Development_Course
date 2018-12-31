@@ -14,10 +14,13 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    class Enemy : Sprite, ICollidable2D
+    public class Enemy : Sprite, ICollidable2D
     {
         private const string k_AssteName = @"Sprites\Enemy01_32x32";
-        Gun m_Gun;
+        private Gun m_Gun;
+        private const int k_MaxRandomToShoot = 10; //TODO: LOCATION?
+        public const int k_MaxRandomNumber = 50000; //TODO: LOCATION?
+
 
         public Enemy(Game i_Game, Color i_EnemyColor)
             : base(k_AssteName, i_Game)
@@ -25,29 +28,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_TintColor = i_EnemyColor;
         }
 
-        protected override void InitBounds()
+        public override void Update(GameTime i_GameTime)
         {
-            base.InitBounds();
+            int rnd = SpaceInvaders.s_RandomNum.Next(0, k_MaxRandomNumber);
 
-            // put in bottom center of view port:
-            // get the bottom and center
-            float x = (float)GraphicsDevice.Viewport.Width / 2;
-            float y = 50;
-
-            // offset:
-            x -= m_Width / 2;
-
-            m_Position = new Vector2(x, y);
+            if (rnd <= k_MaxRandomToShoot)
+            {
+                this.m_Gun.Shoot(Bullet.eBulletType.EnemyBullet,m_Origin ,Game); //TODO: is it class Game or space invaders?
+            }
         }
-
         void ICollidable.Collided(ICollidable i_Collidable)
         {
+                Visible = false;
 
-        }
-
-        bool ICollidable.CheckCollision(ICollidable i_Source)
-        {
-            return false;
         }
     }
     

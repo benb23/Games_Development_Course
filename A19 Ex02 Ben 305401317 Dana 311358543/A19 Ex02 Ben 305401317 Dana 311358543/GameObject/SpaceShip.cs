@@ -17,7 +17,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     class SpaceShip : Sprite , ICollidable2D
     {
         private const string k_AssteName = @"Sprites\Ship01_32x32";
-        Gun m_Gun;
+        private Gun m_Gun;
         IInputManager m_InputManager;
 
         public SpaceShip(Game i_Game)
@@ -27,11 +27,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         void ICollidable.Collided(ICollidable i_Collidable)
         {
 
-        }
-
-        bool ICollidable.CheckCollision(ICollidable i_Source)
-        {
-            return false;
         }
     }
 }

@@ -28,10 +28,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
 
         }
-
-        bool ICollidable.CheckCollision(ICollidable i_Source)
-        {
-            return false;
-        }
     }
 }

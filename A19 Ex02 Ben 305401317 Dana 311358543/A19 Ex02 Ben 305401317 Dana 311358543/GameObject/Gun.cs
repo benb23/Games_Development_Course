@@ -14,7 +14,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Gun
     {
-        void Shoot(Bullet.eBulletType i_eBulletType,Vector2 i_ShooterOrigin, Game i_Game )
+        public void Shoot(Bullet.eBulletType i_eBulletType,Vector2 i_ShooterOrigin, Game i_Game )
         {
             Bullet bullet = new Bullet(i_Game, i_eBulletType);
             bullet.Initialize();
