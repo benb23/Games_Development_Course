@@ -17,6 +17,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     class Enemy : Sprite, ICollidable2D
     {
         private const string k_AssteName = @"Sprites\Enemy01_32x32";
+        Gun m_Gun;
 
         public Enemy(Game i_Game, Color i_EnemyColor)
             : base(k_AssteName, i_Game)
