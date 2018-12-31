@@ -33,5 +33,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             return false;
         }
+
+        protected void Shoot()
+        {
+            Bullet bullet = new Bullet(this.Game, Bullet.eBulletType.SpaceShipBullet);
+            bullet.Initialize();
+            bullet.Position = new Vector2(m_Position.X + m_Width / 2, m_Position.Y - bullet.Height / 2);
+        }
     }
 }
