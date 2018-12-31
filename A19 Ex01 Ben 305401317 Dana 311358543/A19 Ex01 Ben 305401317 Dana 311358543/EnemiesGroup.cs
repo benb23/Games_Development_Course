@@ -254,6 +254,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
                 }
         }
         
+
         private void jumpDown()
         {
             this.m_currTopLeftY += this.m_EnemiesMatrix[0, 0].Texture.Width / 2;
