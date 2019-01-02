@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="GameObject\EnemiesGroup.cs" />
     <Compile Include="GameObject\Gun.cs" />
+    <Compile Include="GameObject\Wall.cs" />
+    <Compile Include="GameObject\WallsGroup.cs" />
     <Compile Include="Interfaces\IGameEngine.cs" />
     <Compile Include="Managers\GameEngine.cs" />
     <Compile Include="Player.cs" />
