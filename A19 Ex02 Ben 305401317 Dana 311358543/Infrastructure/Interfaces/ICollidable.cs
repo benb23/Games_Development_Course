@@ -17,6 +17,7 @@ namespace Infrastructure
         event EventHandler<EventArgs> SizeChanged;
         event EventHandler<EventArgs> VisibleChanged;
         event EventHandler<EventArgs> Disposed;
+
         bool Visible { get; }
         bool CheckCollision(ICollidable i_Source);
         void Collided(ICollidable i_Collidable);

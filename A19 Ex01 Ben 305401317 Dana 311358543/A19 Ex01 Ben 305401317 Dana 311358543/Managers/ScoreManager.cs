@@ -67,6 +67,7 @@ namespace A19_Ex01_Ben_305401317_Dana_311358543
             this.m_SpriteBatch.DrawString(this.m_ArialFont, "Souls: ", new Vector2(Game.GraphicsDevice.Viewport.Width - 170, 1), Color.White);
         }
 
+        //
         public void updateScoreAfterLoosingSoul()
         {
             this.m_Souls[this.m_Souls.Count - 1].RemoveComponent();

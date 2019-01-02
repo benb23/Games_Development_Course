@@ -5,10 +5,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Bullet : Sprite, ICollidable2D
     {
-        public enum eBulletType
+        public enum eBulletType //change the direction
         {
-            SpaceShipBullet = -1,
-            EnemyBullet = 1
+            PlayerOneBullet,
+            PlayerTwoBullet,
+            EnemyBullet 
         }
 
         private const string k_AssteName = @"Sprites\Bullet";

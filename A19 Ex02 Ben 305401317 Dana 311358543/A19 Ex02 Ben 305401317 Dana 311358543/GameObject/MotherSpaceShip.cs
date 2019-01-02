@@ -19,6 +19,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private const string k_AssteName = @"Sprites\Ship01_32x32";
 
         IInputManager m_InputManager;
+        IGameEngine m_ShootingManager;
 
         public MotherSpaceShip(Game i_Game)
 			: base(k_AssteName, i_Game)
@@ -26,7 +27,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
+            Visible = false;
 
+            if (m_ShootingManager == null)
+            {
+                m_ShootingManager = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+            }
+
+            m_ShootingManager.HandleHit(this, i_Collidable);
         }
     }
 }

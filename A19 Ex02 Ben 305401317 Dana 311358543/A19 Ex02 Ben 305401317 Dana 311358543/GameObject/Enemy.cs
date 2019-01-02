@@ -20,7 +20,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Gun m_Gun;
         private const int k_MaxRandomToShoot = 10; //TODO: LOCATION?
         public const int k_MaxRandomNumber = 50000; //TODO: LOCATION?
-
+        private IGameEngine m_ShootingManager;
 
         public Enemy(Game i_Game, Color i_EnemyColor)
             : base(k_AssteName, i_Game)
@@ -39,9 +39,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
         void ICollidable.Collided(ICollidable i_Collidable)
         {
+            if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
+            {
                 Visible = false;
+            }
 
+            if (m_ShootingManager == null)
+            {
+                m_ShootingManager = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+            }
+
+            m_ShootingManager.HandleHit(this, i_Collidable);
         }
-    }
-    
+    }   
 }

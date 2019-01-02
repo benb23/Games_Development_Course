@@ -11,7 +11,15 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Infrastructure
 {
-    public class ScoreManager : IScoreManager
+    public class ScoreManager : GameService , IScoreManager
     {
+        public ScoreManager(Game i_Game):base(i_Game)
+        {
+
+        }
+        public void UpdateScore()
+        {
+
+        }
     }
 }

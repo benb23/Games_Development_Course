@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public interface IScoreable
+    public interface IValuable
     {
-        int Score{ get; set; }
+        int ScoreValue { get; set; }
+
     }
 }
