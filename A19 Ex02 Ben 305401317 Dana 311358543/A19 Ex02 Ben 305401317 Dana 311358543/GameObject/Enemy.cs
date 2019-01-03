@@ -16,17 +16,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Enemy : Sprite, ICollidable2D
     {
+        private List<Bullet> m_Bullets = new List<Bullet>(5);
         private const string k_AssteName = @"Sprites\Enemy01_32x32";
         private Gun m_Gun;
         private const int k_MaxRandomToShoot = 10; //TODO: LOCATION?
         public const int k_MaxRandomNumber = 50000; //TODO: LOCATION?
         private IGameEngine m_GameEngine;
 
-        public Enemy(Game i_Game,Color i_Tint, string i_AssetName)
-            : base(k_AssteName, i_Game)
+        public Enemy(Game i_Game,Color i_Tint) : base(k_AssteName, i_Game)
         {
             m_TintColor = i_Tint;
-            AssetName = i_AssetName;
+            AssetName = k_AssteName;
             m_Gun = new Gun();
         }
 
@@ -41,8 +41,35 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (rnd <= k_MaxRandomToShoot)
             {
+                Bullet bullet = getBullet();
                 this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet) ,Position ,Game); //TODO: is it class Game or space invaders?
-            }//TODO: REUSE OF BULLETS!!!
+            }
+        }
+
+        private Bullet getBullet()
+        {
+            Bullet bullet = null;
+            bool freeBulletFound=false;
+
+            if(m_Bullets.Count > 0)
+            {
+                foreach (Bullet currBullet in m_Bullets)
+                {
+                    if(Visible==false)
+                    {
+                        bullet = currBullet;
+                        freeBulletFound = true;
+                    }
+                }
+            }
+            
+            if(!freeBulletFound)
+            {
+                bullet = new Bullet(Game, Bullet.eBulletType.EnemyBullet);
+                m_Bullets.Add(bullet);
+            }
+          
+            return bullet;
         }
 
         void ICollidable.Collided(ICollidable i_Collidable)

@@ -107,7 +107,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
-                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_AssetName);
+                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint);
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.countDeadEnemies;
             }
         }
