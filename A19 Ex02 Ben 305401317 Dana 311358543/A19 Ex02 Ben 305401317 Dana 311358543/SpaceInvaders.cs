@@ -10,83 +10,84 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Infrastructure;
+
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class SpaceInvaders : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private const int k_NumOfPlayers = 2;
+        private GameEngine m_GameEngine;
+        private GameInputManager m_InputManager;
+        SpriteBatch m_SpriteBatch;
         public static Random s_RandomNum;
+        public const int k_MaxRandomNumber = 50000;
+        private const string k_GameName = "Space Invaders";
+        private GraphicsDeviceManager m_Graphics;
+        private MotherSpaceShip m_MotherSpaceShip;
+        private EnemiesGroup m_EnemysGroup;
+        private Background m_Background;
+        private List<Player> m_Players;
 
         public SpaceInvaders()
         {
-            graphics = new GraphicsDeviceManager(this);
+            m_InputManager = new GameInputManager(this); 
+            m_Players = new List<Player>(2);
+            m_GameEngine = new GameEngine(this);
+            m_GameEngine.Players = m_Players;
+            m_InputManager = new GameInputManager(this);
+            s_RandomNum = new Random();
+            this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
+            Components.Add(this.m_Background);
+            this.m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.m_MotherSpaceShip = new MotherSpaceShip(this);
+            Components.Add(this.m_MotherSpaceShip);
+            this.m_EnemysGroup = new EnemiesGroup(this);
+            Components.Add(this.m_EnemysGroup);
+            this.IsMouseVisible = true;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            //Mouse.SetPosition((int)this.m_SpaceShip.Position.X, GraphicsDevice.Viewport.Height);
+            m_SpriteBatch = new SpriteBatch(GraphicsDevice);
+            this.Services.AddService(typeof(SpriteBatch), m_SpriteBatch);
+            this.Window.Title = k_GameName;
+            this.m_Graphics.IsFullScreen = false;
+            this.m_Graphics.PreferredBackBufferWidth = 800;
+            this.m_Graphics.PreferredBackBufferHeight = 600;
+            this.m_Graphics.ApplyChanges();
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
+        protected override void Update(GameTime i_GameTime)
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            if (m_InputManager.IsPlayerAskToExit())
+            {
+                this.Exit();
+            }
 
-            // TODO: use this.Content to load your game content here
+            for (int i=0; i< k_NumOfPlayers; i++)
+            {
+                if(m_Players[i].IsFreeBulletExists())
+                {
+                    if(m_InputManager.IsplayerAskedToShoot(i))
+                    {
+                        m_Players[i].Shoot();
+                    }
+                }
+            }
+
+            base.Update(i_GameTime);
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
+        protected override void Draw(GameTime i_GameTime)
         {
-            // TODO: Unload any non ContentManager content here
-        }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-
-            base.Update(gameTime);
-        }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
+            GraphicsDevice.Clear(Color.Black);
+            m_SpriteBatch.Begin();
+            base.Draw(i_GameTime);
+            m_SpriteBatch.End();
         }
     }
 }

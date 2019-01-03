@@ -14,11 +14,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Gun
     {
-        public void Shoot(Bullet.eBulletType i_eBulletType,Vector2 i_ShooterOrigin, Game i_Game )
+        public void Shoot(Bullet i_Bullet,Vector2 i_ShooterOrigin, Game i_Game )
         {
-            Bullet bullet = new Bullet(i_Game, i_eBulletType);
-            bullet.Initialize();
-            bullet.Position = new Vector2(i_ShooterOrigin.X , i_ShooterOrigin.Y - bullet.Height / 2);
+            i_Bullet.Initialize();
+            i_Bullet.Position = new Vector2(i_ShooterOrigin.X , i_ShooterOrigin.Y - i_Bullet.Height / 2);
         }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Infrastructure
 {
-    public class Sprite : LoadableDrawableComponent
+    public class Sprite : LoadableDrawableComponent 
     {
         private Texture2D m_Texture;
         public Texture2D Texture

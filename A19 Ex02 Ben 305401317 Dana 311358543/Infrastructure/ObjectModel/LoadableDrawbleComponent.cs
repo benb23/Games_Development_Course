@@ -31,6 +31,7 @@ namespace Infrastructure
 
         // TODO 11: Implement the PositionChanged event:
         public event EventHandler<EventArgs> PositionChanged;
+
         protected virtual void OnPositionChanged()
         {
             if (PositionChanged != null)
@@ -122,5 +123,11 @@ namespace Infrastructure
 
         protected abstract void DrawBoundingBox();
         // -- end of TODO 03
+
+        public void AddComponent()//TODO : ?
+        {
+            Game.Components.Add(this); // self-register as a coponent
+        }
+
     }
 }

@@ -13,8 +13,8 @@ using Microsoft.Xna.Framework.Media;
 using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
-{ 
-    public class GameEngine :GameService,IGameEngine
+{
+    public class GameEngine : GameService, IGameEngine
     {
         private enum eScoreValue
         {
@@ -28,10 +28,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Game m_Game;
         private List<Player> m_Players;
 
-        public GameEngine(Game i_Game): base(i_Game)
+        public GameEngine(Game i_Game) : base(i_Game)
         {
-            m_Players = new List<Player>(2);
             this.m_Game = i_Game;
+        }
+
+        public List<Player> Players
+        {
+            get { return m_Players; }
+            set { m_Players = value; }
         }
 
         public void HandleHit(ICollidable i_Sender, ICollidable i_Target)
@@ -108,7 +113,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        private void ShowGameOverMessage()
+        public void ShowGameOverMessage()
         {
             /*
             System.Windows.Forms.MessageBox.Show(string.Format(

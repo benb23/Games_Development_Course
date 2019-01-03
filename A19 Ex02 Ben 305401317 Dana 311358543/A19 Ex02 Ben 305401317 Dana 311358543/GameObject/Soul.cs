@@ -18,8 +18,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         private const string k_AssteName = @"Sprites\Ship01_32x32";
 
-        IInputManager m_InputManager;
-
         public Soul(Game i_Game)
             : base(k_AssteName, i_Game)
         { }

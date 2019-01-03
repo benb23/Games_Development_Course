@@ -20,12 +20,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Gun m_Gun;
         private const int k_MaxRandomToShoot = 10; //TODO: LOCATION?
         public const int k_MaxRandomNumber = 50000; //TODO: LOCATION?
-        private IGameEngine m_ShootingManager;
+        private IGameEngine m_GameEngine;
 
-        public Enemy(Game i_Game, Color i_EnemyColor)
+        public Enemy(Game i_Game,Color i_Tint, string i_AssetName)
             : base(k_AssteName, i_Game)
         {
-            m_TintColor = i_EnemyColor;
+            m_TintColor = i_Tint;
+            AssetName = i_AssetName;
+        }
+
+        public void LoadAsset()
+        {
+            this.Texture = this.Game.Content.Load<Texture2D>(this.m_AssetName);
         }
 
         public override void Update(GameTime i_GameTime)
@@ -34,9 +40,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (rnd <= k_MaxRandomToShoot)
             {
-                this.m_Gun.Shoot(Bullet.eBulletType.EnemyBullet,m_Origin ,Game); //TODO: is it class Game or space invaders?
-            }
+                this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet) ,m_Origin ,Game); //TODO: is it class Game or space invaders?
+            }//TODO: REUSE OF BULLETS!!!
         }
+
         void ICollidable.Collided(ICollidable i_Collidable)
         {
             if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
@@ -44,12 +51,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 Visible = false;
             }
 
-            if (m_ShootingManager == null)
+            if (m_GameEngine == null)
             {
-                m_ShootingManager = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
             }
 
-            m_ShootingManager.HandleHit(this, i_Collidable);
+            m_GameEngine.HandleHit(this, i_Collidable);
         }
     }   
 }
