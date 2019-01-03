@@ -75,7 +75,6 @@ namespace Infrastructure
                     }
                 }
 
-                // Informing i_Source and all the collided targets about the collision:
                 foreach (ICollidable target in collidedComponents)
                 {
                     target.Collided(i_Source);

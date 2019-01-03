@@ -47,7 +47,6 @@
     <Compile Include="GameObject\WallsGroup.cs" />
     <Compile Include="Interfaces\IGameEngine.cs" />
     <Compile Include="Managers\GameEngine.cs" />
-    <Compile Include="Managers\GameInputManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="SpaceInvaders.cs" />
     <Compile Include="Program.cs" />

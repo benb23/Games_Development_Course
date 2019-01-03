@@ -99,7 +99,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             // For calculating positions according to enemy texture width (generic)
             this.m_EnemiesMatrix[0, 0].LoadAsset();
 
-            this.m_currTopLeftX = 0;
+            this.m_currTopLeftX =this.m_EnemiesMatrix[0, 0].Texture.Width/2;
             this.m_currTopLeftY = this.m_EnemiesMatrix[0, 0].Texture.Width * 3f;
         }
 
@@ -109,7 +109,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_AssetName);
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.countDeadEnemies;
-                this.m_EnemiesMatrix[i_Row, colum].AddComponent();
             }
         }
 
@@ -171,7 +170,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     if (this.m_EnemiesMatrix[row, col].Visible)
                     {
-                        leftX = this.m_EnemiesMatrix[row, col].Position.X;
+                        leftX = this.m_EnemiesMatrix[row, col].Position.X - this.m_EnemiesMatrix[row, col].Texture.Width/2;
                         isFound = true;
                         break;
                     }
@@ -197,7 +196,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     if (this.m_EnemiesMatrix[row, col].Visible)
                     {
-                        rightBorderX = this.m_EnemiesMatrix[row, col].Position.X + this.m_EnemiesMatrix[row, col].Texture.Width;
+                        rightBorderX = this.m_EnemiesMatrix[row, col].Position.X + this.m_EnemiesMatrix[row, col].Texture.Width/2;
                         isFound = true;
                         break;
                     }
@@ -223,7 +222,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     if (this.m_EnemiesMatrix[row, col].Visible)
                     {
-                        bottomBorderY = this.m_EnemiesMatrix[row, col].Position.Y + this.m_EnemiesMatrix[row, col].Texture.Height;
+                        bottomBorderY = this.m_EnemiesMatrix[row, col].Position.Y + this.m_EnemiesMatrix[row, col].Texture.Height/2;
                         isFound = true;
                         break;
                     }

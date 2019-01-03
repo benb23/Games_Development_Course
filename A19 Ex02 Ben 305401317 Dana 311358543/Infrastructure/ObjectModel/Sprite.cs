@@ -105,18 +105,11 @@ namespace Infrastructure
             : base(i_AssetName, i_Game, int.MaxValue)
         { }
 
-        /// <summary>
-        /// Default initialization of bounds
-        /// </summary>
-        /// <remarks>
-        /// Derived classes are welcome to override this to implement their specific boudns initialization
-        /// </remarks>
         protected override void InitBounds()
         {
             // default initialization of bounds
             m_Width = m_Texture.Width;
             m_Height = m_Texture.Height;
-            m_Position = Vector2.Zero;
         }
 
 
@@ -175,8 +168,8 @@ namespace Infrastructure
             {
                 m_SpriteBatch.Begin();
             }
-
-            m_SpriteBatch.Draw(m_Texture, m_Position, m_TintColor);
+            m_SpriteBatch.Draw(m_Texture, Position, null, m_TintColor, 0, m_Origin, 1, SpriteEffects.None, 0);
+            //m_SpriteBatch.Draw(m_Texture, m_Position, m_TintColor);
 
             if (!m_UseSharedBatch)
             {

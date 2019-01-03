@@ -18,7 +18,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         private const int k_NumOfPlayers = 2;
         private GameEngine m_GameEngine;
-        private GameInputManager m_InputManager;
+        private InputManager m_InputManager;
         SpriteBatch m_SpriteBatch;
         public static Random s_RandomNum;
         public const int k_MaxRandomNumber = 50000;
@@ -31,26 +31,28 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public SpaceInvaders()
         {
-            m_InputManager = new GameInputManager(this); 
-            m_Players = new List<Player>(2);
-            m_GameEngine = new GameEngine(this);
-            m_GameEngine.Players = m_Players;
-            m_InputManager = new GameInputManager(this);
             s_RandomNum = new Random();
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
-            Components.Add(this.m_Background);
             this.m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
-            Components.Add(this.m_MotherSpaceShip);
             this.m_EnemysGroup = new EnemiesGroup(this);
             Components.Add(this.m_EnemysGroup);
             this.IsMouseVisible = true;
+            m_InputManager = new InputManager(this);
+            m_Players = new List<Player>(2);
+            m_Players.Add(new Player(this, Player.ePlayer.PlayerOne));//, new Vector2(1 / 3 * m_Graphics.GraphicsDevice.Viewport.Width , 0)));
+            m_Players.Add(new Player(this, Player.ePlayer.PlayerTwo));//, new Vector2(2 / 3 * m_Graphics.GraphicsDevice.Viewport.Width, 0)));
+            Components.Add(m_Players[0]);
+            Components.Add(m_Players[1]);
+            m_GameEngine = new GameEngine(this);
+            m_GameEngine.Players = m_Players;
+
         }
 
         protected override void Initialize()
         {
-            //Mouse.SetPosition((int)this.m_SpaceShip.Position.X, GraphicsDevice.Viewport.Height);
+            Mouse.SetPosition((int)m_Players[0].SpaceShip.Position.X, GraphicsDevice.Viewport.Height);
             m_SpriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), m_SpriteBatch);
             this.Window.Title = k_GameName;
@@ -63,7 +65,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void Update(GameTime i_GameTime)
         {
-            if (m_InputManager.IsPlayerAskToExit())
+            if (IsPlayerAskToExit())
             {
                 this.Exit();
             }
@@ -72,7 +74,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 if(m_Players[i].IsFreeBulletExists())
                 {
-                    if(m_InputManager.IsplayerAskedToShoot(i))
+                    if(IsplayerAskedToShoot(i))
                     {
                         m_Players[i].Shoot();
                     }
@@ -89,5 +91,41 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.Draw(i_GameTime);
             m_SpriteBatch.End();
         }
+
+        public bool IsplayerAskedToShoot(int i_PlayerIndex)
+        {
+            bool IsplayerAskedToShoot;
+
+            if (i_PlayerIndex == 0 && m_InputManager.KeyboardState.IsKeyDown(Keys.U) && m_InputManager.PrevKeyboardState.IsKeyUp(Keys.U))
+            {
+                IsplayerAskedToShoot = true;
+            }
+            else if (i_PlayerIndex == 1 && m_InputManager.KeyboardState.IsKeyDown(Keys.W) && m_InputManager.PrevKeyboardState.IsKeyUp(Keys.W))
+            {
+                IsplayerAskedToShoot = true;
+            }
+            else
+            {
+                IsplayerAskedToShoot = false;
+            }
+
+            return IsplayerAskedToShoot;
+        }
+
+        public bool IsPlayerAskToExit()
+        {
+            bool IsPlayerAskToExit;
+
+            if (m_InputManager.KeyboardState.IsKeyDown(Keys.Escape))
+            {
+                IsPlayerAskToExit = true;
+            }
+            else
+            {
+                IsPlayerAskToExit = false;
+            }
+            return IsPlayerAskToExit;
+        }
+
     }
 }

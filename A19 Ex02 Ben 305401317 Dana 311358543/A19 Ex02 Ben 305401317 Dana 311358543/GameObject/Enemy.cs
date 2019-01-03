@@ -27,6 +27,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             m_TintColor = i_Tint;
             AssetName = i_AssetName;
+            m_Gun = new Gun();
         }
 
         public void LoadAsset()
@@ -40,7 +41,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (rnd <= k_MaxRandomToShoot)
             {
-                this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet) ,m_Origin ,Game); //TODO: is it class Game or space invaders?
+                this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet) ,Position ,Game); //TODO: is it class Game or space invaders?
             }//TODO: REUSE OF BULLETS!!!
         }
 
@@ -57,6 +58,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_GameEngine.HandleHit(this, i_Collidable);
+        }
+
+        protected override void InitBounds()
+        {
+            m_Origin.X = Texture.Width / 2;
+            m_Origin.Y = Texture.Height/2 ;
+            base.InitBounds();
         }
     }   
 }

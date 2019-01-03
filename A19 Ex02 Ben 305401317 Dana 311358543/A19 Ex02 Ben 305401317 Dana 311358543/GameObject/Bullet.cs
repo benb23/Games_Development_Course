@@ -13,7 +13,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
 
         private const string k_AssteName = @"Sprites\Bullet";
-        private const float k_BulletVelocity = 155;
+        private float k_BulletVelocity = 155;
         private eBulletType m_Type;
 
         public Bullet(Game i_Game, eBulletType i_BulletType) : base(k_AssteName, i_Game)
@@ -27,6 +27,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             else
             {
                 this.m_TintColor = Color.Red;
+                k_BulletVelocity *= -1;
             }
 
             m_Velocity = new Vector2(0, k_BulletVelocity); // TODO: in initialize???
@@ -44,7 +45,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.Visible = false;
             }
 
-            this.Position = new Vector2(this.Position.X, this.Position.Y + ((float)this.m_Type * k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds));
+            this.Position = new Vector2(this.Position.X, this.Position.Y + k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
         }
 
         private bool isBulletHitTheScreenBorder()

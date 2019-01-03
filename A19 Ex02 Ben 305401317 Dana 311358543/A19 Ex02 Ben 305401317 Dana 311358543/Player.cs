@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class Player : IScoreable
+    public class Player : GameComponent, IScoreable
     {
         public enum ePlayer //change the direction
         {
@@ -28,10 +28,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private List<Bullet> m_BulletList = new List<Bullet>(k_MaxNumOfBullets);
 
+        private IInputManager m_InputManager;
+
         Bullet.eBulletType m_BulletsType;
 
-        private Gun m_Gun;
+        ePlayer m_PlayerType;
 
+        private Gun m_Gun;
+        
         private SpaceShip m_SpaceShip;
 
         private List<Soul> m_Souls;
@@ -41,6 +45,38 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public SpaceShip SpaceShip
         {
             get { return m_SpaceShip; }
+        }
+
+        public override void Update(GameTime i_GameTime)
+        {        
+            if (m_PlayerType == ePlayer.PlayerOne)
+            {
+                moveSpaceShipUsingMouse(i_GameTime);
+                moveSpaceShipUsingKeyboard(i_GameTime, Keys.H, Keys.K);
+            }
+            else if(m_PlayerType == ePlayer.PlayerTwo)
+            {
+                moveSpaceShipUsingKeyboard(i_GameTime, Keys.A, Keys.D);
+            }
+
+            m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, m_Game.GraphicsDevice.Viewport.Width -m_SpaceShip.Texture.Width/2),m_SpaceShip.Position.Y);
+        }
+
+        private void moveSpaceShipUsingMouse(GameTime i_GameTime)
+        {
+            m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X + m_InputManager.MousePositionDelta.X, m_SpaceShip.Position.Y);
+        }
+
+        private void moveSpaceShipUsingKeyboard(GameTime i_GameTime, Keys i_LeftKey, Keys i_RightKey)
+        {
+            if (m_InputManager.KeyboardState.IsKeyDown(i_LeftKey))
+            {
+                m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X - m_SpaceShip.Speed * (float)i_GameTime.ElapsedGameTime.TotalSeconds, m_SpaceShip.Position.Y);
+            }
+            else if (m_InputManager.KeyboardState.IsKeyDown(i_RightKey))
+            {
+                m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X + m_SpaceShip.Speed * (float)i_GameTime.ElapsedGameTime.TotalSeconds, m_SpaceShip.Position.Y);
+            }
         }
 
         public int CountNumOfVisibleBullets()
@@ -57,12 +93,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             return numOfVisibleBullets;
         }
-        public Player(Game i_Game,ePlayer i_PlayerType)
+
+        public Player(Game i_Game,ePlayer i_PlayerType): base(i_Game)
         {
+            m_PlayerType = i_PlayerType;
+            if (m_InputManager == null)
+            {
+                m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
+            }
+
+            m_Gun = new Gun();
             m_Souls = new List<Soul>(3);
             m_SpaceShip = new SpaceShip(i_Game);
-            i_Game.Components.Add(this.m_SpaceShip);
+
             m_Game = i_Game;
+
             if(i_PlayerType==ePlayer.PlayerOne)
             {
                 m_BulletsType = Bullet.eBulletType.PlayerOneBullet;
@@ -76,11 +121,23 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void Shoot()
         {
             Bullet currBullet;
-
+            Vector2 bulletPosition = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height);
             currBullet = this.getBullet();
-            this.m_Gun.Shoot(currBullet, m_SpaceShip.Position, m_Game);
+            this.m_Gun.Shoot(currBullet, bulletPosition, m_Game);
         }
 
+        public override void Initialize()
+        {
+            if(m_PlayerType==ePlayer.PlayerOne)
+            {
+                m_SpaceShip.Position = new Vector2( m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
+            }
+            else if(m_PlayerType == ePlayer.PlayerTwo)
+            {
+                m_SpaceShip.Position = new Vector2(2*m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
+            }
+            base.Initialize();
+        }
         private Bullet getBullet()
         {
             Bullet currBullet;
@@ -102,20 +159,26 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public bool IsFreeBulletExists()
         {
-            bool IsFreeBulletExists;
+            bool IsFreeBulletExists = false;
 
-            for (int i=0 ; i< k_MaxNumOfBullets; i++)
+            if (m_BulletList.Count < 3)
             {
-                if(m_BulletList[i].Visible == false)
+                IsFreeBulletExists = true;
+            }
+            else
+            {
+                foreach (Bullet bullet in m_BulletList)
                 {
-                    IsFreeBulletExists = true;
+                    if (bullet.Visible == false)
+                    {
+                        IsFreeBulletExists = true;
+                    }
                 }
             }
 
-            IsFreeBulletExists = false;
-
             return IsFreeBulletExists;
         }
+
         private Bullet getUnVisibleBulletFromList()
         {
             Bullet bullet = null;
@@ -130,6 +193,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             return bullet;
         }
+
         public int Score { get; set; }
     }
 }
