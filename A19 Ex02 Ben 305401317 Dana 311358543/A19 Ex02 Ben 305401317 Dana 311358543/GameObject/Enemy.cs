@@ -43,7 +43,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 Bullet bullet = getBullet();
                 bullet.Position = new Vector2(Position.X, Position.Y + Texture.Height / 2 + bullet.Texture.Height/2);
-                this.m_Gun.Shoot(bullet ,Game); //TODO: is it class Game or space invaders?
+                this.m_Gun.Shoot(bullet ,Game);
             }
         }
 

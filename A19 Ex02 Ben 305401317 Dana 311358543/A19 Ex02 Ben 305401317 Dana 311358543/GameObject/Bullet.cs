@@ -5,7 +5,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Bullet : Sprite, ICollidable2D
     {
-        public enum eBulletType //change the direction
+        public enum eBulletType 
         {
             PlayerOneBullet,
             PlayerTwoBullet,

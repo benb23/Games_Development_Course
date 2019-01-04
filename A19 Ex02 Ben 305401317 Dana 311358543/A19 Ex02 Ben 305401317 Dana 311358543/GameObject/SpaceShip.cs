@@ -16,10 +16,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class SpaceShip : Sprite, ICollidable2D
     {
-        private float k_Speed = 145;
+        private float k_Speed = 145; //TODO : VELOCITY
         private const string k_AssteName = @"Sprites\Ship01_32x32";
         private IInputManager m_InputManager;
         private IGameEngine m_GameEngine;
+        private Gun m_Gun = new Gun();
+
+        public Gun Gun
+        {
+            get { return m_Gun; }
+        }
 
         public float Speed
         {
