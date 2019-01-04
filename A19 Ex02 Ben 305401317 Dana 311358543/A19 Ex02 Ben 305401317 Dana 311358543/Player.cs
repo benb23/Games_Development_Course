@@ -112,8 +112,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             Bullet currBullet;
             currBullet = this.getBullet();
-            currBullet.Position = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height);
-            currBullet.Visible = true;
+            currBullet.Position = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height -1/2*currBullet.Texture.Height-30);
 
             m_SpaceShip.Gun.Shoot(currBullet, m_Game);
         }
@@ -139,6 +138,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Bullet getBullet()
         {
             Bullet bullet = null;
+
             bool bulletfound = false;
 
             if(m_BulletList.Count>0)
@@ -159,6 +159,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if(!bulletfound && m_BulletList.Count< k_MaxNumOfBullets)
             {
                 bullet = new Bullet(m_Game, m_BulletsType);
+                bullet.Visible = true;
                 m_BulletList.Add(bullet);
             }
 

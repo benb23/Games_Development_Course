@@ -1,11 +1,14 @@
 ﻿//*** Guy Ronen © 2008-2011 ***//
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Infrastructure;
 
 namespace Infrastructure
 {
-    public class Sprite : LoadableDrawableComponent 
+    public class Sprite : LoadableDrawableComponent
     {
+        protected bool m_Initialize;
+
         private Texture2D m_Texture;
         public Texture2D Texture
         {
@@ -13,50 +16,36 @@ namespace Infrastructure
             set { m_Texture = value; }
         }
 
-        // TODO 01: The Bounds property for collision detection
-        public Rectangle Bounds
+        public float Width
         {
-            get
-            {
-                return new Rectangle(
-                    (int)m_Position.X,
-                    (int)m_Position.Y,
-                    m_Width,
-                    m_Height);
-            }
-        }
-      
-        protected int m_Width;
-        public int Width
-        {
-            get { return m_Width; }
-            set
-            {
-                if (m_Width != value)
-                {
-                    m_Width = value;
-                    OnSizeChanged();
-                }
-            }
+            get { return m_WidthBeforeScale * m_Scales.X; }
+            set { m_WidthBeforeScale = value / m_Scales.X; }
         }
 
-        protected int m_Height;
-        public int Height
+        public float Height
         {
-            get { return m_Height; }
-            set
-            {
-                if (m_Height != value)
-                {
-                    m_Height = value;
-                    OnSizeChanged();
-                }
-            }
+            get { return m_HeightBeforeScale * m_Scales.Y; }
+            set { m_HeightBeforeScale = value / m_Scales.Y; }
         }
 
-        protected Vector2 m_Origin;
+        protected float m_WidthBeforeScale;
+        public float WidthBeforeScale
+        {
+            get { return m_WidthBeforeScale; }
+            set { m_WidthBeforeScale = value; }
+        }
 
-        protected Vector2 m_Position;
+        protected float m_HeightBeforeScale;
+        public float HeightBeforeScale
+        {
+            get { return m_HeightBeforeScale; }
+            set { m_HeightBeforeScale = value; }
+        }
+
+        protected Vector2 m_Position = Vector2.Zero;
+        /// <summary>
+        /// Represents the location of the sprite's origin point in screen coorinates
+        /// </summary>
         public Vector2 Position
         {
             get { return m_Position; }
@@ -69,7 +58,97 @@ namespace Infrastructure
                 }
             }
         }
-        // -- end of TODO 13
+
+        public Vector2 m_PositionOrigin;
+        public Vector2 PositionOrigin
+        {
+            get { return m_PositionOrigin; }
+            set { m_PositionOrigin = value; }
+        }
+
+        public Vector2 m_RotationOrigin = Vector2.Zero;
+        public Vector2 RotationOrigin
+        {
+            get { return m_RotationOrigin; }// r_SpriteParameters.RotationOrigin; }
+            set { m_RotationOrigin = value; }
+        }
+
+        private Vector2 PositionForDraw
+        {
+            get { return this.Position - this.PositionOrigin + this.RotationOrigin; }
+        }
+
+        public Vector2 TopLeftPosition
+        {
+            get { return this.Position - this.PositionOrigin; }
+            set { this.Position = value + this.PositionOrigin; }
+        }
+
+        public Rectangle Bounds
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)TopLeftPosition.X,
+                    (int)TopLeftPosition.Y,
+                    (int)this.Width,
+                    (int)this.Height);
+            }
+        }
+
+        public Rectangle BoundsBeforeScale
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)TopLeftPosition.X,
+                    (int)TopLeftPosition.Y,
+                    (int)this.WidthBeforeScale,
+                    (int)this.HeightBeforeScale);
+            }
+        }
+
+        protected Rectangle m_SourceRectangle;
+        public Rectangle SourceRectangle
+        {
+            get { return m_SourceRectangle; }
+            set { m_SourceRectangle = value; }
+        }
+
+        public Vector2 TextureCenter
+        {
+            get
+            {
+                return new Vector2((float)(m_Texture.Width / 2), (float)(m_Texture.Height / 2));
+            }
+        }
+
+        public Vector2 SourceRectangleCenter
+        {
+            get { return new Vector2((float)(m_SourceRectangle.Width / 2), (float)(m_SourceRectangle.Height / 2)); }
+        }
+
+        protected float m_Rotation = 0;
+        public float Rotation
+        {
+            get { return m_Rotation; }
+            set { m_Rotation = value; }
+        }
+
+        protected Vector2 m_Scales = Vector2.One;
+        public Vector2 Scales
+        {
+            get { return m_Scales; }
+            set
+            {
+                if (m_Scales != value)
+                {
+                    m_Scales = value;
+                    // Notify the Collision Detection mechanism:
+                    OnPositionChanged();
+                }
+            }
+        }
 
         protected Color m_TintColor = Color.White;
         public Color TintColor
@@ -84,11 +163,38 @@ namespace Infrastructure
             set { m_TintColor.A = (byte)(value * (float)byte.MaxValue); }
         }
 
+        protected float m_LayerDepth;
+        public float LayerDepth
+        {
+            get { return m_LayerDepth; }
+            set { m_LayerDepth = value; }
+        }
+
+        protected SpriteEffects m_SpriteEffects = SpriteEffects.None;
+        public SpriteEffects SpriteEffects
+        {
+            get { return m_SpriteEffects; }
+            set { m_SpriteEffects = value; }
+        }
+
         protected Vector2 m_Velocity = Vector2.Zero;
+        /// <summary>
+        /// Pixels per Second on 2 axis
+        /// </summary>
         public Vector2 Velocity
         {
             get { return m_Velocity; }
             set { m_Velocity = value; }
+        }
+
+        private float m_AngularVelocity = 0;
+        /// <summary>
+        /// Radians per Second on X Axis
+        /// </summary>
+        public float AngularVelocity
+        {
+            get { return m_AngularVelocity; }
+            set { m_AngularVelocity = value; }
         }
 
         public Sprite(string i_AssetName, Game i_Game, int i_UpdateOrder, int i_DrawOrder)
@@ -103,23 +209,32 @@ namespace Infrastructure
             : base(i_AssetName, i_Game, int.MaxValue)
         { }
 
+        /// <summary>
+        /// Default initialization of bounds
+        /// </summary>
+        /// <remarks>
+        /// Derived classes are welcome to override this to implement their specific boudns initialization
+        /// </remarks>
         protected override void InitBounds()
         {
-            // default initialization of bounds
-            m_Width = m_Texture.Width;
-            m_Height = m_Texture.Height;
+            m_WidthBeforeScale = m_Texture.Width;
+            m_HeightBeforeScale = m_Texture.Height;
+            m_Position = Vector2.Zero;
+
+            InitSourceRectangle();
+
+            InitOrigins();
         }
 
-        public virtual void RemoveComponent()
+        protected virtual void InitOrigins()
         {
-            this.Visible = false;
-            Game.Components.Remove(this);
         }
 
-        public virtual void AddComponent()
+        protected virtual void InitSourceRectangle()
         {
-            Game.Components.Add(this);
+            m_SourceRectangle = new Rectangle(0, 0, (int)m_WidthBeforeScale, (int)m_HeightBeforeScale);
         }
+
 
         private bool m_UseSharedBatch = true;
 
@@ -161,7 +276,10 @@ namespace Infrastructure
         /// </remarks>
         public override void Update(GameTime gameTime)
         {
-            this.Position += this.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float totalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            this.Position += this.Velocity * totalSeconds;
+            this.Rotation += this.AngularVelocity * totalSeconds;
 
             base.Update(gameTime);
         }
@@ -176,8 +294,11 @@ namespace Infrastructure
             {
                 m_SpriteBatch.Begin();
             }
-            m_SpriteBatch.Draw(m_Texture, Position, null, m_TintColor, 0, m_Origin, 1, SpriteEffects.None, 0);
-            //m_SpriteBatch.Draw(m_Texture, m_Position, m_TintColor);
+
+            m_SpriteBatch.Draw(m_Texture, this.PositionForDraw,
+                 this.SourceRectangle, this.TintColor,
+                this.Rotation, this.RotationOrigin, this.Scales,
+                SpriteEffects.None, this.LayerDepth);
 
             if (!m_UseSharedBatch)
             {
@@ -187,29 +308,34 @@ namespace Infrastructure
             base.Draw(gameTime);
         }
 
+        #region Collision Handlers
         protected override void DrawBoundingBox()
         {
             // not implemented yet
         }
-        // -- end of TODO 04
 
-        // TODO 14: Implement a basic collision detection between two ICollidable2D objects:
         public virtual bool CheckCollision(ICollidable i_Source)
         {
             bool collided = false;
             ICollidable2D source = i_Source as ICollidable2D;
             if (source != null)
             {
-                collided = source.Bounds.Intersects(this.Bounds) || source.Bounds.Contains(this.Bounds);
+                collided = source.Bounds.Intersects(this.Bounds);
             }
 
             return collided;
         }
- 
 
-        public virtual void Collided(ICollidable i_Collidable)
+        public virtual void AddComponent()
         {
-            
+            Game.Components.Add(this);
         }
+
+        public virtual void RemoveComponent()
+        {
+            this.Visible = false;
+            Game.Components.Remove(this);
+        }
+        #endregion //Collision Handlers
     }
 }

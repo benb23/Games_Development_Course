@@ -31,6 +31,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime i_GameTime)
         {
+            if(!m_Initialize)
+            {
+                InitPosition();
+                m_Initialize = true;
+            }
+
             if (!this.Visible)
             {
                 this.m_CurrRandom = SpaceInvaders.s_RandomNum.Next(0, k_MaxRandomNumber);
@@ -43,6 +49,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 if (m_Position.X >= GraphicsDevice.Viewport.Width)
                 {
                     Visible = false;
+                    InitPosition();
                 }
             }
         }
@@ -50,6 +57,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         void ICollidable.Collided(ICollidable i_Collidable)
         {
             Visible = false;
+            InitPosition();
 
             if (m_GameEngine == null)
             {
@@ -57,6 +65,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_GameEngine.HandleHit(this, i_Collidable);
+        }
+
+        protected override void InitOrigins()
+        {
+            m_PositionOrigin = new Vector2(Texture.Width / 2,0);
+            base.InitOrigins();
+        }
+
+        public void InitPosition()
+        {
+            this.Position = new Vector2(-Texture.Width, Texture.Height);
         }
     }
 }

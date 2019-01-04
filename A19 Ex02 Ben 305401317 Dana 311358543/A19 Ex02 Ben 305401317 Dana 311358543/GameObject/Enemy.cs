@@ -97,11 +97,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        protected override void InitBounds()
+        protected override void InitOrigins()
         {
-            m_Origin.X = Texture.Width / 2;
-            m_Origin.Y = Texture.Height/2 ;
-            base.InitBounds();
+            m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
+            m_RotationOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
+            base.InitOrigins();
         }
     }
 }

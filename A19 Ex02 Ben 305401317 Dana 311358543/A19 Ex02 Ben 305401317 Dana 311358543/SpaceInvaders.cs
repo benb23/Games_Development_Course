@@ -34,7 +34,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             m_CollisionManager = new CollisionsManager(this);
             s_RandomNum = new Random();
-            this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
+            this.m_Background = new Background(@"Sprites\BG_Space01_1024x768",this, int.MinValue,int.MinValue);
             this.m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
