@@ -46,7 +46,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 moveSpaceShipUsingMouse(i_GameTime);
                 moveSpaceShipUsingKeyboard(i_GameTime, Keys.H, Keys.K);
-                if(isPlayerAskedToShoot(Keys.U))
+                if(isPlayerAskedToShoot(Keys.U) && IsFreeBulletExists())
                 {
                     this.Shoot();
                 }
@@ -54,7 +54,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             else if(m_PlayerType == PlayerIndex.Two)
             {
                 moveSpaceShipUsingKeyboard(i_GameTime, Keys.A, Keys.D);
-                if (isPlayerAskedToShoot(Keys.W))
+                if (isPlayerAskedToShoot(Keys.W) && IsFreeBulletExists())
                 {
                     this.Shoot();
                 }
@@ -112,8 +112,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             Bullet currBullet;
             currBullet = this.getBullet();
-            currBullet.Position = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height-currBullet.Texture.Height/2-1);
-
+            currBullet.Position = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height - currBullet.Texture.Height / 2 - 1);
             m_SpaceShip.Gun.Shoot(currBullet, m_Game);
         }
 
@@ -149,7 +148,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     {
                         bullet = currbullet;
                         bullet.Visible = true;
-                        bullet.AddComponent();
                         bulletfound = true;
                         break;
                     }

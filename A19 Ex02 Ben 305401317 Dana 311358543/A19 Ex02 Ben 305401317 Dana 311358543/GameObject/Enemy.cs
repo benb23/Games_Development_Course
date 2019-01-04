@@ -59,7 +59,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     if(Visible==false)
                     {
                         bullet = currBullet;
-                        bullet.AddComponent();
+                        bullet.Enabled = true;
                         freeBulletFound = true;
                         break;
                     }
