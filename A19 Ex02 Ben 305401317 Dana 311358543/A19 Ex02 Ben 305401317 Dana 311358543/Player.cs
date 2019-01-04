@@ -18,13 +18,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         Game m_Game;
 
-        public const int k_MaxNumOfBullets = 3;
-
-        private List<Bullet> m_BulletList = new List<Bullet>(k_MaxNumOfBullets); //TODO : MOVE TO GUN
-
         private IInputManager m_InputManager;
 
-        Bullet.eBulletType m_BulletsType;
+        bool m_IsAllowedToUseMouse;
+
+        Keys m_RightMoveKey;
+
+        Keys m_LeftMoveKey;
+
+        Keys m_ShootKey;
 
         PlayerIndex m_PlayerType;
         
@@ -42,22 +44,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         //TODO: SHOOT FROM PLAYER
         public override void Update(GameTime i_GameTime)
         {
-            if (m_PlayerType == PlayerIndex.One)
+            if (m_IsAllowedToUseMouse)
             {
                 moveSpaceShipUsingMouse(i_GameTime);
-                moveSpaceShipUsingKeyboard(i_GameTime, Keys.H, Keys.K);
-                if(isPlayerAskedToShoot(Keys.U) && IsFreeBulletExists())
-                {
-                    this.Shoot();
-                }
             }
-            else if(m_PlayerType == PlayerIndex.Two)
+
+            moveSpaceShipUsingKeyboard(i_GameTime, m_LeftMoveKey, m_RightMoveKey);
+
+            if(isPlayerAskedToShoot(m_ShootKey) && m_SpaceShip.PermitionToShoot())
             {
-                moveSpaceShipUsingKeyboard(i_GameTime, Keys.A, Keys.D);
-                if (isPlayerAskedToShoot(Keys.W) && IsFreeBulletExists())
-                {
-                    this.Shoot();
-                }
+                m_SpaceShip.Shoot();
             }
 
             m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, m_Game.GraphicsDevice.Viewport.Width -m_SpaceShip.Texture.Width/2),m_SpaceShip.Position.Y);
@@ -92,28 +88,27 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public Player(Game i_Game,PlayerIndex i_PlayerType): base(i_Game)
+        public Player(Game i_Game,PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey, bool i_IsAllowdToUseMouse) : base(i_Game)
         {
+            m_LeftMoveKey = i_LeftKey;
+            m_RightMoveKey = i_RightKey;
+            m_ShootKey = i_ShootKey;
+            m_IsAllowedToUseMouse = i_IsAllowdToUseMouse;
             m_PlayerType = i_PlayerType;
-            m_SpaceShip = new SpaceShip(i_Game);
             m_Game = i_Game;
+            createSpaceShip(i_PlayerType);
+        }
 
-            if(i_PlayerType==PlayerIndex.One)
+        private void createSpaceShip(PlayerIndex i_PlayerType)
+        {
+            if(i_PlayerType == PlayerIndex.One)
             {
-                m_BulletsType = Bullet.eBulletType.PlayerOneBullet;
+                m_SpaceShip = new SpaceShip(m_Game, Bullet.eBulletType.PlayerOneBullet);
             }
             else
             {
-                m_BulletsType = Bullet.eBulletType.PlayerTwoBullet;
+                m_SpaceShip = new SpaceShip(m_Game, Bullet.eBulletType.PlayerTwoBullet);
             }
-        }
-
-        public void Shoot()
-        {
-            Bullet currBullet;
-            currBullet = this.getBullet();
-            currBullet.Position = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height - currBullet.Texture.Height / 2 - 1);
-            m_SpaceShip.Gun.Shoot(currBullet, m_Game);
         }
 
         public override void Initialize()
@@ -133,59 +128,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             base.Initialize();
-        }
-        private Bullet getBullet()
-        {
-            Bullet bullet = null;
-
-            bool bulletfound = false;
-
-            if(m_BulletList.Count>0)
-            {
-                foreach(Bullet currbullet in m_BulletList)
-                {
-                    if(!currbullet.Visible)
-                    {
-                        bullet = currbullet;
-                        bullet.Visible = true;
-                        bullet.AddComponent();
-                        bulletfound = true;
-                        break;
-                    }
-                }
-            }
-
-            if(!bulletfound && m_BulletList.Count< k_MaxNumOfBullets)
-            {
-                bullet = new Bullet(m_Game, m_BulletsType);
-                bullet.Visible = true;
-                m_BulletList.Add(bullet);
-            }
-
-            return bullet;
-        }
-
-        public bool IsFreeBulletExists()
-        {
-            bool IsFreeBulletExists = false;
-
-            if (m_BulletList.Count < 3)
-            {
-                IsFreeBulletExists = true;
-            }
-            else
-            {
-                foreach (Bullet bullet in m_BulletList)
-                {
-                    if (bullet.Visible == false)
-                    {
-                        IsFreeBulletExists = true;
-                        break;
-                    }
-                }
-            }
-
-            return IsFreeBulletExists;
         }
 
         public int Score { get; set; }

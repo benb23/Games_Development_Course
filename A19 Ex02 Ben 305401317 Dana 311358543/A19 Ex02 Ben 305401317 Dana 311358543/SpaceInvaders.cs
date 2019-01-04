@@ -43,8 +43,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.IsMouseVisible = true;
             m_InputManager = new InputManager(this);
             m_Players = new List<Player>(2);
-            m_Players.Add(new Player(this, PlayerIndex.One));
-            m_Players.Add(new Player(this, PlayerIndex.Two));
+            m_Players.Add(new Player(this, PlayerIndex.One,Keys.H, Keys.K, Keys.U,true));
+            m_Players.Add(new Player(this, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false));
             Components.Add(m_Players[0]);
             Components.Add(m_Players[1]);
             m_GameEngine = new GameEngine(this);
@@ -54,7 +54,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void Initialize()
         {
-            Mouse.SetPosition((int)m_Players[0].SpaceShip.Position.X, GraphicsDevice.Viewport.Height);
+            //Mouse.SetPosition((int)m_Players[0].SpaceShip.Position.X, GraphicsDevice.Viewport.Height);
             m_SpriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), m_SpriteBatch);
             this.Window.Title = k_GameName;
