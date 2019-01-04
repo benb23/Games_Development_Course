@@ -83,31 +83,47 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initEnemyGroup()
         {
-            this.initEnemiesRow(0, @"Sprites\Enemy0101_32x32", Color.Pink);
-            for (int i = 1; i < k_EnemiesRows; i++)
+            for (int i = 0; i < k_EnemiesRows ; i++)
             {
-                if (i < 3)
+                switch (i)
                 {
-                    this.initEnemiesRow(i, @"Sprites\Enemy0201_32x32", Color.LightBlue);
-                }
-                else
-                {
-                    this.initEnemiesRow(i, @"Sprites\Enemy0301_32x32", Color.LightYellow);
+                    case 0:
+                        this.initEnemiesRow(0, 0, Color.Pink);
+                        break;
+                    case 1:
+                        this.initEnemiesRow(1, 2, Color.LightBlue);
+                        break;
+                    case 2:
+                        this.initEnemiesRow(2, 3, Color.LightBlue);
+                        break;
+                    case 3:
+                        this.initEnemiesRow(3, 4, Color.LightYellow);
+                        break;
+                    case 4:
+                        this.initEnemiesRow(4, 5, Color.LightYellow);
+                        break;
                 }
             }
+
+            
 
             // For calculating positions according to enemy texture width (generic)
             this.m_EnemiesMatrix[0, 0].LoadAsset();
 
-            this.m_currTopLeftX =this.m_EnemiesMatrix[0, 0].Texture.Width/2;
-            this.m_currTopLeftY = this.m_EnemiesMatrix[0, 0].Texture.Width * 3f;
+            m_currTopLeft = new Vector2(this.m_EnemiesMatrix[0, 0].Texture.Height / 2, this.m_EnemiesMatrix[0, 0].Texture.Height * 3f);
+
+            this.m_currTopLeftX = this.m_EnemiesMatrix[0, 0].Texture.Height/2;
+            this.m_currTopLeftY = this.m_EnemiesMatrix[0, 0].Texture.Height * 3f - m_currTopLeftX;
+            // Vector2 x = m_EnemiesMatrix[0, 0].TopLeftPosition;
         }
 
-        private void initEnemiesRow(int i_Row, string i_AssetName, Color i_Tint)
+        private Vector2 m_currTopLeft;
+
+        private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint)
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
-                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint);
+                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_StartSqureIndex);
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.countDeadEnemies;
             }
         }
@@ -122,7 +138,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 for (int j = 0; j < k_EnemiesColumns; j++)
                 {
-                    this.m_EnemiesMatrix[i, j].Position = new Vector2(startX, strartY);
+                    this.m_EnemiesMatrix[i, j].Position = new Vector2(startX + 5 , strartY);
+                    this.m_EnemiesMatrix[i, j].PositionOrigin = new Vector2(16,16);
                     startX += this.m_EnemiesMatrix[0, 0].Texture.Height + enemiesGap;
                 }
 

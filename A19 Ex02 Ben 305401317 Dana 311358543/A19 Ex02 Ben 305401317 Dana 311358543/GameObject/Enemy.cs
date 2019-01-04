@@ -16,18 +16,26 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Enemy : Sprite, ICollidable2D
     {
+        enum eEnemyCell
+        {
+            
+        }
+
         private List<Bullet> m_Bullets = new List<Bullet>(5);
-        private const string k_AssteName = @"Sprites\Enemy01_32x32";
-        private Gun m_Gun;
+        private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
+        private Gun m_Gun = new Gun();
         private const int k_MaxRandomToShoot = 10; //TODO: LOCATION?
         public const int k_MaxRandomNumber = 50000; //TODO: LOCATION?
         private IGameEngine m_GameEngine;
+        private int k_NumOfFrames = 6;
+        private int m_StartSqureIndex;
 
-        public Enemy(Game i_Game,Color i_Tint) : base(k_AssteName, i_Game)
+
+        public Enemy(Game i_Game,Color i_Tint, int i_StartSqureIndex) : base(k_AssteName, i_Game)
         {
+            m_RotationOrigin = new Vector2(16, 16);
+            m_StartSqureIndex = i_StartSqureIndex;
             m_TintColor = i_Tint;
-            AssetName = k_AssteName;
-            m_Gun = new Gun();
         }
 
         public void LoadAsset()
@@ -103,5 +111,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_RotationOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
             base.InitOrigins();
         }
+
+        
+
+        protected override void InitSourceRectangle()
+        {
+            base.InitSourceRectangle();
+            m_WidthBeforeScale = m_WidthBeforeScale / k_NumOfFrames;
+
+            this.SourceRectangle = new Rectangle(
+                (int)m_WidthBeforeScale * m_StartSqureIndex,
+                0,
+                (int)Width,
+                (int)Height);
+        }
+
+
     }
 }
