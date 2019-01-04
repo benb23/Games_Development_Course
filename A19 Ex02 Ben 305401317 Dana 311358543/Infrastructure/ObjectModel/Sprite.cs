@@ -324,17 +324,6 @@ namespace Infrastructure
 
             return collided;
         }
-
-        public virtual void AddComponent()
-        {
-            Game.Components.Add(this);
-        }
-
-        public virtual void RemoveComponent()
-        {
-            this.Visible = false;
-            Game.Components.Remove(this);
-        }
         #endregion //Collision Handlers
     }
 }

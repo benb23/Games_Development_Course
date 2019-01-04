@@ -27,7 +27,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             m_TintColor = i_Tint;
             AssetName = k_AssteName;
-            m_Gun = new Gun();
         }
 
         public void LoadAsset()
@@ -41,40 +40,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (rnd <= k_MaxRandomToShoot)
             {
-                Bullet bullet = getBullet();
-                bullet.Position = new Vector2(Position.X, Position.Y + Texture.Height / 2 + bullet.Texture.Height/2 + 1);
-                this.m_Gun.Shoot(bullet ,Game);
+                shoot();
             }
         }
 
-        private Bullet getBullet()
+        private void shoot()
         {
-            Bullet bullet = null;
-            bool freeBulletFound=false;
-
-            if(m_Bullets.Count > 0)
-            {
-                foreach (Bullet currBullet in m_Bullets)
-                {
-                    if(!currBullet.Visible)
-                    {
-                        bullet = currBullet;
-                        bullet.AddComponent();
-                        freeBulletFound = true;
-                        break;
-                    }
-                }
-            }
-            
-            if(!freeBulletFound)
-            {
-                bullet = new Bullet(Game, Bullet.eBulletType.EnemyBullet);
-                m_Bullets.Add(bullet);
-            }
-          
-            return bullet;
+            m_Gun.Shoot(new Vector2(Position.X,Position.Y+Texture.Height/2));
         }
-
         void ICollidable.Collided(ICollidable i_Collidable)
         {
             if (i_Collidable is Bullet && (i_Collidable as Bullet).Type == Bullet.eBulletType.EnemyBullet)
@@ -97,6 +70,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
+        public override void Initialize()
+        {
+            m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
+            base.Initialize();
+        }
         protected override void InitOrigins()
         {
             m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);

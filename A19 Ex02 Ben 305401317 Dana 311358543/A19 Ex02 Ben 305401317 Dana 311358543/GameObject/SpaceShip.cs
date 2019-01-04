@@ -18,23 +18,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         private float k_Speed = 145; //TODO : VELOCITY
         private const string k_AssteName = @"Sprites\Ship01_32x32";
-        private IInputManager m_InputManager;
         private IGameEngine m_GameEngine;
-        private Gun m_Gun = new Gun();
-
-        public Gun Gun
-        {
-            get { return m_Gun; }
-        }
+        private Gun m_Gun;
 
         public float Speed
         {
             get{return k_Speed; }
         }
 
-        public SpaceShip(Game i_Game)
+        public SpaceShip(Game i_Game, Bullet.eBulletType i_GunBulletsType)
             : base(k_AssteName, i_Game)
-        {}
+        {
+            m_Gun = new Gun(i_Game, 3, i_GunBulletsType,1);
+        }
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
@@ -49,6 +45,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
+        public void Shoot()
+        {
+            m_Gun.Shoot(new Vector2(Position.X, Position.Y - Texture.Height));
+        }
+        public bool PermitionToShoot()
+        {
+            return m_Gun.PermitionToShoot();
+        }
         protected override void InitOrigins()
         {
             m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height);

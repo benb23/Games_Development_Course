@@ -43,7 +43,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (this.isBulletHitTheScreenBorder())
             {
                 this.Visible = false;
-                this.RemoveComponent();
+                this.Enabled = false;
             }
 
             this.Position = new Vector2(this.Position.X, this.Position.Y + k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
@@ -63,7 +63,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 return;
             }
             Visible = false;
-            this.RemoveComponent(); 
+            Enabled = false;
         }
 
         protected override void InitOrigins()
