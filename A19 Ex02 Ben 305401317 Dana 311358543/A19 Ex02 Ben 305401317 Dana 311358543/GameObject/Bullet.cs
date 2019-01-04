@@ -29,7 +29,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_TintColor = Color.Red;
                 k_BulletVelocity *= -1;
             }
-
+            InitOrigins();
             m_Velocity = new Vector2(0, k_BulletVelocity); // TODO: in initialize???
         }
 
@@ -43,6 +43,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (this.isBulletHitTheScreenBorder())
             {
                 this.Visible = false;
+                this.RemoveComponent();
             }
 
             this.Position = new Vector2(this.Position.X, this.Position.Y + k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
@@ -57,8 +58,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
+            if (m_Type == eBulletType.EnemyBullet && i_Collidable is Enemy)
+            {
+                return;
+            }
             Visible = false;
-            this.RemoveComponent();
+            this.RemoveComponent(); 
         }
 
         protected override void InitOrigins()

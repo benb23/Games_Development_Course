@@ -42,7 +42,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (rnd <= k_MaxRandomToShoot)
             {
                 Bullet bullet = getBullet();
-                bullet.Position = new Vector2(Position.X, Position.Y + Texture.Height / 2 + bullet.Texture.Height/2);
+                bullet.Position = new Vector2(Position.X, Position.Y + Texture.Height / 2 + bullet.Texture.Height/2 + 1);
                 this.m_Gun.Shoot(bullet ,Game);
             }
         }

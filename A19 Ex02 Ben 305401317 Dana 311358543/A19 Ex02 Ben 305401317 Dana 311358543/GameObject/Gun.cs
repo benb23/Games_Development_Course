@@ -16,7 +16,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         public void Shoot(Bullet i_Bullet, Game i_Game )
         {
-            i_Bullet.Initialize();
+            //i_Bullet.Initialize();
+
         }
     }
 }

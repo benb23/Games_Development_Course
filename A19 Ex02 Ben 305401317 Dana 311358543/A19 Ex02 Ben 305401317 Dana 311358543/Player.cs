@@ -112,7 +112,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             Bullet currBullet;
             currBullet = this.getBullet();
-            currBullet.Position = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height -1/2*currBullet.Texture.Height-30);
+            currBullet.Position = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height-currBullet.Texture.Height/2-1);
 
             m_SpaceShip.Gun.Shoot(currBullet, m_Game);
         }
