@@ -121,9 +121,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void Shoot()
         {
             Bullet currBullet;
-            Vector2 bulletPosition = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height);
             currBullet = this.getBullet();
-            this.m_Gun.Shoot(currBullet, bulletPosition, m_Game);
+            currBullet.Position = new Vector2(m_SpaceShip.Position.X, m_SpaceShip.Position.Y - m_SpaceShip.Texture.Height);
+            currBullet.Visible = true;
+
+            this.m_Gun.Shoot(currBullet, m_Game);
         }
 
         public override void Initialize()
@@ -140,21 +142,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
         private Bullet getBullet()
         {
-            Bullet currBullet;
+            Bullet bullet = null;
+            bool bulletfound = false;
 
-            if (this.m_BulletList.Count < k_MaxNumOfBullets)
+            if(m_BulletList.Count>0)
             {
-                currBullet = new Bullet(m_Game, m_BulletsType);
-                this.m_BulletList.Add(currBullet);
-            }
-            else
-            {
-                currBullet = this.getUnVisibleBulletFromList();
-                currBullet.Visible = true;
-                currBullet.Position = m_SpaceShip.Position;
+                foreach(Bullet currbullet in m_BulletList)
+                {
+                    if(!currbullet.Visible)
+                    {
+                        bullet = currbullet;
+                        bullet.Visible = true;
+                        bullet.AddComponent();
+                        bulletfound = true;
+                        break;
+                    }
+                }
             }
 
-            return currBullet;
+            if(!bulletfound && m_BulletList.Count< k_MaxNumOfBullets)
+            {
+                bullet = new Bullet(m_Game, m_BulletsType);
+                m_BulletList.Add(bullet);
+            }
+
+            return bullet;
         }
 
         public bool IsFreeBulletExists()
@@ -172,26 +184,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     if (bullet.Visible == false)
                     {
                         IsFreeBulletExists = true;
+                        break;
                     }
                 }
             }
 
             return IsFreeBulletExists;
-        }
-
-        private Bullet getUnVisibleBulletFromList()
-        {
-            Bullet bullet = null;
-
-            foreach (Bullet element in this.m_BulletList)
-            {
-                if (!element.Visible)
-                {
-                    bullet = element;
-                }
-            }
-
-            return bullet;
         }
 
         public int Score { get; set; }

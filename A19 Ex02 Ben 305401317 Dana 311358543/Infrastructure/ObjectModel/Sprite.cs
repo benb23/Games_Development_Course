@@ -25,9 +25,7 @@ namespace Infrastructure
                     m_Height);
             }
         }
-        // -- end of TODO 01
-
-        // TODO 13: Notify about  change:
+      
         protected int m_Width;
         public int Width
         {
@@ -112,6 +110,16 @@ namespace Infrastructure
             m_Height = m_Texture.Height;
         }
 
+        public virtual void RemoveComponent()
+        {
+            this.Visible = false;
+            Game.Components.Remove(this);
+        }
+
+        public virtual void AddComponent()
+        {
+            Game.Components.Add(this);
+        }
 
         private bool m_UseSharedBatch = true;
 
@@ -179,7 +187,6 @@ namespace Infrastructure
             base.Draw(gameTime);
         }
 
-        // TODO 04:
         protected override void DrawBoundingBox()
         {
             // not implemented yet
@@ -198,13 +205,11 @@ namespace Infrastructure
 
             return collided;
         }
-        // -- end of TODO 14
+ 
 
-        // TODO 15: Implement a basic collision reaction between two ICollidable2D objects
         public virtual void Collided(ICollidable i_Collidable)
         {
-            // defualt behavior - change direction:
-            this.Velocity *= -1;
+            
         }
     }
 }

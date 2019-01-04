@@ -58,6 +58,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         void ICollidable.Collided(ICollidable i_Collidable)
         {
             Visible = false;
+            this.RemoveComponent();
         }
     }
 }

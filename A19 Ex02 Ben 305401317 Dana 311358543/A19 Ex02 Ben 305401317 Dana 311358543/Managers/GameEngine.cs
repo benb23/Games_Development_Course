@@ -113,6 +113,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
+        protected override void RegisterAsService()
+        {
+            Game.Services.AddService(typeof(IGameEngine), this);
+        }
+
         public void ShowGameOverMessage()
         {
             /*

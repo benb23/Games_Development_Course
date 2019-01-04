@@ -42,7 +42,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (rnd <= k_MaxRandomToShoot)
             {
                 Bullet bullet = getBullet();
-                this.m_Gun.Shoot(new Bullet(Game, Bullet.eBulletType.EnemyBullet) ,Position ,Game); //TODO: is it class Game or space invaders?
+                bullet.Position = new Vector2(Position.X, Position.Y + Texture.Height / 2 + bullet.Texture.Height/2);
+                this.m_Gun.Shoot(bullet ,Game); //TODO: is it class Game or space invaders?
             }
         }
 
@@ -58,7 +59,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     if(Visible==false)
                     {
                         bullet = currBullet;
+                        bullet.AddComponent();
                         freeBulletFound = true;
+                        break;
                     }
                 }
             }
@@ -74,17 +77,24 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
+            if (i_Collidable is Bullet && (i_Collidable as Bullet).Type == Bullet.eBulletType.EnemyBullet)
             {
-                Visible = false;
+                return;
             }
-
-            if (m_GameEngine == null)
+            else
             {
-                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
-            }
+                if (m_GameEngine == null)
+                {
+                    m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+                }
 
-            m_GameEngine.HandleHit(this, i_Collidable);
+                if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
+                {
+                    Visible = false;
+                }
+
+                m_GameEngine.HandleHit(this, i_Collidable);
+            }
         }
 
         protected override void InitBounds()
@@ -93,5 +103,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_Origin.Y = Texture.Height/2 ;
             base.InitBounds();
         }
-    }   
+    }
 }

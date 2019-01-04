@@ -28,9 +28,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private EnemiesGroup m_EnemysGroup;
         private Background m_Background;
         private List<Player> m_Players;
+        private CollisionsManager m_CollisionManager;
 
         public SpaceInvaders()
         {
+            m_CollisionManager = new CollisionsManager(this);
             s_RandomNum = new Random();
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_Graphics = new GraphicsDeviceManager(this);
@@ -41,8 +43,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.IsMouseVisible = true;
             m_InputManager = new InputManager(this);
             m_Players = new List<Player>(2);
-            m_Players.Add(new Player(this, Player.ePlayer.PlayerOne));//, new Vector2(1 / 3 * m_Graphics.GraphicsDevice.Viewport.Width , 0)));
-            m_Players.Add(new Player(this, Player.ePlayer.PlayerTwo));//, new Vector2(2 / 3 * m_Graphics.GraphicsDevice.Viewport.Width, 0)));
+            m_Players.Add(new Player(this, Player.ePlayer.PlayerOne));
+            m_Players.Add(new Player(this, Player.ePlayer.PlayerTwo));
             Components.Add(m_Players[0]);
             Components.Add(m_Players[1]);
             m_GameEngine = new GameEngine(this);
