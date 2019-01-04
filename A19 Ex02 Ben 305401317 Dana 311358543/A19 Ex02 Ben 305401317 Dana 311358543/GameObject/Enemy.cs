@@ -56,10 +56,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 foreach (Bullet currBullet in m_Bullets)
                 {
-                    if(Visible==false)
+                    if(!currBullet.Visible)
                     {
                         bullet = currBullet;
-                        bullet.Enabled = true;
+                        bullet.AddComponent();
                         freeBulletFound = true;
                         break;
                     }
