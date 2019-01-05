@@ -78,13 +78,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             BlinkAnimator blinkAnimator = new BlinkAnimator("LoosingSoul",TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.5));//TODO: numbers?
             this.Animations.Add(blinkAnimator);
-
+            
             FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(4.5));
             SpriteAnimator[] destriyAnimations =  { fadeAnimator };
             CompositeAnimator spaceShipDestroyAnimator = new CompositeAnimator("Destroy" ,TimeSpan.FromSeconds(2.5),this, destriyAnimations) ;
             spaceShipDestroyAnimator.ResetAfterFinish = false;
             m_Animations.Add(spaceShipDestroyAnimator);
-
+            
             this.Animations.Enabled = true;
         }
 
