@@ -17,16 +17,34 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class Enemy : Sprite, ICollidable2D
     {
         private List<Bullet> m_Bullets = new List<Bullet>(5);
-        private const string k_AssteName = @"Sprites\Enemy01_32x32";
+        private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
         private Gun m_Gun;
         private const int k_MaxRandomToShoot = 10; //TODO: LOCATION?
         public const int k_MaxRandomNumber = 50000; //TODO: LOCATION?
         private IGameEngine m_GameEngine;
+        private int k_NumOfTOtalFrames = 6;
+        public int k_NumOfFrames = 2;
+        public int m_StartSqureIndex;
+        private int m_Row;
+        private int m_Colum;
 
-        public Enemy(Game i_Game,Color i_Tint) : base(k_AssteName, i_Game)
+
+        public int Row
         {
+            get { return m_Row; }
+        }
+
+        public int Colum
+        {
+            get { return m_Colum; }
+        }
+
+        public Enemy(Game i_Game, Color i_Tint, int i_StartSqureIndex, int i_Row, int i_Colum) : base(k_AssteName, i_Game)
+        {
+            m_Row = i_Row;
+            m_Colum = i_Colum;
+            m_StartSqureIndex = i_StartSqureIndex;
             m_TintColor = i_Tint;
-            AssetName = k_AssteName;
         }
 
         public void LoadAsset()
@@ -42,15 +60,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 shoot();
             }
+
+            base.Update(i_GameTime);
         }
 
         private void shoot()
         {
             m_Gun.Shoot(new Vector2(Position.X,Position.Y+Texture.Height/2));
         }
+
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if (i_Collidable is Bullet && (i_Collidable as Bullet).Type == Bullet.eBulletType.EnemyBullet)
+            if (i_Collidable is Bullet && (i_Collidable as Bullet).Type == Bullet.eBulletType.EnemyBullet || i_Collidable is Enemy)
             {
                 return;
             }
@@ -75,11 +96,25 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
             base.Initialize();
         }
+
         protected override void InitOrigins()
         {
             m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
             m_RotationOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
             base.InitOrigins();
+        }
+
+
+        protected override void InitSourceRectangle()
+        {
+            base.InitSourceRectangle();
+            m_WidthBeforeScale = m_WidthBeforeScale / k_NumOfTOtalFrames;
+
+            this.SourceRectangle = new Rectangle(
+                (int)m_WidthBeforeScale * m_StartSqureIndex,
+                0,
+                 (int)m_WidthBeforeScale,
+                (int)Height);
         }
     }
 }

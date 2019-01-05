@@ -55,13 +55,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(i_Sender is Bullet)
             {
-                if(m_Players[0].SpaceShip == i_Target)
+                if(m_Players[(int)PlayerIndex.One].SpaceShip == i_Target)
                 {
-                    m_Players[0].Score += (int)eScoreValue.Soul; 
+                    m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.Soul; 
                 }
-                else if(m_Players[1].SpaceShip == i_Target) 
+                else if(m_Players[(int)PlayerIndex.Two].SpaceShip == i_Target) 
                 {
-                    m_Players[1].Score += (int)eScoreValue.Soul;
+                    m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.Soul;
                 }
             }
             else // i_Sender is Enemy
