@@ -8,39 +8,41 @@ using Microsoft.Xna.Framework;
 
 namespace Infrastructure
 {
-    public class RoataterAnimator : SpriteAnimator
+    public class ShrinkerAnimator : SpriteAnimator
     {
-        private TimeSpan m_RotateLength;
-        private int m_NumOfRoundsPerSec;
+        private TimeSpan m_ShrinkLength;
 
-        public TimeSpan RotateLength
+        public TimeSpan ShrinkLength
         {
-            get { return m_RotateLength; }
-            set { m_RotateLength = value; }
+            get { return m_ShrinkLength; }
+            set { m_ShrinkLength = value; }
         }
 
         // CTORs
-        public RoataterAnimator(string i_Name, int NumOfRoundsPerSec, TimeSpan i_AnimationLength)
+        public ShrinkerAnimator(string i_Name, TimeSpan i_AnimationLength)
             : base(i_Name, i_AnimationLength)
         {
-            m_NumOfRoundsPerSec = NumOfRoundsPerSec;
-            m_RotateLength = i_AnimationLength;
+            m_ShrinkLength = i_AnimationLength;
         }
-
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            float currentTime = (float)m_RotateLength.TotalSeconds;
-            float rotationVelocity = m_NumOfRoundsPerSec * MathHelper.TwoPi;
-            currentTime -= (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+            TimeSpan currSize = m_ShrinkLength;
+            currSize -= i_GameTime.ElapsedGameTime;
 
-            this.BoundSprite.Rotation += rotationVelocity * currentTime;
+            this.BoundSprite.Scales *= new Vector2((float)currSize.TotalSeconds / (float)m_ShrinkLength.TotalSeconds);
+
+            if (i_GameTime.ElapsedGameTime >= m_ShrinkLength)
+            {
+                // we have elapsed, so blink
+                this.BoundSprite.Visible = !this.BoundSprite.Visible;
+            }
 
         }
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Scales = this.m_OriginalSpriteInfo.Scales;
+            this.BoundSprite.Rotation += m_OriginalSpriteInfo.Rotation;
         }
 
     }

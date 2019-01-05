@@ -82,16 +82,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
                 }
 
-                m_GameEngine.HandleHit(this, i_Collidable);
-                this.Animations.Enabled = true;
-                m_Animations["roatateEnemy"].Resume();
-                m_Animations["shrinkEnemy"].Resume();
-
-
-                //if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet && m_Animations.IsFinished)
+                //if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
                 //{
                 //    Visible = false;
                 //}
+
+                m_GameEngine.HandleHit(this, i_Collidable);
+                this.Animations.Enabled = true;
+                m_Animations["shrinkEnemy"].Resume();
+                m_Animations["roatateEnemy"].Resume();
+
+
             }
         }
 
@@ -126,9 +127,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initAnimations()
         {
-            this.Animations.Add(new RoataterAnimator("roatateEnemy", 6, TimeSpan.FromSeconds(1.2)));
             this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
-            
+            this.Animations.Add(new RoataterAnimator("roatateEnemy", 6, TimeSpan.FromSeconds(1.2)));
         }
     }
 }
