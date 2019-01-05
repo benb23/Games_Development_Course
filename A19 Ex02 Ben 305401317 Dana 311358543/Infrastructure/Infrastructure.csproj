@@ -61,8 +61,5 @@
     <Compile Include="ObjectModel\RegisteredComponent.cs" />
     <Compile Include="ObjectModel\Sprite.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

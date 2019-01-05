@@ -28,6 +28,7 @@ namespace Infrastructure
         }
 
 
+
         protected override void DoFrame(GameTime i_GameTime)
         {
             float currentTime = (float)m_RotateLength.TotalSeconds;
