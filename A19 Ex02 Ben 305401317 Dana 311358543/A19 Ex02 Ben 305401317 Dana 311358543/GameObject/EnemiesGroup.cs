@@ -34,15 +34,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         float m_EnemiesGap;
         private int m_Toggeler = 1;
 
-
-        //private float getRightGroupBorder();
-
-
-        //private initAlivesArrayies()
-        //{
-
-        //}
-
         public EnemiesGroup(Game i_Game) : base(i_Game)
         {
             this.m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
@@ -52,9 +43,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
-            if (this.m_IncreaseVelocityWhen4Dead)
+            //TODO: CHEAK
+            if (isFourEnemiesDead())
             {
-                this.m_IncreaseVelocityWhen4Dead = false;
+               // this.m_IncreaseVelocityWhen4Dead = false;
                 this.increaseVelocity(0.04f);
             }
 
@@ -70,9 +62,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
                 else
                 {
-                    doEnemyCellAnimation();
                     this.jumpHorizontalStep(i_GameTime);
                 }
+                doEnemyCellAnimation();
             }
 
             this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);
@@ -91,6 +83,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             this.initEnemyGroup();
+            this.initAliveEnemiesByColum();
 
             // initilize enemies positions
             this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);
@@ -141,29 +134,33 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_currTopLeftY = this.m_EnemiesMatrix[0, 0].Texture.Height * 3f;
             // Vector2 x = m_EnemiesMatrix[0, 0].TopLeftPosition;
         }
-
-        private Vector2 m_currTopLeft;
-        private int m_AlivesRow;
-        private int m_AlivesCols;
-        private int[] m_AlivesArrayRow = Enumerable.Repeat(k_EnemiesColumns, k_EnemiesRows).ToArray();
-        private int[] m_AlivesArrayColumns = Enumerable.Repeat(k_EnemiesRows, k_EnemiesColumns).ToArray();
-
-     
+  
         private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint)
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
                 this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_StartSqureIndex, i_Row, colum);
-                m_AliveEnemies.Add(m_EnemiesMatrix[i_Row, colum]);
-                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.countDeadEnemies;
-                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.updateLivesArraies;
+                m_AliveEnemiesByRow.Add(m_EnemiesMatrix[i_Row, colum]);
+                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.updateAliveLists;
             }
+        }
+
+        private void initAliveEnemiesByColum()
+        {
+            for (int colum = 0; colum < k_EnemiesColumns; colum++)
+            {
+                for (int row = 0; row < k_EnemiesRows; row++)
+                {
+                    m_AliveEnemiesByColum.Add(m_EnemiesMatrix[row, colum]);
+                }
+            } 
         }
 
         private void updatePositions(float i_X, float i_Y)
         {
             
             float enemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
+            int halfEnemySize = this.m_EnemiesMatrix[0, 0].Texture.Height / 2;
             float startX = i_X;
             float strartY = i_Y;
 
@@ -171,8 +168,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 for (int j = 0; j < k_EnemiesColumns; j++)
                 {
-                    this.m_EnemiesMatrix[i, j].Position = new Vector2(startX + 16, strartY + 16);
-                    this.m_EnemiesMatrix[i, j].PositionOrigin = new Vector2(this.m_EnemiesMatrix[0, 0].Texture.Height / 2);
+                    this.m_EnemiesMatrix[i, j].Position = new Vector2(startX + halfEnemySize, strartY + halfEnemySize);
+                    this.m_EnemiesMatrix[i, j].PositionOrigin = new Vector2(halfEnemySize);
                     startX += this.m_EnemiesMatrix[0, 0].Texture.Height + enemiesGap;
                 }
 
@@ -181,11 +178,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        
-
         private void doEnemyCellAnimation()
         {
-            foreach (Enemy enemy in m_AliveEnemies)
+            foreach (Enemy enemy in m_AliveEnemiesByRow)
             {
                 if (enemy.Row == 0)
                 {
@@ -214,146 +209,45 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private bool isAllEnemiesDead()
         {
-            bool isAllDead = m_AliveEnemies.Count == 0;
+            bool isAllDead = m_AliveEnemiesByRow.Count == 0;
 
             return isAllDead;
         }
 
         private bool isEnemiesGroupTouchTheBotton()
         {
-            bool isEnemiesGroupTouchTheBotton;
-
-            if (this.getBottomGroupBorder() >= Game.GraphicsDevice.Viewport.Height)
-            {
-                isEnemiesGroupTouchTheBotton = true;
-            }
-            else
-            {
-                isEnemiesGroupTouchTheBotton = false;
-            }
+            bool isEnemiesGroupTouchTheBotton = this.getBottomGroupBorder() >= Game.GraphicsDevice.Viewport.Height;
 
             return isEnemiesGroupTouchTheBotton;
         }
 
-        private float getLeftGroupBorder()
-        {
-            float leftX = 0;
-            bool isFound = false;
-
-            for (int col = 0; col < k_EnemiesColumns; col++)
-            {
-                for (int row = 0; row < k_EnemiesRows; row++)
-                {
-                    if (this.m_EnemiesMatrix[row, col].Visible)
-                    {
-                        leftX = this.m_EnemiesMatrix[row, col].TopLeftPosition.X - this.m_EnemiesMatrix[row, col].Texture.Height/2;
-                        isFound = true;
-                        break;
-                    }
-                }
-
-                if (isFound)
-                {
-                    break;
-                }
-            }
-
-            return leftX;
-        }
-
         private float getRightGroupBorder()
         {
-            float rightBorderX = 0;
-            bool isFound = false;
+            return m_AliveEnemiesByColum.Last().Position.X + m_AliveEnemiesByColum.Last().HeightBeforeScale/2;
+        }
 
-            for (int col = k_EnemiesColumns - 1; col >= 0; col--)
-            {
-                for (int row = 0; row < k_EnemiesRows; row++)
-                {
-                    if (this.m_EnemiesMatrix[row, col].Visible)
-                    {
-                        rightBorderX = this.m_EnemiesMatrix[row, col].TopLeftPosition.X + this.m_EnemiesMatrix[row, col].Texture.Height/2;
-                        isFound = true;
-                        break;
-                    }
-                }
-
-                if (isFound)
-                {
-                    break;
-                }
-            }
-
-            return rightBorderX;
+        private float getLeftGroupBorder()
+        {
+            return m_AliveEnemiesByColum.First().Position.X - m_AliveEnemiesByColum.First().HeightBeforeScale / 2;
         }
 
         private float getBottomGroupBorder()
         {
-            float bottomBorderY = 0;
-            bool isFound = false;
-
-            for (int row = k_EnemiesRows - 1; row >= 0; row--)
-            {
-                for (int col = 0; col < k_EnemiesColumns; col++)
-                {
-                    if (this.m_EnemiesMatrix[row, col].Visible)
-                    {
-                        bottomBorderY = this.m_EnemiesMatrix[row, col].Position.Y + this.m_EnemiesMatrix[row, col].Texture.Height/2;
-                        isFound = true;
-                        break;
-                    }
-                }
-
-                if (isFound)
-                {
-                    break;
-                }
-            }
-
-            return bottomBorderY;
+            return m_AliveEnemiesByRow.Last().Position.Y + m_AliveEnemiesByRow.Last().HeightBeforeScale / 2;
         }
 
-        int m_TopRow = 0;
-        int m_BottomRow = 4;
-        int m_LeftColum = 0;
-        int m_RightColum = 8;
-
-
-        private void updateLivesArraies(object sender, EventArgs args)
+        private void updateAliveLists(object sender, EventArgs args)
         {
-            int livesNumInCurrRow = m_AlivesArrayRow[(sender as Enemy).Row]--;
-            int livesNumCurrInCol = m_AlivesArrayRow[(sender as Enemy).Colum]--;
-            
-            if (livesNumInCurrRow == 0)
-            {
-                if ((sender as Enemy).Row == m_TopRow)
-                {
-                 //   m_AliveEnemiesRec = m_AliveEnemiesRec.Inflate()
-                    m_TopRow--;
-                }
-                else if ((sender as Enemy).Row == m_BottomRow)
-                {
-                    m_BottomRow--;
-                }
-                
-            }
-            else if ((sender as Enemy).Colum == 0)
-            {
-
-            }
-
-            // ALIVES LISTTTT
-            m_AliveEnemies.Remove(sender as Enemy);
+            m_AliveEnemiesByRow.Remove((sender as Enemy));
+            m_AliveEnemiesByColum.Remove((sender as Enemy));
         }
 
-        private void countDeadEnemies(object sender, EventArgs args)
+        private bool isFourEnemiesDead()
         {
-            this.m_NumOfDeadEnemies++;
-            if (this.m_NumOfDeadEnemies % 4 == 0 && this.m_NumOfDeadEnemies != 0)
-            {
-                this.m_IncreaseVelocityWhen4Dead = true;
-            }
+            int numOfDeadEnemies = m_AliveEnemiesByRow.Capacity - m_AliveEnemiesByRow.Count;
+            bool isFourEnemiesDead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
 
+            return isFourEnemiesDead;
         }
 
         private void jumpHorizontalStep(GameTime i_GameTime)
