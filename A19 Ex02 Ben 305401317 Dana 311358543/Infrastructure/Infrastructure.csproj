@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\IValuable.cs" />
     <Compile Include="ObjectModel\Animations\CompositeAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\BlinkAnimator.cs" />
+    <Compile Include="ObjectModel\Animations\ConcreteAnimators\FadeAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\RoataterAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\ShrinkerAnimator.cs" />
     <Compile Include="ObjectModel\LoadableDrawbleComponent.cs" />
@@ -60,9 +61,6 @@
     <Compile Include="ObjectModel\GameService.cs" />
     <Compile Include="ObjectModel\RegisteredComponent.cs" />
     <Compile Include="ObjectModel\Sprite.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
