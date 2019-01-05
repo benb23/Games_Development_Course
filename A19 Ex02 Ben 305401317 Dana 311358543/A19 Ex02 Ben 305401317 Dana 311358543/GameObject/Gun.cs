@@ -19,19 +19,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Game m_Game;
         private Bullet.eBulletType m_BulletsType;
         private int m_ShootingDirection;
-        public Gun(Game i_Game,int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType,int m_ShootingDirection)
+        public Gun(Game i_Game,int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType,int i_ShootingDirection)
         {
             m_Game = i_Game;
             k_MaxNumOfBullets = i_MaxNumOfBullets;
             m_BulletsType = i_BulletType;
             m_Bullets = new List<Bullet>(k_MaxNumOfBullets);
+            m_ShootingDirection = i_ShootingDirection;
         }
 
         public void Shoot(Vector2 i_ShooterPosition)
         {
             Bullet bullet = getBullet();
             bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection*(bullet.Texture.Height/2+1));
-            bullet.Enabled = true;
         }
 
         private Bullet getBullet()
@@ -45,6 +45,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     bullet = currBullet;
                     foundBullet = true;
+                    bullet.Enabled = true;
+                    bullet.Visible = true;
+
                 }
             }
 

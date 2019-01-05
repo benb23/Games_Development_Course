@@ -29,7 +29,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public SpaceShip(Game i_Game, Bullet.eBulletType i_GunBulletsType)
             : base(k_AssteName, i_Game)
         {
-            m_Gun = new Gun(i_Game, 3, i_GunBulletsType,1);
+            m_Gun = new Gun(i_Game, 3, i_GunBulletsType,-1);
         }
 
         void ICollidable.Collided(ICollidable i_Collidable)
@@ -47,7 +47,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void Shoot()
         {
-            m_Gun.Shoot(new Vector2(Position.X, Position.Y - Texture.Height));
+             m_Gun.Shoot(new Vector2(Position.X, Position.Y - Texture.Height));
         }
         public bool PermitionToShoot()
         {
