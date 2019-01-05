@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    class EnemiesGroup : DrawableGameComponent
+    class EnemiesGroup : GameComponent
     {
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
@@ -44,9 +44,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
             //TODO: CHEAK
-            if (isFourEnemiesDead())
+            if (m_IncreaseVelocityWhen4Dead)
             {
-               // this.m_IncreaseVelocityWhen4Dead = false;
+               this.m_IncreaseVelocityWhen4Dead = false;
                 this.increaseVelocity(0.04f);
             }
 
@@ -142,6 +142,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_StartSqureIndex, i_Row, colum);
                 m_AliveEnemiesByRow.Add(m_EnemiesMatrix[i_Row, colum]);
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.updateAliveLists;
+                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.isFourEnemiesDead;
+
             }
         }
 
@@ -242,12 +244,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_AliveEnemiesByColum.Remove((sender as Enemy));
         }
 
-        private bool isFourEnemiesDead()
+        private void isFourEnemiesDead(object sender, EventArgs args)
         {
             int numOfDeadEnemies = m_AliveEnemiesByRow.Capacity - m_AliveEnemiesByRow.Count;
-            bool isFourEnemiesDead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
+            m_IncreaseVelocityWhen4Dead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
 
-            return isFourEnemiesDead;
+            //return isFourEnemiesDead;
         }
 
         private void jumpHorizontalStep(GameTime i_GameTime)
