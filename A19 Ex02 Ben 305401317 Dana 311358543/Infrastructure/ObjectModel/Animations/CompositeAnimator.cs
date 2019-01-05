@@ -35,6 +35,7 @@ namespace Infrastructure
             {
                 this.Add(animation);
             }
+
         }
 
         public void Add(SpriteAnimator i_Animation)
