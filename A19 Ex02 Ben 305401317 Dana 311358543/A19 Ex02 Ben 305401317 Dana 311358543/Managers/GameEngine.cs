@@ -43,7 +43,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(i_Sender is SpaceShip)
             {
-                HandleSpaceShipHit(i_Sender, i_Target);
+                HandleSpaceShipHit(i_Sender as SpaceShip, i_Target);
             }
             else
             {
@@ -51,20 +51,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        private void HandleSpaceShipHit(ICollidable i_Target, ICollidable i_Sender)
+        private void HandleSpaceShipHit(SpaceShip i_Target, ICollidable i_Sender)
         {
             if(i_Sender is Bullet)
             {
-                if(m_Players[(int)PlayerIndex.One].SpaceShip == i_Target)
+                updatePlayerScoreAndSouls(i_Target.Owner);
+                if(m_Players[(int)i_Target.Owner].Souls.Count == 0)
                 {
-                    m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.Soul;
-                    m_Players[(int)PlayerIndex.One].Souls.Remove(m_Players[(int)PlayerIndex.One].Souls[0]);
+                    m_Players[(int)i_Target.Owner].SpaceShip.Animations["Destroy"].Restart();
+                    //m_Players[(int)i_Target.Owner].die();
                 }
-                else if(m_Players[(int)PlayerIndex.Two].SpaceShip == i_Target) 
+                else
                 {
-                    m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.Soul;
-                    m_Players[(int)PlayerIndex.Two].Souls.Remove(m_Players[(int)PlayerIndex.Two].Souls[0]);
-
+                    m_Players[(int)i_Target.Owner].SpaceShip.Animations["LoosingSoul"].Restart();
                 }
             }
             else // i_Sender is Enemy
@@ -72,6 +71,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 ShowGameOverMessage();
                 this.m_Game.Exit();
             }
+        }
+
+
+        private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
+        {
+            m_Players[(int)i_PlayerIndex].Score += (int)eScoreValue.Soul;
+            m_Players[(int)i_PlayerIndex].Souls.Remove(m_Players[(int)i_PlayerIndex].Souls[0]);
         }
 
         private void handleNonSpaceShipHit(ICollidable i_Target, ICollidable i_Sender)
