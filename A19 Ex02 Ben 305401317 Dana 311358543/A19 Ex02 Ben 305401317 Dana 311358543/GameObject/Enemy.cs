@@ -89,9 +89,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
                 m_GameEngine.HandleHit(this, i_Collidable);
                 this.Animations.Enabled = true;
-                m_Animations["dyingEnemy"].Resume();
-
-
             }
         }
 
@@ -99,8 +96,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             base.Initialize();
             m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
-            initAnimations();
-            
+            initAnimations(); 
         }
 
         protected override void InitOrigins()
@@ -139,6 +135,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Animations.Add(dyingEnemy);
 
             dyingEnemy.Finished += new EventHandler(dyingEnemy_Finished);
+            
+
             // this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
             //   this.Animations.Add();
         }
