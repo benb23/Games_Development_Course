@@ -10,7 +10,7 @@ namespace Infrastructure
     {
         private Sprite m_BoundSprite;
         private TimeSpan m_AnimationLength;
-        private TimeSpan m_TimeLeft;
+        protected TimeSpan m_TimeLeft; //TODO : WAS PRIVATE
         private bool m_IsFinished = false;
         private bool m_Enabled = false; // todo : new
         private bool m_Initialized = false;
@@ -20,6 +20,7 @@ namespace Infrastructure
 
         public event EventHandler Finished;
 
+        
         protected virtual void OnFinished()
         {
             if (m_ResetAfterFinish)

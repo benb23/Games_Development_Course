@@ -11,12 +11,12 @@ namespace Infrastructure
         
 
         public FadeAnimator(TimeSpan i_AnimationLength)
-            : this("Blink", i_AnimationLength)
+            : this("Fade", i_AnimationLength)
         {}
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            this.BoundSprite.Opacity -=(float)(this.m_OriginalSpriteInfo.Opacity / this.AnimationLength.Seconds);
+            this.BoundSprite.Opacity -= (float)i_GameTime.ElapsedGameTime.TotalSeconds*(float)(this.BoundSprite.Opacity / this.AnimationLength.TotalSeconds);
 
         }
 

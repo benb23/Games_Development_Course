@@ -58,6 +58,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 updatePlayerScoreAndSouls(i_Target.Owner);
                 if(m_Players[(int)i_Target.Owner].Souls.Count == 0)
                 {
+                    m_Players[(int)i_Target.Owner].SpaceShip.Animations["Destroy"].Finished += new EventHandler(m_Players[(int)i_Target.Owner].destroyed_Finished);
                     m_Players[(int)i_Target.Owner].SpaceShip.Animations["Destroy"].Enabled = true;
                     m_Players[(int)i_Target.Owner].SpaceShip.Animations["Destroy"].Restart();
                 }
@@ -65,6 +66,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     m_Players[(int)i_Target.Owner].SpaceShip.Animations["LoosingSoul"].Enabled = true;
                     m_Players[(int)i_Target.Owner].SpaceShip.Animations["LoosingSoul"].Restart();
+
                 }
             }
             else // i_Sender is Enemy
@@ -73,6 +75,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_Game.Exit();
             }
         }
+
 
 
         private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
