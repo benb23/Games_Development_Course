@@ -34,7 +34,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private List<Soul> m_Souls = new List<Soul>(3);
 
+        public List<Soul> Souls
+        {
+            get { return m_Souls; }
+        }
+
         private int m_Score;
+
+        public int Score
+        {
+            get { return m_Score; }
+            set { m_Score = value; }
+        }
+
 
         public SpaceShip SpaceShip
         {
@@ -68,7 +80,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {//TODO : function for mouse .
                 isPlayerAskedToShoot = true;
             }
-
+            
             return isPlayerAskedToShoot;
         }
 
@@ -89,7 +101,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public Player(Game i_Game,PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey, bool i_IsAllowdToUseMouse) : base(i_Game)
+        public Player(Game i_Game,PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey,
+                      bool i_IsAllowdToUseMouse, Vector2 initialPosition) : base(i_Game)
         {
             m_LeftMoveKey = i_LeftKey;
             m_RightMoveKey = i_RightKey;
@@ -98,6 +111,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_PlayerType = i_PlayerType;
             m_Game = i_Game;
             createSpaceShip(i_PlayerType);
+            
         }
 
         private void createSpaceShip(PlayerIndex i_PlayerType)
@@ -114,23 +128,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
+            m_Souls.Add(new Soul(m_Game));
+            m_Souls.Add(new Soul(m_Game));
+            m_Souls.Add(new Soul(m_Game));
+
             if (m_InputManager == null)
             {
                 m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
             }
 
-            if (m_PlayerType==PlayerIndex.One)
-            {
-                m_SpaceShip.Position = new Vector2( m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
-            }
-            else if(m_PlayerType == PlayerIndex.Two)
-            {
-                m_SpaceShip.Position = new Vector2(2*m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
-            }
+            m_SpaceShip.Position = new Vector2(((int)m_PlayerType*m_SpaceShip.Texture.Width/2)+ m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
 
             base.Initialize();
         }
 
-        public int Score { get; set; }
     }
 }

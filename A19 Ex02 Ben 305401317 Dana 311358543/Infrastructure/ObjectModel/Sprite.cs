@@ -9,6 +9,13 @@ namespace Infrastructure
     {
         protected bool m_Initialize;
 
+        protected CompositeAnimator m_Animations;
+        public CompositeAnimator Animations
+        {
+            get { return m_Animations; }
+            set { m_Animations = value; }
+        }
+
         private Texture2D m_Texture;
         public Texture2D Texture
         {
@@ -281,6 +288,8 @@ namespace Infrastructure
             this.Rotation += this.AngularVelocity * totalSeconds;
 
             base.Update(gameTime);
+            this.Animations.Update(gameTime);
+
         }
 
         /// <summary>
@@ -324,6 +333,18 @@ namespace Infrastructure
 
             return collided;
         }
+        public Sprite ShallowClone()
+        {
+            return this.MemberwiseClone() as Sprite;
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            m_Animations = new CompositeAnimator(this);
+        }
+
         #endregion //Collision Handlers
     }
 }
