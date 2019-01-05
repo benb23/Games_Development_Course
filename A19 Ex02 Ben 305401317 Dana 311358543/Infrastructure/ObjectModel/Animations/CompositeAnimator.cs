@@ -40,7 +40,7 @@ namespace Infrastructure
         public void Add(SpriteAnimator i_Animation)
         {
             i_Animation.BoundSprite = this.BoundSprite;
-            i_Animation.Enabled = true;
+            //i_Animation.Enabled = true; //TOFO:
             m_AnimationsDictionary.Add(i_Animation.Name, i_Animation);
             m_AnimationsList.Add(i_Animation);
         }

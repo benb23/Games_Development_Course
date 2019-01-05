@@ -12,7 +12,7 @@ namespace Infrastructure
         private TimeSpan m_AnimationLength;
         private TimeSpan m_TimeLeft;
         private bool m_IsFinished = false;
-        private bool m_Enabled = true;
+        private bool m_Enabled = false; // todo : new
         private bool m_Initialized = false;
         private string m_Name;
         protected bool m_ResetAfterFinish = true;
@@ -32,6 +32,8 @@ namespace Infrastructure
             {
                 Finished(this, EventArgs.Empty);
             }
+
+            Enabled = false; // todo: new
         }
 
         protected SpriteAnimator(string i_Name, TimeSpan i_AnimationLength)

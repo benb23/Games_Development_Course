@@ -76,19 +76,26 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initAnimations()
         {
-            BlinkAnimator blinkAnimator = new BlinkAnimator("LoosingSoul",TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.5));//TODO: numbers?
+            BlinkAnimator blinkAnimator = new BlinkAnimator("LoosingSoul",TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.5));
+            //blinkAnimator.Enabled = false;
             this.Animations.Add(blinkAnimator);
             
             FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(4.5));
-            SpriteAnimator[] destriyAnimations =  { fadeAnimator };
-            CompositeAnimator spaceShipDestroyAnimator = new CompositeAnimator("Destroy" ,TimeSpan.FromSeconds(2.5),this, destriyAnimations) ;
+            //fadeAnimator.Enabled = false;
+
+            CompositeAnimator spaceShipDestroyAnimator = new CompositeAnimator("Destroy" ,TimeSpan.FromSeconds(2.5),this, fadeAnimator);
             spaceShipDestroyAnimator.ResetAfterFinish = false;
-            m_Animations.Add(spaceShipDestroyAnimator);
-            
+            //spaceShipDestroyAnimator.Enabled = false;
+
+            this.Animations.Add(spaceShipDestroyAnimator);
             this.Animations.Enabled = true;
+            spaceShipDestroyAnimator.Finished += new EventHandler(destroyed_Finished);
         }
 
-
+        private void destroyed_Finished(object sender, EventArgs e)
+        {
+            
+        }
 
         public override void Initialize()
         {
