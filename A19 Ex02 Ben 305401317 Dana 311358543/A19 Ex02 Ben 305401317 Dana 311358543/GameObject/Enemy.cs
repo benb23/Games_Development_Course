@@ -82,25 +82,32 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
                 }
 
-                if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
-                {
-                    Visible = false;
-                }
+                //if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
+                //{
+                //    Visible = false;
+                //}
 
                 m_GameEngine.HandleHit(this, i_Collidable);
+                this.Animations.Enabled = true;
+                m_Animations["shrinkEnemy"].Resume();
+                m_Animations["roatateEnemy"].Resume();
+
+
             }
         }
 
         public override void Initialize()
         {
-            m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
             base.Initialize();
+            m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
+            initAnimations();
+            
         }
 
         protected override void InitOrigins()
         {
-            m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
-            m_RotationOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
+            m_PositionOrigin = new Vector2(Texture.Height / 2, Texture.Height/2);
+            m_RotationOrigin = new Vector2(Texture.Height / 2, Texture.Height/2);
             base.InitOrigins();
         }
 
@@ -115,6 +122,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 0,
                  (int)m_WidthBeforeScale,
                 (int)Height);
+        }
+
+
+        private void initAnimations()
+        {
+            this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
+            this.Animations.Add(new RoataterAnimator("roatateEnemy", 6, TimeSpan.FromSeconds(1.2)));
         }
     }
 }
