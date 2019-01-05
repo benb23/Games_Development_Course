@@ -89,8 +89,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
                 m_GameEngine.HandleHit(this, i_Collidable);
                 this.Animations.Enabled = true;
-                m_Animations["shrinkEnemy"].Resume();
-                m_Animations["roatateEnemy"].Resume();
+                m_Animations["dyingEnemy"].Resume();
 
 
             }
@@ -124,11 +123,24 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 (int)Height);
         }
 
+        private void dyingEnemy_Finished(object sender, EventArgs e)
+        {
+            this.Animations["dyingEnemy"].Pause();
+            this.Visible = false;
+            this.Enabled = false;
+        }
 
         private void initAnimations()
         {
-            this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
-            this.Animations.Add(new RoataterAnimator("roatateEnemy", 6, TimeSpan.FromSeconds(1.2)));
+            ShrinkerAnimator shrinker = new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2));
+            RoataterAnimator rotate = new RoataterAnimator("roatateEnemy", 6, TimeSpan.FromSeconds(1.2));
+
+            CompositeAnimator dyingEnemy = new CompositeAnimator("dyingEnemy", TimeSpan.FromSeconds(1.2), this, shrinker, rotate);
+            this.Animations.Add(dyingEnemy);
+
+            dyingEnemy.Finished += new EventHandler(dyingEnemy_Finished);
+            // this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
+            //   this.Animations.Add();
         }
     }
 }
