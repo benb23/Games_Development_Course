@@ -42,6 +42,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
 
                 m_GameEngine.HandleHit(this, i_Collidable);
+                this.Animations.Enabled = true;
+                m_Animations["LoosingSoul"].Restart();
+                
             }
         }
 
@@ -58,6 +61,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height);
             m_RotationOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
             base.InitOrigins();
+        }
+
+        private void initAnimations()
+        {
+            BlinkAnimator blinkAnimator = new BlinkAnimator("LoosingSoul",TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.5));//TODO: numbers?
+            this.Animations.Add(blinkAnimator);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            initAnimations();
         }
     }
 }

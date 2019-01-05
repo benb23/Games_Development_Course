@@ -43,8 +43,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.IsMouseVisible = true;
             m_InputManager = new InputManager(this);
             m_Players = new List<Player>(2);
-            m_Players.Add(new Player(this, PlayerIndex.One,Keys.H, Keys.K, Keys.U,true));
-            m_Players.Add(new Player(this, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false));
+            m_Players.Add(new Player(this, PlayerIndex.One,Keys.H, Keys.K, Keys.U, true, new Vector2(0,0)));
+            m_Players.Add(new Player(this, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
             Components.Add(m_Players[0]);
             Components.Add(m_Players[1]);
             m_GameEngine = new GameEngine(this);
