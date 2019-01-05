@@ -32,17 +32,11 @@ namespace Infrastructure
 
             this.BoundSprite.Scales *= new Vector2((float)currSize.TotalSeconds / (float)m_ShrinkLength.TotalSeconds);
 
-            if (i_GameTime.ElapsedGameTime >= m_ShrinkLength)
-            {
-                // we have elapsed, so blink
-                this.BoundSprite.Visible = !this.BoundSprite.Visible;
-            }
-
         }
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Rotation += m_OriginalSpriteInfo.Rotation;
+            this.BoundSprite.Rotation = m_OriginalSpriteInfo.Rotation;
         }
 
     }

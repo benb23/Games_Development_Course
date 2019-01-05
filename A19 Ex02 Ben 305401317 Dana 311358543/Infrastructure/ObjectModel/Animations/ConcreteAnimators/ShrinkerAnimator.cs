@@ -27,6 +27,13 @@ namespace Infrastructure
             m_RotateLength = i_AnimationLength;
         }
 
+        protected override void OnFinished()
+        {
+            base.OnFinished();
+            this.BoundSprite.Visible = false;
+        }
+
+
         protected override void DoFrame(GameTime i_GameTime)
         {
             float currentTime = (float)m_RotateLength.TotalSeconds;
