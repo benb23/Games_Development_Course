@@ -118,12 +118,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(i_PlayerType == PlayerIndex.One)
             {
-                m_SpaceShip = new SpaceShip(m_Game, Bullet.eBulletType.PlayerOneBullet);
+                m_SpaceShip = new SpaceShip(m_Game, Bullet.eBulletType.PlayerOneBullet, PlayerIndex.One);
             }
             else
             {
-                m_SpaceShip = new SpaceShip(m_Game, Bullet.eBulletType.PlayerTwoBullet);
+                m_SpaceShip = new SpaceShip(m_Game, Bullet.eBulletType.PlayerTwoBullet, PlayerIndex.Two);
             }
+        }
+
+        public void die()
+        {
+            Enabled = false;
+            SpaceShip.Enabled = false;
+            SpaceShip.Visible = false;
         }
 
         public override void Initialize()
@@ -138,7 +145,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_SpaceShip.Position = new Vector2(((int)m_PlayerType*m_SpaceShip.Texture.Width/2)+ m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
-
+            //m_SpaceShip.Animations["Destroy"].Finished += SpaceShipDestroyed;
             base.Initialize();
         }
 

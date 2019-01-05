@@ -49,8 +49,7 @@
     <Compile Include="Interfaces\IValuable.cs" />
     <Compile Include="ObjectModel\Animations\CompositeAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\BlinkAnimator.cs" />
-    <Compile Include="ObjectModel\Animations\ConcreteAnimators\ShrinkerAnimator.cs" />
-    <Compile Include="ObjectModel\Animations\ConcreteAnimators\RoataterAnimator.cs" />
+    <Compile Include="ObjectModel\Animations\ConcreteAnimators\FadeAnimator.cs" />
     <Compile Include="ObjectModel\LoadableDrawbleComponent.cs" />
     <Compile Include="Managers\CollisionsManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
