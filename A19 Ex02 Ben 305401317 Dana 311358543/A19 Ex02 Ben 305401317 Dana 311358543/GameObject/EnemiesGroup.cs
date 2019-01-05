@@ -19,18 +19,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private float m_Direction = 1f;
         private float m_currTopLeftX;
         private float m_currTopLeftY;
-        private int m_NumOfDeadEnemies = 0;
         private bool m_IncreaseVelocityWhen4Dead = false;
         private bool m_IsLastStepInRow = false;
         private float m_TimeCounter = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
         private Enemy[,] m_EnemiesMatrix;
-        private List<Enemy> m_AliveEnemies = new List<Enemy>(k_EnemiesRows* k_EnemiesColumns);
         private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
 
         private IGameEngine m_GameEngine;
-        private Rectangle m_AliveEnemiesRec;
         float m_EnemiesGap;
         private int m_Toggeler = 1;
 
@@ -43,7 +40,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
-            //TODO: CHEAK
             if (m_IncreaseVelocityWhen4Dead)
             {
                this.m_IncreaseVelocityWhen4Dead = false;
@@ -64,6 +60,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     this.jumpHorizontalStep(i_GameTime);
                 }
+
                 doEnemyCellAnimation();
             }
 
@@ -119,14 +116,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             // For calculating positions according to enemy texture width (generic)
             this.m_EnemiesMatrix[0, 0].LoadAsset();
             m_EnemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
-
-            m_AliveEnemiesRec = new Rectangle(
-                    0,
-                    this.m_EnemiesMatrix[0, 0].Texture.Height * 3,
-                    (int)((this.m_EnemiesMatrix[0, 0].Texture.Height + m_EnemiesGap) * 9 - m_EnemiesGap),
-                    (int)((this.m_EnemiesMatrix[0, 0].Texture.Height + m_EnemiesGap) * 5 - m_EnemiesGap)
-                );
-
 
 
 
@@ -248,8 +237,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             int numOfDeadEnemies = m_AliveEnemiesByRow.Capacity - m_AliveEnemiesByRow.Count;
             m_IncreaseVelocityWhen4Dead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
-
-            //return isFourEnemiesDead;
         }
 
         private void jumpHorizontalStep(GameTime i_GameTime)
