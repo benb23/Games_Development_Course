@@ -17,7 +17,6 @@ namespace Infrastructure
         protected override void DoFrame(GameTime i_GameTime)
         {
             this.BoundSprite.Opacity -= (float)i_GameTime.ElapsedGameTime.TotalSeconds*(float)(this.m_OriginalSpriteInfo.Opacity /this.AnimationLength.TotalSeconds);
-
         }
 
         protected override void RevertToOriginal()
