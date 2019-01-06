@@ -75,6 +75,7 @@ namespace Infrastructure
             : this(i_AssetName, i_Game, i_CallsOrder, i_CallsOrder)
         { }
 
+
         public override void Initialize()
         {
             base.Initialize();

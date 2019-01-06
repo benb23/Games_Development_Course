@@ -16,6 +16,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public interface IGameEngine
     {
+        List<Player> Players { get; set;}
+
         void HandleHit(ICollidable i_Target, ICollidable i_Sender);
         void ShowGameOverMessage();
     }

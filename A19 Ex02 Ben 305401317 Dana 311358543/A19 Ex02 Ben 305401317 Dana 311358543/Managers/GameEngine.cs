@@ -27,6 +27,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private Game m_Game;
         private List<Player> m_Players;
+        private ScoreBoardHeader m_ScoreBoard;
 
         public override void Update(GameTime gameTime)
         {
@@ -38,6 +39,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public GameEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
+            m_ScoreBoard = new ScoreBoardHeader(i_Game);
         }
 
         public List<Player> Players
