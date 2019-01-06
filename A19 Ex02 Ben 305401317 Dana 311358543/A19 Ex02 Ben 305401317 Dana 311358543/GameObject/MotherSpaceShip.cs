@@ -25,6 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public MotherSpaceShip(Game i_Game): base(k_AssteName, i_Game)
 		{
+            
             this.m_TintColor = Color.Red;
             this.Visible = false;
         }

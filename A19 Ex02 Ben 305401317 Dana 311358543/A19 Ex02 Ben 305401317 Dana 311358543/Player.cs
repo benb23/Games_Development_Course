@@ -29,10 +29,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         Keys m_ShootKey;
 
         PlayerIndex m_PlayerType;
-        
-        private SpaceShip m_SpaceShip;
 
-        private int m_NumOfSouls = 3;
+        private SpaceShip m_SpaceShip;
 
         private List<Soul> m_Souls = new List<Soul>(3);
 
@@ -41,24 +39,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return m_Souls; }
         }
 
+        public SpaceShip SpaceShip
+        {
+            get{ return m_SpaceShip; }
+        }
+
         private int m_Score;
 
         public int Score
         {
             get { return m_Score; }
             set { m_Score = value; }
-        }
-
-        public int SoulsNumber
-        {
-            get { return m_NumOfSouls; }
-        }
-
-
-
-        public SpaceShip SpaceShip
-        {
-            get { return m_SpaceShip; }
         }
 
         //TODO: SHOOT FROM PLAYER
@@ -119,7 +110,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_PlayerType = i_PlayerType;
             m_Game = i_Game;
             createSpaceShip(i_PlayerType);
-            
         }
 
         private void createSpaceShip(PlayerIndex i_PlayerType)
@@ -143,11 +133,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
-            for (int i = 0; i < m_Souls.Capacity; i++)
-            {
-                this.m_Souls.Add(new Soul(Game, new Vector2(0.5f), 0.5f, SpaceShip.AssetName, m_PlayerType, i));
-            }
-            
+            m_Souls.Add(new Soul(m_Game));
+            m_Souls.Add(new Soul(m_Game));
+            m_Souls.Add(new Soul(m_Game));
 
             if (m_InputManager == null)
             {
