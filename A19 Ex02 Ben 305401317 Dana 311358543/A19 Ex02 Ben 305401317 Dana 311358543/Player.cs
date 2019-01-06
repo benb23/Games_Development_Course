@@ -133,9 +133,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
-            m_Souls.Add(new Soul(m_Game));
-            m_Souls.Add(new Soul(m_Game));
-            m_Souls.Add(new Soul(m_Game));
+            for (int i = 0; i < m_Souls.Capacity; i++)
+            {
+                this.m_Souls.Add(new Soul(Game, new Vector2(0.5f), 0.5f, SpaceShip.AssetName, m_PlayerType, i));
+            }
 
             if (m_InputManager == null)
             {
