@@ -26,8 +26,9 @@ namespace Infrastructure
             if (m_ResetAfterFinish)
             {
                 Reset();
-                this.m_IsFinished = true;
             }
+
+            this.m_IsFinished = true;
 
             if (Finished != null)
             {

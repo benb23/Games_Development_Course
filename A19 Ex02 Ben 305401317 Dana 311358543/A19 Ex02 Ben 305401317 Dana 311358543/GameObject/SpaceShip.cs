@@ -26,10 +26,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return k_Speed; }
         }
 
-        public CompositeAnimator Animations
-        {
-            get { return m_Animations; }
-        }
+
         public PlayerIndex Owner
         {
             get { return m_Owner; }
@@ -61,7 +58,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
         public bool PermitionToShoot()
         {
-            return m_Gun.PermitionToShoot();
+            return m_Animations["Destroy"].Enabled == false && m_Gun.PermitionToShoot();
         }
         protected override void InitOrigins()
         {
@@ -74,13 +71,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             BlinkAnimator blinkAnimator = new BlinkAnimator("LoosingSoul",TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.5));
             this.Animations.Add(blinkAnimator);
-            
+
+            RoataterAnimator roataterAnimator = new RoataterAnimator(4, TimeSpan.FromSeconds(2.5));
             FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(2.5));
 
-            CompositeAnimator spaceShipDestroyAnimator = new CompositeAnimator("Destroy" ,TimeSpan.FromSeconds(2.5),this, fadeAnimator);
-            spaceShipDestroyAnimator.ResetAfterFinish = false;
+            CompositeAnimator DestroyAnimator = new CompositeAnimator("Destroy" ,TimeSpan.FromSeconds(2.5),this, fadeAnimator, roataterAnimator);
+            DestroyAnimator.ResetAfterFinish = false;
             
-            this.Animations.Add(spaceShipDestroyAnimator);
+            this.Animations.Add(DestroyAnimator);
             this.Animations.Enabled = true;
         }
 
