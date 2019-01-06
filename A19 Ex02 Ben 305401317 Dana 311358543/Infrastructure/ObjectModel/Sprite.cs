@@ -7,7 +7,7 @@ namespace Infrastructure
 {
     public class Sprite : LoadableDrawableComponent
     {
-        protected bool m_Initialize;
+        protected bool m_PositionInit;
 
         protected CompositeAnimator m_Animations;
         public CompositeAnimator Animations

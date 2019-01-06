@@ -128,8 +128,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initAnimations()
         {
-            ShrinkerAnimator shrinker = new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2));
-            RoataterAnimator rotate = new RoataterAnimator("roatateEnemy", 6, TimeSpan.FromSeconds(1.2));
+            ShrinkAnimator shrinker = new ShrinkAnimator(TimeSpan.FromSeconds(1.2));
+            RoataterAnimator rotate = new RoataterAnimator(6, TimeSpan.FromSeconds(1.2));
 
             CompositeAnimator dyingEnemy = new CompositeAnimator("dyingEnemy", TimeSpan.FromSeconds(1.2), this, shrinker, rotate);
             this.Animations.Add(dyingEnemy);

@@ -31,10 +31,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime i_GameTime)
         {
-            if(!m_Initialize)
+            if (!m_PositionInit)
             {
                 InitPosition();
-                m_Initialize = true;
+                m_PositionInit = true;
             }
 
             if (!this.Visible)
@@ -54,10 +54,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            initAnimations();
+        }
+
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            Visible = false;
-            InitPosition();
+            m_Animations["Destroy"].Restart();
 
             if (m_GameEngine == null)
             {
@@ -76,6 +81,27 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void InitPosition()
         {
             this.Position = new Vector2(-Texture.Width, Texture.Height);
+        }
+
+        private void initAnimations()
+        {
+            BlinkAnimator blinkAnimator = new BlinkAnimator(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.2));
+            FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(2.2));
+            ShrinkAnimator shrinkAnimator = new ShrinkAnimator(TimeSpan.FromSeconds(2.2));
+
+            CompositeAnimator DestroyAnimator = new CompositeAnimator("Destroy", TimeSpan.FromSeconds(2.2), this, blinkAnimator, fadeAnimator, shrinkAnimator);
+            DestroyAnimator.ResetAfterFinish = false;
+            DestroyAnimator.Finished += new EventHandler(destroyed_Finished);
+
+            this.Animations.Add(DestroyAnimator);
+            this.Animations.Enabled = true;
+        }
+
+        private void destroyed_Finished(object sender, EventArgs e)
+        {
+            //Enabled = false;
+            Visible = false;
+            InitPosition();
         }
     }
 }

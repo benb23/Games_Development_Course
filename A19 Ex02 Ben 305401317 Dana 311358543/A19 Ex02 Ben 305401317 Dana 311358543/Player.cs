@@ -126,7 +126,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void die()
+        public void destroyed_Finished(object sender, EventArgs e)
         {
             Enabled = false;
             SpaceShip.Enabled = false;
@@ -145,7 +145,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_SpaceShip.Position = new Vector2(((int)m_PlayerType*m_SpaceShip.Texture.Width/2)+ m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
-            //m_SpaceShip.Animations["Destroy"].Finished += SpaceShipDestroyed;
             base.Initialize();
         }
 
