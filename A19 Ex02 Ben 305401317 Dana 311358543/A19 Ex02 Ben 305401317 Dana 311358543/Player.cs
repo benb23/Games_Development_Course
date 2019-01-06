@@ -118,11 +118,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(i_PlayerType == PlayerIndex.One)
             {
-                m_SpaceShip = new SpaceShip(m_Game, Bullet.eBulletType.PlayerOneBullet, PlayerIndex.One);
+                m_SpaceShip = new SpaceShip(m_Game, @"Sprites\Ship01_32x32", Bullet.eBulletType.PlayerOneBullet, PlayerIndex.One);
             }
             else
             {
-                m_SpaceShip = new SpaceShip(m_Game, Bullet.eBulletType.PlayerTwoBullet, PlayerIndex.Two);
+                m_SpaceShip = new SpaceShip(m_Game, @"Sprites\Ship02_32x32", Bullet.eBulletType.PlayerTwoBullet, PlayerIndex.Two);
             }
         }
 
