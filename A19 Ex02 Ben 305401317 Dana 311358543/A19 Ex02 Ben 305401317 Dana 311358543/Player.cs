@@ -46,6 +46,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private int m_Score;
 
+        private int m_CurrentSoulsNumber;
+
+        private int CurrentSoulsNum
+        {
+            get { return m_CurrentSoulsNumber; }
+        }
+
         public int Score
         {
             get { return m_Score; }
@@ -67,6 +74,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_SpaceShip.Shoot();
             }
 
+            m_CurrentSoulsNumber = m_Souls.Count;
             m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, m_Game.GraphicsDevice.Viewport.Width -m_SpaceShip.Texture.Width/2),m_SpaceShip.Position.Y);
         }
 
@@ -110,6 +118,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_PlayerType = i_PlayerType;
             m_Game = i_Game;
             createSpaceShip(i_PlayerType);
+            m_CurrentSoulsNumber = m_Souls.Capacity;
         }
 
         private void createSpaceShip(PlayerIndex i_PlayerType)

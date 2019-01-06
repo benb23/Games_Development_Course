@@ -18,7 +18,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
 
         private SpriteFont m_Font;
-        private SpriteBatch m_SpriteBatch;
         private IGameEngine m_GameEngine;
         private Game m_Game;
 
@@ -48,8 +47,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             int playerOneScore = m_GameEngine.Players[(int)PlayerIndex.One].Score;
             int playerTwoScore = m_GameEngine.Players[(int)PlayerIndex.Two].Score;
 
-            this.m_SpriteBatch.DrawString(this.m_Font, "P1 Score: " + playerOneScore.ToString(), new Vector2(2, 1 + (int)PlayerIndex.One * 15) , Color.Blue);
-            this.m_SpriteBatch.DrawString(this.m_Font, "P2 Score: " + playerTwoScore.ToString(), new Vector2(2, 1 + (int)PlayerIndex.Two * 15), Color.Green);
+            this.m_SpriteBatch.DrawString(this.m_Font, "P1 Score: " + playerOneScore.ToString(), new Vector2(2, 1 + (int)PlayerIndex.One * 15) , new Color(46, 145, 232));
+            this.m_SpriteBatch.DrawString(this.m_Font, "P2 Score: " + playerTwoScore.ToString(), new Vector2(2, 1 + (int)PlayerIndex.Two * 15), new Color(55, 232, 46));
         }
 
 
@@ -59,6 +58,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         protected override void DrawBoundingBox()
         {
         }
+
+
 
     }
 }

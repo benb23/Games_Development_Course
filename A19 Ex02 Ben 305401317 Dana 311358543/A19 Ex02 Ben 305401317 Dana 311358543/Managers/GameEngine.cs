@@ -71,6 +71,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     {
                         player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(m_Players[(int)i_Target.Owner].destroyed_Finished);
                         player.SpaceShip.Animations["Destroy"].Restart();
+
+                        if(m_Players[(int)(i_Target.Owner) + 1 % 2].Souls.Count == 0)
+                        {
+                        ShowGameOverMessage();
+                        this.m_Game.Exit();
+                        }
                     }
                     else
                     {
@@ -86,8 +92,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
         {
-            m_Players[(int)i_PlayerIndex].Score += (int)eScoreValue.Soul;
-            m_Players[(int)i_PlayerIndex].Souls.Remove(m_Players[(int)i_PlayerIndex].Souls[0]);
+            Player player = m_Players[(int)i_PlayerIndex];
+
+            player.Score = (int)MathHelper.Clamp(player.Score + (int)eScoreValue.Soul, 0, float.PositiveInfinity);
+            player.Souls.First().Visible = false;
+            player.Souls.Remove(player.Souls.First());
         }
 
         private void handleNonSpaceShipHit(ICollidable i_Target, ICollidable i_Sender)
@@ -96,22 +105,22 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 if((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
                 {
-                    m_Players[0].Score += (int)eScoreValue.MotherShip;
+                    m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.MotherShip;
                 }
-                else if((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
+                else if((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerTwoBullet)
                 {
-                    m_Players[1].Score += (int)eScoreValue.MotherShip;
+                    m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
                 }
             }
-            else //Enemy
+            else if (i_Target is Enemy)
             {
                 if ((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
                 {
-                    updatePlayerScoreAfterHitEnemy(m_Players[0], i_Target as Enemy);
+                    updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.One], i_Target as Enemy);
                 }
-                else if ((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
+                else if ((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerTwoBullet)
                 {
-                    updatePlayerScoreAfterHitEnemy(m_Players[1], i_Target as Enemy);
+                    updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.Two], i_Target as Enemy);
                 }
             }
         }
@@ -126,7 +135,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 i_Player.Score += (int)eScoreValue.BlueEnemy;
             }
-            else if(i_Enemy.TintColor == Color.Yellow)
+            else if(i_Enemy.TintColor == Color.LightYellow)
             {
                 i_Player.Score += (int)eScoreValue.YellowEnemy;
             }

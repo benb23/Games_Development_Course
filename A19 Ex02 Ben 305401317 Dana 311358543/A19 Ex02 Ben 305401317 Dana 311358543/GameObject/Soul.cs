@@ -32,11 +32,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public int SoulIndex
         {
-            set
-            {
-                this.m_SoulIndx = value;
-            }
+            set { this.m_SoulIndx = value; }
         }
+
 
         public override void Initialize()
         {
