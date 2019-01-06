@@ -88,7 +88,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 //}
 
                 m_GameEngine.HandleHit(this, i_Collidable);
-                this.Animations.Enabled = true;
+                this.m_Animations["dyingEnemy"].Restart();
             }
         }
 
@@ -121,7 +121,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void dyingEnemy_Finished(object sender, EventArgs e)
         {
-            this.Animations["dyingEnemy"].Pause();
+            this.Animations.Enabled = false;
             this.Visible = false;
             this.Enabled = false;
         }
@@ -135,7 +135,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Animations.Add(dyingEnemy);
 
             dyingEnemy.Finished += new EventHandler(dyingEnemy_Finished);
-            
+            this.Animations.Enabled = true;
 
             // this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
             //   this.Animations.Add();
