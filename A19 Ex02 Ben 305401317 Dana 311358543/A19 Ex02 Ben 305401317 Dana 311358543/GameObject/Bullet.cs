@@ -3,7 +3,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class Bullet : Sprite, ICollidable2D
+    public class Bullet : Sprite, IPixelBasedCollidable
     {
         public enum eBulletType 
         {
