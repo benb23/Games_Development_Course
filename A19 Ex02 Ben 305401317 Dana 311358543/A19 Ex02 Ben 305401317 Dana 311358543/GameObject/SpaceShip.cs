@@ -17,7 +17,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class SpaceShip : Sprite, ICollidable2D
     {
         private float k_Speed = 145; //TODO : VELOCITY
-        private const string k_AssteName = @"Sprites\Ship01_32x32";
         private IGameEngine m_GameEngine;
         private Gun m_Gun;
         private PlayerIndex m_Owner;
@@ -31,8 +30,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             get { return m_Owner; }
         }
-        public SpaceShip(Game i_Game, Bullet.eBulletType i_GunBulletsType, PlayerIndex i_Owner)
-            : base(k_AssteName, i_Game)
+        public SpaceShip(Game i_Game, string i_AssetName, Bullet.eBulletType i_GunBulletsType, PlayerIndex i_Owner)
+            : base(i_AssetName, i_Game)
         {
             m_Gun = new Gun(i_Game, 3, i_GunBulletsType,-1);
             m_Owner = i_Owner;

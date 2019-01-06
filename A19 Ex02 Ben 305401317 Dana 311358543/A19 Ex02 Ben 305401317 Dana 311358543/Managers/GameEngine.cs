@@ -28,6 +28,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Game m_Game;
         private List<Player> m_Players;
 
+        public override void Update(GameTime gameTime)
+        {
+
+            base.Update(gameTime);
+        }
+
+    
         public GameEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
