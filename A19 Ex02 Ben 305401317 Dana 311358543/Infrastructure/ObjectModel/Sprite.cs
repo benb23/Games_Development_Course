@@ -80,7 +80,7 @@ namespace Infrastructure
             set { m_RotationOrigin = value; }
         }
 
-        private Vector2 PositionForDraw
+        protected Vector2 PositionForDraw//TODO: WAS PRIVATE
         {
             get { return this.Position - this.PositionOrigin + this.RotationOrigin; }
         }
@@ -242,7 +242,7 @@ namespace Infrastructure
         }
 
 
-        private bool m_UseSharedBatch = true;
+        private bool m_UseSharedBatch = true; 
 
         protected SpriteBatch m_SpriteBatch;
         public SpriteBatch SpriteBatch

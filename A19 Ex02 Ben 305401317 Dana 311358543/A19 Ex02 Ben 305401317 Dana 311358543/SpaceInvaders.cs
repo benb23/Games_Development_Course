@@ -29,6 +29,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Background m_Background;
         private List<Player> m_Players;
         private CollisionsManager m_CollisionManager;
+        private WallsGroup m_WallsGroup;
 
         public SpaceInvaders()
         {
@@ -40,15 +41,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
             this.m_EnemysGroup = new EnemiesGroup(this);
             Components.Add(this.m_EnemysGroup);
+            m_Players = new List<Player>(2);
+            m_Players.Add(new Player(this, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
+            m_Players.Add(new Player(this, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
             this.IsMouseVisible = true;
             m_InputManager = new InputManager(this);
-            m_Players = new List<Player>(2);
-            m_Players.Add(new Player(this, PlayerIndex.One,Keys.H, Keys.K, Keys.U, true, new Vector2(0,0)));
-            m_Players.Add(new Player(this, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
             Components.Add(m_Players[0]);
             Components.Add(m_Players[1]);
             m_GameEngine = new GameEngine(this);
             m_GameEngine.Players = m_Players;
+            this.m_WallsGroup = new WallsGroup(this, 4);
+            Components.Add(this.m_WallsGroup);
 
         }
 
@@ -63,6 +66,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Graphics.PreferredBackBufferHeight = 600;
             this.m_Graphics.ApplyChanges();
             base.Initialize();
+            m_WallsGroup.WallsYShift = m_Graphics.GraphicsDevice.Viewport.Height - 2*m_Players[0].SpaceShip.Texture.Height;
+
         }
 
         protected override void Update(GameTime i_GameTime)

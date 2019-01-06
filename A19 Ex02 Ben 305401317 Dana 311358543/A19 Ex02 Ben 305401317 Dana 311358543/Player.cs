@@ -29,7 +29,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         Keys m_ShootKey;
 
         PlayerIndex m_PlayerType;
-        
+
         private SpaceShip m_SpaceShip;
 
         private List<Soul> m_Souls = new List<Soul>(3);
@@ -39,18 +39,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return m_Souls; }
         }
 
+        public SpaceShip SpaceShip
+        {
+            get{ return m_SpaceShip; }
+        }
+
         private int m_Score;
 
         public int Score
         {
             get { return m_Score; }
             set { m_Score = value; }
-        }
-
-
-        public SpaceShip SpaceShip
-        {
-            get { return m_SpaceShip; }
         }
 
         //TODO: SHOOT FROM PLAYER
@@ -111,7 +110,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_PlayerType = i_PlayerType;
             m_Game = i_Game;
             createSpaceShip(i_PlayerType);
-            
         }
 
         private void createSpaceShip(PlayerIndex i_PlayerType)
