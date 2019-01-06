@@ -68,7 +68,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                         player.SpaceShip.Animations["LoosingSoul"].Restart();
                     }
             }
-            else // i_Sender is Enemy
+            else if(i_Sender is Enemy)
             {
                 ShowGameOverMessage();
                 this.m_Game.Exit();
