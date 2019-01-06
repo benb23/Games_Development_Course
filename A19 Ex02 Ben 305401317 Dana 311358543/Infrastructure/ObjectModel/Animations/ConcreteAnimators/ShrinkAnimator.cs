@@ -18,7 +18,11 @@ namespace Infrastructure
             set { m_ShrinkLength = value; }
         }
 
-        // CTORs
+        public ShrinkAnimator(string i_Name, TimeSpan i_AnimationLength)
+            : base(i_Name, i_AnimationLength)
+        { }
+
+
         public ShrinkAnimator(TimeSpan i_AnimationLength)
             : base("Shrinker", i_AnimationLength)
         {

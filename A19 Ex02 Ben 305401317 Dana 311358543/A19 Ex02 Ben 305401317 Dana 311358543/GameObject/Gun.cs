@@ -30,11 +30,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void Shoot(Vector2 i_ShooterPosition)
         {
-            Bullet bullet = getBullet();
-            bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection*(bullet.Texture.Height/2+1));
+            Bullet bullet = getBullet(i_ShooterPosition);
         }
 
-        private Bullet getBullet()
+        private Bullet getBullet(Vector2 i_ShooterPosition)
         {
             Bullet bullet = null;
             bool foundBullet = false;
@@ -45,6 +44,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     bullet = currBullet;
                     foundBullet = true;
+                    bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * (bullet.Texture.Height / 2 + 1));
                     bullet.Enabled = true;
                     bullet.Visible = true;
                     break;
@@ -56,6 +56,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 if(m_Bullets.Count < k_MaxNumOfBullets)
                 {
                     bullet = new Bullet(m_Game, m_BulletsType);
+                    bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * (bullet.Texture.Height / 2 + 1));
                     m_Bullets.Add(bullet);
                 }
             }

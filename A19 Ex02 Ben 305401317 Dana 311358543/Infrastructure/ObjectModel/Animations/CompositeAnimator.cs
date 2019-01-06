@@ -12,16 +12,12 @@ namespace Infrastructure
 
         protected readonly List<SpriteAnimator> m_AnimationsList = new List<SpriteAnimator>();
 
-        // CTORs
-
-        // CTOR: Me as an AnimationsMamager
         public CompositeAnimator(Sprite i_BoundSprite)
             : this("AnimationsMamager", TimeSpan.Zero, i_BoundSprite, new SpriteAnimator[] { })
         {
             this.Enabled = false;
         }
 
-        // CTOR: me as a ParallelAnimations animation:
         public CompositeAnimator(
             string i_Name,
             TimeSpan i_AnimationLength,
@@ -41,7 +37,7 @@ namespace Infrastructure
         public void Add(SpriteAnimator i_Animation)
         {
             i_Animation.BoundSprite = this.BoundSprite;
-            //i_Animation.Enabled = true; //TOFO:
+            //i_Animation.Enabled = true; //TODO:
             m_AnimationsDictionary.Add(i_Animation.Name, i_Animation);
             m_AnimationsList.Add(i_Animation);
         }

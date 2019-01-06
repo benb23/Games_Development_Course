@@ -40,14 +40,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if (!(i_Collidable is SpaceShip))
+            if (!(i_Collidable is SpaceShip) && (!m_Animations["Destroy"].Enabled))
             {
                 if (m_GameEngine == null)
                 {
                     m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
                 }
 
-                m_GameEngine.HandleHit(this, i_Collidable);    
+                m_GameEngine.HandleHit(this, i_Collidable);
             }
         }
 

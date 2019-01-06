@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    class MotherSpaceShip : Sprite, ICollidable2D
+    public class MotherSpaceShip : Sprite, ICollidable2D
     {
         private const string k_AssteName = @"Sprites\MotherShip_32x120";
         private const float k_MotherShipVelocity = 40;
@@ -31,25 +31,29 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime i_GameTime)
         {
-            if (!m_PositionInit)
+            if(!m_Initialize)
             {
                 InitPosition();
-                m_PositionInit = true;
+                m_Initialize = true;
             }
 
             if (!this.Visible)
             {
                 this.m_CurrRandom = SpaceInvaders.s_RandomNum.Next(0, k_MaxRandomNumber);
-            }
 
-            if (this.m_CurrRandom <= k_MaxRandomNumToDrawMotherShip)
+                if (this.m_CurrRandom <= k_MaxRandomNumToDrawMotherShip)
+                {
+                    this.Visible = true;
+                    InitPosition();
+                }
+            }
+            else
             {
-                this.Visible = true;
                 this.m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+
                 if (m_Position.X >= GraphicsDevice.Viewport.Width)
                 {
                     Visible = false;
-                    InitPosition();
                 }
             }
         }
@@ -62,14 +66,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            m_Animations["Destroy"].Restart();
-
-            if (m_GameEngine == null)
+            if (!m_Animations["Destroy"].Enabled)
             {
-                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
-            }
+                m_Animations["Destroy"].Restart();
 
-            m_GameEngine.HandleHit(this, i_Collidable);
+                if (m_GameEngine == null)
+                {
+                    m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+                }
+
+                m_GameEngine.HandleHit(this, i_Collidable);
+            }
         }
 
         protected override void InitOrigins()
@@ -99,7 +106,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void destroyed_Finished(object sender, EventArgs e)
         {
-            //Enabled = false;
             Visible = false;
             InitPosition();
         }

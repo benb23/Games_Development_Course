@@ -19,7 +19,11 @@ namespace Infrastructure
             set { m_RotateLength = value; }
         }
 
-        // CTORs
+        public RoataterAnimator(string i_Name, TimeSpan i_AnimationLength)
+            : base(i_Name, i_AnimationLength)
+        { }
+
+
         public RoataterAnimator(int NumOfRoundsPerSec, TimeSpan i_AnimationLength)
             : base("Rotator", i_AnimationLength)
         {
