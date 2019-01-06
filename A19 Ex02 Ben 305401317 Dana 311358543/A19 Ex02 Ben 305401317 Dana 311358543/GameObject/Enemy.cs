@@ -29,6 +29,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private int m_Colum;
 
 
+
         public int Row
         {
             get { return m_Row; }
