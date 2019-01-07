@@ -5,6 +5,7 @@ namespace Infrastructure
 {
     public class FadeAnimator : SpriteAnimator
     {
+
         public FadeAnimator(string i_Name, TimeSpan i_AnimationLength)
             : base(i_Name, i_AnimationLength)
         {}
@@ -16,9 +17,11 @@ namespace Infrastructure
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            this.BoundSprite.Opacity -= (float)i_GameTime.ElapsedGameTime.TotalSeconds*(float)(this.m_OriginalSpriteInfo.Opacity /this.AnimationLength.TotalSeconds);
-        }
+            float m_FadeVelocity = (float)(this.m_OriginalSpriteInfo.Opacity / 2.5);
 
+            this.BoundSprite.Opacity -= (float)i_GameTime.ElapsedGameTime.TotalSeconds * m_FadeVelocity;
+        }
+        //(float)(this.m_OriginalSpriteInfo.Opacity /this.AnimationLength.TotalSeconds);
         protected override void RevertToOriginal()
         {
             this.BoundSprite.Visible = m_OriginalSpriteInfo.Visible;
