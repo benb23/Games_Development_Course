@@ -10,9 +10,9 @@ namespace Infrastructure
     {
         private Sprite m_BoundSprite;
         private TimeSpan m_AnimationLength;
-        protected TimeSpan m_TimeLeft; //TODO : WAS PRIVATE
+        private TimeSpan m_TimeLeft;
         private bool m_IsFinished = false;
-        private bool m_Enabled = false; // todo : new
+        private bool m_Enabled = false;
         private bool m_Initialized = false;
         private string m_Name;
         protected bool m_ResetAfterFinish = true;
@@ -20,22 +20,20 @@ namespace Infrastructure
 
         public event EventHandler Finished;
 
-        
         protected virtual void OnFinished()
         {
             if (m_ResetAfterFinish)
             {
                 Reset();
+                this.m_IsFinished = true;
             }
-
-            this.m_IsFinished = true;
 
             if (Finished != null)
             {
                 Finished(this, EventArgs.Empty);
             }
 
-            Enabled = false; // todo: new
+            Enabled = false;
         }
 
         protected SpriteAnimator(string i_Name, TimeSpan i_AnimationLength)

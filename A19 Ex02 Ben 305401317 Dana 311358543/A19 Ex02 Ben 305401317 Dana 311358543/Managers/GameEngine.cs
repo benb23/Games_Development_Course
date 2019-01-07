@@ -50,13 +50,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void HandleHit(ICollidable i_Sender, ICollidable i_Target)
         {
-            if(i_Sender is SpaceShip)
+            if (i_Sender is SpaceShip)
             {
                 HandleSpaceShipHit(i_Sender as SpaceShip, i_Target);
             }
-            else
+            else if (i_Sender is Bullet && i_Target is MotherSpaceShip)
             {
-                handleNonSpaceShipHit(i_Sender, i_Target);
+                handleMotherShipHit(i_Sender as Bullet);
+            }
+            else if(i_Sender is Enemy && i_Target is Bullet)
+            {
+                handleEnemyHit(i_Target as Bullet, i_Sender as Enemy);
             }
         }
 
@@ -69,14 +73,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     updatePlayerScoreAndSouls(i_Target.Owner);
                     if (player.Souls.Count == 0)
                     {
-                        player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(m_Players[(int)i_Target.Owner].destroyed_Finished);
-                        player.SpaceShip.Animations["Destroy"].Restart();
-
+                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(m_Players[(int)i_Target.Owner].destroyed_Finished);
+                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(player_Died);
+                    player.SpaceShip.Animations["Destroy"].Restart();
+                    
+                    /*
                         if(m_Players[(int)(i_Target.Owner) + 1 % 2].Souls.Count == 0)
                         {
                         ShowGameOverMessage();
                         this.m_Game.Exit();
-                        }
+                        }*/
                     }
                     else
                     {
@@ -90,6 +96,24 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
+        private void player_Died(object sender, EventArgs e)
+        {
+            bool gameIsOver = true;
+            foreach(Player player in m_Players)
+            {
+                if(player.Souls.Count != 0)
+                {
+                    gameIsOver = false;
+                    break;
+                }
+            }
+
+            if (gameIsOver)
+            {
+                ShowGameOverMessage();
+                this.m_Game.Exit();
+            }
+        }
         private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
         {
             Player player = m_Players[(int)i_PlayerIndex];
@@ -99,29 +123,27 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             player.Souls.Remove(player.Souls.First());
         }
 
-        private void handleNonSpaceShipHit(ICollidable i_Target, ICollidable i_Sender)
+        private void handleEnemyHit(Bullet i_Bullet, Enemy i_Enemy)
         {
-            if(i_Target is MotherSpaceShip)
+            if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
             {
-                if((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
-                {
-                    m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.MotherShip;
-                }
-                else if((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerTwoBullet)
-                {
-                    m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
-                }
+                updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.One], i_Enemy);
             }
-            else if (i_Target is Enemy)
+            else if (i_Bullet.Type == Bullet.eBulletType.PlayerTwoBullet)
             {
-                if ((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
-                {
-                    updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.One], i_Target as Enemy);
-                }
-                else if ((i_Sender as Bullet).Type == Bullet.eBulletType.PlayerTwoBullet)
-                {
-                    updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.Two], i_Target as Enemy);
-                }
+                updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.Two], i_Enemy);
+            }
+        }
+
+        private void handleMotherShipHit(Bullet i_Bullet)
+        {
+            if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
+            {
+                m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.MotherShip;
+            }
+            else if (i_Bullet.Type == Bullet.eBulletType.PlayerTwoBullet)
+            {
+                m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
             }
         }
 

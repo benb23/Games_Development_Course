@@ -50,24 +50,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        /*
-        public override void Draw(GameTime gameTime)
-        {
-            if (Animations["Destroy"].Enabled)
-            {
-                m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-                m_SpriteBatch.Draw(Texture, this.PositionForDraw,
-                                    this.SourceRectangle, this.TintColor,
-                                    this.Rotation, this.RotationOrigin, this.Scales,
-                                    SpriteEffects.None, this.LayerDepth);
-                m_SpriteBatch.End();
-            }
-            else
-            {
-                base.Draw(gameTime);
-            }
-        }*/
-
         public void Shoot()
         {
              m_Gun.Shoot(new Vector2(Position.X, Position.Y - Texture.Height));
@@ -95,9 +77,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             DestroyAnimator.ResetAfterFinish = false;
             
             this.Animations.Add(DestroyAnimator);
-            this.Animations.Enabled = true;
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            if (Animations["Destroy"].Enabled)
+            {
+                m_SpriteBatch.End();
+                m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+                m_SpriteBatch.Draw(this.Texture,
+                                    this.PositionForDraw,
+                                    this.SourceRectangle,
+                                    this.TintColor,
+                                    this.Rotation,
+                                    this.RotationOrigin,
+                                    this.Scales,
+                                    SpriteEffects.None,
+                                    this.LayerDepth);
+                m_SpriteBatch.End();
+                m_SpriteBatch.Begin();
+            }
+            else
+            {
+                base.Draw(gameTime);
+            }
+        }
 
         public override void Initialize()
         {

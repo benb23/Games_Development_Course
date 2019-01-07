@@ -34,7 +34,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(!m_Initialize)
             {
-                InitPosition();
+                Position = new Vector2(100, 100);
                 m_Initialize = true;
             }
 
@@ -93,16 +93,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initAnimations()
         {
-            BlinkAnimator blinkAnimator = new BlinkAnimator(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.2));
-            FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(2.2));
-            ShrinkAnimator shrinkAnimator = new ShrinkAnimator(TimeSpan.FromSeconds(2.2));
-
+            BlinkAnimator blinkAnimator = new BlinkAnimator(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0));
+            FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(0));
+            ShrinkAnimator shrinkAnimator = new ShrinkAnimator(TimeSpan.FromSeconds(0));
+            
             CompositeAnimator DestroyAnimator = new CompositeAnimator("Destroy", TimeSpan.FromSeconds(2.2), this, blinkAnimator, fadeAnimator, shrinkAnimator);
             DestroyAnimator.ResetAfterFinish = false;
             DestroyAnimator.Finished += new EventHandler(destroyed_Finished);
 
             this.Animations.Add(DestroyAnimator);
-            this.Animations.Enabled = true;
         }
 
         private void destroyed_Finished(object sender, EventArgs e)

@@ -13,9 +13,9 @@ namespace Infrastructure
         protected readonly List<SpriteAnimator> m_AnimationsList = new List<SpriteAnimator>();
 
         public CompositeAnimator(Sprite i_BoundSprite)
-            : this("AnimationsMamager", TimeSpan.Zero, i_BoundSprite, new SpriteAnimator[] { })
+            : this("AnimationsManager", TimeSpan.Zero, i_BoundSprite, new SpriteAnimator[] { })
         {
-            this.Enabled = false;
+            this.Enabled = true;
         }
 
         public CompositeAnimator(
@@ -26,18 +26,21 @@ namespace Infrastructure
             : base(i_Name, i_AnimationLength)
         {
             this.BoundSprite = i_BoundSprite;
+            this.Enabled = false;
 
             foreach (SpriteAnimator animation in i_Animations)
             {
                 this.Add(animation);
             }
-
         }
 
         public void Add(SpriteAnimator i_Animation)
         {
             i_Animation.BoundSprite = this.BoundSprite;
-            //i_Animation.Enabled = true; //TODO:
+            if (Name != "AnimationsManager")
+            {
+                i_Animation.Enabled = true;
+            }
             m_AnimationsDictionary.Add(i_Animation.Name, i_Animation);
             m_AnimationsList.Add(i_Animation);
         }
