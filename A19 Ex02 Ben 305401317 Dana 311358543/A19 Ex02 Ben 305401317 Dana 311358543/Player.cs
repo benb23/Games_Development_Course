@@ -135,9 +135,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void destroyed_Finished(object sender, EventArgs e)
         {
-            Enabled = false;
+            //Enabled = false;
             SpaceShip.Enabled = false;
             SpaceShip.Visible = false;
+            
         }
 
         public override void Initialize()

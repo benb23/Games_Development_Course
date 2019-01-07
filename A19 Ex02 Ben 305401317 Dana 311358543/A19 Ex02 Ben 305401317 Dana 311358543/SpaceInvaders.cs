@@ -20,9 +20,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private GameEngine m_GameEngine;
         private InputManager m_InputManager;
         SpriteBatch m_SpriteBatch;
-        public static Random s_RandomNum;
+        
         public const int k_MaxRandomNumber = 50000;
         private const string k_GameName = "Space Invaders";
+        public static Random k_Random = new Random(); // TODO: Move to Engine
         private GraphicsDeviceManager m_Graphics;
         private MotherSpaceShip m_MotherSpaceShip;
         private EnemiesGroup m_EnemysGroup;
@@ -34,7 +35,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public SpaceInvaders()
         {
             m_CollisionManager = new CollisionsManager(this);
-            s_RandomNum = new Random();
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -82,10 +82,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void Draw(GameTime i_GameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-            m_SpriteBatch.Begin();
-            base.Draw(i_GameTime);
-            m_SpriteBatch.End();
+
+                GraphicsDevice.Clear(Color.Black);
+                m_SpriteBatch.Begin();
+                base.Draw(i_GameTime);
+                m_SpriteBatch.End();
+
+
+
         }
 
         public bool IsPlayerAskToExit()

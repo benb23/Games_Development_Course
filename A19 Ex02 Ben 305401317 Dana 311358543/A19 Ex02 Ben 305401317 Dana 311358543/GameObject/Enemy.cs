@@ -53,9 +53,37 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Texture = this.Game.Content.Load<Texture2D>(this.m_AssetName);
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
+            initAnimations();
+        }
+
+        protected override void InitOrigins()
+        {
+            m_PositionOrigin = new Vector2(Texture.Height / 2, Texture.Height / 2);
+            m_RotationOrigin = new Vector2(Texture.Height / 2, Texture.Height / 2);
+            base.InitOrigins();
+        }
+
+
+        protected override void InitSourceRectangle()
+        {
+            base.InitSourceRectangle();
+            m_WidthBeforeScale = m_WidthBeforeScale / k_NumOfTOtalFrames;
+
+            this.SourceRectangle = new Rectangle(
+                (int)m_WidthBeforeScale * m_StartSqureIndex,
+                0,
+                 (int)m_WidthBeforeScale,
+                (int)Height);
+        }
+
         public override void Update(GameTime i_GameTime)
         {
-            int rnd = SpaceInvaders.s_RandomNum.Next(0, k_MaxRandomNumber);
+            //TODO: change random from static to private with getter
+            int rnd = SpaceInvaders.k_Random.Next(0, k_MaxRandomNumber);    
 
             if (rnd <= k_MaxRandomToShoot && m_Gun.PermitionToShoot())
             {
@@ -83,42 +111,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
                 }
 
-                //if ((i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
-                //{
-                //    Visible = false;
-                //}
-
                 m_GameEngine.HandleHit(this, i_Collidable);
                 this.m_Animations["dyingEnemy"].Restart();
             }
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
-            initAnimations(); 
-        }
 
-        protected override void InitOrigins()
-        {
-            m_PositionOrigin = new Vector2(Texture.Height / 2, Texture.Height/2);
-            m_RotationOrigin = new Vector2(Texture.Height / 2, Texture.Height/2);
-            base.InitOrigins();
-        }
-
-
-        protected override void InitSourceRectangle()
-        {
-            base.InitSourceRectangle();
-            m_WidthBeforeScale = m_WidthBeforeScale / k_NumOfTOtalFrames;
-
-            this.SourceRectangle = new Rectangle(
-                (int)m_WidthBeforeScale * m_StartSqureIndex,
-                0,
-                 (int)m_WidthBeforeScale,
-                (int)Height);
-        }
 
         private void dyingEnemy_Finished(object sender, EventArgs e)
         {
@@ -138,7 +136,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             dyingEnemy.Finished += new EventHandler(dyingEnemy_Finished);
             this.Animations.Enabled = true;
 
-            // this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
+             // this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
             //   this.Animations.Add();
         }
     }
