@@ -322,17 +322,6 @@ namespace Infrastructure
             // not implemented yet
         }
 
-        public virtual bool CheckCollision(ICollidable i_Source)
-        {
-            bool collided = false;
-            ICollidable2D source = i_Source as ICollidable2D;
-            if (source != null)
-            {
-                collided = source.Bounds.Intersects(this.Bounds);
-            }
-
-            return collided;
-        }
         public Sprite ShallowClone()
         {
             return this.MemberwiseClone() as Sprite;

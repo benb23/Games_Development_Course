@@ -13,7 +13,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 { 
-    public class Wall : Sprite, ICollidable2D
+    public class Wall : PixelsCollidableSprite, IPixelsCollidable , IRectangleCollidable
     {
         private const int k_NumOfWalls = 4;
         private const string k_AssteName = @"Sprites\Barrier_44x32";
@@ -37,6 +37,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
+            //TODO : move to gameEngine?
+            if(i_Collidable is Bullet)
+            {
+                
+
+
+            }
         }
+
     }
 }

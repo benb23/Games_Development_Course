@@ -57,10 +57,12 @@
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ScoreManager.cs" />
     <Compile Include="ObjectModel\Animations\SpriteAnimator.cs" />
+    <Compile Include="PixelsCollidableSprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ObjectModel\GameService.cs" />
     <Compile Include="ObjectModel\RegisteredComponent.cs" />
     <Compile Include="ObjectModel\Sprite.cs" />
+    <Compile Include="RectangleCollidableSprite.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

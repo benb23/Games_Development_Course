@@ -15,7 +15,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class MotherSpaceShip : Sprite, ICollidable2D
+    public class MotherSpaceShip : RectangleCollidableSprite, IRectangleCollidable
     {
         private const string k_AssteName = @"Sprites\MotherShip_32x120";
         private  float k_MotherShipVelocity = 40;
