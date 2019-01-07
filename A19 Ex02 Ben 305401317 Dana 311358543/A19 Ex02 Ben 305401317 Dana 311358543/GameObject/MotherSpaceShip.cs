@@ -35,7 +35,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             initAnimations();
         }
 
-
         public override void Update(GameTime i_GameTime)
         {
             if (!m_Initialize)
@@ -61,30 +60,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     m_OnMove = false;
                     m_Initialize = false;
                 }
-            }
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            if (Animations["DestroyMother"].Enabled)
-            {
-                m_SpriteBatch.End();
-                m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-                m_SpriteBatch.Draw(this.Texture,
-                                    this.PositionForDraw,
-                                    this.SourceRectangle,
-                                    this.TintColor,
-                                    this.Rotation,
-                                    this.RotationOrigin,
-                                    this.Scales,
-                                    SpriteEffects.None,
-                                    this.LayerDepth);
-                m_SpriteBatch.End();
-                m_SpriteBatch.Begin();
-            }
-            else
-            {
-                base.Draw(gameTime);
             }
         }
 

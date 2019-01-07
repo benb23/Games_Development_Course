@@ -79,30 +79,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Animations.Add(DestroyAnimator);
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            if (Animations["Destroy"].Enabled)
-            {
-                m_SpriteBatch.End();
-                m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-                m_SpriteBatch.Draw(this.Texture,
-                                    this.PositionForDraw,
-                                    this.SourceRectangle,
-                                    this.TintColor,
-                                    this.Rotation,
-                                    this.RotationOrigin,
-                                    this.Scales,
-                                    SpriteEffects.None,
-                                    this.LayerDepth);
-                m_SpriteBatch.End();
-                m_SpriteBatch.Begin();
-            }
-            else
-            {
-                base.Draw(gameTime);
-            }
-        }
-
         public override void Initialize()
         {
             base.Initialize();
