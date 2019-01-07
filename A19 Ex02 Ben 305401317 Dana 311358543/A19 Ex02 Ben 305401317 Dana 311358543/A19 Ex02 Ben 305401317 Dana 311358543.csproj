@@ -56,7 +56,6 @@
     <Compile Include="GameObject\Background.cs" />
     <Compile Include="GameObject\Bullet.cs" />
     <Compile Include="GameObject\Enemy.cs" />
-    <Compile Include="GameObject\MotherSpaceShip2.cs" />
     <Compile Include="GameObject\Soul.cs" />
     <Compile Include="GameObject\SpaceShip.cs" />
   </ItemGroup>

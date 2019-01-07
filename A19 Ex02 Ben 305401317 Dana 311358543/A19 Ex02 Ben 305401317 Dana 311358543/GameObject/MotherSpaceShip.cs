@@ -24,7 +24,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private IGameEngine m_GameEngine;
         private bool m_OnMove = false;
 
-        public MotherSpaceShip(Game i_Game): base(k_AssteName, i_Game, 1)
+        public MotherSpaceShip(Game i_Game): base(k_AssteName, i_Game)
 		{
             this.m_TintColor = Color.Red;
         }
@@ -122,10 +122,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             CompositeAnimator DestroyAnimator2 = new CompositeAnimator("DestroyMother", TimeSpan.FromSeconds(2.2), this, blinkAnimator, fadeAnimator, shrinkAnimator);
             this.Animations.Add(DestroyAnimator2);
-            this.Animations.Enabled = false;
-            Animations["DestroyMother"].Finished += new EventHandler(this.destroyed_Finished1);
-
-            
+            Animations["DestroyMother"].Finished += new EventHandler(this.destroyed_Finished1);   
         }
 
         private void destroyed_Finished1(object sender, EventArgs e)
