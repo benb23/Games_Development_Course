@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class Enemy : Sprite, ICollidable2D
+    public class Enemy : RectangleCollidableSprite, IRectangleCollidable
     {
         private List<Bullet> m_Bullets = new List<Bullet>(5);
         private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
