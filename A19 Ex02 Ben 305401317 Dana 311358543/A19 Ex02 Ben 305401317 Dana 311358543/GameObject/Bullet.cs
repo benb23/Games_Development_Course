@@ -65,7 +65,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
             }
 
-            m_GameEngine.HandleBulletHit(this, i_Collidable);
+            m_GameEngine.HandletHit(this, i_Collidable);
         }
 
         protected override void InitOrigins()
