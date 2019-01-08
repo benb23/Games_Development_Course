@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\IValuable.cs" />
     <Compile Include="ObjectModel\Animations\CompositeAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\BlinkAnimator.cs" />
+    <Compile Include="ObjectModel\Animations\ConcreteAnimators\CellAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\FadeAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\ShrinkAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\RoataterAnimator.cs" />

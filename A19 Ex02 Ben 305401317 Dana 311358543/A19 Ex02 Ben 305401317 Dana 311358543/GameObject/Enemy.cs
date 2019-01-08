@@ -125,15 +125,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             ShrinkAnimator shrinker = new ShrinkAnimator(TimeSpan.FromSeconds(1.2));
             RoataterAnimator rotate = new RoataterAnimator(6, TimeSpan.FromSeconds(1.2));
-
             CompositeAnimator dyingEnemy = new CompositeAnimator("dyingEnemy", TimeSpan.FromSeconds(1.2), this, shrinker, rotate);
+            //CellAnimator enemyCellAnimation = new CellAnimator( i_CellTime, 2, TimeSpan i_AnimationLength, int i_StartingSquareIndex)
+
             this.Animations.Add(dyingEnemy);
 
             dyingEnemy.Finished += new EventHandler(dyingEnemy_Finished);
             this.Animations.Enabled = true;
-
-             // this.Animations.Add(new ShrinkerAnimator("shrinkEnemy", TimeSpan.FromSeconds(1.2)));
-            //   this.Animations.Add();
         }
     }
 }
