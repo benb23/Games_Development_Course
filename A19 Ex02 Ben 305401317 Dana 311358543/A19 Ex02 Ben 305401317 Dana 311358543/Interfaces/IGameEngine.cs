@@ -18,7 +18,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         List<Player> Players { get; set;}
 
-        void HandleHit(ICollidable i_Target, ICollidable i_Sender);
+        void HandleBulletHit(Bullet i_Bullet, ICollidable i_Collidable);
+        void HandleSpaceShipHit(SpaceShip i_SpaceShip, ICollidable i_Collidable);
+        void HandleEnemyHit(Enemy i_Enemy, ICollidable i_Collidable);
+        void HandleMotherSpaceShipHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet);
         void ShowGameOverMessage();
     }
 }

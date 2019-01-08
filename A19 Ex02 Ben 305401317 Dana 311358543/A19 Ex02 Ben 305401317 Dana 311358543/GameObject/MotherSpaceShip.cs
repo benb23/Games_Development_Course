@@ -80,7 +80,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
 
                 Animations["DestroyMother"].Restart();
-                m_GameEngine.HandleHit(this, i_Collidable);
+                m_GameEngine.HandleMotherSpaceShipHit(this, i_Collidable as Bullet);
                 
             }
         }
@@ -97,7 +97,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(2.2));
             ShrinkAnimator shrinkAnimator = new ShrinkAnimator(TimeSpan.FromSeconds(2.2));
 
-            CompositeAnimator DestroyAnimator2 = new CompositeAnimator("DestroyMother", TimeSpan.FromSeconds(2.2), this, blinkAnimator, fadeAnimator, shrinkAnimator);
+            CompositeAnimator DestroyAnimator2 = new CompositeAnimator("DestroyMother", TimeSpan.FromSeconds(2.2), this, fadeAnimator, blinkAnimator,shrinkAnimator);
             this.Animations.Add(DestroyAnimator2);
             Animations["DestroyMother"].Finished += new EventHandler(this.destroyed_Finished);   
         }
@@ -107,7 +107,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             InitPosition();
             m_OnMove = false;
         }
-
+        
         public override void Draw(GameTime gameTime)
         {
             m_SpriteBatch.End();

@@ -45,7 +45,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
                 }
 
-                m_GameEngine.HandleHit(this, i_Collidable);
+                m_GameEngine.HandleSpaceShipHit(this, i_Collidable);
             }
         }
 
@@ -53,10 +53,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
              m_Gun.Shoot(new Vector2(Position.X, Position.Y - Texture.Height));
         }
+
         public bool PermitionToShoot()
         {
             return m_Animations["Destroy"].Enabled == false && m_Gun.PermitionToShoot();
         }
+
         protected override void InitOrigins()
         {
             m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height);

@@ -29,13 +29,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private List<Player> m_Players;
         private ScoreBoardHeader m_ScoreBoard;
 
-        public override void Update(GameTime gameTime)
-        {
-
-            base.Update(gameTime);
-        }
-
-    
         public GameEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
@@ -48,52 +41,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_Players = value; }
         }
 
-        public void HandleHit(ICollidable i_Sender, ICollidable i_Target)
+    
+        public bool IsOpponents(ICollidable i_Target, ICollidable i_Sender)
         {
-            if (i_Sender is SpaceShip)
-            {
-                HandleSpaceShipHit(i_Sender as SpaceShip, i_Target);
-            }
-            else if (i_Sender is Bullet && i_Target is MotherSpaceShip)
-            {
-                handleMotherShipHit(i_Sender as Bullet);
-            }
-            else if(i_Sender is Enemy && i_Target is Bullet)
-            {
-                handleEnemyHit(i_Target as Bullet, i_Sender as Enemy);
-            }
-        }
+            bool IsOpponents = false;
 
-        private void HandleSpaceShipHit(SpaceShip i_Target, ICollidable i_Sender)
-        {
-            Player player = m_Players[(int)i_Target.Owner];
+            if (i_Target is Enemy && i_Sender is Bullet)
+            {
+                IsOpponents = ((i_Sender as Bullet).Type != Bullet.eBulletType.EnemyBullet);
+            }
 
-            if (i_Sender is Bullet )
-            {
-                    updatePlayerScoreAndSouls(i_Target.Owner);
-                    if (player.Souls.Count == 0)
-                    {
-                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(m_Players[(int)i_Target.Owner].destroyed_Finished);
-                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(player_Died);
-                    player.SpaceShip.Animations["Destroy"].Restart();
-                    
-                    /*
-                        if(m_Players[(int)(i_Target.Owner) + 1 % 2].Souls.Count == 0)
-                        {
-                        ShowGameOverMessage();
-                        this.m_Game.Exit();
-                        }*/
-                    }
-                    else
-                    {
-                        player.SpaceShip.Animations["LoosingSoul"].Restart();
-                    }
-            }
-            else if(i_Sender is Enemy)
-            {
-                ShowGameOverMessage();
-                this.m_Game.Exit();
-            }
+            return IsOpponents;
         }
 
         private void player_Died(object sender, EventArgs e)
@@ -114,6 +72,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_Game.Exit();
             }
         }
+
         private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
         {
             Player player = m_Players[(int)i_PlayerIndex];
@@ -121,30 +80,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             player.Score = (int)MathHelper.Clamp(player.Score + (int)eScoreValue.Soul, 0, float.PositiveInfinity);
             player.Souls.First().Visible = false;
             player.Souls.Remove(player.Souls.First());
-        }
-
-        private void handleEnemyHit(Bullet i_Bullet, Enemy i_Enemy)
-        {
-            if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
-            {
-                updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.One], i_Enemy);
-            }
-            else if (i_Bullet.Type == Bullet.eBulletType.PlayerTwoBullet)
-            {
-                updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.Two], i_Enemy);
-            }
-        }
-
-        private void handleMotherShipHit(Bullet i_Bullet)
-        {
-            if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
-            {
-                m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.MotherShip;
-            }
-            else if (i_Bullet.Type == Bullet.eBulletType.PlayerTwoBullet)
-            {
-                m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
-            }
         }
 
         private void updatePlayerScoreAfterHitEnemy(IScoreable i_Player, Enemy i_Enemy)
@@ -173,6 +108,70 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             /*
             System.Windows.Forms.MessageBox.Show(string.Format(
 @"Game Over"); //TODO: PRINT WINNER */
+        }
+
+        public void HandleBulletHit(Bullet bullet, ICollidable i_Collidable)
+        {
+            if (!(bullet.Type == Bullet.eBulletType.EnemyBullet && i_Collidable is Enemy))
+            {
+                bullet.Visible = false;
+                bullet.Enabled = false;
+            }
+        }
+
+        public void HandleSpaceShipHit(SpaceShip i_Target, ICollidable i_Collidable)
+        {
+            Player player = m_Players[(int)i_Target.Owner];
+
+            if (i_Collidable is Bullet)
+            {
+                updatePlayerScoreAndSouls(i_Target.Owner);
+                if (player.Souls.Count == 0)
+                {
+                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(m_Players[(int)i_Target.Owner].destroyed_Finished);
+                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(player_Died);
+                    player.SpaceShip.Animations["Destroy"].Restart();
+
+                }
+                else
+                {
+                    player.SpaceShip.Animations["LoosingSoul"].Restart();
+                }
+            }
+            else if (i_Collidable is Enemy)
+            {
+                ShowGameOverMessage();
+                this.m_Game.Exit();
+            }
+        }
+
+        public void HandleEnemyHit(Enemy i_Enemy, ICollidable i_Collidable)
+        {
+            if (i_Collidable is Bullet && (i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
+            {
+                i_Enemy.Animations["dyingEnemy"].Restart();
+
+                if ((i_Collidable as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
+                {
+                    updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.One], i_Enemy);
+                }
+                else if ((i_Collidable as Bullet).Type == Bullet.eBulletType.PlayerTwoBullet)
+                {
+                    updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.Two], i_Enemy);
+                }
+            }
+        }
+
+        public void HandleMotherSpaceShipHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet)
+        {
+            if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
+            {
+                m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.MotherShip;
+            }
+            else if (i_Bullet.Type == Bullet.eBulletType.PlayerTwoBullet)
+            {
+                m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
+            }
         }
     }
 }
