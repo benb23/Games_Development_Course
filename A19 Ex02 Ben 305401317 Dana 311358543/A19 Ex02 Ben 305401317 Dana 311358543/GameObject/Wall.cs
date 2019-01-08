@@ -13,7 +13,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 { 
-    public class Wall : PixelsCollidableSprite, IPixelsCollidable , IRectangleCollidable
+    public class Wall : CollidableSprite, IPixelsCollidable , IRectangleCollidable
     {
         private const int k_NumOfWalls = 4;
         private const string k_AssteName = @"Sprites\Barrier_44x32";

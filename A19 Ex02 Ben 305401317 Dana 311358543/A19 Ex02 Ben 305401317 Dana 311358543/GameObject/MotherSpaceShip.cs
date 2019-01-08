@@ -15,10 +15,11 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class MotherSpaceShip : RectangleCollidableSprite, IRectangleCollidable
+    public class MotherSpaceShip : CollidableSprite, IRectangleCollidable
     {
         private const string k_AssteName = @"Sprites\MotherShip_32x120";
-        private  float k_MotherShipVelocity = 40;
+        private Vector2 k_MotherShipVelocity =new Vector2(40,0); //??
+
         private const int k_MaxRandomNumToDrawMotherShip = 70;
         public const int k_MaxRandomNumber = 50000;
         private IGameEngine m_GameEngine;
@@ -27,6 +28,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public MotherSpaceShip(Game i_Game): base(k_AssteName, i_Game)
 		{
             this.m_TintColor = Color.Red;
+            this.Velocity = k_MotherShipVelocity;
         }
 
         public override void Initialize()
@@ -54,7 +56,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
             else
             {
-                this.m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+                base.Update(i_GameTime);
+                //this.m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
                 if (m_Position.X >= GraphicsDevice.Viewport.Width)
                 {
                     m_OnMove = false;

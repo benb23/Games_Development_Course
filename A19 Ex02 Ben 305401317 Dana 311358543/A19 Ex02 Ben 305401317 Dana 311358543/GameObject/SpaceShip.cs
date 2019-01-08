@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class SpaceShip : RectangleCollidableSprite, IRectangleCollidable
+    public class SpaceShip : CollidableSprite, IRectangleCollidable
     {
         private float k_Speed = 145; //TODO : VELOCITY
         private IGameEngine m_GameEngine;
@@ -24,7 +24,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             get { return k_Speed; }
         }
-
 
         public PlayerIndex Owner
         {

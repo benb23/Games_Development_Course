@@ -68,28 +68,9 @@ namespace Infrastructure
                 {
                     if (i_Source != target && target.Visible)
                     {
-                        if (target is IPixelsCollidable && target is IRectangleCollidable && i_Source is IRectangleCollidable)
+                        if (target.CheckCollision(i_Source))
                         {
-                            IRectangleCollidable targetAsIRec = target as IRectangleCollidable;
-                            if (targetAsIRec.CheckCollision(i_Source))
-                            {
-                                collidedComponents.Add(target);
-                            }
-                        }
-                        else if (target is IPixelsCollidable && target is IRectangleCollidable && i_Source is IPixelsCollidable)
-                        {
-                            IPixelsCollidable targetAsIPix = target as IPixelsCollidable;
-                            if (targetAsIPix.CheckCollision(i_Source))
-                            {
-                                collidedComponents.Add(target);
-                            }
-                        }
-                        else
-                        {
-                            if (target.CheckCollision(i_Source))
-                            {
-                                collidedComponents.Add(target);
-                            }
+                            collidedComponents.Add(target);
                         }
                     }
                 }

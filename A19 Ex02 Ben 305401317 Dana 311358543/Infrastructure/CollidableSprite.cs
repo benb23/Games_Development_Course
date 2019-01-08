@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Infrastructure
 {
-    public class PixelsCollidableSprite : Sprite
+    public class CollidableSprite : Sprite
     {
         private Color[] m_Pixels;
 
@@ -28,8 +28,8 @@ namespace Infrastructure
             get { return m_currTexture; }
         }
 
-        public PixelsCollidableSprite(string i_AssetName, Game i_Game) : base(i_AssetName, i_Game)
-        {}
+        public CollidableSprite(string i_AssetName, Game i_Game) : base(i_AssetName, i_Game)
+        { }
 
         protected override void LoadContent()
         {
@@ -39,7 +39,20 @@ namespace Infrastructure
             this.Texture.GetData<Color>(m_Pixels);
         }
 
+
         public virtual bool CheckCollision(ICollidable i_Source)
+        {
+            if(this is IPixelsCollidable && i_Source is IPixelsCollidable)
+            {
+                return checkPixelsCollision(i_Source);
+            }
+            else
+            {
+                return checkRectangleCollision(i_Source);
+            }
+        }
+
+        private bool checkPixelsCollision(ICollidable i_Source)
         {
             bool pixelsCollided = false;
             bool rectanglesCollided = false;
@@ -57,6 +70,24 @@ namespace Infrastructure
             return pixelsCollided;
         }
 
+        private bool checkRectangleCollision(ICollidable i_Source)
+        {
+            {
+                bool collided = false;
+                IPixelsCollidable source = i_Source as IPixelsCollidable;
+                if (source != null)
+                {
+                    collided = source.Bounds.Intersects(this.Bounds);
+                }
+
+                if (collided)
+                {
+                    collided = true;
+                }
+
+                return collided;
+            }
+        }
 
         private bool isPixelsCollided(IPixelsCollidable i_Source)
         {
@@ -76,7 +107,9 @@ namespace Infrastructure
 
                     if (colorA.A != 0 && colorB.A != 0)
                     {
+
                         isPixelsCollided = true;
+                        break;
                     }
                 }
             }
@@ -86,10 +119,10 @@ namespace Infrastructure
 
         public override void Draw(GameTime gameTime)
         {
-             m_SpriteBatch.Draw(m_currTexture, this.PositionForDraw,
-                 this.SourceRectangle, this.TintColor,
-                this.Rotation, this.RotationOrigin, this.Scales,
-                SpriteEffects.None, this.LayerDepth);
+            m_SpriteBatch.Draw(m_currTexture, this.PositionForDraw,
+                this.SourceRectangle, this.TintColor,
+               this.Rotation, this.RotationOrigin, this.Scales,
+               SpriteEffects.None, this.LayerDepth);
 
             base.Draw(gameTime);
         }

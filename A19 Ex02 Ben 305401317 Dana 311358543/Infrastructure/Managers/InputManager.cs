@@ -64,6 +64,7 @@ namespace Infrastructure
             m_GamePadState = m_PrevGamePadState;
         }
 
+        
         protected override void RegisterAsService()
         {
             Game.Services.AddService(typeof(IInputManager), this);

@@ -3,7 +3,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class Bullet : PixelsCollidableSprite, IPixelsCollidable, IRectangleCollidable
+    public class Bullet : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
         public enum eBulletType 
         {
@@ -13,7 +13,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
 
         private const string k_AssteName = @"Sprites\Bullet";
-        private float k_BulletVelocity = 155;
+        private Vector2 k_BulletVelocity = new Vector2(0,155);
         private eBulletType m_Type;
 
         public Bullet(Game i_Game, eBulletType i_BulletType) : base(k_AssteName, i_Game)
@@ -22,15 +22,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (this.m_Type == eBulletType.EnemyBullet)
             {
+                Velocity = k_BulletVelocity;
                 this.m_TintColor = Color.Blue;
             }
             else
             {
+                Velocity = k_BulletVelocity *new Vector2(0,-1);
                 this.m_TintColor = Color.Red;
                 k_BulletVelocity *= -1;
             }
             InitOrigins();
-            m_Velocity = new Vector2(0, k_BulletVelocity); // TODO: in initialize???
         }
 
         public eBulletType Type
@@ -46,7 +47,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.Enabled = false;
             }
 
-            this.Position = new Vector2(this.Position.X, this.Position.Y + k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
+            base.Update(i_GameTime);
+           // this.Position = new Vector2(this.Position.X, this.Position.Y + k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
         }
 
         private bool isBulletHitTheScreenBorder()
