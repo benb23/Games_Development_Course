@@ -100,19 +100,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if (i_Collidable is Bullet && (i_Collidable as Bullet).Type == Bullet.eBulletType.EnemyBullet || i_Collidable is Enemy)
+            if ((!this.m_Animations["dyingEnemy"].Enabled))
             {
-                return;
-            }
-            else if(!this.m_Animations["dyingEnemy"].Enabled)
-            {
-                if (m_GameEngine == null)
-                {
-                    m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
-                }
 
-                m_GameEngine.HandleHit(this, i_Collidable);
-                this.m_Animations["dyingEnemy"].Restart();
+            if (m_GameEngine == null)
+            {
+                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+            }
+
+            m_GameEngine.HandleEnemyHit(this, i_Collidable);
             }
         }
 

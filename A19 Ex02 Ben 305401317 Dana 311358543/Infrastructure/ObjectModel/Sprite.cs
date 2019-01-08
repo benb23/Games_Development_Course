@@ -242,7 +242,7 @@ namespace Infrastructure
         }
 
 
-        private bool m_UseSharedBatch = true; 
+        protected bool m_UseSharedBatch = true; //todo: was private
 
         protected SpriteBatch m_SpriteBatch;
         public SpriteBatch SpriteBatch

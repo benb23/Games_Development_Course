@@ -5,6 +5,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Bullet : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
+        private IGameEngine m_GameEngine;
         public enum eBulletType 
         {
             PlayerOneBullet,
@@ -48,7 +49,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             base.Update(i_GameTime);
-           // this.Position = new Vector2(this.Position.X, this.Position.Y + k_BulletVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
         }
 
         private bool isBulletHitTheScreenBorder()
@@ -60,12 +60,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if (m_Type == eBulletType.EnemyBullet && i_Collidable is Enemy)
+            if(m_GameEngine==null)
             {
-                return;
+                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
             }
-            Visible = false;
-            Enabled = false;
+
+            m_GameEngine.HandleBulletHit(this, i_Collidable);
         }
 
         protected override void InitOrigins()
