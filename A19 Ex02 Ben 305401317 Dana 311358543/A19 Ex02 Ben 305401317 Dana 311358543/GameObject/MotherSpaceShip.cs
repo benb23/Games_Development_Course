@@ -57,7 +57,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             else
             {
                 base.Update(i_GameTime);
-                //this.m_Position.X += k_MotherShipVelocity * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
                 if (m_Position.X >= GraphicsDevice.Viewport.Width)
                 {
                     m_OnMove = false;
@@ -100,15 +99,22 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             CompositeAnimator DestroyAnimator2 = new CompositeAnimator("DestroyMother", TimeSpan.FromSeconds(2.2), this, blinkAnimator, fadeAnimator, shrinkAnimator);
             this.Animations.Add(DestroyAnimator2);
-            Animations["DestroyMother"].Finished += new EventHandler(this.destroyed_Finished1);   
+            Animations["DestroyMother"].Finished += new EventHandler(this.destroyed_Finished);   
         }
 
-        private void destroyed_Finished1(object sender, EventArgs e)
+        private void destroyed_Finished(object sender, EventArgs e)
         {
             InitPosition();
             m_OnMove = false;
         }
 
-
+        public override void Draw(GameTime gameTime)
+        {
+            m_SpriteBatch.End();
+            m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            base.Draw(gameTime);
+            m_SpriteBatch.End();
+            m_SpriteBatch.Begin();
+        }
     }
 }

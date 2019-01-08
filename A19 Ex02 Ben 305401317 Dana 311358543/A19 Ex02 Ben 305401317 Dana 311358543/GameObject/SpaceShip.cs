@@ -83,5 +83,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.Initialize();
             initAnimations();
         }
+
+        public override void Draw(GameTime gameTime)
+        {
+            m_SpriteBatch.End();
+            m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            base.Draw(gameTime);
+            m_SpriteBatch.End();
+            m_SpriteBatch.Begin();
+        }
     }
 }

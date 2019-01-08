@@ -56,14 +56,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
         public override void Update(GameTime i_GameTime)
         {
-            if(hitRightOrLeftBorders())
-            {
-                foreach(Wall wall in m_Walls)
-                {
-                    wall.Velocity *= new Vector2(-1, 1);
-                }
-            }
-            
             if (!m_Initialize)
             {
                 initWallsPositions();

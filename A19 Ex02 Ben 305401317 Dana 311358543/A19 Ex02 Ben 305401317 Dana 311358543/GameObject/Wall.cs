@@ -15,9 +15,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 { 
     public class Wall : CollidableSprite, IPixelsCollidable , IRectangleCollidable
     {
+        private Vector2 m_StartingPosition;
         private const int k_NumOfWalls = 4;
         private const string k_AssteName = @"Sprites\Barrier_44x32";
         private List<Wall> m_Walls;
+        private bool m_Initialize = false;
 
         public Wall(Game i_Game)
             : base(k_AssteName, i_Game)
@@ -27,6 +29,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
+            if(!m_Initialize)
+            {
+                m_StartingPosition = Position;
+                m_Initialize = true;
+            }
+
+            if((Position.X - m_StartingPosition.X >= Texture.Width/2) || (Position.X + Texture.Width / 2 <= m_StartingPosition.X))
+            {
+                Velocity *= -1;
+            }
+
             base.Update(gameTime);
         }
         protected override void InitOrigins()
