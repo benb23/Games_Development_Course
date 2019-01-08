@@ -25,7 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private float m_TimeUntilNextStepInSec = 0.5f;
         private Enemy[,] m_EnemiesMatrix;
         private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
-        private SortedList<int, Enemy> m_AliveEnemiesByRow = new SortedList<int, Enemy>(k_EnemiesRows * k_EnemiesColumns);
+        private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
 
         private IGameEngine m_GameEngine;
         float m_EnemiesGap;
@@ -80,6 +80,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             this.initEnemyGroup();
+            this.initAliveEnemiesByColum();
 
             // initilize enemies positions
             this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);
@@ -127,13 +128,23 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
                 this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_StartSqureIndex, i_Row, colum);
-                m_AliveEnemiesByRow.Add(colum, m_EnemiesMatrix[i_Row, colum]);
+                m_AliveEnemiesByRow.Add(m_EnemiesMatrix[i_Row, colum]);
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.updateAliveLists;
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.isFourEnemiesDead;
 
             }
         }
 
+        private void initAliveEnemiesByColum()
+        {
+            for (int colum = 0; colum < k_EnemiesColumns; colum++)
+            {
+                for (int row = 0; row < k_EnemiesRows; row++)
+                {
+                    m_AliveEnemiesByColum.Add(m_EnemiesMatrix[row, colum]);
+                }
+            } 
+        }
 
         private void updatePositions(float i_X, float i_Y)
         {
@@ -159,7 +170,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void doEnemyCellAnimation()
         {
-            foreach (Enemy enemy in m_AliveEnemiesByRow.Values)
+            foreach (Enemy enemy in m_AliveEnemiesByRow)
             {
                 if (enemy.Row == 0)
                 {
