@@ -41,19 +41,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_Players = value; }
         }
 
-    
-        public bool IsOpponents(ICollidable i_Target, ICollidable i_Sender)
-        {
-            bool IsOpponents = false;
-
-            if (i_Target is Enemy && i_Sender is Bullet)
-            {
-                IsOpponents = ((i_Sender as Bullet).Type != Bullet.eBulletType.EnemyBullet);
-            }
-
-            return IsOpponents;
-        }
-
         private void player_Died(object sender, EventArgs e)
         {
             bool gameIsOver = true;
@@ -110,7 +97,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 @"Game Over"); //TODO: PRINT WINNER */
         }
 
-        public void HandleBulletHit(Bullet bullet, ICollidable i_Collidable)
+        public void HandletHit(Bullet bullet, ICollidable i_Collidable)
         {
             if (!(bullet.Type == Bullet.eBulletType.EnemyBullet && i_Collidable is Enemy))
             {
@@ -119,7 +106,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void HandleSpaceShipHit(SpaceShip i_Target, ICollidable i_Collidable)
+        public void HandletHit(SpaceShip i_Target, ICollidable i_Collidable)
         {
             Player player = m_Players[(int)i_Target.Owner];
 
@@ -145,7 +132,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void HandleEnemyHit(Enemy i_Enemy, ICollidable i_Collidable)
+        public void HandletHit(Enemy i_Enemy, ICollidable i_Collidable)
         {
             if (i_Collidable is Bullet && (i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
             {
@@ -162,7 +149,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void HandleMotherSpaceShipHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet)
+        public void HandletHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet)
         {
             if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
             {

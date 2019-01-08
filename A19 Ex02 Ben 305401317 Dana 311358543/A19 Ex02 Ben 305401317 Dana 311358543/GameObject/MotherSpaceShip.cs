@@ -80,7 +80,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
 
                 Animations["DestroyMother"].Restart();
-                m_GameEngine.HandleMotherSpaceShipHit(this, i_Collidable as Bullet);
+                m_GameEngine.HandletHit(this, i_Collidable as Bullet);
                 
             }
         }
