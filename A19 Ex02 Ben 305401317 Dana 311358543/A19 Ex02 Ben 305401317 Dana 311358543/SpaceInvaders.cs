@@ -17,8 +17,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class SpaceInvaders : Game
     {
         private const int k_NumOfPlayers = 2;
-        private GameEngine m_GameEngine;
-        private InputManager m_InputManager;
+        private IGameEngine m_GameEngine;
+        private IInputManager m_InputManager;
         SpriteBatch m_SpriteBatch;
         
         public const int k_MaxRandomNumber = 50000;
@@ -34,22 +34,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public SpaceInvaders()
         {
-            m_CollisionManager = new CollisionsManager(this);
-            this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
+            this.IsMouseVisible = true;
             this.m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
-            this.m_EnemysGroup = new EnemiesGroup(this);
-            Components.Add(this.m_EnemysGroup);
+
+
             m_Players = new List<Player>(2);
             m_Players.Add(new Player(this, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
             m_Players.Add(new Player(this, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
-            this.IsMouseVisible = true;
-            m_InputManager = new InputManager(this);
             Components.Add(m_Players[0]);
             Components.Add(m_Players[1]);
-            m_GameEngine = new GameEngine(this);
+
+
+            m_CollisionManager = new CollisionsManager(this);
+            m_InputManager = new InputManager(this) as IInputManager;
+            m_GameEngine = new GameEngine(this) as IGameEngine;
             m_GameEngine.Players = m_Players;
+
+            
+
+            
+            this.m_EnemysGroup = new EnemiesGroup(this);
+            Components.Add(this.m_EnemysGroup);
+
             this.m_WallsGroup = new WallsGroup(this, 4);
             Components.Add(this.m_WallsGroup);
 
@@ -82,14 +91,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void Draw(GameTime i_GameTime)
         {
-
                 GraphicsDevice.Clear(Color.Black);
                 m_SpriteBatch.Begin();
                 base.Draw(i_GameTime);
                 m_SpriteBatch.End();
-
-
-
         }
 
         public bool IsPlayerAskToExit()

@@ -16,11 +16,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class ScoreBoardHeader : Sprite
     {
-
         private SpriteFont m_Font;
         private IGameEngine m_GameEngine;
         private Game m_Game;
-
 
 
         public ScoreBoardHeader(Game i_Game) : base ("" , i_Game)
@@ -52,12 +50,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
 
 
-        protected override void InitBounds() { }
-
-
-        protected override void DrawBoundingBox()
-        {
-        }
 
 
 

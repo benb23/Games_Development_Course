@@ -39,7 +39,6 @@ namespace Infrastructure
             this.Texture.GetData<Color>(m_Pixels);
         }
 
-
         public virtual bool CheckCollision(ICollidable i_Source)
         {
             if(this is IPixelsCollidable && i_Source is IPixelsCollidable)
@@ -115,16 +114,6 @@ namespace Infrastructure
             }
 
             return isPixelsCollided;
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            m_SpriteBatch.Draw(m_currTexture, this.PositionForDraw,
-                this.SourceRectangle, this.TintColor,
-               this.Rotation, this.RotationOrigin, this.Scales,
-               SpriteEffects.None, this.LayerDepth);
-
-            base.Draw(gameTime);
         }
     }
 }
