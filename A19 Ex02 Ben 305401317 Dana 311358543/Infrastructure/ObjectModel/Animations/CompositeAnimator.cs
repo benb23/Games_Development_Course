@@ -76,6 +76,8 @@ namespace Infrastructure
             }
         }
 
+
+
         public override void Restart(TimeSpan i_AnimationLength)
         {
             base.Restart(i_AnimationLength);
