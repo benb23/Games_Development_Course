@@ -187,50 +187,38 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             int wallRow =MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].X - i_bullet.Texture.Width/2,0,i_wall.Texture.Width);
             int wallColomn = MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_wall.Texture.Height);
+            int wallX = wallRow;
+            int wallY = wallColomn;
+            int bulletMinY, bulletMaxY;
 
             if (i_bullet.Type != Bullet.eBulletType.EnemyBullet)
             {
-                wallColomn -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_bullet.Texture.Height), 0, wallColomn);
-
-
-                int x = wallRow;
-                int y = wallColomn;
-
-                for (int bulletRow = 0; bulletRow <= m_sizeOfBulletHitEffect * i_bullet.Texture.Height; bulletRow++)
-                {
-                    x = wallRow;
-                    for (int bulletColomn = 0; bulletColomn < i_bullet.Texture.Width; bulletColomn++)
-                    {
-                        if (i_bullet.Pixels[bulletColomn + bulletRow * i_bullet.Texture.Width].A != 0 &&
-                           (x + y * i_wall.Texture.Width) < i_wall.Pixels.Length)
-                        {
-                            i_wall.Pixels[x + y * i_wall.Texture.Width] = new Color(0, 0, 0, 0);
-                        }
-                        x++;
-                    }
-                    y++;
-                }
+                wallY -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_bullet.Texture.Height), 0, wallColomn);
+                bulletMinY = 0;
+                bulletMaxY =(int)( m_sizeOfBulletHitEffect * i_bullet.Texture.Height) + 1 ;
             }
             else
             {
-                int x = wallRow;
-                int y = wallColomn;
+                bulletMinY = (int)((1 - m_sizeOfBulletHitEffect) * i_bullet.Texture.Height);
+                bulletMaxY = i_bullet.Texture.Height;
+            }
 
-                for (int bulletRow =(int)((1- m_sizeOfBulletHitEffect)* i_bullet.Texture.Height); bulletRow < i_bullet.Texture.Height; bulletRow++)
+
+            for (int bulletRow = bulletMinY; bulletRow < bulletMaxY; bulletRow++)
                 {
-                    x = wallRow;
+                    wallX = wallRow;
                     for (int bulletColomn = 0; bulletColomn < i_bullet.Texture.Width; bulletColomn++)
                     {
                         if (i_bullet.Pixels[bulletColomn + bulletRow * i_bullet.Texture.Width].A != 0 &&
-                           (x + y * i_wall.Texture.Width) < i_wall.Pixels.Length)
+                           (wallX + wallY * i_wall.Texture.Width) < i_wall.Pixels.Length)
                         {
-                            i_wall.Pixels[x + y * i_wall.Texture.Width] = new Color(0, 0, 0, 0);
+                            i_wall.Pixels[wallX + wallY * i_wall.Texture.Width] = new Color(0, 0, 0, 0);
                         }
-                        x++;
+                        wallX++;
                     }
-                    y++;
+                    wallY++;
                 }
-            }
+
             i_wall.CurrTexture.SetData(i_wall.Pixels);
         }
 
