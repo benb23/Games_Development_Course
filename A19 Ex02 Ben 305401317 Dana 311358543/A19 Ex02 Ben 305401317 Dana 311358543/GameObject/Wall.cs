@@ -12,9 +12,10 @@ using Microsoft.Xna.Framework.Media;
 using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
-{ 
-    public class Wall : CollidableSprite, IPixelsCollidable , IRectangleCollidable
+{
+    public class Wall : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
+        private IGameEngine m_GameEngine;
         private Vector2 m_StartingPosition;
         private const int k_NumOfWalls = 4;
         private const string k_AssteName = @"Sprites\Barrier_44x32";
@@ -27,6 +28,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Velocity = new Vector2(45, 0);
         }
 
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+        }
+        private Texture2D m_CurrTexture;
+
+        public Texture2D CurrTexture
+        {
+            get { return m_CurrTexture; }
+            set { m_CurrTexture = value; }
+        }
         public override void Update(GameTime gameTime)
         {
             if(!m_Initialize)
@@ -50,14 +62,34 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            //TODO : move to gameEngine?
-            if(i_Collidable is Bullet)
+            if (m_GameEngine == null)
             {
-                
-
-
+                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
             }
+
+            if(m_CurrTexture ==null)
+            {
+                m_CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
+                Color[] texturePixels = new Color[Texture.Width*Texture.Height];
+                m_CurrTexture.SetData(texturePixels);
+            }
+            m_GameEngine.HandletHit(this, i_Collidable);
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            if (m_CurrTexture == null)
+            {
+                base.Draw(gameTime);
+
+            }
+            else
+            {
+                m_SpriteBatch.Draw(m_CurrTexture, this.PositionForDraw,
+                    this.SourceRectangle, this.TintColor,
+                   this.Rotation, this.RotationOrigin, this.Scales,
+                   SpriteEffects.None, this.LayerDepth);
+            }
+        }
     }
 }

@@ -19,7 +19,6 @@ namespace Infrastructure
     }
     public interface IPixelsCollidable : ICollidable
     {
-        Texture2D CurrTexture { get;  }
         Color[] Pixels { get; }
         Vector2 Position { get; set; }  
     }
