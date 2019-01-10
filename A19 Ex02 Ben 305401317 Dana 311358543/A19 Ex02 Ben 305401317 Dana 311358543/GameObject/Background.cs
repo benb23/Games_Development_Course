@@ -14,7 +14,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         protected override void InitBounds()
         {
             base.InitBounds();
-
             this.DrawOrder = int.MinValue;
         }
     }

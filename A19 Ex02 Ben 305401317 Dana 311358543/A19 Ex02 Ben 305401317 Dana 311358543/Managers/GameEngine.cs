@@ -32,6 +32,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
 
         private Game m_Game;
+        private IInputManager m_InputManager;
         private List<Player> m_Players;
         private ScoreBoardHeader m_ScoreBoard;
 
@@ -41,6 +42,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Game = i_Game;
             m_ScoreBoard = new ScoreBoardHeader(i_Game);
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (IsPlayerAskToExit())
+            {
+                Game.Exit();
+            }
+        }
+
+        public bool IsPlayerAskToExit()
+        {
+            bool IsPlayerAskToExit;
+
+            if (m_InputManager == null)
+            {
+                m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
+            }
+
+            IsPlayerAskToExit = m_InputManager.KeyboardState.IsKeyDown(Keys.Escape);
+          
+            return IsPlayerAskToExit;
+        }
+
+
 
         public List<Player> Players
         {

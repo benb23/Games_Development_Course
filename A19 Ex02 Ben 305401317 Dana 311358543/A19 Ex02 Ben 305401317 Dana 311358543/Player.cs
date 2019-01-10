@@ -75,7 +75,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_CurrentSoulsNumber = m_Souls.Count;
-            m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, m_Game.GraphicsDevice.Viewport.Width -m_SpaceShip.Texture.Width/2),m_SpaceShip.Position.Y);
+            m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, m_Game.GraphicsDevice.Viewport.Width -m_SpaceShip.Texture.Width/2) ,m_SpaceShip.Position.Y);
         }
 
         private bool isPlayerAskedToShoot(Keys i_shootKey)
@@ -121,6 +121,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_CurrentSoulsNumber = m_Souls.Capacity;
         }
 
+        // TODO: Move asset name
         private void createSpaceShip(PlayerIndex i_PlayerType)
         {
             if(i_PlayerType == PlayerIndex.One)

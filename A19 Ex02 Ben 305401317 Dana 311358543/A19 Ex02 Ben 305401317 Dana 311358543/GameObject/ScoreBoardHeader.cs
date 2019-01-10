@@ -28,7 +28,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
-            m_SpriteBatch = m_Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
+           // m_SpriteBatch = m_Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             m_GameEngine = m_Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
             
             base.Initialize();
@@ -36,6 +36,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void LoadContent()
         {
+            m_SpriteBatch = new SpriteBatch(Game.GraphicsDevice);
             this.m_Font = m_Game.Content.Load<SpriteFont>(@"Fonts\ComicSansMS");
         }
 
@@ -45,8 +46,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             int playerOneScore = m_GameEngine.Players[(int)PlayerIndex.One].Score;
             int playerTwoScore = m_GameEngine.Players[(int)PlayerIndex.Two].Score;
 
+            //TODO: String format
+            this.m_SpriteBatch.Begin();
             this.m_SpriteBatch.DrawString(this.m_Font, "P1 Score: " + playerOneScore.ToString(), new Vector2(2, 1 + (int)PlayerIndex.One * 15) , new Color(46, 145, 232));
             this.m_SpriteBatch.DrawString(this.m_Font, "P2 Score: " + playerTwoScore.ToString(), new Vector2(2, 1 + (int)PlayerIndex.Two * 15), new Color(55, 232, 46));
+            this.m_SpriteBatch.End();
         }
 
 

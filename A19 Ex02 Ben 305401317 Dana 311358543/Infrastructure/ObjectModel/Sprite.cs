@@ -268,6 +268,7 @@ namespace Infrastructure
         {
             m_Texture = Game.Content.Load<Texture2D>(m_AssetName);
 
+ 
             if (m_SpriteBatch == null)
             {
                 m_SpriteBatch =
@@ -315,17 +316,22 @@ namespace Infrastructure
         }
 
 
-        public override void Draw(GameTime gameTime)
+        protected void DrawWithAllParameters()
         {
-            if (!m_UseSharedBatch)
-            {
-                m_SpriteBatch.Begin(m_SpriteSortMode, m_BlendState);
-            }
-
             m_SpriteBatch.Draw(m_Texture, this.PositionForDraw,
                  this.SourceRectangle, this.TintColor,
                 this.Rotation, this.RotationOrigin, this.Scales,
                 SpriteEffects.None, this.LayerDepth);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            if (!m_UseSharedBatch)
+            {
+                m_SpriteBatch.Begin();
+            }
+
+            DrawWithAllParameters();
 
             if (!m_UseSharedBatch)
             {

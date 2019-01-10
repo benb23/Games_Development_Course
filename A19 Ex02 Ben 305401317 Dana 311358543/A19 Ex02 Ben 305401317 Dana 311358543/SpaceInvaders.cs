@@ -62,54 +62,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_WallsGroup = new WallsGroup(this, 4);
             Components.Add(this.m_WallsGroup);
 
+
+            this.m_Graphics.IsFullScreen = false;
+            this.m_Graphics.PreferredBackBufferWidth = 800;
+            this.m_Graphics.PreferredBackBufferHeight = 600;
+            this.m_Graphics.ApplyChanges();
+        }
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+
+
         }
 
         protected override void Initialize()
         {
             //Mouse.SetPosition((int)m_Players[0].SpaceShip.Position.X, GraphicsDevice.Viewport.Height);
+            base.Initialize();
             m_SpriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), m_SpriteBatch);
             this.Window.Title = k_GameName;
-            this.m_Graphics.IsFullScreen = false;
-            this.m_Graphics.PreferredBackBufferWidth = 800;
-            this.m_Graphics.PreferredBackBufferHeight = 600;
-            this.m_Graphics.ApplyChanges();
-            base.Initialize();
+
+            
             m_WallsGroup.WallsYShift = m_Graphics.GraphicsDevice.Viewport.Height - 2*m_Players[0].SpaceShip.Texture.Height;
-
-        }
-
-        protected override void Update(GameTime i_GameTime)
-        {
-            if (IsPlayerAskToExit())
-            {
-                this.Exit();
-            }
-
-            base.Update(i_GameTime);
-        }
-
-        protected override void Draw(GameTime i_GameTime)
-        {
-                GraphicsDevice.Clear(Color.Black);
-                m_SpriteBatch.Begin();
-                base.Draw(i_GameTime);
-                m_SpriteBatch.End();
-        }
-
-        public bool IsPlayerAskToExit()
-        {
-            bool IsPlayerAskToExit;
-
-            if (m_InputManager.KeyboardState.IsKeyDown(Keys.Escape))
-            {
-                IsPlayerAskToExit = true;
-            }
-            else
-            {
-                IsPlayerAskToExit = false;
-            }
-            return IsPlayerAskToExit;
+            
         }
 
     }
