@@ -78,18 +78,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Draw(GameTime gameTime)
         {
-            if (m_CurrTexture == null)
-            {
-                base.Draw(gameTime);
-
-            }
-            else
-            {
-                m_SpriteBatch.Draw(m_CurrTexture, this.PositionForDraw,
-                    this.SourceRectangle, this.TintColor,
-                   this.Rotation, this.RotationOrigin, this.Scales,
-                   SpriteEffects.None, this.LayerDepth);
-            }
+            m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            this.DrawWithAllParameters();
+            m_SpriteBatch.End();
         }
     }
 }
