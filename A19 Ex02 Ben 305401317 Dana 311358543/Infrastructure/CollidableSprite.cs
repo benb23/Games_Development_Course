@@ -48,7 +48,6 @@ namespace Infrastructure
             this.Texture.GetData<Color>(m_Pixels);
         }
 
-
         public virtual bool CheckCollision(ICollidable i_Source)
         {
             if(this is IPixelsCollidable && i_Source is IPixelsCollidable)

@@ -35,6 +35,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { this.m_SoulIndx = value; }
         }
 
+
         public override void Initialize()
         {
             base.Initialize();
@@ -51,5 +52,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_SpriteBatch.End();
             m_SpriteBatch.Begin();
         }
+
     }
 }

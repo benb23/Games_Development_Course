@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Infrastructure;
+using System;
 
 namespace Infrastructure
 {
@@ -224,8 +225,13 @@ namespace Infrastructure
         /// </remarks>
         protected override void InitBounds()
         {
-            m_WidthBeforeScale = m_Texture.Width;
-            m_HeightBeforeScale = m_Texture.Height;
+            if (m_Texture != null)
+            {
+                m_WidthBeforeScale = m_Texture.Width;
+                m_HeightBeforeScale = m_Texture.Height;
+
+            }
+            
 
             InitSourceRectangle();
 
@@ -242,9 +248,13 @@ namespace Infrastructure
         }
 
 
+        protected SpriteSortMode m_SpriteSortMode;
+        protected BlendState m_BlendState;
+
         protected bool m_UseSharedBatch = true; //todo: was private
 
         protected SpriteBatch m_SpriteBatch;
+
         public SpriteBatch SpriteBatch
         {
             set
@@ -289,18 +299,27 @@ namespace Infrastructure
 
             base.Update(gameTime);
             this.Animations.Update(gameTime);
-
         }
 
         /// <summary>
         /// Basic texture draw behavior, using a shared/own sprite batch
         /// </summary>
         /// <param name="gameTime"></param>
+        /// 
+        protected void useYourOwnSpriteBatch(SpriteSortMode i_SpriteSortMode, BlendState i_BlendState)
+        {
+            m_SpriteBatch = new SpriteBatch(this.GraphicsDevice);
+            m_UseSharedBatch = false;
+            m_BlendState = i_BlendState;
+            m_SpriteSortMode = i_SpriteSortMode;
+        }
+
+
         public override void Draw(GameTime gameTime)
         {
             if (!m_UseSharedBatch)
             {
-                m_SpriteBatch.Begin();
+                m_SpriteBatch.Begin(m_SpriteSortMode, m_BlendState);
             }
 
             m_SpriteBatch.Draw(m_Texture, this.PositionForDraw,
@@ -316,6 +335,7 @@ namespace Infrastructure
             base.Draw(gameTime);
         }
 
+       
         #region Collision Handlers
         protected override void DrawBoundingBox()
         {

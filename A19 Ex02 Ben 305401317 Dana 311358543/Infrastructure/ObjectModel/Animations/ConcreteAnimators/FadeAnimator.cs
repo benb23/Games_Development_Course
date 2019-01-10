@@ -23,7 +23,7 @@ namespace Infrastructure
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Visible = m_OriginalSpriteInfo.Visible;
+            this.BoundSprite.Opacity = m_OriginalSpriteInfo.Opacity;
         }
     }
 }
