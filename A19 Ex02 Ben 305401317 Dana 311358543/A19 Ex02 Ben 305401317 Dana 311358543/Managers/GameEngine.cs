@@ -223,43 +223,60 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             i_wall.CurrTexture.SetData(i_wall.Pixels);
         }
 
-        private void handleWallAndBulletVerticalCollision(Wall i_wall, Bullet i_bullet)
+        private void handleWallAndBulletVerticalCollision(Wall i_wall, Bullet i_Bullet)
         {
-            int wallRow =MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].X/* - (int)(i_bullet.LastCollisionPixelsPositions[0].X-i_bullet.Position.X)*/-i_bullet.Texture.Width/2,0,i_wall.Texture.Width);
-            int wallColomn = MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_wall.Texture.Height);
-            int wallX = wallRow;
-            int wallY = wallColomn;
-            int bulletMinY, bulletMaxY;
+            int wallStartColomn = getHittenSpritesColomnInPixelsArray(i_wall, i_Bullet);
+            int wallRow = getHittenSpritesRowInPixelsArray(i_wall, i_Bullet);
+            int bulletMinY;
+            int bulletMaxY;
 
-            if (i_bullet.Type != Bullet.eBulletType.EnemyBullet)
+            if (i_Bullet.Velocity.Y < 0) //bullet direction 
             {
-                wallY -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_bullet.Texture.Height), 0, wallColomn);
                 bulletMinY = 0;
-                bulletMaxY =(int)( m_sizeOfBulletHitEffect * i_bullet.Texture.Height) + 1 ;
+                bulletMaxY =(int)( m_sizeOfBulletHitEffect * i_Bullet.Texture.Height) + 1 ;
             }
             else
             {
-                bulletMinY = (int)((1 - m_sizeOfBulletHitEffect) * i_bullet.Texture.Height);
-                bulletMaxY = i_bullet.Texture.Height;
+                bulletMinY = (int)((1 - m_sizeOfBulletHitEffect) * i_Bullet.Texture.Height);
+                bulletMaxY = i_Bullet.Texture.Height;
             }
 
+            int wallColomn = wallStartColomn;
 
+            //delete pixels
             for (int bulletRow = bulletMinY; bulletRow < bulletMaxY; bulletRow++)
                 {
-                    wallX = wallRow;
-                    for (int bulletColomn = 0; bulletColomn < i_bullet.Texture.Width; bulletColomn++)
+                    wallColomn = wallStartColomn;
+                    for (int bulletColomn = 0; bulletColomn < i_Bullet.Texture.Width; bulletColomn++)
                     {
-                        if (i_bullet.Pixels[bulletColomn + bulletRow * i_bullet.Texture.Width].A != 0 &&
-                           (wallX + wallY * i_wall.Texture.Width) < i_wall.Pixels.Length)
+                        if (i_Bullet.Pixels[bulletColomn + bulletRow * i_Bullet.Texture.Width].A != 0 &&
+                           (wallColomn + wallRow * i_wall.Texture.Width) < i_wall.Pixels.Length)
                         {
-                            i_wall.Pixels[wallX + wallY * i_wall.Texture.Width] = new Color(0, 0, 0, 0);
+                            i_wall.Pixels[wallColomn + wallRow * i_wall.Texture.Width] = new Color(0, 0, 0, 0);
                         }
-                        wallX++;
+                        wallColomn++;
                     }
-                    wallY++;
+                    wallRow++;
                 }
 
             i_wall.CurrTexture.SetData(i_wall.Pixels);
+        }
+        
+        private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, Bullet i_Bullet)
+        {
+            return MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].X + (int)(i_Bullet.Texture.Width / 2 - i_Bullet.LastCollisionPixelsIndex[0].X) - i_Bullet.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);
+        }
+
+        private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, Bullet i_Bullet)
+        {
+            int wallColomn = MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_HittenSprite.Texture.Height);
+
+            if (i_Bullet.Type != Bullet.eBulletType.EnemyBullet)
+            {
+                wallColomn -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_Bullet.Texture.Height), 0, wallColomn);
+            }
+
+            return wallColomn;
         }
 
         private void handleWallAndBullethorizontalCollision(Wall i_wall, Bullet i_bullet)
