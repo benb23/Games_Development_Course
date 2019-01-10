@@ -25,7 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public Wall(Game i_Game)
             : base(k_AssteName, i_Game)
         {
-            this.m_Velocity = new Vector2(45, 0);
+            this.m_Velocity = new Vector2(0, 0);// new Vector2(45, 0);
         }
 
         protected override void LoadContent()
@@ -73,7 +73,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 Color[] texturePixels = new Color[Texture.Width*Texture.Height];
                 m_CurrTexture.SetData(texturePixels);
             }
-            m_GameEngine.HandletHit(this, i_Collidable);
+            m_GameEngine.HandleHit(this, i_Collidable);
         }
 
         public override void Draw(GameTime gameTime)

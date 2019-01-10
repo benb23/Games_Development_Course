@@ -21,24 +21,23 @@ namespace Infrastructure
             get { return m_Pixels; }
         } 
 
-        protected List<Vector2> m_LastCollisionPixelsPositions;
-        protected List<Vector2> m_LastCollisionPixelsIndex;
-
+        protected List<Vector2> m_CollidedPixelsPositions;
+        protected List<Vector2> m_CollidedPixelsIndex;
 
         public List<Vector2> LastCollisionPixelsPositions
         {
-            get { return m_LastCollisionPixelsPositions; }
+            get { return m_CollidedPixelsPositions; }
         }
 
         public List<Vector2> LastCollisionPixelsIndex
         {
-            get { return m_LastCollisionPixelsIndex; }
+            get { return m_CollidedPixelsIndex; }
         }
 
         public CollidableSprite(string i_AssetName, Game i_Game) : base(i_AssetName, i_Game)
         {
-            m_LastCollisionPixelsPositions = new List<Vector2>(5);//??????
-            m_LastCollisionPixelsIndex = new List<Vector2>(5);//??????
+            m_CollidedPixelsPositions = new List<Vector2>();
+            m_CollidedPixelsIndex = new List<Vector2>();
         }
 
         protected override void LoadContent()
@@ -100,8 +99,8 @@ namespace Infrastructure
         private bool isPixelsCollided(IPixelsCollidable i_Source)
         {
             bool isPixelsCollided = false;
-            m_LastCollisionPixelsPositions.Clear();
-            m_LastCollisionPixelsIndex.Clear();
+            m_CollidedPixelsPositions.Clear();
+            m_CollidedPixelsIndex.Clear();
 
             int top = Math.Max(Bounds.Top, i_Source.Bounds.Top);
             int bottom = Math.Min(Bounds.Bottom, i_Source.Bounds.Bottom);
@@ -118,9 +117,9 @@ namespace Infrastructure
                     if (pixelA.A != 0 && pixelB.A != 0)
                     {
                         //keep colliding pixels data
-                        m_LastCollisionPixelsPositions.Add(new Vector2(x,y)); 
+                        m_CollidedPixelsPositions.Add(new Vector2(x,y)); 
                         (i_Source as CollidableSprite).LastCollisionPixelsPositions.Add(new Vector2(x, y));
-                        m_LastCollisionPixelsIndex.Add(new Vector2(x - Bounds.Left, y - Bounds.Top));
+                        m_CollidedPixelsIndex.Add(new Vector2(x - Bounds.Left, y - Bounds.Top));
                         (i_Source as CollidableSprite).LastCollisionPixelsIndex.Add(new Vector2(x - i_Source.Bounds.Left, y - i_Source.Bounds.Top));
 
                         isPixelsCollided = true;

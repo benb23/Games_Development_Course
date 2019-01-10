@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class Enemy : CollidableSprite, IRectangleCollidable
+    public class Enemy : CollidableSprite, IRectangleCollidable, IPixelsCollidable
     {
         private List<Bullet> m_Bullets = new List<Bullet>(5);
         private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
@@ -132,7 +132,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
             }
 
-            m_GameEngine.HandletHit(this, i_Collidable);
+            m_GameEngine.HandleHit(this, i_Collidable);
             }
         }
 

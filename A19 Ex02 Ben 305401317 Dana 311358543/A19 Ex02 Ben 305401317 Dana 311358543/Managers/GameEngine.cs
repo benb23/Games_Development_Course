@@ -104,7 +104,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 @"Game Over"); //TODO: PRINT WINNER */
         }
 
-        public void HandletHit(Bullet bullet, ICollidable i_Collidable)
+        public void HandleHit(Bullet bullet, ICollidable i_Collidable)
         {
             if (!(bullet.Type == Bullet.eBulletType.EnemyBullet && i_Collidable is Enemy))
             {
@@ -113,7 +113,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void HandletHit(SpaceShip i_Target, ICollidable i_Collidable)
+        public void HandleHit(SpaceShip i_Target, ICollidable i_Collidable)
         {
             Player player = m_Players[(int)i_Target.Owner];
 
@@ -139,7 +139,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void HandletHit(Enemy i_Enemy, ICollidable i_Collidable)
+        public void HandleHit(Enemy i_Enemy, ICollidable i_Collidable)
         {
             if (i_Collidable is Bullet && (i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
             {
@@ -156,7 +156,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void HandletHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet)
+        public void HandleHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet)
         {
             if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
             {
@@ -168,11 +168,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void HandletHit(Wall i_wall, ICollidable i_Collidable)
+        public void HandleHit(Wall i_wall, ICollidable i_Collidable)
         {
-            if(i_Collidable is Bullet)
+            if (i_Collidable is Bullet)
             {
-                if(checkBulletCollisionDirection(i_Collidable as Bullet) == eCollisionDirection.horizontal)
+                if (checkBulletCollisionDirection(i_Collidable as Bullet) == eCollisionDirection.horizontal)
                 {
                     handleWallAndBullethorizontalCollision(i_wall, i_Collidable as Bullet);
                 }
@@ -181,11 +181,25 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     handleWallAndBulletVerticalCollision(i_wall, i_Collidable as Bullet);
                 }
             }
+            else if(i_Collidable is Enemy)
+            {
+                HandleWallAndEnemyHit(i_wall, i_Collidable as Enemy);
+            }
+        }
+
+        private void HandleWallAndEnemyHit(Wall i_wall, Enemy i_Enemy)
+        {
+            foreach(Vector2 positionInPixels in i_wall.LastCollisionPixelsIndex)
+            {
+                i_wall.Pixels[(int)(positionInPixels.X + positionInPixels.Y * i_wall.Texture.Width)] = new Color(0, 0, 0, 0);
+            }
+
+            i_wall.CurrTexture.SetData(i_wall.Pixels);
         }
 
         private void handleWallAndBulletVerticalCollision(Wall i_wall, Bullet i_bullet)
         {
-            int wallRow =MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].X - i_bullet.Texture.Width/2,0,i_wall.Texture.Width);
+            int wallRow =MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].X/* - (int)(i_bullet.LastCollisionPixelsPositions[0].X-i_bullet.Position.X)*/-i_bullet.Texture.Width/2,0,i_wall.Texture.Width);
             int wallColomn = MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_wall.Texture.Height);
             int wallX = wallRow;
             int wallY = wallColomn;
