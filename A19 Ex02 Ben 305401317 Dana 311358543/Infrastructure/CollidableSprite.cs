@@ -19,22 +19,31 @@ namespace Infrastructure
         public Color[] Pixels
         {
             get { return m_Pixels; }
+        } 
+
+        protected List<Vector2> m_LastCollisionPixelsPositions;
+        protected List<Vector2> m_LastCollisionPixelsIndex;
+
+
+        public List<Vector2> LastCollisionPixelsPositions
+        {
+            get { return m_LastCollisionPixelsPositions; }
         }
 
-        private Texture2D m_currTexture;
-
-        public Texture2D CurrTexture
+        public List<Vector2> LastCollisionPixelsIndex
         {
-            get { return m_currTexture; }
+            get { return m_LastCollisionPixelsIndex; }
         }
 
         public CollidableSprite(string i_AssetName, Game i_Game) : base(i_AssetName, i_Game)
-        { }
+        {
+            m_LastCollisionPixelsPositions = new List<Vector2>(5);//??????
+            m_LastCollisionPixelsIndex = new List<Vector2>(5);//??????
+        }
 
         protected override void LoadContent()
         {
             base.LoadContent();
-            m_currTexture = Texture;
             m_Pixels = new Color[this.Texture.Width * this.Texture.Height];
             this.Texture.GetData<Color>(m_Pixels);
         }
@@ -92,6 +101,8 @@ namespace Infrastructure
         private bool isPixelsCollided(IPixelsCollidable i_Source)
         {
             bool isPixelsCollided = false;
+            m_LastCollisionPixelsPositions.Clear();
+            m_LastCollisionPixelsIndex.Clear();
 
             int top = Math.Max(Bounds.Top, i_Source.Bounds.Top);
             int bottom = Math.Min(Bounds.Bottom, i_Source.Bounds.Bottom);
@@ -102,29 +113,23 @@ namespace Infrastructure
             {
                 for (int x = left; x < right; x++)
                 {
-                    Color colorA = Pixels[(x - Bounds.Left) + (y - Bounds.Top) * Bounds.Width];
-                    Color colorB = i_Source.Pixels[(x - i_Source.Bounds.Left) + (y - i_Source.Bounds.Top) * i_Source.Bounds.Width];
+                    Color pixelA = Pixels[(x - Bounds.Left) + (y - Bounds.Top) * Bounds.Width];
+                    Color pixelB = i_Source.Pixels[(x - i_Source.Bounds.Left) + (y - i_Source.Bounds.Top) * i_Source.Bounds.Width];
 
-                    if (colorA.A != 0 && colorB.A != 0)
+                    if (pixelA.A != 0 && pixelB.A != 0)
                     {
+                        //keep colliding pixels data
+                        m_LastCollisionPixelsPositions.Add(new Vector2(x,y)); 
+                        (i_Source as CollidableSprite).LastCollisionPixelsPositions.Add(new Vector2(x, y));
+                        m_LastCollisionPixelsIndex.Add(new Vector2(x - Bounds.Left, y - Bounds.Top));
+                        (i_Source as CollidableSprite).LastCollisionPixelsIndex.Add(new Vector2(x - i_Source.Bounds.Left, y - i_Source.Bounds.Top));
 
                         isPixelsCollided = true;
-                        break;
                     }
                 }
             }
 
             return isPixelsCollided;
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            m_SpriteBatch.Draw(m_currTexture, this.PositionForDraw,
-                this.SourceRectangle, this.TintColor,
-               this.Rotation, this.RotationOrigin, this.Scales,
-               SpriteEffects.None, this.LayerDepth);
-
-            base.Draw(gameTime);
         }
     }
 }

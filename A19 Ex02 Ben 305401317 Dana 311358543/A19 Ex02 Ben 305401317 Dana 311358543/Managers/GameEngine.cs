@@ -24,11 +24,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             BlueEnemy = 140,
             YellowEnemy = 110
         }
+        public enum eCollisionDirection
+        {
+            horizontal,
+            Vertical,
+            Null // TODO : ??
+        }
 
         private Game m_Game;
         private List<Player> m_Players;
         private ScoreBoardHeader m_ScoreBoard;
 
+        private double m_sizeOfBulletHitEffect = 0.7; //todo: name???
         public GameEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
@@ -159,6 +166,91 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
             }
+        }
+
+        public void HandletHit(Wall i_wall, ICollidable i_Collidable)
+        {
+            if(i_Collidable is Bullet)
+            {
+                if(checkBulletCollisionDirection(i_Collidable as Bullet) == eCollisionDirection.horizontal)
+                {
+                    handleWallAndBullethorizontalCollision(i_wall, i_Collidable as Bullet);
+                }
+                else
+                {
+                    handleWallAndBulletVerticalCollision(i_wall, i_Collidable as Bullet);
+                }
+            }
+        }
+
+        private void handleWallAndBulletVerticalCollision(Wall i_wall, Bullet i_bullet)
+        {
+            int wallRow =MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].X - i_bullet.Texture.Width/2,0,i_wall.Texture.Width);
+            int wallColomn = MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_wall.Texture.Height);
+
+            if(i_bullet.Type != Bullet.eBulletType.EnemyBullet)
+            {
+                wallColomn -=MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_bullet.Texture.Height),0, wallColomn);
+            }
+
+            int x = wallRow;
+            int y = wallColomn;
+
+            for (int bulletRow = 0; bulletRow <= m_sizeOfBulletHitEffect * i_bullet.Texture.Height; bulletRow++)
+            {
+                x = wallRow;
+                for (int bulletColomn = 0; bulletColomn < i_bullet.Texture.Width; bulletColomn++)
+                {
+                    if (i_bullet.Pixels[bulletColomn + bulletRow * i_bullet.Texture.Width].A != 0 &&
+                       (x + y * i_wall.Texture.Width) < i_wall.Pixels.Length)
+                    {
+                        i_wall.Pixels[x + y * i_wall.Texture.Width] = new Color(0, 0, 0, 0);
+                    }
+                    x++;
+                }
+                y++;
+            }
+
+            i_wall.CurrTexture.SetData(i_wall.Pixels);
+        }
+
+        private void handleWallAndBullethorizontalCollision(Wall i_wall, Bullet i_bullet)
+        {
+            float wallX = (float)i_bullet.Position.X - (float)(0.5 * i_bullet.Texture.Width) -7/10 * i_bullet.Texture.Width;
+            float wallY = (float)i_bullet.Position.Y + (float)(0.5 * i_bullet.Texture.Height);
+
+            for (int row = 0; row < i_bullet.Texture.Height; row++)//todo: <=?
+            {
+                for(int colomn = 0; colomn <= m_sizeOfBulletHitEffect * i_bullet.Texture.Width; colomn++)
+                {
+                    if(i_bullet.Pixels[row + colomn* i_bullet.Texture.Width].A != 0)
+                    {
+                        i_wall.Pixels[(int)wallX + (int)(wallY * m_sizeOfBulletHitEffect * i_bullet.Texture.Width)] = new Color(0, 0, 0, 0);
+                    }
+                    wallX++;
+                }
+                wallY++;
+            }
+
+        }
+
+        private eCollisionDirection checkBulletCollisionDirection(Bullet i_bullet)
+        {
+            eCollisionDirection collisionDirection = eCollisionDirection.Null;
+
+            foreach (Vector2 pixelPosition in i_bullet.LastCollisionPixelsPositions)
+            {
+                if(pixelPosition.X ==i_bullet.Position.X +0.5*i_bullet.Texture.Width || pixelPosition.X == i_bullet.Position.X + 0.5 * i_bullet.Texture.Width)
+                {
+                    collisionDirection = eCollisionDirection.horizontal;
+                }
+                else
+                {
+                    collisionDirection = eCollisionDirection.Vertical;
+                }
+            }
+
+            return collisionDirection;
         }
     }
 }

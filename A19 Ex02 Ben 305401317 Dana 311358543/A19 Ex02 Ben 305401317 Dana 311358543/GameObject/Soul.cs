@@ -35,7 +35,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { this.m_SoulIndx = value; }
         }
 
-
         public override void Initialize()
         {
             base.Initialize();
@@ -44,5 +43,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Position = new Vector2(Game.GraphicsDevice.Viewport.Width - (this.m_CurrSoulsNumber * (Width + soulsGap)), 1 + ((int)m_SoulOwner * 20));
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            m_SpriteBatch.End();
+            m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            base.Draw(gameTime);
+            m_SpriteBatch.End();
+            m_SpriteBatch.Begin();
+        }
     }
 }
