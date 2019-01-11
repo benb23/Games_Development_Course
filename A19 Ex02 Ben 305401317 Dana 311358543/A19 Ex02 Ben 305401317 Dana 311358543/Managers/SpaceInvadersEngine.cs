@@ -173,7 +173,7 @@ The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(
         {
             if (!(bullet.Type == Bullet.eBulletType.EnemyBullet && i_Collidable is Enemy))
             {
-                if (bullet.Type is Bullet.eBulletType.EnemyBullet && i_Collidable is Bullet)
+                if (bullet.Type == Bullet.eBulletType.EnemyBullet && i_Collidable is Bullet)
                 {
                     if (m_Random == null)
                     {
