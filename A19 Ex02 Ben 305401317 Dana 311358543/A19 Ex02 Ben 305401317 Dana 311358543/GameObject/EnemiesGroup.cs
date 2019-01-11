@@ -142,7 +142,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        // TODO: change list initilize
         private void initAliveEnemiesByColum()
         {
             for (int colomn = 0; colomn < k_EnemiesColumns; colomn++)
