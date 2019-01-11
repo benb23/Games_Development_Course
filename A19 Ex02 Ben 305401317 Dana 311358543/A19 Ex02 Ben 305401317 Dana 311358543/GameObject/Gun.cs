@@ -22,16 +22,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public Gun(Game i_Game, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection)
         {
-            m_Game = i_Game;
-            k_MaxNumOfBullets = i_MaxNumOfBullets;
-            m_BulletsType = i_BulletType;
-            m_Bullets = new List<Bullet>(k_MaxNumOfBullets);
-            m_ShootingDirection = i_ShootingDirection;
+            this.m_Game = i_Game;
+            this.k_MaxNumOfBullets = i_MaxNumOfBullets;
+            this.m_BulletsType = i_BulletType;
+            this.m_Bullets = new List<Bullet>(this.k_MaxNumOfBullets);
+            this.m_ShootingDirection = i_ShootingDirection;
         }
 
         public void Shoot(Vector2 i_ShooterPosition)
         {
-            Bullet bullet = getBullet(i_ShooterPosition);
+            Bullet bullet = this.getBullet(i_ShooterPosition);
         }
 
         private Bullet getBullet(Vector2 i_ShooterPosition)
@@ -39,13 +39,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             Bullet bullet = null;
             bool foundBullet = false;
 
-            foreach (Bullet currBullet in m_Bullets)
+            foreach (Bullet currBullet in this.m_Bullets)
             {
                 if(!currBullet.Visible)
                 {
                     bullet = currBullet;
                     foundBullet = true;
-                    bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * ((bullet.Texture.Height / 2) + 1));
+                    bullet.Position = i_ShooterPosition + new Vector2(0, this.m_ShootingDirection * ((bullet.Texture.Height / 2) + 1));
                     bullet.Enabled = true;
                     bullet.Visible = true;
                     break;
@@ -54,11 +54,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if(!foundBullet)
             {
-                if(m_Bullets.Count < k_MaxNumOfBullets)
+                if(this.m_Bullets.Count < this.k_MaxNumOfBullets)
                 {
-                    bullet = new Bullet(m_Game, m_BulletsType);
-                    bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * (bullet.Texture.Height / 2 + 1));
-                    m_Bullets.Add(bullet);
+                    bullet = new Bullet(this.m_Game, this.m_BulletsType);
+                    bullet.Position = i_ShooterPosition + new Vector2(0, this.m_ShootingDirection * ((bullet.Texture.Height / 2) + 1));
+                    this.m_Bullets.Add(bullet);
                 }
             }
 
@@ -74,14 +74,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             bool PermitionToShoot = false;
 
-            if (m_Bullets.Count < k_MaxNumOfBullets)
+            if (this.m_Bullets.Count < this.k_MaxNumOfBullets)
             {
                 PermitionToShoot = true;
             }
 
             if(!PermitionToShoot)
             {
-                foreach(Bullet currBullet in m_Bullets)
+                foreach(Bullet currBullet in this.m_Bullets)
                 {
                     if(!currBullet.Visible)
                     {

@@ -8,6 +8,6 @@ namespace Infrastructure
 {
     public interface IScoreable
     {
-        int Score{ get; set; }
+        int Score { get; set; }
     }
 }

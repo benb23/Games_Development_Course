@@ -14,8 +14,8 @@ namespace Infrastructure
 
         public TimeSpan RotateLength
         {
-            get { return m_RotateLength; }
-            set { m_RotateLength = value; }
+            get { return this.m_RotateLength; }
+            set { this.m_RotateLength = value; }
         }
 
         public RoataterAnimator(string i_Name, TimeSpan i_AnimationLength)
@@ -26,8 +26,8 @@ namespace Infrastructure
         public RoataterAnimator(int NumOfRoundsPerSec, TimeSpan i_AnimationLength)
             : base("Rotator", i_AnimationLength)
         {
-            m_NumOfRoundsPerSec = NumOfRoundsPerSec;
-            m_RotateLength = i_AnimationLength;
+            this.m_NumOfRoundsPerSec = NumOfRoundsPerSec;
+            this.m_RotateLength = i_AnimationLength;
         }
 
         protected override void OnFinished()
@@ -38,8 +38,8 @@ namespace Infrastructure
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            float currentTime = (float)m_RotateLength.TotalSeconds;
-            float rotationVelocity = m_NumOfRoundsPerSec * MathHelper.TwoPi;
+            float currentTime = (float)this.m_RotateLength.TotalSeconds;
+            float rotationVelocity = this.m_NumOfRoundsPerSec * MathHelper.TwoPi;
             currentTime -= (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
             this.BoundSprite.Rotation += rotationVelocity * currentTime;

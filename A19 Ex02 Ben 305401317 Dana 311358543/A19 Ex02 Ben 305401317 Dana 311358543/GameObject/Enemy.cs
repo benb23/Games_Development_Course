@@ -16,14 +16,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Enemy : CollidableSprite, IRectangleCollidable, IPixelsCollidable
     {
-        private List<Bullet> m_Bullets = new List<Bullet>(5);
+        private const int k_MaxRandomToShoot = 10;
+        public const int k_MaxRandomNumber = 50000;
         private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
         private Gun m_Gun;
-        private const int k_MaxRandomToShoot = 10; 
-        public const int k_MaxRandomNumber = 50000;
         private ISpaceInvadersEngine m_GameEngine;
         private int k_NumOfTOtalFrames = 6;
-        public int k_NumOfFrames = 2;
         private Random m_Random;
         public int m_StartSqureIndex;
         private int m_Row;
@@ -34,24 +32,24 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public int Row
         {
-            get { return m_Row; }
+            get { return this.m_Row; }
         }
 
         public int Colum
         {
-            get { return m_Colum; }
+            get { return this.m_Colum; }
         }
 
         public Enemy(Game i_Game, Color i_Tint, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec) 
             : base(k_AssteName, i_Game)
         {
-            m_Random = Game.Services.GetService(typeof(Random)) as Random; 
-            m_TimeUntilNextStepInSec = TimeSpan.FromSeconds(i_TimeUntilNextStepInSec);
-            m_Gap = i_Gap;
-            m_Row = i_Row;
-            m_Colum = i_Colum;
-            m_StartSqureIndex = i_StartSqureIndex;
-            m_TintColor = i_Tint;
+            this.m_Random = this.Game.Services.GetService(typeof(Random)) as Random;
+            this.m_TimeUntilNextStepInSec = TimeSpan.FromSeconds(i_TimeUntilNextStepInSec);
+            this.m_Gap = i_Gap;
+            this.m_Row = i_Row;
+            this.m_Colum = i_Colum;
+            this.m_StartSqureIndex = i_StartSqureIndex;
+            this.m_TintColor = i_Tint;
         }
 
         public void LoadAsset()
@@ -62,50 +60,50 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
-            m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
-            initPosition();
+            this.m_Gun = new Gun(this.Game, 1, Bullet.eBulletType.EnemyBullet, 1);
+            this.initPosition();
 
-            initAnimations();
+            this.initAnimations();
         }
 
         private void initPosition()
         {
             float halfEnemySize = this.Texture.Height / 2;
-            m_Position = new Vector2(halfEnemySize + m_Colum * (Texture.Height * 1.5f + m_Gap), this.Texture.Height * 3f + m_Row * (Texture.Height * 1.5f + m_Gap));
+            this.m_Position = new Vector2(halfEnemySize + (this.m_Colum * ((this.Texture.Height * 1.5f) + this.m_Gap)), (this.Texture.Height * 3f) + (this.m_Row * ((this.Texture.Height * 1.5f) + this.m_Gap)));
         }
 
         protected override void InitOrigins()
         {
-            m_PositionOrigin = new Vector2(Texture.Height / 2, Texture.Height / 2);
-            m_RotationOrigin = new Vector2(Texture.Height / 2, Texture.Height / 2);
+            this.m_PositionOrigin = new Vector2(this.Texture.Height / 2, this.Texture.Height / 2);
+            this.m_RotationOrigin = new Vector2(this.Texture.Height / 2, this.Texture.Height / 2);
             base.InitOrigins();
         }
 
         protected override void InitSourceRectangle()
         {
             base.InitSourceRectangle();
-            m_WidthBeforeScale = m_WidthBeforeScale / k_NumOfTOtalFrames;
+            this.m_WidthBeforeScale = this.m_WidthBeforeScale / this.k_NumOfTOtalFrames;
 
             this.SourceRectangle = new Rectangle(
-                (int)m_WidthBeforeScale * m_StartSqureIndex,
+                (int)this.m_WidthBeforeScale * this.m_StartSqureIndex,
                 0,
-                 (int)m_WidthBeforeScale,
-                (int)Height);
+                 (int)this.m_WidthBeforeScale,
+                (int)this.Height);
         }
 
         public override void Update(GameTime i_GameTime)
         {
-            if (!m_Initialize)
+            if (!this.m_Initialize)
             {
-                m_Initialize = true;
+                this.m_Initialize = true;
                 this.Animations["CellAnimation"].Restart();
             }
 
-            int rnd = m_Random.Next(0, k_MaxRandomNumber);    
+            int rnd = this.m_Random.Next(0, k_MaxRandomNumber);    
 
-            if (rnd <= k_MaxRandomToShoot && m_Gun.PermitionToShoot())
+            if (rnd <= k_MaxRandomToShoot && this.m_Gun.PermitionToShoot())
             {
-                shoot();
+                this.shoot();
             }
 
             base.Update(i_GameTime);
@@ -113,19 +111,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void shoot()
         {
-            m_Gun.Shoot(new Vector2(Position.X, Position.Y + (Texture.Height / 2)));
+            this.m_Gun.Shoot(new Vector2(this.Position.X, this.Position.Y + (this.Texture.Height / 2)));
         }
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if ((!this.m_Animations["dyingEnemy"].Enabled))
+            if (!this.m_Animations["dyingEnemy"].Enabled)
             {
-                if (m_GameEngine == null)
+                if (this.m_GameEngine == null)
                 {
-                    m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+                    this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
                 }
 
-                m_GameEngine.HandleHit(this, i_Collidable);
+                this.m_GameEngine.HandleHit(this, i_Collidable);
             }
         }
 
@@ -138,7 +136,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void cellAnimation_PositionChanged(object sender, EventArgs e)
         {
-            (m_Animations["CellAnimation"] as CellAnimator).CellTime = m_TimeUntilNextStepInSec;
+            (this.m_Animations["CellAnimation"] as CellAnimator).CellTime = this.m_TimeUntilNextStepInSec;
         }
 
         private void initAnimations()
@@ -146,13 +144,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             ShrinkAnimator shrinker = new ShrinkAnimator(TimeSpan.FromSeconds(1.2));
             RoataterAnimator rotate = new RoataterAnimator(6, TimeSpan.FromSeconds(1.2));
             CompositeAnimator dyingEnemy = new CompositeAnimator("dyingEnemy", TimeSpan.FromSeconds(1.2), this, shrinker, rotate);
-            CellAnimator enemyCellAnimation = new CellAnimator(m_TimeUntilNextStepInSec, 2, TimeSpan.Zero,  m_StartSqureIndex, true, m_Toggeler);
+            CellAnimator enemyCellAnimation = new CellAnimator(this.m_TimeUntilNextStepInSec, 2, TimeSpan.Zero, this.m_StartSqureIndex, true, this.m_Toggeler);
 
             this.Animations.Add(enemyCellAnimation);
             this.Animations.Add(dyingEnemy);
 
-            PositionChanged += new EventHandler<EventArgs>(cellAnimation_PositionChanged);
-            dyingEnemy.Finished += new EventHandler(dyingEnemy_Finished);
+            this.PositionChanged += new EventHandler<EventArgs>(this.cellAnimation_PositionChanged);
+            dyingEnemy.Finished += new EventHandler(this.dyingEnemy_Finished);
             this.Animations.Enabled = true; 
         }
     }

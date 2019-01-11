@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    class EnemiesGroup : RegisteredComponent
+    public class EnemiesGroup : RegisteredComponent
     {
         public enum eDirection
         {
@@ -44,7 +44,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
-            if (m_IncreaseVelocityWhen4Dead)
+            if (this.m_IncreaseVelocityWhen4Dead)
             {
                this.m_IncreaseVelocityWhen4Dead = false;
                 this.increaseVelocity(0.04f);
@@ -66,7 +66,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            cheackGameOver();
+            this.cheackGameOver();
         }
 
         private bool cheackGameOver()
@@ -74,13 +74,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             bool isGameOver = this.isEnemiesGroupTouchTheBotton() || this.isAllEnemiesDead();
             if (isGameOver)
             {
-                if (m_GameEngine == null)
+                if (this.m_GameEngine == null)
                 {
-                    m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+                    this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
                 }
 
-                m_GameEngine.ShowGameOverMessage();
-                Game.Exit();
+                this.m_GameEngine.ShowGameOverMessage();
+                this.Game.Exit();
             }
 
             return isGameOver;
@@ -88,7 +88,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void jump(Vector2 i_StepToJump)
         {
-            foreach (Enemy enemy in m_AliveEnemiesByRow)
+            foreach (Enemy enemy in this.m_AliveEnemiesByRow)
             {
                 enemy.Position += i_StepToJump;
             }
@@ -127,16 +127,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             /// For calculating positions according to enemy texture width (generic)
             this.m_EnemiesMatrix[0, 0].LoadAsset();
-            m_EnemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
+            this.m_EnemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
         }
   
         private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint, int i_Toggeler)
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
-                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_StartSqureIndex, i_Row, colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
-                m_AliveEnemiesByRow.Add(m_EnemiesMatrix[i_Row, colum]);
-                m_EnemiesMatrix[i_Row, colum].m_Toggeler = i_Toggeler;
+                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_StartSqureIndex, i_Row, colum, this.m_EnemiesGap, this.m_TimeUntilNextStepInSec);
+                this.m_AliveEnemiesByRow.Add(this.m_EnemiesMatrix[i_Row, colum]);
+                this.m_EnemiesMatrix[i_Row, colum].m_Toggeler = i_Toggeler;
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.updateAliveLists;
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.isFourEnemiesDead;
             }
@@ -148,70 +148,70 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 for (int row = 0; row < k_EnemiesRows; row++)
                 {
-                    m_AliveEnemiesByColum.Add(m_EnemiesMatrix[row, colomn]);
+                    this.m_AliveEnemiesByColum.Add(this.m_EnemiesMatrix[row, colomn]);
                 }
             } 
         }
 
         private bool isAllEnemiesDead()
         {
-            bool isAllDead = m_AliveEnemiesByRow.Count == 0;
+            bool isAllDead = this.m_AliveEnemiesByRow.Count == 0;
 
             return isAllDead;
         }
 
         private bool isEnemiesGroupTouchTheBotton()
         {
-            bool isEnemiesGroupTouchTheBotton = this.getBottomGroupBorder() >= Game.GraphicsDevice.Viewport.Height;
+            bool isEnemiesGroupTouchTheBotton = this.getBottomGroupBorder() >= this.Game.GraphicsDevice.Viewport.Height;
 
             return isEnemiesGroupTouchTheBotton;
         }
 
         private float getRightGroupBorder()
         {
-            return m_AliveEnemiesByColum.Last().Position.X + m_AliveEnemiesByColum.Last().HeightBeforeScale / 2;
+            return this.m_AliveEnemiesByColum.Last().Position.X + (this.m_AliveEnemiesByColum.Last().HeightBeforeScale / 2);
         }
 
         private float getLeftGroupBorder()
         {
-            return m_AliveEnemiesByColum.First().Position.X - m_AliveEnemiesByColum.First().HeightBeforeScale / 2;
+            return this.m_AliveEnemiesByColum.First().Position.X - (this.m_AliveEnemiesByColum.First().HeightBeforeScale / 2);
         }
 
         private float getBottomGroupBorder()
         {
-            return m_AliveEnemiesByRow.Last().Position.Y + (m_AliveEnemiesByRow.Last().HeightBeforeScale / 2);
+            return this.m_AliveEnemiesByRow.Last().Position.Y + (this.m_AliveEnemiesByRow.Last().HeightBeforeScale / 2);
         }
 
         private void updateAliveLists(object sender, EventArgs args)
         {
-            m_AliveEnemiesByRow.Remove((sender as Enemy));
-            m_AliveEnemiesByColum.Remove((sender as Enemy));
+            this.m_AliveEnemiesByRow.Remove(sender as Enemy);
+            this.m_AliveEnemiesByColum.Remove(sender as Enemy);
         }
 
         private void isFourEnemiesDead(object sender, EventArgs args)
         {
-            int numOfDeadEnemies = m_AliveEnemiesByRow.Capacity - m_AliveEnemiesByRow.Count;
-            m_IncreaseVelocityWhen4Dead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
+            int numOfDeadEnemies = this.m_AliveEnemiesByRow.Capacity - this.m_AliveEnemiesByRow.Count;
+            this.m_IncreaseVelocityWhen4Dead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
         }
 
         private void jumpHorizontalStep(GameTime i_GameTime)
         {
-            float lastRightJump = Game.GraphicsDevice.Viewport.Width - this.getRightGroupBorder();
+            float lastRightJump = this.Game.GraphicsDevice.Viewport.Width - this.getRightGroupBorder();
             float lastLeftJump = this.getLeftGroupBorder();
 
-            if (isLastStep(lastRightJump, eDirection.right))
+            if (this.isLastStep(lastRightJump, eDirection.right))
             {
                 this.m_IsLastStepInRow = true;
-                jump(new Vector2(m_Direction * lastRightJump, 0));
+                this.jump(new Vector2(this.m_Direction * lastRightJump, 0));
             }
-            else if (isLastStep(lastLeftJump, eDirection.left))
+            else if (this.isLastStep(lastLeftJump, eDirection.left))
             {
                 this.m_IsLastStepInRow = true;
-                jump(new Vector2(m_Direction * lastLeftJump, 0));
+                this.jump(new Vector2(this.m_Direction * lastLeftJump, 0));
             }
             else
             {
-                jump(new Vector2(m_Direction * this.m_EnemiesMatrix[0, 0].Texture.Height / 2, 0));
+                this.jump(new Vector2(this.m_Direction * this.m_AliveEnemiesByRow.First().Texture.Height / 2, 0));
             }
         }
 
@@ -219,9 +219,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             bool isLastStep = false;
 
-            if (this.m_Direction ==(float)i_MoveDirection)
+            if (this.m_Direction == (float)i_MoveDirection)
             {
-                isLastStep = i_LastStep < (this.m_EnemiesMatrix[0, 0].Texture.Height) && i_LastStep > 0;
+                isLastStep = i_LastStep < this.m_AliveEnemiesByRow.First().Texture.Height && i_LastStep > 0;
             }
 
             return isLastStep;
@@ -229,7 +229,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void jumpDown()
         {
-            jump(new Vector2(0, this.m_EnemiesMatrix[0, 0].Texture.Height / 2));
+            this.jump(new Vector2(0, this.m_AliveEnemiesByRow.First().Texture.Height / 2));
             this.increaseVelocity(0.08f);
         }
 
