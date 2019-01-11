@@ -32,8 +32,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public int m_Toggeler;
 
 
-
-
         public int Row
         {
             get { return m_Row; }
