@@ -23,20 +23,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public float WallsYShift
         {
-            set { m_GroupYShift = value; }
+            set { this.m_GroupYShift = value; }
         }
  
         public WallsGroup(Game i_Game, int i_numOfWalls) : base(i_Game)
         {
-            m_NumOfWalls = i_numOfWalls;
-            this.m_Walls = new List<Wall>(m_NumOfWalls);
+            this.m_NumOfWalls = i_numOfWalls;
+            this.m_Walls = new List<Wall>(this.m_NumOfWalls);
         }
 
         public override void Initialize()
         {
-            for (int i = 0; i < m_NumOfWalls; i++)
+            for (int i = 0; i < this.m_NumOfWalls; i++)
             {
-                m_Walls.Add(new Wall(Game));
+                this.m_Walls.Add(new Wall(Game));
             }
 
             base.Initialize();
@@ -44,20 +44,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initWallsPositions()
         {
-            m_GroupPosition = new Vector2(((Game.GraphicsDevice.Viewport.Width / 3) - (m_Walls[0].Texture.Width / 2)), m_GroupYShift);
+            this.m_GroupPosition = new Vector2((Game.GraphicsDevice.Viewport.Width / 3) - (this.m_Walls[0].Texture.Width / 2), this.m_GroupYShift);
 
-            for (int i = 0; i < m_NumOfWalls; i++)
+            for (int i = 0; i < this.m_NumOfWalls; i++)
             {
-                m_Walls[i].Position = m_GroupPosition + new Vector2(m_Walls[i].Texture.Width * 2 * i, 0);
+                this.m_Walls[i].Position = this.m_GroupPosition + new Vector2(this.m_Walls[i].Texture.Width * 2 * i, 0);
             }
         }
 
         public override void Update(GameTime i_GameTime)
         {
-            if (!m_Initialize)
+            if (!this.m_Initialize)
             {
-                initWallsPositions();
-                m_Initialize = true;
+                this.initWallsPositions();
+                this.m_Initialize = true;
             }
 
             base.Update(i_GameTime);
@@ -65,39 +65,39 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private bool hitRightOrLeftBorders()
         {
-            return hitRightBorder() || hitLeftBorder();
+            return this.hitRightBorder() || this.hitLeftBorder();
         }
 
         private bool hitRightBorder()
         {
             Wall rightWall = null;
 
-            for (int i = m_NumOfWalls - 1; i >= 0; i--)
+            for (int i = this.m_NumOfWalls - 1; i >= 0; i--)
             {
-                if (m_Walls[i].Enabled)
+                if (this.m_Walls[i].Enabled)
                 {
-                    rightWall = m_Walls[i];
+                    rightWall = this.m_Walls[i];
                     break;
                 }
             }
 
-            return (rightWall.Position.X >= Game.GraphicsDevice.Viewport.Width - (rightWall.Texture.Width / 2));
+            return rightWall.Position.X >= Game.GraphicsDevice.Viewport.Width - (rightWall.Texture.Width / 2);
         }
 
         private bool hitLeftBorder()
         {
             Wall leftWall = null;
 
-            for (int i = 0; i < m_NumOfWalls; i++)
+            for (int i = 0; i < this.m_NumOfWalls; i++)
             {
-                if (m_Walls[i].Enabled)
+                if (this.m_Walls[i].Enabled)
                 {
                     leftWall = this.m_Walls[i];
                     break;
                 }
             }
 
-            return leftWall.Position.X <= (leftWall.Texture.Width / 2);
+            return leftWall.Position.X <= leftWall.Texture.Width / 2;
         }
     }
 }

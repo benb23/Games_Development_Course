@@ -22,8 +22,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             EnemyBullet 
         }
 
-        private ISpaceInvadersEngine m_GameEngine;
         private const string k_AssteName = @"Sprites\Bullet";
+        private ISpaceInvadersEngine m_GameEngine;
         private Vector2 k_BulletVelocity = new Vector2(0, 155);
         private eBulletType m_Type;
 
@@ -33,17 +33,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (this.m_Type == eBulletType.EnemyBullet)
             {
-                Velocity = k_BulletVelocity;
+                this.Velocity = this.k_BulletVelocity;
                 this.m_TintColor = Color.Blue;
             }
             else
             {
-                Velocity = k_BulletVelocity * new Vector2(0, -1);
+                this.Velocity = this.k_BulletVelocity * new Vector2(0, -1);
                 this.m_TintColor = Color.Red;
-                k_BulletVelocity *= -1;
+                this.k_BulletVelocity *= -1;
             }
 
-            InitOrigins();
+            this.InitOrigins();
         }
 
         public eBulletType Type
@@ -64,24 +64,24 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private bool isBulletHitTheScreenBorder()
         {
-            bool isBulletHit = m_Position.Y + Texture.Height / 2 <= 0 || m_Position.Y - Texture.Height / 2 >= Game.GraphicsDevice.Viewport.Height;
+            bool isBulletHit = this.m_Position.Y + this.Texture.Height / 2 <= 0 || this.m_Position.Y - this.Texture.Height / 2 >= this.Game.GraphicsDevice.Viewport.Height;
 
             return isBulletHit;
         }
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if(m_GameEngine == null)
+            if(this.m_GameEngine == null)
             {
-                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+                this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
-            m_GameEngine.HandleHit(this, i_Collidable);
+            this.m_GameEngine.HandleHit(this, i_Collidable);
         }
 
         protected override void InitOrigins()
         {
-            m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height / 2);
+            this.m_PositionOrigin = new Vector2(this.Texture.Width / 2, this.Texture.Height / 2);
             base.InitOrigins();
         }
     }

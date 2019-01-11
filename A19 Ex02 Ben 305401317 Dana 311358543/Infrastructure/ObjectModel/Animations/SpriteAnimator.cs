@@ -1,7 +1,5 @@
-﻿ ///*** Guy Ronen © 2008-2011 ***//
+﻿ ///***Guy Ronen © 2008-2011 ***//
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace Infrastructure
@@ -22,41 +20,41 @@ namespace Infrastructure
 
         protected virtual void OnFinished()
         {
-            if (m_ResetAfterFinish)
+            if (this.m_ResetAfterFinish)
             {
-                Reset();
+                this.Reset();
                 this.m_IsFinished = true;
             }
 
-            if (Finished != null)
+            if (this.Finished != null)
             {
-                Finished(this, EventArgs.Empty);
+                this.Finished(this, EventArgs.Empty);
             }
 
-            Enabled = false;
+            this.Enabled = false;
         }
 
         protected SpriteAnimator(string i_Name, TimeSpan i_AnimationLength)
         {
-            m_Name = i_Name;
-            m_AnimationLength = i_AnimationLength;
+            this.m_Name = i_Name;
+            this.m_AnimationLength = i_AnimationLength;
         }
 
         protected internal Sprite BoundSprite
         {
-            get { return m_BoundSprite; }
-            set { m_BoundSprite = value; }
+            get { return this.m_BoundSprite; }
+            set { this.m_BoundSprite = value; }
         }
 
         public string Name
         {
-            get { return m_Name; }
+            get { return this.m_Name; }
         }
 
         public bool Enabled
         {
-            get { return m_Enabled; }
-            set { m_Enabled = value; }
+            get { return this.m_Enabled; }
+            set { this.m_Enabled = value; }
         }
 
         public bool IsFinite
@@ -66,49 +64,49 @@ namespace Infrastructure
 
         public bool ResetAfterFinish
         {
-            get { return m_ResetAfterFinish; }
-            set { m_ResetAfterFinish = value; }
+            get { return this.m_ResetAfterFinish; }
+            set { this.m_ResetAfterFinish = value; }
         }
 
         public virtual void Initialize()
         {
-            if (!m_Initialized)
+            if (!this.m_Initialized)
             {
-                m_Initialized = true;
+                this.m_Initialized = true;
 
-                CloneSpriteInfo();
+                this.CloneSpriteInfo();
 
-                Reset();
+                this.Reset();
             }
         }
 
         protected virtual void CloneSpriteInfo()
         {
-            if (m_OriginalSpriteInfo == null)
+            if (this.m_OriginalSpriteInfo == null)
             {
-                m_OriginalSpriteInfo = m_BoundSprite.ShallowClone();
+                this.m_OriginalSpriteInfo = this.m_BoundSprite.ShallowClone();
             }
         }
 
         public void Reset()
         {
-            Reset(m_AnimationLength);
+            this.Reset(this.m_AnimationLength);
         }
 
         public void Reset(TimeSpan i_AnimationLength)
         {
-            if (!m_Initialized)
+            if (!this.m_Initialized)
             {
-                Initialize();
+                this.Initialize();
             }
             else
             {
-                m_AnimationLength = i_AnimationLength;
-                m_TimeLeft = m_AnimationLength;
+                this.m_AnimationLength = i_AnimationLength;
+                this.m_TimeLeft = this.m_AnimationLength;
                 this.IsFinished = false;
             }
 
-            RevertToOriginal();
+            this.RevertToOriginal();
         }
 
         protected abstract void RevertToOriginal();
@@ -120,23 +118,23 @@ namespace Infrastructure
 
         public void Resume()
         {
-            m_Enabled = true;
+            this.m_Enabled = true;
         }
 
         public virtual void Restart()
         {
-            Restart(m_AnimationLength);
+            this.Restart(this.m_AnimationLength);
         }
 
         public virtual void Restart(TimeSpan i_AnimationLength)
         {
-            Reset(i_AnimationLength);
-            Resume();
+            this.Reset(i_AnimationLength);
+            this.Resume();
         }
 
         protected TimeSpan AnimationLength
         {
-            get { return m_AnimationLength; }
+            get { return this.m_AnimationLength; }
         }
 
         public bool IsFinished
@@ -144,12 +142,12 @@ namespace Infrastructure
             get { return this.m_IsFinished; }
             protected set
             {
-                if (value != m_IsFinished)
+                if (value != this.m_IsFinished)
                 {
-                    m_IsFinished = value;
-                    if (m_IsFinished == true)
+                    this.m_IsFinished = value;
+                    if (this.m_IsFinished == true)
                     {
-                        OnFinished();
+                        this.OnFinished();
                     }
                 }
             }
@@ -157,9 +155,9 @@ namespace Infrastructure
 
         public void Update(GameTime i_GameTime)
         {
-            if (!m_Initialized)
+            if (!this.m_Initialized)
             {
-                Initialize();
+                this.Initialize();
             }
 
             if (this.Enabled && !this.IsFinished)
@@ -167,9 +165,9 @@ namespace Infrastructure
                 if (this.IsFinite)
                 {
                     // check if we should stop animating:
-                    m_TimeLeft -= i_GameTime.ElapsedGameTime;
+                    this.m_TimeLeft -= i_GameTime.ElapsedGameTime;
 
-                    if (m_TimeLeft.TotalSeconds < 0)
+                    if (this.m_TimeLeft.TotalSeconds < 0)
                     {
                         this.IsFinished = true;
                     }
@@ -178,7 +176,7 @@ namespace Infrastructure
                 if (!this.IsFinished)
                 {
                     // we are still required to animate:
-                    DoFrame(i_GameTime);
+                    this.DoFrame(i_GameTime);
                 }
             }
         }

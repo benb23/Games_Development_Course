@@ -15,11 +15,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Wall : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
-        private ISpaceInvadersEngine m_GameEngine;
-        private Vector2 m_StartingPosition;
         private const int k_NumOfWalls = 4;
         private const string k_AssteName = @"Sprites\Barrier_44x32";
-
+        private ISpaceInvadersEngine m_GameEngine;
+        private Vector2 m_StartingPosition;
+        
         public Wall(Game i_Game)
             : base(k_AssteName, i_Game)
         {
@@ -33,15 +33,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-            if(!m_Initialize)
+            if(!this.m_Initialize)
             {
-                m_StartingPosition = Position;
-                m_Initialize = true;
+                this.m_StartingPosition = this.Position;
+                this.m_Initialize = true;
             }
 
-            if((Position.X - m_StartingPosition.X >= (Texture.Width / 2)) || (Position.X + (Texture.Width / 2) <= m_StartingPosition.X))
+            if((Position.X - this.m_StartingPosition.X >= (Texture.Width / 2)) || (Position.X + (Texture.Width / 2) <= this.m_StartingPosition.X))
             {
-                Velocity *= -1;
+                this.Velocity *= -1;
             }
 
             base.Update(gameTime);
@@ -49,25 +49,25 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void InitOrigins()
         {
-            m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height);
+            this.m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height);
             base.InitOrigins();
         }
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if (m_GameEngine == null)
+            if (this.m_GameEngine == null)
             {
-                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+                this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
-            if(CurrTexture == null)
+            if(this.CurrTexture == null)
             {
-                CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
+                this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
                 Color[] texturePixels = new Color[Texture.Width * Texture.Height];
-                CurrTexture.SetData(texturePixels);
+                this.CurrTexture.SetData(texturePixels);
             }
 
-            m_GameEngine.HandleHit(this, i_Collidable);
+            this.m_GameEngine.HandleHit(this, i_Collidable);
         }
     }
 }

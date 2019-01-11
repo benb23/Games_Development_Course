@@ -142,11 +142,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             string winner;
 
-            if(m_Winner == null)
+            if(this.m_Winner == null)
             {
                 winner = "Tie";
             }
-            else if(m_Winner == PlayerIndex.One)
+            else if(this.m_Winner == PlayerIndex.One)
             {
                 winner = "player 1";
             }
@@ -159,7 +159,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 @"Game Over 
 player 1 score is : {0}
 Player 2 score is : {1}
-The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[(int)PlayerIndex.Two].Score.ToString(), winner)); 
+The winner is : {2} !", 
+this.Players[(int)PlayerIndex.One].Score.ToString(), 
+this.Players[(int)PlayerIndex.Two].Score.ToString(), 
+winner)); 
         }
 
         public void HandleHit(Bullet bullet, ICollidable i_Collidable)
@@ -168,12 +171,12 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
             {
                 if (bullet.Type == Bullet.eBulletType.EnemyBullet && i_Collidable is Bullet)
                 {
-                    if (m_Random == null)
+                    if (this.m_Random == null)
                     {
-                        m_Random = Game.Services.GetService(typeof(Random)) as Random;
+                        this.m_Random = Game.Services.GetService(typeof(Random)) as Random;
                     }
 
-                    int rndDisposeOfEnemyBullet = m_Random.Next(0, 45);
+                    int rndDisposeOfEnemyBullet = this.m_Random.Next(0, 45);
                     if (rndDisposeOfEnemyBullet < 10)
                     {
                         bullet.Enabled = false;
@@ -190,15 +193,15 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
 
         public void HandleHit(SpaceShip i_Target, ICollidable i_Collidable)
         {
-            Player player = m_Players[(int)i_Target.Owner];
+            Player player = this.m_Players[(int)i_Target.Owner];
 
             if (i_Collidable is Bullet)
             {
-                updatePlayerScoreAndSouls(i_Target.Owner);
+                this.updatePlayerScoreAndSouls(i_Target.Owner);
                 if (player.Souls.Count == 0)
                 {
-                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(m_Players[(int)i_Target.Owner].destroyed_Finished);
-                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(player_Died);
+                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.m_Players[(int)i_Target.Owner].destroyed_Finished);
+                    player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.player_Died);
                     player.SpaceShip.Animations["Destroy"].Restart();
                 }
                 else
@@ -208,7 +211,7 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
             }
             else if (i_Collidable is Enemy)
             {
-                ShowGameOverMessage();
+                this.ShowGameOverMessage();
                 this.m_Game.Exit();
             }
         }
@@ -221,11 +224,11 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
 
                 if ((i_Collidable as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
                 {
-                    updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.One], i_Enemy);
+                    this.updatePlayerScoreAfterHitEnemy(this.m_Players[(int)PlayerIndex.One], i_Enemy);
                 }
                 else if ((i_Collidable as Bullet).Type == Bullet.eBulletType.PlayerTwoBullet)
                 {
-                    updatePlayerScoreAfterHitEnemy(m_Players[(int)PlayerIndex.Two], i_Enemy);
+                    this.updatePlayerScoreAfterHitEnemy(this.m_Players[(int)PlayerIndex.Two], i_Enemy);
                 }
             }
         }
@@ -234,11 +237,11 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
         {
             if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
             {
-                m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.MotherShip;
+                this.m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.MotherShip;
             }
             else if (i_Bullet.Type == Bullet.eBulletType.PlayerTwoBullet)
             {
-                m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
+                this.m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
             }
         }
 
@@ -246,11 +249,11 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
         {
             if (i_Collidable is Bullet && i_Wall.LastCollisionPixelsIndex.Count > 0)
             {
-                deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Collidable as CollidableSprite);
+                this.deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Collidable as CollidableSprite);
             }
             else if(i_Collidable is Enemy)
             {
-                HandleWallAndEnemyHit(i_Wall, i_Collidable as Enemy);
+                this.HandleWallAndEnemyHit(i_Wall, i_Collidable as Enemy);
             }
         }
 
@@ -266,10 +269,9 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
         
         private void deletePixelsInVerticalDirection(CollidableSprite i_Target, CollidableSprite i_Sender)
         {
-            int targetStartColomn = getHittenSpritesColomnInPixelsArray(i_Target, i_Sender);
-            int targetRow = getHittenSpritesRowInPixelsArray(i_Target, i_Sender);
-            int senderMinY;
-            int senderMaxY;
+            int targetStartColomn = this.getHittenSpritesColomnInPixelsArray(i_Target, i_Sender);
+            int targetRow = this.getHittenSpritesRowInPixelsArray(i_Target, i_Sender);
+            int senderMinY, senderMaxY;
 
             if (i_Sender.Velocity.Y < 0) 
             {
@@ -284,7 +286,7 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
 
             int targetColomn = targetStartColomn;
 
-            //delete pixels
+            /// delete pixels
             for (int senderRow = senderMinY; senderRow < senderMaxY; senderRow++)
             {
                 targetColomn = targetStartColomn;
@@ -311,7 +313,7 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
             }
 
             i_Target.CurrTexture.SetData(i_Target.Pixels);
-            clearCollisionData(i_Target, i_Sender);
+            this.clearCollisionData(i_Target, i_Sender);
         }
 
         private void clearCollisionData(CollidableSprite i_Target, CollidableSprite i_Sender)
@@ -324,7 +326,7 @@ The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[
 
         private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
-            return MathHelper.Clamp(((int)i_HittenSprite.LastCollisionPixelsIndex[0].X + (int)((i_Sender.Texture.Width / 2) - i_Sender.LastCollisionPixelsIndex[0].X) - (i_Sender.Texture.Width / 2)), 0, i_HittenSprite.Texture.Width);
+            return MathHelper.Clamp((int)i_HittenSprite.LastCollisionPixelsIndex[0].X + (int)((i_Sender.Texture.Width / 2) - i_Sender.LastCollisionPixelsIndex[0].X) - (i_Sender.Texture.Width / 2), 0, i_HittenSprite.Texture.Width);
         }
 
         private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)

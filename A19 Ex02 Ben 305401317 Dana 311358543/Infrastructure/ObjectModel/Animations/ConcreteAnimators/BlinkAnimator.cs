@@ -11,8 +11,8 @@ namespace Infrastructure
 
         public TimeSpan BlinkLength
         {
-            get { return m_BlinkLength; }
-            set { m_BlinkLength = value; }
+            get { return this.m_BlinkLength; }
+            set { this.m_BlinkLength = value; }
         }
 
         // CTORs
@@ -32,18 +32,18 @@ namespace Infrastructure
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            m_TimeLeftForNextBlink -= i_GameTime.ElapsedGameTime;
-            if (m_TimeLeftForNextBlink.TotalSeconds < 0)
+            this.m_TimeLeftForNextBlink -= i_GameTime.ElapsedGameTime;
+            if (this.m_TimeLeftForNextBlink.TotalSeconds < 0)
             {
                 // we have elapsed, so blink
                 this.BoundSprite.Visible = !this.BoundSprite.Visible;
-                m_TimeLeftForNextBlink = m_BlinkLength;
+                this.m_TimeLeftForNextBlink = this.m_BlinkLength;
             }
         }
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Visible = m_OriginalSpriteInfo.Visible;
+            this.BoundSprite.Visible = this.m_OriginalSpriteInfo.Visible;
         }
     }
 }
