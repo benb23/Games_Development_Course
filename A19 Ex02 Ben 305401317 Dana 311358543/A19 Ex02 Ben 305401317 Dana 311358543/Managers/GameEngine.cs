@@ -253,9 +253,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             i_Target.CurrTexture.SetData(i_Target.Pixels);
-
+            clearCollisionData(i_Target, i_Sender);
         }
 
+        private void clearCollisionData(CollidableSprite i_Target, CollidableSprite i_Sender)
+        {
+            i_Target.LastCollisionPixelsIndex.Clear();
+            i_Target.LastCollisionPixelsPositions.Clear();
+            i_Sender.LastCollisionPixelsIndex.Clear();
+            i_Sender.LastCollisionPixelsPositions.Clear();
+        }
         private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
             return MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].X + (int)(i_Sender.Texture.Width / 2 - i_Sender.LastCollisionPixelsIndex[0].X) - i_Sender.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);
