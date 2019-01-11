@@ -17,7 +17,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class ScoreBoardHeader : Sprite
     {
         private SpriteFont m_Font;
-        private IGameEngine m_GameEngine;
+        private ISpaceInvadersEngine m_GameEngine;
         private Game m_Game;
 
 
@@ -29,7 +29,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
            // m_SpriteBatch = m_Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
-            m_GameEngine = m_Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+            m_GameEngine = m_Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             
             base.Initialize();
         }

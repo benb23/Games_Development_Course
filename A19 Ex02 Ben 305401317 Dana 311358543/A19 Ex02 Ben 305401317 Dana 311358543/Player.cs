@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class Player : GameComponent, IScoreable
+    public class Player : RegisteredComponent, IScoreable
     {
         Game m_Game;
 
@@ -34,6 +34,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private List<Soul> m_Souls = new List<Soul>(3);
 
+        private bool m_Initialized = false;
         public List<Soul> Souls
         {
             get { return m_Souls; }
@@ -62,6 +63,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         //TODO: SHOOT FROM PLAYER
         public override void Update(GameTime i_GameTime)
         {
+            if(!m_Initialized)
+            {
+                m_SpaceShip.Position = new Vector2(((int)m_PlayerType * m_SpaceShip.Texture.Width / 2) + m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
+                m_Initialized = true;
+            }
             if (m_IsAllowedToUseMouse)
             {
                 moveSpaceShipUsingMouse(i_GameTime);
@@ -136,7 +142,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void destroyed_Finished(object sender, EventArgs e)
         {
-            //Enabled = false;
             SpaceShip.Enabled = false;
             SpaceShip.Visible = false;
             
@@ -154,7 +159,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
             }
 
-            m_SpaceShip.Position = new Vector2(((int)m_PlayerType*m_SpaceShip.Texture.Width/2)+ m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
             base.Initialize();
         }
 

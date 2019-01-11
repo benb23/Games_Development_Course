@@ -13,7 +13,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class WallsGroup : GameComponent
+    public class WallsGroup : RegisteredComponent
     {
         private bool m_Initialize;
         private int m_NumOfWalls;

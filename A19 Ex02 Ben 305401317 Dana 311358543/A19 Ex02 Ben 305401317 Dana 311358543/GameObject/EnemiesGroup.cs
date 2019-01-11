@@ -10,9 +10,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Infrastructure;
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    class EnemiesGroup : GameComponent
+    class EnemiesGroup : RegisteredComponent
     {
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
@@ -29,7 +30,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
 
-        private IGameEngine m_GameEngine;
+        private ISpaceInvadersEngine m_GameEngine;
 
 
         public EnemiesGroup(Game i_Game) : base(i_Game)
@@ -77,7 +78,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 if (m_GameEngine == null)
                 {
-                    m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+                    m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
                 }
                 m_GameEngine.ShowGameOverMessage();
                 Game.Exit();

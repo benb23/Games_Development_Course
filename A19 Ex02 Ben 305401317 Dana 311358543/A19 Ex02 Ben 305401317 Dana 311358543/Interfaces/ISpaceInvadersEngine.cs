@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public interface IGameEngine
+    public interface ISpaceInvadersEngine
     {
         List<Player> Players { get; set;}
 

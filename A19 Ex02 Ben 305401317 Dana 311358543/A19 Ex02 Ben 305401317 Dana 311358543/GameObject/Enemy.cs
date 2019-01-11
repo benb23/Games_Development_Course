@@ -21,9 +21,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Gun m_Gun;
         private const int k_MaxRandomToShoot = 10; //TODO: LOCATION?
         public const int k_MaxRandomNumber = 50000; //TODO: LOCATION?
-        private IGameEngine m_GameEngine;
+        private ISpaceInvadersEngine m_GameEngine;
         private int k_NumOfTOtalFrames = 6;
         public int k_NumOfFrames = 2;
+        private Random m_Random;
         public int m_StartSqureIndex;
         private int m_Row;
         private int m_Colum;
@@ -45,6 +46,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public Enemy(Game i_Game, Color i_Tint, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec) 
             : base(k_AssteName, i_Game)
         {
+            m_Random = Game.Services.GetService(typeof(Random)) as Random; 
             m_TimeUntilNextStepInSec = TimeSpan.FromSeconds(i_TimeUntilNextStepInSec);
             m_Gap = i_Gap;
             m_Row = i_Row;
@@ -105,11 +107,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
 
-            int rnd = SpaceInvaders.k_Random.Next(0, k_MaxRandomNumber);    
+            int rnd = m_Random.Next(0, k_MaxRandomNumber);    
 
             if (rnd <= k_MaxRandomToShoot && m_Gun.PermitionToShoot())
             {
-                //shoot();
+                shoot();
             }
 
             base.Update(i_GameTime);
@@ -127,7 +129,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (m_GameEngine == null)
             {
-                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
             m_GameEngine.HandleHit(this, i_Collidable);

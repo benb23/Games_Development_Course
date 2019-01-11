@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class GameEngine : GameService, IGameEngine
+    public class SpaceInvadersEngine : GameService, ISpaceInvadersEngine
     {
         private enum eScoreValue
         {
@@ -31,13 +31,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             Null // TODO : ??
         }
 
+        private PlayerIndex? m_Winner;
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
         private ScoreBoardHeader m_ScoreBoard;
 
         private double m_sizeOfBulletHitEffect = 0.7; //todo: name???
-        public GameEngine(Game i_Game) : base(i_Game)
+        public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
             m_ScoreBoard = new ScoreBoardHeader(i_Game);
@@ -66,7 +67,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             return IsPlayerAskToExit;
         }
 
+        public override void Initialize()
+        {
+            //m_WallsGroup.WallsYShift = m_Graphics.GraphicsDevice.Viewport.Height - 2 * m_Players[0].SpaceShip.Texture.Height;
 
+            base.Initialize();
+        }
 
         public List<Player> Players
         {
@@ -88,11 +94,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (gameIsOver)
             {
+                m_Winner = getWinner();
                 ShowGameOverMessage();
                 this.m_Game.Exit();
             }
         }
 
+        private PlayerIndex? getWinner()
+        {
+            PlayerIndex? winner;
+
+            if(Players[(int)PlayerIndex.One].Score > Players[(int)PlayerIndex.Two].Score)
+            {
+                winner = PlayerIndex.One;
+            }
+            else if(Players[(int)PlayerIndex.One].Score == Players[(int)PlayerIndex.Two].Score)
+            {
+                winner = null;
+            }
+            else
+            {
+                winner = PlayerIndex.Two;
+            }
+
+            return winner;
+        }
         private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
         {
             Player player = m_Players[(int)i_PlayerIndex];
@@ -120,14 +146,32 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void RegisterAsService()
         {
-            Game.Services.AddService(typeof(IGameEngine), this);
+            Game.Services.AddService(typeof(ISpaceInvadersEngine), this);
         }
 
         public void ShowGameOverMessage()
         {
-            /*
+            string winner;
+
+            if(m_Winner == null)
+            {
+                winner = "Tie";
+            }
+            else if(m_Winner == PlayerIndex.One)
+            {
+                winner = "player 1";
+            }
+            else
+            {
+                winner = "player 2";
+            }
+
+
             System.Windows.Forms.MessageBox.Show(string.Format(
-@"Game Over"); //TODO: PRINT WINNER */
+@"Game Over 
+player 1 score is : {0}
+Player 2 score is : {1}
+The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(int)PlayerIndex.Two].Score.ToString(),winner)); 
         }
 
         public void HandleHit(Bullet bullet, ICollidable i_Collidable)
@@ -196,7 +240,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void HandleHit(Wall i_Wall, ICollidable i_Collidable)
         {
-            if (i_Collidable is Bullet)
+            if (i_Collidable is Bullet && i_Wall.LastCollisionPixelsIndex.Count>0)
             {
                 deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Collidable as CollidableSprite);
             }
@@ -271,6 +315,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             i_Sender.LastCollisionPixelsIndex.Clear();
             i_Sender.LastCollisionPixelsPositions.Clear();
         }
+
         private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
             return MathHelper.Clamp((int)i_HittenSprite.LastCollisionPixelsIndex[0].X + (int)(i_Sender.Texture.Width/2 - i_Sender.LastCollisionPixelsIndex[0].X) - i_Sender.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);

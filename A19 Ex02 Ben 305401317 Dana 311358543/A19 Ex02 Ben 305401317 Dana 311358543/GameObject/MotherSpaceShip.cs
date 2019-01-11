@@ -19,10 +19,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         private const string k_AssteName = @"Sprites\MotherShip_32x120";
         private Vector2 k_MotherShipVelocity =new Vector2(40,0); //??
-
+        private Random m_Random;
         private const int k_MaxRandomNumToDrawMotherShip = 70;
         public const int k_MaxRandomNumber = 50000;
-        private IGameEngine m_GameEngine;
+        private ISpaceInvadersEngine m_GameEngine;
         private bool m_OnMove = false;
 
         public MotherSpaceShip(Game i_Game): base(k_AssteName, i_Game)
@@ -46,10 +46,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             // TODO: change random from static to private with getter
-
+            if(m_Random==null)
+            {
+                m_Random = Game.Services.GetService(typeof(Random)) as Random;
+            }
             if (!m_OnMove)
             {
-                if (SpaceInvaders.k_Random.Next(0, k_MaxRandomNumber) <= k_MaxRandomNumToDrawMotherShip)
+                if (m_Random.Next(0, k_MaxRandomNumber) <= k_MaxRandomNumToDrawMotherShip)
                 {
                     m_OnMove = true;
                 }
@@ -76,7 +79,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 if (m_GameEngine == null)
                 {
-                    m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+                    m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
                 }
 
                 Animations["DestroyMother"].Restart();
@@ -110,12 +113,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         
         public override void Draw(GameTime gameTime)
         {
-            //m_SpriteBatch.End();
+            m_SpriteBatch.End();
             m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-            //base.Draw(gameTime);
             DrawWithAllParameters();
             m_SpriteBatch.End();
-            //m_SpriteBatch.Begin();
+            m_SpriteBatch.Begin();
         }
     }
 }

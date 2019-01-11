@@ -15,7 +15,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Wall : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
-        private IGameEngine m_GameEngine;
+        private ISpaceInvadersEngine m_GameEngine;
         private Vector2 m_StartingPosition;
         private const int k_NumOfWalls = 4;
         private const string k_AssteName = @"Sprites\Barrier_44x32";
@@ -58,7 +58,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if (m_GameEngine == null)
             {
-                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
             if(CurrTexture ==null)

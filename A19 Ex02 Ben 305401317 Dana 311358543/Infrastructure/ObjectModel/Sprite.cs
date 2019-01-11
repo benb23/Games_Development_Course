@@ -217,12 +217,6 @@ namespace Infrastructure
             : base(i_AssetName, i_Game, int.MaxValue)
         { }
 
-        /// <summary>
-        /// Default initialization of bounds
-        /// </summary>
-        /// <remarks>
-        /// Derived classes are welcome to override this to implement their specific boudns initialization
-        /// </remarks>
         protected override void InitBounds()
         {
             if (m_Texture != null)
@@ -251,7 +245,7 @@ namespace Infrastructure
         protected SpriteSortMode m_SpriteSortMode;
         protected BlendState m_BlendState;
 
-        protected bool m_UseSharedBatch = true; //todo: was private
+        private bool m_UseSharedBatch = true; 
 
         protected SpriteBatch m_SpriteBatch;
 
@@ -284,13 +278,6 @@ namespace Infrastructure
             base.LoadContent();
         }
 
-        /// <summary>
-        /// Basic movement logic (position += velocity * totalSeconds)
-        /// </summary>
-        /// <param name="gameTime"></param>
-        /// <remarks>
-        /// Derived classes are welcome to extend this logic.
-        /// </remarks>
         public override void Update(GameTime gameTime)
         {
             float totalSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -301,20 +288,6 @@ namespace Infrastructure
             base.Update(gameTime);
             this.Animations.Update(gameTime);
         }
-
-        /// <summary>
-        /// Basic texture draw behavior, using a shared/own sprite batch
-        /// </summary>
-        /// <param name="gameTime"></param>
-        /// 
-        protected void useYourOwnSpriteBatch(SpriteSortMode i_SpriteSortMode, BlendState i_BlendState)
-        {
-            m_SpriteBatch = new SpriteBatch(this.GraphicsDevice);
-            m_UseSharedBatch = false;
-            m_BlendState = i_BlendState;
-            m_SpriteSortMode = i_SpriteSortMode;
-        }
-
 
         protected void DrawWithAllParameters()
         {

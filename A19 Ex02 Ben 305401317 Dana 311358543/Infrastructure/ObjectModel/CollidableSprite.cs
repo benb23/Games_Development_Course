@@ -86,10 +86,6 @@ namespace Infrastructure
 
         public override void Draw(GameTime gameTime)
         {
-
-            m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-
-
             if (m_CurrTexture == null)
             {
                 this.DrawWithAllParameters();
@@ -101,8 +97,6 @@ namespace Infrastructure
                    this.Rotation, this.RotationOrigin, this.Scales,
                    SpriteEffects.None, this.LayerDepth);
             }
-
-            m_SpriteBatch.End();
         }
         private bool checkRectangleCollision(ICollidable i_Source)
         {

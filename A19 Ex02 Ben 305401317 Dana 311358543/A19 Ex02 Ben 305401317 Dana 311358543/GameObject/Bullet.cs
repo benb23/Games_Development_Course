@@ -16,7 +16,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Bullet : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
-        private IGameEngine m_GameEngine;
+        private ISpaceInvadersEngine m_GameEngine;
         public enum eBulletType 
         {
             PlayerOneBullet,
@@ -74,7 +74,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(m_GameEngine==null)
             {
-                m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
             m_GameEngine.HandleHit(this, i_Collidable);
@@ -86,11 +86,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.InitOrigins();
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            m_SpriteBatch.Begin();
-            DrawWithAllParameters();
-            m_SpriteBatch.End();
-        }
     }
 }

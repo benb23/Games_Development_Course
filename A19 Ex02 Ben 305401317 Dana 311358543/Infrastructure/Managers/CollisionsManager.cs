@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 
 namespace Infrastructure
 {
-    // TODO 10: Implement the collisions manager service:
     public class CollisionsManager : GameService, ICollisionsManager
     {
         protected readonly List<ICollidable> m_Collidables = new List<ICollidable>();

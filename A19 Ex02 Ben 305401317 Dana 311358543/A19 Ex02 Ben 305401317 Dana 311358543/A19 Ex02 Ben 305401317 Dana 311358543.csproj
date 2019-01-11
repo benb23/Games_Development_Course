@@ -47,8 +47,8 @@
     <Compile Include="GameObject\ScoreBoardHeader.cs" />
     <Compile Include="GameObject\Wall.cs" />
     <Compile Include="GameObject\WallsGroup.cs" />
-    <Compile Include="Interfaces\IGameEngine.cs" />
-    <Compile Include="Managers\GameEngine.cs" />
+    <Compile Include="Interfaces\ISpaceInvadersEngine.cs" />
+    <Compile Include="Managers\SpaceInvadersEngine.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="SpaceInvaders.cs" />
     <Compile Include="Program.cs" />
