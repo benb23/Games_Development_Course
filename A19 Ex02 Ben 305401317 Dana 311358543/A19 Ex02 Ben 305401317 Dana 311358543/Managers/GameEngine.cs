@@ -198,14 +198,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if (i_Collidable is Bullet)
             {
-                if (checkBulletCollisionDirection(i_Collidable as Bullet) == eCollisionDirection.horizontal)
-                {
-                    handleWallAndBullethorizontalCollision(i_wall, i_Collidable as Bullet);
-                }
-                else
-                {
-                    handleWallAndBulletVerticalCollision(i_wall, i_Collidable as Bullet);
-                }
+                handleWallAndBulletVerticalCollision(i_wall, i_Collidable as Bullet);
             }
             else if(i_Collidable is Enemy)
             {
@@ -223,62 +216,68 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             i_wall.CurrTexture.SetData(i_wall.Pixels);
         }
 
-        private void handleWallAndBulletVerticalCollision(Wall i_wall, Bullet i_Bullet)
+        private void handleWallAndBulletVerticalCollision(Wall i_Wall, Bullet i_Bullet)
         {
-            int wallStartColomn = getHittenSpritesColomnInPixelsArray(i_wall, i_Bullet);
-            int wallRow = getHittenSpritesRowInPixelsArray(i_wall, i_Bullet);
-            int bulletMinY;
-            int bulletMaxY;
+            deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Bullet as CollidableSprite);
+        }
+        
+        private void deletePixelsInVerticalDirection(CollidableSprite i_Target, CollidableSprite i_Sender)
+        {
+            int targetStartColomn = getHittenSpritesColomnInPixelsArray(i_Target, i_Sender);
+            int targetRow = getHittenSpritesRowInPixelsArray(i_Target, i_Sender);
+            int senderMinY;
+            int senderMaxY;
 
-            if (i_Bullet.Velocity.Y < 0) //bullet direction 
+            if (i_Sender.Velocity.Y < 0) 
             {
-                bulletMinY = 0;
-                bulletMaxY =(int)( m_sizeOfBulletHitEffect * i_Bullet.Texture.Height) + 1 ;
+                senderMinY = 0;
+                senderMaxY = (int)(m_sizeOfBulletHitEffect * i_Sender.Texture.Height) + 1;
             }
             else
             {
-                bulletMinY = (int)((1 - m_sizeOfBulletHitEffect) * i_Bullet.Texture.Height);
-                bulletMaxY = i_Bullet.Texture.Height;
+                senderMinY = (int)((1 - m_sizeOfBulletHitEffect) * i_Sender.Texture.Height);
+                senderMaxY = i_Sender.Texture.Height;
             }
 
-            int wallColomn = wallStartColomn;
+            int targetColomn = targetStartColomn;
 
             //delete pixels
-            for (int bulletRow = bulletMinY; bulletRow < bulletMaxY; bulletRow++)
+            for (int senderRow = senderMinY; senderRow < senderMaxY; senderRow++)
+            {
+                targetColomn = targetStartColomn;
+                for (int senderColomn = 0; senderColomn < i_Sender.Texture.Width; senderColomn++)
                 {
-                    wallColomn = wallStartColomn;
-                    for (int bulletColomn = 0; bulletColomn < i_Bullet.Texture.Width; bulletColomn++)
+                    if (i_Sender.Pixels[senderColomn + senderRow * i_Sender.Texture.Width].A != 0 &&
+                       (targetColomn + targetRow * i_Target.Texture.Width) < i_Target.Pixels.Length)
                     {
-                        if (i_Bullet.Pixels[bulletColomn + bulletRow * i_Bullet.Texture.Width].A != 0 &&
-                           (wallColomn + wallRow * i_wall.Texture.Width) < i_wall.Pixels.Length)
-                        {
-                            i_wall.Pixels[wallColomn + wallRow * i_wall.Texture.Width] = new Color(0, 0, 0, 0);
-                        }
-                        wallColomn++;
+                        i_Target.Pixels[targetColomn + targetRow * i_Target.Texture.Width] = new Color(0, 0, 0, 0);
                     }
-                    wallRow++;
+                    targetColomn++;
                 }
+                targetRow++;
+            }
 
-            i_wall.CurrTexture.SetData(i_wall.Pixels);
+            i_Target.CurrTexture.SetData(i_Target.Pixels);
+
         }
-        
-        private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, Bullet i_Bullet)
+
+        private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
-            return MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].X + (int)(i_Bullet.Texture.Width / 2 - i_Bullet.LastCollisionPixelsIndex[0].X) - i_Bullet.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);
+            return MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].X + (int)(i_Sender.Texture.Width / 2 - i_Sender.LastCollisionPixelsIndex[0].X) - i_Sender.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);
         }
 
-        private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, Bullet i_Bullet)
+        private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
             int wallColomn = MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_HittenSprite.Texture.Height);
 
-            if (i_Bullet.Type != Bullet.eBulletType.EnemyBullet)
+            if (i_Sender.Velocity.Y < 0)
             {
-                wallColomn -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_Bullet.Texture.Height), 0, wallColomn);
+                wallColomn -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_Sender.Texture.Height), 0, wallColomn);
             }
 
             return wallColomn;
         }
-
+        /*
         private void handleWallAndBullethorizontalCollision(Wall i_wall, Bullet i_bullet)
         {
             float wallX = (float)i_bullet.Position.X - (float)(0.5 * i_bullet.Texture.Width) -7/10 * i_bullet.Texture.Width;
@@ -298,7 +297,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
         }
-
+        
         private eCollisionDirection checkBulletCollisionDirection(Bullet i_bullet)
         {
             eCollisionDirection collisionDirection = eCollisionDirection.Null;
@@ -317,5 +316,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             return collisionDirection;
         }
+        */
     }
 }

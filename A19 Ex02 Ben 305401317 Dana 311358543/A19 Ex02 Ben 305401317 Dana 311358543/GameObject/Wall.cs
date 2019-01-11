@@ -25,20 +25,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public Wall(Game i_Game)
             : base(k_AssteName, i_Game)
         {
-            this.m_Velocity = new Vector2(0, 0);// new Vector2(45, 0);
+            this.m_Velocity = new Vector2(45, 0);
         }
 
         protected override void LoadContent()
         {
             base.LoadContent();
         }
-        private Texture2D m_CurrTexture;
 
-        public Texture2D CurrTexture
-        {
-            get { return m_CurrTexture; }
-            set { m_CurrTexture = value; }
-        }
         public override void Update(GameTime gameTime)
         {
             if(!m_Initialize)
@@ -67,34 +61,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_GameEngine = Game.Services.GetService(typeof(IGameEngine)) as IGameEngine;
             }
 
-            if(m_CurrTexture ==null)
+            if(CurrTexture ==null)
             {
-                m_CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
+                CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
                 Color[] texturePixels = new Color[Texture.Width*Texture.Height];
-                m_CurrTexture.SetData(texturePixels);
+                CurrTexture.SetData(texturePixels);
             }
             m_GameEngine.HandleHit(this, i_Collidable);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-                   
-            m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-            
-
-            if (m_CurrTexture == null)
-            {
-                this.DrawWithAllParameters();
-            }
-            else
-            {
-                m_SpriteBatch.Draw(m_CurrTexture, this.PositionForDraw,
-                    this.SourceRectangle, this.TintColor,
-                   this.Rotation, this.RotationOrigin, this.Scales,
-                   SpriteEffects.None, this.LayerDepth);
-            }
-
-            m_SpriteBatch.End();
         }
     }
 }
