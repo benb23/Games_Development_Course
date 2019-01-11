@@ -14,6 +14,13 @@ namespace Infrastructure
 {
     public class CollidableSprite : Sprite
     {
+        private Texture2D m_CurrTexture;
+        
+        public Texture2D CurrTexture
+        {
+            get { return m_CurrTexture; }
+            set { m_CurrTexture = value; }
+        }
         private Color[] m_Pixels;
 
         public Color[] Pixels
@@ -77,6 +84,26 @@ namespace Infrastructure
             return pixelsCollided;
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+
+            m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+
+
+            if (m_CurrTexture == null)
+            {
+                this.DrawWithAllParameters();
+            }
+            else
+            {
+                m_SpriteBatch.Draw(m_CurrTexture, this.PositionForDraw,
+                    this.SourceRectangle, this.TintColor,
+                   this.Rotation, this.RotationOrigin, this.Scales,
+                   SpriteEffects.None, this.LayerDepth);
+            }
+
+            m_SpriteBatch.End();
+        }
         private bool checkRectangleCollision(ICollidable i_Source)
         {
             {

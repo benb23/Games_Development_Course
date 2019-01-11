@@ -194,22 +194,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void HandleHit(Wall i_wall, ICollidable i_Collidable)
+        public void HandleHit(Wall i_Wall, ICollidable i_Collidable)
         {
             if (i_Collidable is Bullet)
             {
-                if (checkBulletCollisionDirection(i_Collidable as Bullet) == eCollisionDirection.horizontal)
-                {
-                    handleWallAndBullethorizontalCollision(i_wall, i_Collidable as Bullet);
-                }
-                else
-                {
-                    handleWallAndBulletVerticalCollision(i_wall, i_Collidable as Bullet);
-                }
+                deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Collidable as CollidableSprite);
             }
             else if(i_Collidable is Enemy)
             {
-                HandleWallAndEnemyHit(i_wall, i_Collidable as Enemy);
+                HandleWallAndEnemyHit(i_Wall, i_Collidable as Enemy);
             }
         }
 
@@ -222,83 +215,69 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             i_wall.CurrTexture.SetData(i_wall.Pixels);
         }
-
-        private void handleWallAndBulletVerticalCollision(Wall i_wall, Bullet i_bullet)
+        
+        private void deletePixelsInVerticalDirection(CollidableSprite i_Target, CollidableSprite i_Sender)
         {
-            int wallRow =MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].X/* - (int)(i_bullet.LastCollisionPixelsPositions[0].X-i_bullet.Position.X)*/-i_bullet.Texture.Width/2,0,i_wall.Texture.Width);
-            int wallColomn = MathHelper.Clamp((int)(i_wall as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_wall.Texture.Height);
-            int wallX = wallRow;
-            int wallY = wallColomn;
-            int bulletMinY, bulletMaxY;
+            int targetStartColomn = getHittenSpritesColomnInPixelsArray(i_Target, i_Sender);
+            int targetRow = getHittenSpritesRowInPixelsArray(i_Target, i_Sender);
+            int senderMinY;
+            int senderMaxY;
 
-            if (i_bullet.Type != Bullet.eBulletType.EnemyBullet)
+            if (i_Sender.Velocity.Y < 0) 
             {
-                wallY -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_bullet.Texture.Height), 0, wallColomn);
-                bulletMinY = 0;
-                bulletMaxY =(int)( m_sizeOfBulletHitEffect * i_bullet.Texture.Height) + 1 ;
+                senderMinY = 0;
+                senderMaxY = (int)(m_sizeOfBulletHitEffect * i_Sender.Texture.Height) + 1;
             }
             else
             {
-                bulletMinY = (int)((1 - m_sizeOfBulletHitEffect) * i_bullet.Texture.Height);
-                bulletMaxY = i_bullet.Texture.Height;
+                senderMinY = (int)((1 - m_sizeOfBulletHitEffect) * i_Sender.Texture.Height);
+                senderMaxY = i_Sender.Texture.Height;
             }
 
+            int targetColomn = targetStartColomn;
 
-            for (int bulletRow = bulletMinY; bulletRow < bulletMaxY; bulletRow++)
+            //delete pixels
+            for (int senderRow = senderMinY; senderRow < senderMaxY; senderRow++)
+            {
+                targetColomn = targetStartColomn;
+                for (int senderColomn = 0; senderColomn < i_Sender.Texture.Width; senderColomn++)
                 {
-                    wallX = wallRow;
-                    for (int bulletColomn = 0; bulletColomn < i_bullet.Texture.Width; bulletColomn++)
+                    if (i_Sender.Pixels[senderColomn + senderRow * i_Sender.Texture.Width].A != 0 &&
+                       (targetColomn + targetRow * i_Target.Texture.Width) < i_Target.Pixels.Length)
                     {
-                        if (i_bullet.Pixels[bulletColomn + bulletRow * i_bullet.Texture.Width].A != 0 &&
-                           (wallX + wallY * i_wall.Texture.Width) < i_wall.Pixels.Length)
-                        {
-                            i_wall.Pixels[wallX + wallY * i_wall.Texture.Width] = new Color(0, 0, 0, 0);
-                        }
-                        wallX++;
+                        i_Target.Pixels[targetColomn + targetRow * i_Target.Texture.Width] = new Color(0, 0, 0, 0);
                     }
-                    wallY++;
+                    targetColomn++;
                 }
+                targetRow++;
+            }
 
-            i_wall.CurrTexture.SetData(i_wall.Pixels);
+            i_Target.CurrTexture.SetData(i_Target.Pixels);
+            clearCollisionData(i_Target, i_Sender);
         }
 
-        private void handleWallAndBullethorizontalCollision(Wall i_wall, Bullet i_bullet)
+        private void clearCollisionData(CollidableSprite i_Target, CollidableSprite i_Sender)
         {
-            float wallX = (float)i_bullet.Position.X - (float)(0.5 * i_bullet.Texture.Width) -7/10 * i_bullet.Texture.Width;
-            float wallY = (float)i_bullet.Position.Y + (float)(0.5 * i_bullet.Texture.Height);
-
-            for (int row = 0; row < i_bullet.Texture.Height; row++)//todo: <=?
-            {
-                for(int colomn = 0; colomn <= m_sizeOfBulletHitEffect * i_bullet.Texture.Width; colomn++)
-                {
-                    if(i_bullet.Pixels[row + colomn* i_bullet.Texture.Width].A != 0)
-                    {
-                        i_wall.Pixels[(int)wallX + (int)(wallY * m_sizeOfBulletHitEffect * i_bullet.Texture.Width)] = new Color(0, 0, 0, 0);
-                    }
-                    wallX++;
-                }
-                wallY++;
-            }
-
+            i_Target.LastCollisionPixelsIndex.Clear();
+            i_Target.LastCollisionPixelsPositions.Clear();
+            i_Sender.LastCollisionPixelsIndex.Clear();
+            i_Sender.LastCollisionPixelsPositions.Clear();
+        }
+        private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
+        {
+            return MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].X + (int)(i_Sender.Texture.Width / 2 - i_Sender.LastCollisionPixelsIndex[0].X) - i_Sender.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);
         }
 
-        private eCollisionDirection checkBulletCollisionDirection(Bullet i_bullet)
+        private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
-            eCollisionDirection collisionDirection = eCollisionDirection.Null;
+            int wallColomn = MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_HittenSprite.Texture.Height);
 
-            foreach (Vector2 pixelPosition in i_bullet.LastCollisionPixelsPositions)
+            if (i_Sender.Velocity.Y < 0)
             {
-                if(pixelPosition.X ==i_bullet.Position.X +0.5*i_bullet.Texture.Width || pixelPosition.X == i_bullet.Position.X + 0.5 * i_bullet.Texture.Width)
-                {
-                    collisionDirection = eCollisionDirection.horizontal;
-                }
-                else
-                {
-                    collisionDirection = eCollisionDirection.Vertical;
-                }
+                wallColomn -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_Sender.Texture.Height), 0, wallColomn);
             }
 
-            return collisionDirection;
+            return wallColomn;
         }
     }
 }
