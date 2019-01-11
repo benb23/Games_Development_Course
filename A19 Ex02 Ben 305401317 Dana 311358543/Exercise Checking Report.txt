@@ -1,0 +1,10 @@
+==========================Exercise Checking Report==========================
+Exercise No...........: 2
+First Student Details.: 305401317 - Ben Bublil
+Second Student Details: 311358543 - Dana Keydar
+Delivery Date.........: 19 - January- 2019
+Delivered In Delay....: No
+Delay Reason..........: -
+Visual Studio Version.: 2017 
+Comments..............: -
+========================End Exercise Checking Report======================== 
