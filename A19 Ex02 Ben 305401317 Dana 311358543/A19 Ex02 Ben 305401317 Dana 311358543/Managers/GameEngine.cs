@@ -134,8 +134,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if (!(bullet.Type == Bullet.eBulletType.EnemyBullet && i_Collidable is Enemy))
             {
-                bullet.Visible = false;
                 bullet.Enabled = false;
+                bullet.Visible = false;
             }
         }
 
@@ -248,8 +248,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                         i_Target.Pixels[targetColomn + targetRow * i_Target.Texture.Width] = new Color(0, 0, 0, 0);
                     }
                     targetColomn++;
+                    if(targetColomn>i_Target.Texture.Width)
+                    {
+                        break;
+                    }
                 }
                 targetRow++;
+                if(targetRow>i_Target.Height)
+                {
+                    break;
+                }
             }
 
             i_Target.CurrTexture.SetData(i_Target.Pixels);
@@ -265,7 +273,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
         private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
-            return MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].X + (int)(i_Sender.Texture.Width / 2 - i_Sender.LastCollisionPixelsIndex[0].X) - i_Sender.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);
+            return MathHelper.Clamp((int)i_HittenSprite.LastCollisionPixelsIndex[0].X + (int)(i_Sender.Texture.Width/2 - i_Sender.LastCollisionPixelsIndex[0].X) - i_Sender.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);
         }
 
         private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)

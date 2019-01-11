@@ -126,8 +126,6 @@ namespace Infrastructure
         private bool isPixelsCollided(IPixelsCollidable i_Source)
         {
             bool isPixelsCollided = false;
-            m_CollidedPixelsPositions.Clear();
-            m_CollidedPixelsIndex.Clear();
 
             int top = Math.Max(Bounds.Top, i_Source.Bounds.Top);
             int bottom = Math.Min(Bounds.Bottom, i_Source.Bounds.Bottom);
