@@ -20,6 +20,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         private Gun m_Gun;
         private PlayerIndex m_Owner;
+
         public float Speed
         {
             get { return k_Speed; }
@@ -29,6 +30,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             get { return m_Owner; }
         }
+
         public SpaceShip(Game i_Game, string i_AssetName, Bullet.eBulletType i_GunBulletsType, PlayerIndex i_Owner)
             : base(i_AssetName, i_Game)
         {
@@ -62,21 +64,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         protected override void InitOrigins()
         {
             m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height);
-            m_RotationOrigin = new Vector2(Texture.Width / 2, Texture.Height/2);
+            m_RotationOrigin = new Vector2(Texture.Width / 2, Texture.Height / 2);
             base.InitOrigins();
         }
 
         private void initAnimations()
         {
-            BlinkAnimator blinkAnimator = new BlinkAnimator("LoosingSoul",TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.5));
+            BlinkAnimator blinkAnimator = new BlinkAnimator("LoosingSoul", TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(2.5));
             this.Animations.Add(blinkAnimator);
-
             RoataterAnimator roataterAnimator = new RoataterAnimator(4, TimeSpan.FromSeconds(2.5));
             FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(2.5));
-
-            CompositeAnimator DestroyAnimator = new CompositeAnimator("Destroy" ,TimeSpan.FromSeconds(2.5),this, fadeAnimator, roataterAnimator);
+            CompositeAnimator DestroyAnimator = new CompositeAnimator("Destroy", TimeSpan.FromSeconds(2.5), this, fadeAnimator, roataterAnimator);
             DestroyAnimator.ResetAfterFinish = false;
-            
             this.Animations.Add(DestroyAnimator);
         }
 

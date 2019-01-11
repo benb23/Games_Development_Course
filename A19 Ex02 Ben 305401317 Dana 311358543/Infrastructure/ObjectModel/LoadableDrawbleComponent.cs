@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen © 2008-2011 ***//
+﻿ ///*** Guy Ronen © 2008-2011 ***//
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -8,6 +8,7 @@ namespace Infrastructure
     public abstract class LoadableDrawableComponent : DrawableGameComponent
     {
         public event EventHandler<EventArgs> Disposed;
+
         protected virtual void OnDisposed(object sender, EventArgs args)
         {
             if (Disposed != null)
@@ -15,6 +16,7 @@ namespace Infrastructure
                 Disposed.Invoke(sender, args);
             }
         }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -40,6 +42,7 @@ namespace Infrastructure
         }
 
         public event EventHandler<EventArgs> SizeChanged;
+
         protected virtual void OnSizeChanged()
         {
             if (SizeChanged != null)
@@ -71,8 +74,8 @@ namespace Infrastructure
             Game i_Game,
             int i_CallsOrder)
             : this(i_AssetName, i_Game, i_CallsOrder, i_CallsOrder)
-        { }
-
+        {
+        }
 
         public override void Initialize()
         {

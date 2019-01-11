@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen � 2008-2011 ***//
+﻿ ///*** Guy Ronen � 2008-2011 ***//
 using System;
 using Microsoft.Xna.Framework;
 
@@ -15,7 +15,6 @@ namespace Infrastructure
         private int m_Direction = 1;
         private bool isFliper = false;
 
-
         // CTORs
         public CellAnimator(TimeSpan i_CellTime, int i_NumOfCells, TimeSpan i_AnimationLength, int i_StartingSquareIndex, bool i_IsFlipper, int i_toggleDIrection)
             : base("CellAnimation", i_AnimationLength)
@@ -31,7 +30,6 @@ namespace Infrastructure
             m_Loop = i_AnimationLength == TimeSpan.Zero;
         }
 
-
         public TimeSpan CellTime
         {
             get { return m_CellTime; }
@@ -40,7 +38,6 @@ namespace Infrastructure
 
         private void goToNextFrame()
         {
-
             if (isFliper)
             {
                 m_CurrCellIdx += m_Direction;

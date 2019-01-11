@@ -25,14 +25,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             YellowEnemy = 110
         }
 
+        private const double m_sizeOfBulletHitEffect = 0.7;
         private Random m_Random;
         private PlayerIndex? m_Winner;
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
         private ScoreBoardHeader m_ScoreBoard;
-
-        private double m_sizeOfBulletHitEffect = 0.7; 
+        
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
@@ -60,13 +60,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             IsPlayerAskToExit = m_InputManager.KeyboardState.IsKeyDown(Keys.Escape);
           
             return IsPlayerAskToExit;
-        }
-
-        public override void Initialize()
-        {
-            //m_WallsGroup.WallsYShift = m_Graphics.GraphicsDevice.Viewport.Height - 2 * m_Players[0].SpaceShip.Texture.Height;
-
-            base.Initialize();
         }
 
         public List<Player> Players
@@ -114,6 +107,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             return winner;
         }
+
         private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
         {
             Player player = m_Players[(int)i_PlayerIndex];
@@ -161,12 +155,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 winner = "player 2";
             }
 
-
             System.Windows.Forms.MessageBox.Show(string.Format(
 @"Game Over 
 player 1 score is : {0}
 Player 2 score is : {1}
-The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(int)PlayerIndex.Two].Score.ToString(),winner)); 
+The winner is : {2} !", Players[(int)PlayerIndex.One].Score.ToString(), Players[(int)PlayerIndex.Two].Score.ToString(), winner)); 
         }
 
         public void HandleHit(Bullet bullet, ICollidable i_Collidable)
@@ -207,7 +200,6 @@ The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(m_Players[(int)i_Target.Owner].destroyed_Finished);
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(player_Died);
                     player.SpaceShip.Animations["Destroy"].Restart();
-
                 }
                 else
                 {
@@ -252,7 +244,7 @@ The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(
 
         public void HandleHit(Wall i_Wall, ICollidable i_Collidable)
         {
-            if (i_Collidable is Bullet && i_Wall.LastCollisionPixelsIndex.Count>0)
+            if (i_Collidable is Bullet && i_Wall.LastCollisionPixelsIndex.Count > 0)
             {
                 deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Collidable as CollidableSprite);
             }
@@ -266,7 +258,7 @@ The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(
         {
             foreach(Vector2 positionInPixels in i_wall.LastCollisionPixelsIndex)
             {
-                i_wall.Pixels[(int)(positionInPixels.X + positionInPixels.Y * i_wall.Texture.Width)] = new Color(0, 0, 0, 0);
+                i_wall.Pixels[(int)(positionInPixels.X + (positionInPixels.Y * i_wall.Texture.Width))] = new Color(0, 0, 0, 0);
             }
 
             i_wall.CurrTexture.SetData(i_wall.Pixels);
@@ -298,19 +290,21 @@ The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(
                 targetColomn = targetStartColomn;
                 for (int senderColomn = 0; senderColomn < i_Sender.Texture.Width; senderColomn++)
                 {
-                    if (i_Sender.Pixels[senderColomn + senderRow * i_Sender.Texture.Width].A != 0 &&
-                       (targetColomn + targetRow * i_Target.Texture.Width) < i_Target.Pixels.Length)
+                    if (i_Sender.Pixels[senderColomn + (senderRow * i_Sender.Texture.Width)].A != 0 &&
+                       (targetColomn + (targetRow * i_Target.Texture.Width)) < i_Target.Pixels.Length)
                     {
-                        i_Target.Pixels[targetColomn + targetRow * i_Target.Texture.Width] = new Color(0, 0, 0, 0);
+                        i_Target.Pixels[targetColomn + (targetRow * i_Target.Texture.Width)] = new Color(0, 0, 0, 0);
                     }
+
                     targetColomn++;
-                    if(targetColomn>i_Target.Texture.Width)
+                    if(targetColomn > i_Target.Texture.Width)
                     {
                         break;
                     }
                 }
+
                 targetRow++;
-                if(targetRow>i_Target.Height)
+                if(targetRow > i_Target.Height)
                 {
                     break;
                 }
@@ -330,7 +324,7 @@ The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(
 
         private int getHittenSpritesColomnInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
-            return MathHelper.Clamp((int)i_HittenSprite.LastCollisionPixelsIndex[0].X + (int)(i_Sender.Texture.Width/2 - i_Sender.LastCollisionPixelsIndex[0].X) - i_Sender.Texture.Width / 2, 0, i_HittenSprite.Texture.Width);
+            return MathHelper.Clamp(((int)i_HittenSprite.LastCollisionPixelsIndex[0].X + (int)((i_Sender.Texture.Width / 2) - i_Sender.LastCollisionPixelsIndex[0].X) - (i_Sender.Texture.Width / 2)), 0, i_HittenSprite.Texture.Width);
         }
 
         private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)

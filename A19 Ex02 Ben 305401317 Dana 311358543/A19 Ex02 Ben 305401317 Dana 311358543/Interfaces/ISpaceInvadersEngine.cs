@@ -16,13 +16,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public interface ISpaceInvadersEngine
     {
-        List<Player> Players { get; set;}
+        List<Player> Players { get; set; }
 
         void HandleHit(Wall i_wall, ICollidable i_Collidable);
+
         void HandleHit(Bullet i_Bullet, ICollidable i_Collidable);
+
         void HandleHit(SpaceShip i_SpaceShip, ICollidable i_Collidable);
+
         void HandleHit(Enemy i_Enemy, ICollidable i_Collidable);
+
         void HandleHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet);
+
         void ShowGameOverMessage();
     }
 }

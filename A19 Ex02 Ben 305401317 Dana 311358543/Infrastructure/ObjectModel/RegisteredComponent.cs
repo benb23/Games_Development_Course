@@ -21,6 +21,7 @@ namespace Infrastructure
 
         public RegisteredComponent(Game i_Game)
             : this(i_Game, int.MaxValue)
-        { }
+        {
+        }
     }
 }

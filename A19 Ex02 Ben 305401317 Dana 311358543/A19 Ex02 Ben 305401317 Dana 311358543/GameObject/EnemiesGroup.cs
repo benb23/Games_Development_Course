@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 using Infrastructure;
+
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     class EnemiesGroup : RegisteredComponent
@@ -23,14 +24,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private float m_TimeCounter = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
         private float m_EnemiesGap;
-
-
         private Enemy[,] m_EnemiesMatrix;
         private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
-
         private ISpaceInvadersEngine m_GameEngine;
-
 
         public EnemiesGroup(Game i_Game) : base(i_Game)
         {
@@ -75,6 +72,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
                 }
+
                 m_GameEngine.ShowGameOverMessage();
                 Game.Exit();
             }
@@ -99,9 +97,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initEnemyGroup()
         {
-            for (int i = 0; i < k_EnemiesRows; i++)
+            for (int row = 0; row < k_EnemiesRows; row++)
             {
-                switch (i)
+                switch (row)
                 {
                     case 0:
                         this.initEnemiesRow(0, 0, Color.Pink, 1);
@@ -121,18 +119,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-
-            // For calculating positions according to enemy texture width (generic)
+            /// For calculating positions according to enemy texture width (generic)
             this.m_EnemiesMatrix[0, 0].LoadAsset();
             m_EnemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
-
         }
   
         private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint, int i_Toggeler)
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
-
                 this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_StartSqureIndex, i_Row, colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
                 m_AliveEnemiesByRow.Add(m_EnemiesMatrix[i_Row, colum]);
                 m_EnemiesMatrix[i_Row, colum].m_Toggeler = i_Toggeler;
@@ -169,7 +164,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private float getRightGroupBorder()
         {
-            return m_AliveEnemiesByColum.Last().Position.X + m_AliveEnemiesByColum.Last().HeightBeforeScale/2;
+            return m_AliveEnemiesByColum.Last().Position.X + m_AliveEnemiesByColum.Last().HeightBeforeScale / 2;
         }
 
         private float getLeftGroupBorder()
@@ -179,7 +174,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private float getBottomGroupBorder()
         {
-            return m_AliveEnemiesByRow.Last().Position.Y + m_AliveEnemiesByRow.Last().HeightBeforeScale / 2;
+            return m_AliveEnemiesByRow.Last().Position.Y + (m_AliveEnemiesByRow.Last().HeightBeforeScale / 2);
         }
 
         private void updateAliveLists(object sender, EventArgs args)
@@ -203,7 +198,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (isLastStepToRightWall(lastRightJump))
             {
                 this.m_IsLastStepInRow = true;
-                jump(new Vector2(m_Direction* lastRightJump, 0));
+                jump(new Vector2(m_Direction * lastRightJump, 0));
             }
             else if (isLastStepToLeftWall(lastLeftJump))
             {

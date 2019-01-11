@@ -7,12 +7,13 @@ namespace Infrastructure
     {
         public FadeAnimator(string i_Name, TimeSpan i_AnimationLength)
             : base(i_Name, i_AnimationLength)
-        {}
+        {
+        }
         
-
         public FadeAnimator(TimeSpan i_AnimationLength)
             : this("Fade", i_AnimationLength)
-        {}
+        {
+        }
 
         protected override void DoFrame(GameTime i_GameTime)
         {

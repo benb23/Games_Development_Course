@@ -11,6 +11,7 @@ namespace Infrastructure
         protected bool m_Initialize;
 
         protected CompositeAnimator m_Animations;
+
         public CompositeAnimator Animations
         {
             get { return m_Animations; }
@@ -18,6 +19,7 @@ namespace Infrastructure
         }
 
         private Texture2D m_Texture;
+
         public Texture2D Texture
         {
             get { return m_Texture; }
@@ -37,6 +39,7 @@ namespace Infrastructure
         }
 
         protected float m_WidthBeforeScale;
+
         public float WidthBeforeScale
         {
             get { return m_WidthBeforeScale; }
@@ -44,6 +47,7 @@ namespace Infrastructure
         }
 
         protected float m_HeightBeforeScale;
+
         public float HeightBeforeScale
         {
             get { return m_HeightBeforeScale; }
@@ -51,9 +55,7 @@ namespace Infrastructure
         }
 
         protected Vector2 m_Position = Vector2.Zero;
-        /// <summary>
-        /// Represents the location of the sprite's origin point in screen coorinates
-        /// </summary>
+
         public Vector2 Position
         {
             get { return m_Position; }
@@ -68,6 +70,7 @@ namespace Infrastructure
         }
 
         public Vector2 m_PositionOrigin;
+
         public Vector2 PositionOrigin
         {
             get { return m_PositionOrigin; }
@@ -75,6 +78,7 @@ namespace Infrastructure
         }
 
         public Vector2 m_RotationOrigin = Vector2.Zero;
+
         public Vector2 RotationOrigin
         {
             get { return m_RotationOrigin; }// r_SpriteParameters.RotationOrigin; }
@@ -117,6 +121,7 @@ namespace Infrastructure
         }
 
         protected Rectangle m_SourceRectangle;
+
         public Rectangle SourceRectangle
         {
             get { return m_SourceRectangle; }
@@ -137,6 +142,7 @@ namespace Infrastructure
         }
 
         protected float m_Rotation = 0;
+
         public float Rotation
         {
             get { return m_Rotation; }
@@ -144,6 +150,7 @@ namespace Infrastructure
         }
 
         protected Vector2 m_Scales = Vector2.One;
+
         public Vector2 Scales
         {
             get { return m_Scales; }
@@ -152,13 +159,14 @@ namespace Infrastructure
                 if (m_Scales != value)
                 {
                     m_Scales = value;
-                    // Notify the Collision Detection mechanism:
+                    /// Notify the Collision Detection mechanism:
                     OnPositionChanged();
                 }
             }
         }
 
         protected Color m_TintColor = Color.White;
+
         public Color TintColor
         {
             get { return m_TintColor; }
@@ -172,6 +180,7 @@ namespace Infrastructure
         }
 
         protected float m_LayerDepth;
+
         public float LayerDepth
         {
             get { return m_LayerDepth; }
@@ -179,6 +188,7 @@ namespace Infrastructure
         }
 
         protected SpriteEffects m_SpriteEffects = SpriteEffects.None;
+
         public SpriteEffects SpriteEffects
         {
             get { return m_SpriteEffects; }
@@ -186,9 +196,7 @@ namespace Infrastructure
         }
 
         protected Vector2 m_Velocity = Vector2.Zero;
-        /// <summary>
-        /// Pixels per Second on 2 axis
-        /// </summary>
+
         public Vector2 Velocity
         {
             get { return m_Velocity; }
@@ -196,9 +204,7 @@ namespace Infrastructure
         }
 
         private float m_AngularVelocity = 0;
-        /// <summary>
-        /// Radians per Second on X Axis
-        /// </summary>
+
         public float AngularVelocity
         {
             get { return m_AngularVelocity; }
@@ -207,15 +213,18 @@ namespace Infrastructure
 
         public Sprite(string i_AssetName, Game i_Game, int i_UpdateOrder, int i_DrawOrder)
             : base(i_AssetName, i_Game, i_UpdateOrder, i_DrawOrder)
-        { }
+        {
+        }
 
         public Sprite(string i_AssetName, Game i_Game, int i_CallsOrder)
             : base(i_AssetName, i_Game, i_CallsOrder)
-        { }
+        {
+        }
 
         public Sprite(string i_AssetName, Game i_Game)
             : base(i_AssetName, i_Game, int.MaxValue)
-        { }
+        {
+        }
 
         protected override void InitBounds()
         {
@@ -223,9 +232,7 @@ namespace Infrastructure
             {
                 m_WidthBeforeScale = m_Texture.Width;
                 m_HeightBeforeScale = m_Texture.Height;
-
             }
-            
 
             InitSourceRectangle();
 
@@ -241,12 +248,9 @@ namespace Infrastructure
             m_SourceRectangle = new Rectangle(0, 0, (int)m_WidthBeforeScale, (int)m_HeightBeforeScale);
         }
 
-
         protected SpriteSortMode m_SpriteSortMode;
         protected BlendState m_BlendState;
-
         private bool m_UseSharedBatch = true; 
-
         protected SpriteBatch m_SpriteBatch;
 
         public SpriteBatch SpriteBatch
@@ -262,7 +266,6 @@ namespace Infrastructure
         {
             m_Texture = Game.Content.Load<Texture2D>(m_AssetName);
 
- 
             if (m_SpriteBatch == null)
             {
                 m_SpriteBatch =
@@ -313,7 +316,6 @@ namespace Infrastructure
 
             base.Draw(gameTime);
         }
-
        
         #region Collision Handlers
         protected override void DrawBoundingBox()

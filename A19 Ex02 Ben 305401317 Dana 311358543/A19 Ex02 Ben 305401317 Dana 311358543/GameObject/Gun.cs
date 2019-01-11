@@ -19,7 +19,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Game m_Game;
         private Bullet.eBulletType m_BulletsType;
         private int m_ShootingDirection;
-        public Gun(Game i_Game,int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType,int i_ShootingDirection)
+
+        public Gun(Game i_Game, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection)
         {
             m_Game = i_Game;
             k_MaxNumOfBullets = i_MaxNumOfBullets;
@@ -44,7 +45,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     bullet = currBullet;
                     foundBullet = true;
-                    bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * (bullet.Texture.Height / 2 + 1));
+                    bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * ((bullet.Texture.Height / 2) + 1));
                     bullet.Enabled = true;
                     bullet.Visible = true;
                     break;
@@ -61,12 +62,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            if(bullet==null)
+            if(bullet == null)
             {
                 bullet = null;
             }
+
             return bullet;
         }
+
         public bool PermitionToShoot()
         {
             bool PermitionToShoot = false;
@@ -86,6 +89,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     }
                 }
             }
+
             return PermitionToShoot;
         }
     }

@@ -1,8 +1,7 @@
-﻿//*** Guy Ronen © 2008-2011 ***//
+﻿ ///*** Guy Ronen © 2008-2011 ***//
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-
 
 namespace Infrastructure
 {
@@ -12,7 +11,8 @@ namespace Infrastructure
 
         public CollisionsManager(Game i_Game) :
             base(i_Game, int.MaxValue)
-        { }
+        {
+        }
 
         protected override void RegisterAsService()
         {

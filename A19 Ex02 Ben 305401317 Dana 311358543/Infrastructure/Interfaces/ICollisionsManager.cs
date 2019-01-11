@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen © 2008-2011 ***//
+﻿ ///*** Guy Ronen © 2008-2011 ***//
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +17,15 @@ namespace Infrastructure
     {
         void AddObjectToMonitor(ICollidable i_Collidable);
     }
+
     public interface IPixelsCollidable : ICollidable
     {
         Color[] Pixels { get; }
+
         Vector2 Position { get; set; }  
     }
 
     public interface IRectangleCollidable : ICollidable
-    {
-        
+    {       
     }
 }

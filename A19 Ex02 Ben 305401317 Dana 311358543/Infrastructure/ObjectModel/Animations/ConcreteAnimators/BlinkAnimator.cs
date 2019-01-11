@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen © 2008-2011 ***//
+﻿ ///*** Guy Ronen © 2008-2011 ***//
 using System;
 using Microsoft.Xna.Framework;
 
@@ -39,7 +39,6 @@ namespace Infrastructure
                 this.BoundSprite.Visible = !this.BoundSprite.Visible;
                 m_TimeLeftForNextBlink = m_BlinkLength;
             }
-
         }
 
         protected override void RevertToOriginal()

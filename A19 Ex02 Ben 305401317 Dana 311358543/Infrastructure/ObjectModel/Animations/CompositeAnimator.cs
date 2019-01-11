@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen © 2008-2011 ***//
+﻿ ///*** Guy Ronen © 2008-2011 ***//
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -41,6 +41,7 @@ namespace Infrastructure
             {
                 i_Animation.Enabled = true;
             }
+
             m_AnimationsDictionary.Add(i_Animation.Name, i_Animation);
             m_AnimationsList.Add(i_Animation);
         }
@@ -75,8 +76,6 @@ namespace Infrastructure
                 animation.Restart();
             }
         }
-
-
 
         public override void Restart(TimeSpan i_AnimationLength)
         {

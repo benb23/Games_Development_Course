@@ -16,25 +16,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Player : RegisteredComponent, IScoreable
     {
-        Game m_Game;
-
+        private const int k_NumOfSouls = 3;
+        private Game m_Game;
         private IInputManager m_InputManager;
-
-        bool m_IsAllowedToUseMouse;
-
-        Keys m_RightMoveKey;
-
-        Keys m_LeftMoveKey;
-
-        Keys m_ShootKey;
-
-        PlayerIndex m_PlayerType;
-
+        private bool m_IsAllowedToUseMouse;
+        private Keys m_RightMoveKey;
+        private Keys m_LeftMoveKey;
+        private Keys m_ShootKey;
+        private PlayerIndex m_PlayerType;
         private SpaceShip m_SpaceShip;
-
         private List<Soul> m_Souls = new List<Soul>(3);
-
         private bool m_Initialized = false;
+        private int m_Score;
+        private int m_CurrentSoulsNumber;
+
         public List<Soul> Souls
         {
             get { return m_Souls; }
@@ -44,10 +39,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             get{ return m_SpaceShip; }
         }
-
-        private int m_Score;
-
-        private int m_CurrentSoulsNumber;
 
         private int CurrentSoulsNum
         {
@@ -60,6 +51,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_Score = value; }
         }
 
+        public Player(Game i_Game, PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey, bool i_IsAllowdToUseMouse, Vector2 initialPosition)
+            : base(i_Game)
+        {
+            m_Souls = new List<Soul>(k_NumOfSouls);
+            m_LeftMoveKey = i_LeftKey;
+            m_RightMoveKey = i_RightKey;
+            m_ShootKey = i_ShootKey;
+            m_IsAllowedToUseMouse = i_IsAllowdToUseMouse;
+            m_PlayerType = i_PlayerType;
+            m_Game = i_Game;
+            createSpaceShip(i_PlayerType);
+            m_CurrentSoulsNumber = m_Souls.Capacity;
+        }
+
         public override void Update(GameTime i_GameTime)
         {
             if(!m_Initialized)
@@ -67,6 +72,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_SpaceShip.Position = new Vector2(((int)m_PlayerType * m_SpaceShip.Texture.Width / 2) + m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
                 m_Initialized = true;
             }
+
             if (m_IsAllowedToUseMouse)
             {
                 moveSpaceShipUsingMouse(i_GameTime);
@@ -80,7 +86,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_CurrentSoulsNumber = m_Souls.Count;
-            m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, m_Game.GraphicsDevice.Viewport.Width -m_SpaceShip.Texture.Width/2) ,m_SpaceShip.Position.Y);
+            m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, m_Game.GraphicsDevice.Viewport.Width - (m_SpaceShip.Texture.Width / 2)), m_SpaceShip.Position.Y);
         }
 
         private bool isPlayerAskedToShoot(Keys i_shootKey)
@@ -105,28 +111,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if (m_InputManager.KeyboardState.IsKeyDown(i_LeftKey))
             {
-                m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X - m_SpaceShip.Speed * (float)i_GameTime.ElapsedGameTime.TotalSeconds, m_SpaceShip.Position.Y);
+                m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X - (m_SpaceShip.Speed * (float)i_GameTime.ElapsedGameTime.TotalSeconds), m_SpaceShip.Position.Y);
             }
             else if (m_InputManager.KeyboardState.IsKeyDown(i_RightKey))
             {
-                m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X + m_SpaceShip.Speed * (float)i_GameTime.ElapsedGameTime.TotalSeconds, m_SpaceShip.Position.Y);
+                m_SpaceShip.Position = new Vector2(m_SpaceShip.Position.X + (m_SpaceShip.Speed * (float)i_GameTime.ElapsedGameTime.TotalSeconds), m_SpaceShip.Position.Y);
             }
         }
 
-        public Player(Game i_Game,PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey,
-                      bool i_IsAllowdToUseMouse, Vector2 initialPosition) : base(i_Game)
-        {
-            m_LeftMoveKey = i_LeftKey;
-            m_RightMoveKey = i_RightKey;
-            m_ShootKey = i_ShootKey;
-            m_IsAllowedToUseMouse = i_IsAllowdToUseMouse;
-            m_PlayerType = i_PlayerType;
-            m_Game = i_Game;
-            createSpaceShip(i_PlayerType);
-            m_CurrentSoulsNumber = m_Souls.Capacity;
-        }
-
-        // TODO: Move asset name
         private void createSpaceShip(PlayerIndex i_PlayerType)
         {
             if(i_PlayerType == PlayerIndex.One)
@@ -142,8 +134,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void destroyed_Finished(object sender, EventArgs e)
         {
             SpaceShip.Enabled = false;
-            SpaceShip.Visible = false;
-            
+            SpaceShip.Visible = false;  
         }
 
         public override void Initialize()
@@ -160,6 +151,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             base.Initialize();
         }
-
     }
 }
