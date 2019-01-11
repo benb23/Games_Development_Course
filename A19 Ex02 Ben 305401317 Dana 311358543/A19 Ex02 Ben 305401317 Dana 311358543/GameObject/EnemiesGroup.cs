@@ -16,6 +16,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     class EnemiesGroup : RegisteredComponent
     {
+        public enum eDirection
+        {
+            left = -1,
+            right = 1,
+        }
+
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
         private float m_Direction = 1f;
@@ -139,11 +145,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         // TODO: change list initilize
         private void initAliveEnemiesByColum()
         {
-            for (int colum = 0; colum < k_EnemiesColumns; colum++)
+            for (int colomn = 0; colomn < k_EnemiesColumns; colomn++)
             {
                 for (int row = 0; row < k_EnemiesRows; row++)
                 {
-                    m_AliveEnemiesByColum.Add(m_EnemiesMatrix[row, colum]);
+                    m_AliveEnemiesByColum.Add(m_EnemiesMatrix[row, colomn]);
                 }
             } 
         }
@@ -189,18 +195,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_IncreaseVelocityWhen4Dead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
         }
 
-        // TODO: code dup
         private void jumpHorizontalStep(GameTime i_GameTime)
         {
             float lastRightJump = Game.GraphicsDevice.Viewport.Width - this.getRightGroupBorder();
             float lastLeftJump = this.getLeftGroupBorder();
 
-            if (isLastStepToRightWall(lastRightJump))
+            if (isLastStep(lastRightJump, eDirection.right))
             {
                 this.m_IsLastStepInRow = true;
                 jump(new Vector2(m_Direction * lastRightJump, 0));
             }
-            else if (isLastStepToLeftWall(lastLeftJump))
+            else if (isLastStep(lastLeftJump, eDirection.left))
             {
                 this.m_IsLastStepInRow = true;
                 jump(new Vector2(m_Direction * lastLeftJump, 0));
@@ -210,28 +215,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 jump(new Vector2(m_Direction * this.m_EnemiesMatrix[0, 0].Texture.Height / 2, 0));
             }
         }
-        
-        // TODO: code dup
-        private bool isLastStepToRightWall(float lastRightJump)
+
+        private bool isLastStep(float i_LastStep, eDirection i_MoveDirection)
         {
             bool isLastStep = false;
 
-            if (m_Direction == 1)
+            if (this.m_Direction ==(float)i_MoveDirection)
             {
-                isLastStep =  lastRightJump < (this.m_EnemiesMatrix[0, 0].Texture.Height) && lastRightJump > 0;
-            }
-
-            return isLastStep;
-        }
-
-        // TODO: code dup
-        private bool isLastStepToLeftWall(float lastLeftJump)
-        {
-            bool isLastStep = false;
-
-            if (this.m_Direction == -1f)
-            {
-                isLastStep = lastLeftJump < (this.m_EnemiesMatrix[0, 0].Texture.Height) && lastLeftJump > 0;
+                isLastStep = i_LastStep < (this.m_EnemiesMatrix[0, 0].Texture.Height) && i_LastStep > 0;
             }
 
             return isLastStep;
