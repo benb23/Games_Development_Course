@@ -94,7 +94,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             bool isPlayerAskedToShoot = false;
 
             if (m_InputManager.KeyReleased(i_shootKey) || 
-                (m_InputManager.MouseState.LeftButton.Equals(ButtonState.Pressed) && m_InputManager.MouseState.LeftButton.Equals(ButtonState.Released) && m_IsAllowedToUseMouse))
+                (m_InputManager.ButtonReleased(eInputButtons.Left) && m_IsAllowedToUseMouse))
             {
                 isPlayerAskedToShoot = true;
             }
