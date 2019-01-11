@@ -45,11 +45,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_Initialize = true;
             }
 
-            // TODO: change random from static to private with getter
             if(m_Random==null)
             {
                 m_Random = Game.Services.GetService(typeof(Random)) as Random;
             }
+
             if (!m_OnMove)
             {
                 if (m_Random.Next(0, k_MaxRandomNumber) <= k_MaxRandomNumToDrawMotherShip)

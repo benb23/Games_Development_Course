@@ -28,7 +28,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
-           // m_SpriteBatch = m_Game.Services.GetService(typeof(SpriteBatch)) as SpriteBatch;
             m_GameEngine = m_Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             
             base.Initialize();
@@ -40,7 +39,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Font = m_Game.Content.Load<SpriteFont>(@"Fonts\ComicSansMS");
         }
 
-        // TODO: generic for more players
         public override void Draw(GameTime i_GameTime)
         {
             int playerOneScore = m_GameEngine.Players[(int)PlayerIndex.One].Score;

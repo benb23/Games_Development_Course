@@ -16,7 +16,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class SpaceShip : CollidableSprite, IRectangleCollidable
     {
-        private float k_Speed = 145; //TODO : VELOCITY
+        private float k_Speed = 145; 
         private ISpaceInvadersEngine m_GameEngine;
         private Gun m_Gun;
         private PlayerIndex m_Owner;

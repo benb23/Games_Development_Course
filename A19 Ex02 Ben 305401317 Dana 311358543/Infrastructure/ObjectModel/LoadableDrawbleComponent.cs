@@ -29,7 +29,6 @@ namespace Infrastructure
             get { return this.Game.Content; }
         }
 
-        // TODO 11: Implement the PositionChanged event:
         public event EventHandler<EventArgs> PositionChanged;
 
         protected virtual void OnPositionChanged()
@@ -48,7 +47,6 @@ namespace Infrastructure
                 SizeChanged(this, EventArgs.Empty);
             }
         }
-        // -- end of TODO 11
 
         public string AssetName
         {
@@ -80,7 +78,6 @@ namespace Infrastructure
         {
             base.Initialize();
 
-            // TODO 12: Register in the collisions manager:
             if (this is ICollidable)
             {
                 ICollisionsManager collisionMgr =
@@ -92,14 +89,10 @@ namespace Infrastructure
                     collisionMgr.AddObjectToMonitor(this as ICollidable);
                 }
             }
-            // -- end of TODO 12
 
-            // After everything is loaded and initialzied,
-            // lets init graphical aspects:
-            InitBounds();   // a call to an abstract method;
+            InitBounds(); 
         }
 
-        // TODO 02: Show/Hide Bounding box
 #if DEBUG
         protected bool m_ShowBoundingBox = true;
 #else
@@ -111,11 +104,9 @@ namespace Infrastructure
             get { return m_ShowBoundingBox; }
             set { m_ShowBoundingBox = value; }
         }
-        // -- end of TODO 02
 
         protected abstract void InitBounds();
 
-        // TODO 03: enforce the logic of drawing the bounding box to the derivies:
         public override void Draw(GameTime gameTime)
         {
             DrawBoundingBox();
@@ -123,6 +114,5 @@ namespace Infrastructure
         }
 
         protected abstract void DrawBoundingBox();
-        // -- end of TODO 03
     }
 }

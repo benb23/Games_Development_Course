@@ -19,8 +19,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private List<Bullet> m_Bullets = new List<Bullet>(5);
         private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
         private Gun m_Gun;
-        private const int k_MaxRandomToShoot = 10; //TODO: LOCATION?
-        public const int k_MaxRandomNumber = 50000; //TODO: LOCATION?
+        private const int k_MaxRandomToShoot = 10; 
+        public const int k_MaxRandomNumber = 50000;
         private ISpaceInvadersEngine m_GameEngine;
         private int k_NumOfTOtalFrames = 6;
         public int k_NumOfFrames = 2;
@@ -99,7 +99,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime i_GameTime)
         {
-            //TODO: change random from static to private with getter
             if (!m_Initialize)
             {
                 m_Initialize = true;

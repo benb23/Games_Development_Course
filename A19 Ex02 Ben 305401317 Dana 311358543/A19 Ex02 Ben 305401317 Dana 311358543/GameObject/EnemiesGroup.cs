@@ -22,7 +22,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private bool m_IsLastStepInRow = false;
         private float m_TimeCounter = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
-        //private bool m_IsEnemGap = false;
         private float m_EnemiesGap;
 
 
@@ -62,16 +61,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     this.jumpHorizontalStep(i_GameTime);
                 }
-
-                //doEnemyCellAnimation();
             }
 
-            cheakGameOver();
+            cheackGameOver();
         }
 
-
-        /// TODO: Move to IGameEngine ?? 
-        private bool cheakGameOver()
+        private bool cheackGameOver()
         {
             bool isGameOver = this.isEnemiesGroupTouchTheBotton() || this.isAllEnemiesDead();
             if (isGameOver)
@@ -99,10 +94,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.initEnemyGroup();
             this.initAliveEnemiesByColum();
-
-            // initilize enemies positions
-            //this.updatePositions(this.m_currTopLeftX, this.m_currTopLeftY);
-
             base.Initialize();
         }
 
@@ -261,34 +252,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_TimeUntilNextStepInSec -= this.m_TimeUntilNextStepInSec * i_TimeToIncrease;
         }
-
-        //private void doEnemyCellAnimation()
-        //{
-        //    foreach (Enemy enemy in m_AliveEnemiesByRow)
-        //    {
-        //        if (enemy.Row == 0)
-        //        {
-        //            enemy.m_StartSqureIndex++;
-        //            enemy.m_StartSqureIndex %= enemy.k_NumOfFrames;
-        //        }
-        //        else if (enemy.Row == 1 || enemy.Row == 3)
-        //        {
-        //            enemy.m_StartSqureIndex += m_Toggeler;
-        //        }
-        //        else if (enemy.Row == 2 || enemy.Row == 4)
-        //        {
-        //            enemy.m_StartSqureIndex -= m_Toggeler;
-        //        }
-
-        //        enemy.SourceRectangle = new Rectangle(
-        //            (int)enemy.WidthBeforeScale * enemy.m_StartSqureIndex,
-        //            0,
-        //            (int)enemy.WidthBeforeScale,
-        //            (int)enemy.Height
-        //        );
-        //    }
-
-        //    m_Toggeler *= -1;
-        //}
     }
 }

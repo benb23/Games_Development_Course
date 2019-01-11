@@ -24,20 +24,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             BlueEnemy = 140,
             YellowEnemy = 110
         }
-        public enum eCollisionDirection
-        {
-            horizontal,
-            Vertical,
-            Null // TODO : ??
-        }
 
+        private Random m_Random;
         private PlayerIndex? m_Winner;
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
         private ScoreBoardHeader m_ScoreBoard;
 
-        private double m_sizeOfBulletHitEffect = 0.7; //todo: name???
+        private double m_sizeOfBulletHitEffect = 0.7; 
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
@@ -178,8 +173,25 @@ The winner is : {2} !",Players[(int)PlayerIndex.One].Score.ToString(), Players[(
         {
             if (!(bullet.Type == Bullet.eBulletType.EnemyBullet && i_Collidable is Enemy))
             {
-                bullet.Enabled = false;
-                bullet.Visible = false;
+                if (bullet.Type is Bullet.eBulletType.EnemyBullet && i_Collidable is Bullet)
+                {
+                    if (m_Random == null)
+                    {
+                        m_Random = Game.Services.GetService(typeof(Random)) as Random;
+                    }
+
+                    int rndDisposeOfEnemyBullet = m_Random.Next(0, 45);
+                    if (rndDisposeOfEnemyBullet < 10)
+                    {
+                        bullet.Enabled = false;
+                        bullet.Visible = false;
+                    }
+                }
+                else
+                {
+                    bullet.Enabled = false;
+                    bullet.Visible = false;
+                }
             }
         }
 

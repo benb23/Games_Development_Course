@@ -25,7 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             : base(i_AssteName, i_Game)
         {
             Scales = i_Scale;
-            Opacity = i_Opacity;  //TODO --> Cheak opacity
+            Opacity = i_Opacity;  
             m_SoulIndx = i_SoulIndex;
             m_SoulOwner = i_SoulOwner;
         }

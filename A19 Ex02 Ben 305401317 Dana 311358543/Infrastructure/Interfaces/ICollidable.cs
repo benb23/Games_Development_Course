@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Infrastructure
 {
-    // TODO 06: Define the base interface for collidable objects (2D/3D):
     public interface ICollidable
     {
         event EventHandler<EventArgs> PositionChanged;

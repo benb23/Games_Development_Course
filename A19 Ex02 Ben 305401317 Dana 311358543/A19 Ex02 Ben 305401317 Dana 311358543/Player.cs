@@ -60,7 +60,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_Score = value; }
         }
 
-        //TODO: SHOOT FROM PLAYER
         public override void Update(GameTime i_GameTime)
         {
             if(!m_Initialized)
@@ -90,7 +89,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (m_InputManager.KeyReleased(i_shootKey) || 
                 (m_InputManager.MouseState.LeftButton.Equals(ButtonState.Pressed) && m_InputManager.MouseState.LeftButton.Equals(ButtonState.Released) && m_IsAllowedToUseMouse))
-            {//TODO : function for mouse .
+            {
                 isPlayerAskedToShoot = true;
             }
             
