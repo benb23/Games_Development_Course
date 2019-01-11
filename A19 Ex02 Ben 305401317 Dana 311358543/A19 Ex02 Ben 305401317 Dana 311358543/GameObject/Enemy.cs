@@ -32,7 +32,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private TimeSpan m_TimeUntilNextStepInSec;
         public int m_Toggeler;
 
-
         public int Row
         {
             get { return m_Row; }
@@ -69,14 +68,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             initAnimations();
         }
 
-
         private void initPosition()
         {
             float halfEnemySize = this.Texture.Height / 2;
-            m_Position = new Vector2(halfEnemySize + m_Colum * (Texture.Height * 1.5f + m_Gap) , this.Texture.Height * 3f + m_Row * (Texture.Height * 1.5f + m_Gap));
+            m_Position = new Vector2(halfEnemySize + m_Colum * (Texture.Height * 1.5f + m_Gap), this.Texture.Height * 3f + m_Row * (Texture.Height * 1.5f + m_Gap));
         }
-
-
 
         protected override void InitOrigins()
         {
@@ -105,7 +101,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.Animations["CellAnimation"].Restart();
             }
 
-
             int rnd = m_Random.Next(0, k_MaxRandomNumber);    
 
             if (rnd <= k_MaxRandomToShoot && m_Gun.PermitionToShoot())
@@ -118,20 +113,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void shoot()
         {
-            m_Gun.Shoot(new Vector2(Position.X,Position.Y+Texture.Height/2));
+            m_Gun.Shoot(new Vector2(Position.X, Position.Y + (Texture.Height / 2)));
         }
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
             if ((!this.m_Animations["dyingEnemy"].Enabled))
             {
+                if (m_GameEngine == null)
+                {
+                    m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+                }
 
-            if (m_GameEngine == null)
-            {
-                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            }
-
-            m_GameEngine.HandleHit(this, i_Collidable);
+                m_GameEngine.HandleHit(this, i_Collidable);
             }
         }
 
@@ -149,7 +143,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initAnimations()
         {
-
             ShrinkAnimator shrinker = new ShrinkAnimator(TimeSpan.FromSeconds(1.2));
             RoataterAnimator rotate = new RoataterAnimator(6, TimeSpan.FromSeconds(1.2));
             CompositeAnimator dyingEnemy = new CompositeAnimator("dyingEnemy", TimeSpan.FromSeconds(1.2), this, shrinker, rotate);
@@ -160,8 +153,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             PositionChanged += new EventHandler<EventArgs>(cellAnimation_PositionChanged);
             dyingEnemy.Finished += new EventHandler(dyingEnemy_Finished);
-            this.Animations.Enabled = true;
-            
+            this.Animations.Enabled = true; 
         }
     }
 }

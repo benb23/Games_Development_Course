@@ -21,6 +21,7 @@ namespace Infrastructure
             get { return m_CurrTexture; }
             set { m_CurrTexture = value; }
         }
+
         private Color[] m_Pixels;
 
         public Color[] Pixels
@@ -98,6 +99,7 @@ namespace Infrastructure
                    SpriteEffects.None, this.LayerDepth);
             }
         }
+
         private bool checkRectangleCollision(ICollidable i_Source)
         {
             {
@@ -135,8 +137,8 @@ namespace Infrastructure
 
                     if (pixelA.A != 0 && pixelB.A != 0)
                     {
-                        //keep colliding pixels data
-                        m_CollidedPixelsPositions.Add(new Vector2(x,y)); 
+                        ///keep colliding pixels data
+                        m_CollidedPixelsPositions.Add(new Vector2(x, y)); 
                         (i_Source as CollidableSprite).LastCollisionPixelsPositions.Add(new Vector2(x, y));
                         m_CollidedPixelsIndex.Add(new Vector2(x - Bounds.Left, y - Bounds.Top));
                         (i_Source as CollidableSprite).LastCollisionPixelsIndex.Add(new Vector2(x - i_Source.Bounds.Left, y - i_Source.Bounds.Top));

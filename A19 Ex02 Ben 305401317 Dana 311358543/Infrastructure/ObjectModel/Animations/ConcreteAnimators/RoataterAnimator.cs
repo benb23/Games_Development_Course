@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-
 namespace Infrastructure
 {
     public class RoataterAnimator : SpriteAnimator
@@ -21,8 +20,8 @@ namespace Infrastructure
 
         public RoataterAnimator(string i_Name, TimeSpan i_AnimationLength)
             : base(i_Name, i_AnimationLength)
-        { }
-
+        {
+        }
 
         public RoataterAnimator(int NumOfRoundsPerSec, TimeSpan i_AnimationLength)
             : base("Rotator", i_AnimationLength)
@@ -37,7 +36,6 @@ namespace Infrastructure
             this.BoundSprite.Visible = false;
         }
 
-
         protected override void DoFrame(GameTime i_GameTime)
         {
             float currentTime = (float)m_RotateLength.TotalSeconds;
@@ -45,13 +43,11 @@ namespace Infrastructure
             currentTime -= (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
             this.BoundSprite.Rotation += rotationVelocity * currentTime;
-
         }
 
         protected override void RevertToOriginal()
         {
             this.BoundSprite.Scales = this.m_OriginalSpriteInfo.Scales;
         }
-
     }
 }

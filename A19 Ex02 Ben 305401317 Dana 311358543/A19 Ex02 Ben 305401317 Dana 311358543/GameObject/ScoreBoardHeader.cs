@@ -20,8 +20,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         private Game m_Game;
 
-
-        public ScoreBoardHeader(Game i_Game) : base ("" , i_Game)
+        public ScoreBoardHeader(Game i_Game) : base ("", i_Game)
         {
             m_Game = i_Game;
         }
@@ -44,16 +43,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             int playerOneScore = m_GameEngine.Players[(int)PlayerIndex.One].Score;
             int playerTwoScore = m_GameEngine.Players[(int)PlayerIndex.Two].Score;
 
-            //TODO: String format
             this.m_SpriteBatch.Begin();
-            this.m_SpriteBatch.DrawString(this.m_Font, "P1 Score: " + playerOneScore.ToString(), new Vector2(2, 1 + (int)PlayerIndex.One * 15) , new Color(46, 145, 232));
-            this.m_SpriteBatch.DrawString(this.m_Font, "P2 Score: " + playerTwoScore.ToString(), new Vector2(2, 1 + (int)PlayerIndex.Two * 15), new Color(55, 232, 46));
+            this.m_SpriteBatch.DrawString(this.m_Font, String.Format("P1 Score: {0}", playerOneScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.One * 15)), new Color(46, 145, 232));
+            this.m_SpriteBatch.DrawString(this.m_Font, String.Format("P2 Score: {0}", playerTwoScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.Two * 15)), new Color(55, 232, 46));
             this.m_SpriteBatch.End();
         }
-
-
-
-
-
     }
 }

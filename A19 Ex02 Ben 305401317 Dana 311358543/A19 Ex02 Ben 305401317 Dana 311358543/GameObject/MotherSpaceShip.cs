@@ -12,23 +12,21 @@ using Microsoft.Xna.Framework.Media;
 
 using Infrastructure;
 
-
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class MotherSpaceShip : CollidableSprite, IRectangleCollidable
     {
         private const string k_AssteName = @"Sprites\MotherShip_32x120";
-        private Vector2 k_MotherShipVelocity =new Vector2(40,0); //??
         private Random m_Random;
         private const int k_MaxRandomNumToDrawMotherShip = 70;
         public const int k_MaxRandomNumber = 50000;
         private ISpaceInvadersEngine m_GameEngine;
         private bool m_OnMove = false;
 
-        public MotherSpaceShip(Game i_Game): base(k_AssteName, i_Game)
+        public MotherSpaceShip(Game i_Game) : base(k_AssteName, i_Game)
 		{
             this.m_TintColor = Color.Red;
-            this.Velocity = k_MotherShipVelocity;
+            this.Velocity = new Vector2(40, 0);
         }
 
         public override void Initialize()
@@ -45,7 +43,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_Initialize = true;
             }
 
-            if(m_Random==null)
+            if(m_Random == null)
             {
                 m_Random = Game.Services.GetService(typeof(Random)) as Random;
             }
@@ -84,7 +82,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
                 Animations["DestroyMother"].Restart();
                 m_GameEngine.HandleHit(this, i_Collidable as Bullet);
-                
             }
         }
 
@@ -100,7 +97,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(2.2));
             ShrinkAnimator shrinkAnimator = new ShrinkAnimator(TimeSpan.FromSeconds(2.2));
 
-            CompositeAnimator DestroyAnimator2 = new CompositeAnimator("DestroyMother", TimeSpan.FromSeconds(2.2), this, fadeAnimator, blinkAnimator,shrinkAnimator);
+            CompositeAnimator DestroyAnimator2 = new CompositeAnimator("DestroyMother", TimeSpan.FromSeconds(2.2), this, fadeAnimator, blinkAnimator, shrinkAnimator);
             this.Animations.Add(DestroyAnimator2);
             Animations["DestroyMother"].Finished += new EventHandler(this.destroyed_Finished);   
         }

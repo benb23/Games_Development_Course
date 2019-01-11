@@ -9,24 +9,22 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework;
 using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Bullet : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
-        private ISpaceInvadersEngine m_GameEngine;
         public enum eBulletType 
         {
             PlayerOneBullet,
             PlayerTwoBullet,
             EnemyBullet 
         }
-        
 
+        private ISpaceInvadersEngine m_GameEngine;
         private const string k_AssteName = @"Sprites\Bullet";
-        private Vector2 k_BulletVelocity = new Vector2(0,155);
+        private Vector2 k_BulletVelocity = new Vector2(0, 155);
         private eBulletType m_Type;
 
         public Bullet(Game i_Game, eBulletType i_BulletType) : base(k_AssteName, i_Game)
@@ -40,10 +38,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
             else
             {
-                Velocity = k_BulletVelocity *new Vector2(0,-1);
+                Velocity = k_BulletVelocity * new Vector2(0, -1);
                 this.m_TintColor = Color.Red;
                 k_BulletVelocity *= -1;
             }
+
             InitOrigins();
         }
 
@@ -65,14 +64,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private bool isBulletHitTheScreenBorder()
         {
-            bool isBulletHit = m_Position.Y + Texture.Height/2 <= 0 || m_Position.Y - Texture.Height / 2 >= Game.GraphicsDevice.Viewport.Height;
+            bool isBulletHit = m_Position.Y + Texture.Height / 2 <= 0 || m_Position.Y - Texture.Height / 2 >= Game.GraphicsDevice.Viewport.Height;
 
             return isBulletHit;
         }
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if(m_GameEngine==null)
+            if(m_GameEngine == null)
             {
                 m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
@@ -85,6 +84,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height / 2);
             base.InitOrigins();
         }
-
     }
 }

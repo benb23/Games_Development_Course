@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen (c) 2008-2011 ***//
+﻿ ///*** Guy Ronen (c) 2008-2011 ***//
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Text;
@@ -8,45 +8,52 @@ namespace Infrastructure
     public class InputManager : GameService, IInputManager
     {
         private KeyboardState m_PrevKeyboardState;
+
         public KeyboardState PrevKeyboardState
         {
             get { return m_PrevKeyboardState; }
         }
 
         private KeyboardState m_KeyboardState;
+
         public KeyboardState KeyboardState
         {
             get { return m_KeyboardState; }
         }
 
         private MouseState m_PrevMouseState;
+
         public MouseState PrevMouseState
         {
             get { return m_PrevMouseState; }
         }
 
         private MouseState m_MouseState;
+
         public MouseState MouseState
         {
             get { return m_MouseState; }
         }
 
         private GamePadState m_PrevGamePadState;
+
         public GamePadState PrevGamePadState
         {
             get { return m_PrevGamePadState; }
         }
 
         private GamePadState m_GamePadState;
+
         public GamePadState GamePadState
         {
             get { return m_GamePadState; }
         }
 
         public InputManager(Game i_Game)
-            // we want this component to be updated first!
+            /// we want this component to be updated first!
             : base(i_Game, int.MinValue)
-        { }
+        {
+        }
 
         /// <summary>
         /// Allows the game component to perform any initialization it needs to before starting
@@ -64,7 +71,6 @@ namespace Infrastructure
             m_GamePadState = m_PrevGamePadState;
         }
 
-        
         protected override void RegisterAsService()
         {
             Game.Services.AddService(typeof(IInputManager), this);
@@ -247,6 +253,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.B) != 0)
             {
                 currCheck =
@@ -256,6 +263,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.X) != 0)
             {
                 currCheck =
@@ -265,6 +273,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.Y) != 0)
             {
                 currCheck =
@@ -274,6 +283,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.DPadDown) != 0)
             {
                 currCheck =
@@ -283,6 +293,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.DPadUp) != 0)
             {
                 currCheck =
@@ -292,6 +303,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.DPadLeft) != 0)
             {
                 currCheck =
@@ -301,6 +313,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.DPadRight) != 0)
             {
                 currCheck =
@@ -310,6 +323,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.Back) != 0)
             {
                 currCheck =
@@ -319,6 +333,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.Start) != 0)
             {
                 currCheck =
@@ -328,6 +343,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.LeftShoulder) != 0)
             {
                 currCheck =
@@ -337,6 +353,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.RightShoulder) != 0)
             {
                 currCheck =
@@ -346,6 +363,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.LeftStick) != 0)
             {
                 currCheck =
@@ -355,6 +373,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.RightStick) != 0)
             {
                 currCheck =
@@ -364,6 +383,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.LeftThumbstickDown) != 0)
             {
                 currCheck =
@@ -373,6 +393,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.LeftThumbstickUp) != 0)
             {
                 currCheck =
@@ -382,6 +403,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.LeftThumbstickLeft) != 0)
             {
                 currCheck =
@@ -391,6 +413,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.LeftThumbstickRight) != 0)
             {
                 currCheck = checkRelease == m_GamePadState.IsButtonUp(Buttons.LeftThumbstickRight)
@@ -399,6 +422,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.RightThumbstickDown) != 0)
             {
                 currCheck =
@@ -408,6 +432,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.RightThumbstickUp) != 0)
             {
                 currCheck =
@@ -417,6 +442,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.RightThumbstickLeft) != 0)
             {
                 currCheck =
@@ -426,6 +452,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.RightThumbstickRight) != 0)
             {
                 currCheck =
@@ -435,6 +462,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.LeftTrigger) != 0)
             {
                 currCheck =
@@ -444,6 +472,7 @@ namespace Infrastructure
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
             }
+
             if ((i_Buttons & eInputButtons.RightTrigger) != 0)
             {
                 currCheck =
@@ -504,7 +533,6 @@ namespace Infrastructure
             #endregion Mouse Buttons
 
             return i_IsOneEnough ? atLeastOneIsTrue : allTrue;
-
         }
 
         /// <summary>

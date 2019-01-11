@@ -9,6 +9,5 @@ namespace Infrastructure
     public interface IValuable
     {
         int ScoreValue { get; set; }
-
     }
 }

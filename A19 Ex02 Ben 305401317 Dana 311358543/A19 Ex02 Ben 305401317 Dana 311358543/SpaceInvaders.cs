@@ -58,11 +58,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             m_SpriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), m_SpriteBatch);
-            this.Services.AddService(typeof(Random) ,m_Random);
+            this.Services.AddService(typeof(Random), m_Random);
             this.Window.Title = k_GameName;
             base.Initialize();
 
-            m_WallsGroup.WallsYShift = m_Graphics.GraphicsDevice.Viewport.Height - 2*m_Players[0].SpaceShip.Texture.Height;            
+            m_WallsGroup.WallsYShift = m_Graphics.GraphicsDevice.Viewport.Height - (2 * m_Players[(int)PlayerIndex.One].SpaceShip.Texture.Height);            
         }
 
         protected override void Draw(GameTime gameTime)
