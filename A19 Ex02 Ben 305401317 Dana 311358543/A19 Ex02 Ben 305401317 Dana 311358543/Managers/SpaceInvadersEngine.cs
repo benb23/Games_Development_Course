@@ -36,15 +36,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
-            this.m_ScoreBoard = new ScoreBoardHeader(i_Game);
+            m_ScoreBoard = new ScoreBoardHeader(i_Game);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (this.IsPlayerAskToExit())
+            if (IsPlayerAskToExit())
             {
-                this.Game.Exit();
+                Game.Exit();
             }
         }
 
@@ -52,26 +52,26 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             bool IsPlayerAskToExit;
 
-            if (this.m_InputManager == null)
+            if (m_InputManager == null)
             {
-                this.m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
+                m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
             }
 
-            IsPlayerAskToExit = this.m_InputManager.KeyboardState.IsKeyDown(Keys.Escape);
+            IsPlayerAskToExit = m_InputManager.KeyboardState.IsKeyDown(Keys.Escape);
           
             return IsPlayerAskToExit;
         }
 
         public List<Player> Players
         {
-            get { return this.m_Players; }
-            set { this.m_Players = value; }
+            get { return m_Players; }
+            set { m_Players = value; }
         }
 
         private void player_Died(object sender, EventArgs e)
         {
             bool gameIsOver = true;
-            foreach(Player player in this.m_Players)
+            foreach(Player player in m_Players)
             {
                 if(player.Souls.Count != 0)
                 {
@@ -82,8 +82,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (gameIsOver)
             {
-                this.m_Winner = this.getWinner();
-                this.ShowGameOverMessage();
+                m_Winner = getWinner();
+                ShowGameOverMessage();
                 this.m_Game.Exit();
             }
         }
@@ -92,11 +92,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             PlayerIndex? winner;
 
-            if(this.Players[(int)PlayerIndex.One].Score > this.Players[(int)PlayerIndex.Two].Score)
+            if(Players[(int)PlayerIndex.One].Score > Players[(int)PlayerIndex.Two].Score)
             {
                 winner = PlayerIndex.One;
             }
-            else if(this.Players[(int)PlayerIndex.One].Score == this.Players[(int)PlayerIndex.Two].Score)
+            else if(Players[(int)PlayerIndex.One].Score == Players[(int)PlayerIndex.Two].Score)
             {
                 winner = null;
             }
@@ -110,7 +110,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
         {
-            Player player = this.m_Players[(int)i_PlayerIndex];
+            Player player = m_Players[(int)i_PlayerIndex];
 
             player.Score = (int)MathHelper.Clamp(player.Score + (int)eScoreValue.Soul, 0, float.PositiveInfinity);
             player.Souls.First().Visible = false;

@@ -7,13 +7,13 @@ namespace Infrastructure
         public GameService(Game i_Game, int i_UpdateOrder)
           : base(i_Game, i_UpdateOrder)
         {
-            this.RegisterAsService(); 
+            RegisterAsService(); 
         }
 
         public GameService(Game i_Game)
             : base(i_Game)
         {
-            this.RegisterAsService();
+            RegisterAsService();
         }
 
         protected virtual void RegisterAsService()

@@ -13,8 +13,8 @@ namespace Infrastructure
 
         public TimeSpan ShrinkLength
         {
-            get { return this.m_ShrinkLength; }
-            set { this.m_ShrinkLength = value; }
+            get { return m_ShrinkLength; }
+            set { m_ShrinkLength = value; }
         }
 
         public ShrinkAnimator(string i_Name, TimeSpan i_AnimationLength)
@@ -25,15 +25,15 @@ namespace Infrastructure
         public ShrinkAnimator(TimeSpan i_AnimationLength)
             : base("Shrinker", i_AnimationLength)
         {
-            this.m_ShrinkLength = i_AnimationLength;
+            m_ShrinkLength = i_AnimationLength;
         }
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            TimeSpan currSize = this.m_ShrinkLength;
+            TimeSpan currSize = m_ShrinkLength;
             currSize -= i_GameTime.ElapsedGameTime;
 
-            this.BoundSprite.Scales *= new Vector2((float)currSize.TotalSeconds / (float)this.m_ShrinkLength.TotalSeconds);
+            this.BoundSprite.Scales *= new Vector2((float)currSize.TotalSeconds / (float)m_ShrinkLength.TotalSeconds);
         }
 
         protected override void RevertToOriginal()

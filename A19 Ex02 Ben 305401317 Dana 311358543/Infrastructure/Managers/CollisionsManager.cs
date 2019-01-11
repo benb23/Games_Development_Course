@@ -24,10 +24,10 @@ namespace Infrastructure
             if (!this.m_Collidables.Contains(i_Collidable))
             {
                 this.m_Collidables.Add(i_Collidable);
-                i_Collidable.PositionChanged += this.collidable_Changed;
-                i_Collidable.SizeChanged += this.collidable_Changed;
-                i_Collidable.VisibleChanged += this.collidable_Changed;
-                i_Collidable.Disposed += this.collidable_Disposed;
+                i_Collidable.PositionChanged += collidable_Changed;
+                i_Collidable.SizeChanged += collidable_Changed;
+                i_Collidable.VisibleChanged += collidable_Changed;
+                i_Collidable.Disposed += collidable_Disposed;
             }
         }
 
@@ -39,21 +39,20 @@ namespace Infrastructure
                 &&
                 this.m_Collidables.Contains(collidable))
             {
-                collidable.PositionChanged -= this.collidable_Changed;
-                collidable.SizeChanged -= this.collidable_Changed;
-                collidable.VisibleChanged -= this.collidable_Changed;
-                collidable.Disposed -= this.collidable_Disposed;
+                collidable.PositionChanged -= collidable_Changed;
+                collidable.SizeChanged -= collidable_Changed;
+                collidable.VisibleChanged -= collidable_Changed;
+                collidable.Disposed -= collidable_Disposed;
 
-                this.m_Collidables.Remove(collidable);
+                m_Collidables.Remove(collidable);
             }
         }
 
         private void collidable_Changed(object sender, EventArgs e)
         {
             if (sender is ICollidable)
-            {
-                // to be on the safe side :)
-                this.checkCollision(sender as ICollidable);
+            {// to be on the safe side :)
+                checkCollision(sender as ICollidable);
             }
         }
 
@@ -64,7 +63,7 @@ namespace Infrastructure
                 List<ICollidable> collidedComponents = new List<ICollidable>();
 
                 // finding who collided with i_Source:
-                foreach (ICollidable target in this.m_Collidables)
+                foreach (ICollidable target in m_Collidables)
                 {
                     if (i_Source != target && target.Visible)
                     {

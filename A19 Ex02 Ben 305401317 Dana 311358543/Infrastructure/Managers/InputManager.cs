@@ -1,7 +1,7 @@
 ﻿ ///*** Guy Ronen (c) 2008-2011 ***//
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Text;
 
 namespace Infrastructure
 {
@@ -11,42 +11,42 @@ namespace Infrastructure
 
         public KeyboardState PrevKeyboardState
         {
-            get { return this.m_PrevKeyboardState; }
+            get { return m_PrevKeyboardState; }
         }
 
         private KeyboardState m_KeyboardState;
 
         public KeyboardState KeyboardState
         {
-            get { return this.m_KeyboardState; }
+            get { return m_KeyboardState; }
         }
 
         private MouseState m_PrevMouseState;
 
         public MouseState PrevMouseState
         {
-            get { return this.m_PrevMouseState; }
+            get { return m_PrevMouseState; }
         }
 
         private MouseState m_MouseState;
 
         public MouseState MouseState
         {
-            get { return this.m_MouseState; }
+            get { return m_MouseState; }
         }
 
         private GamePadState m_PrevGamePadState;
 
         public GamePadState PrevGamePadState
         {
-            get { return this.m_PrevGamePadState; }
+            get { return m_PrevGamePadState; }
         }
 
         private GamePadState m_GamePadState;
 
         public GamePadState GamePadState
         {
-            get { return this.m_GamePadState; }
+            get { return m_GamePadState; }
         }
 
         public InputManager(Game i_Game)
@@ -61,14 +61,14 @@ namespace Infrastructure
         /// </summary>
         public override void Initialize()
         {
-            this.m_PrevKeyboardState = Keyboard.GetState();
-            this.m_KeyboardState = this.m_PrevKeyboardState;
+            m_PrevKeyboardState = Keyboard.GetState();
+            m_KeyboardState = m_PrevKeyboardState;
 
-            this.m_PrevMouseState = Mouse.GetState();
-            this.m_MouseState = this.m_PrevMouseState;
+            m_PrevMouseState = Mouse.GetState();
+            m_MouseState = m_PrevMouseState;
 
-            this.m_PrevGamePadState = GamePad.GetState(PlayerIndex.One);
-            this.m_GamePadState = this.m_PrevGamePadState;
+            m_PrevGamePadState = GamePad.GetState(PlayerIndex.One);
+            m_GamePadState = m_PrevGamePadState;
         }
 
         protected override void RegisterAsService()
@@ -82,14 +82,14 @@ namespace Infrastructure
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            this.m_PrevKeyboardState = this.m_KeyboardState;
-            this.m_KeyboardState = Keyboard.GetState();
+            m_PrevKeyboardState = m_KeyboardState;
+            m_KeyboardState = Keyboard.GetState();
 
-            this.m_PrevMouseState = this.m_MouseState;
-            this.m_MouseState = Mouse.GetState();
+            m_PrevMouseState = m_MouseState;
+            m_MouseState = Mouse.GetState();
 
-            this.m_PrevGamePadState = this.m_GamePadState;
-            this.m_GamePadState = GamePad.GetState(PlayerIndex.One);
+            m_PrevGamePadState = m_GamePadState;
+            m_GamePadState = GamePad.GetState(PlayerIndex.One);
         }
 
         #region Keyboard Services
@@ -100,7 +100,7 @@ namespace Infrastructure
         /// <returns>Returns true if held.</returns>
         public bool KeyHeld(Keys i_Key)
         {
-            return this.m_KeyboardState.IsKeyDown(i_Key) && this.m_PrevKeyboardState.IsKeyDown(i_Key);
+            return (m_KeyboardState.IsKeyDown(i_Key) && m_PrevKeyboardState.IsKeyDown(i_Key));
         }
 
         /// <summary>
@@ -110,10 +110,10 @@ namespace Infrastructure
         /// <returns>Return true if so.</returns>
         public bool KeyReleased(Keys i_Key)
         {
-            return 
-                this.m_PrevKeyboardState.IsKeyDown(i_Key)
+            return (
+                m_PrevKeyboardState.IsKeyDown(i_Key)
                 &&
-                this.m_KeyboardState.IsKeyUp(i_Key);
+                m_KeyboardState.IsKeyUp(i_Key));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Infrastructure
         /// <returns>Return true if so.</returns>
         public bool KeyPressed(Keys i_Key)
         {
-            return this.m_PrevKeyboardState.IsKeyUp(i_Key) && this.m_KeyboardState.IsKeyDown(i_Key);
+            return (m_PrevKeyboardState.IsKeyUp(i_Key) && m_KeyboardState.IsKeyDown(i_Key));
         }
         #endregion Keyboard Services
 
@@ -142,7 +142,7 @@ namespace Infrastructure
         {
             const bool v_OneIsEnough = true;
 
-            return this.ButtonStateChanged(i_Buttons, ButtonState.Pressed, v_OneIsEnough);
+            return ButtonStateChanged(i_Buttons, ButtonState.Pressed, v_OneIsEnough);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Infrastructure
         {
             const bool v_OneIsEnough = true;
 
-            return this.ButtonStateChanged(i_Buttons, ButtonState.Released, v_OneIsEnough);
+            return ButtonStateChanged(i_Buttons, ButtonState.Released, v_OneIsEnough);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Infrastructure
         {
             const bool v_OneIsEnough = true;
 
-            return this.ButtonStateChanged(i_Buttons, ButtonState.Pressed, !v_OneIsEnough);
+            return ButtonStateChanged(i_Buttons, ButtonState.Pressed, !v_OneIsEnough);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Infrastructure
         {
             const bool v_OneIsEnough = true;
 
-            return this.ButtonStateChanged(i_Buttons, ButtonState.Released, !v_OneIsEnough);
+            return ButtonStateChanged(i_Buttons, ButtonState.Released, !v_OneIsEnough);
         }
 
         /// <summary>
@@ -214,22 +214,22 @@ namespace Infrastructure
         {
             const bool v_OneIsEnough = true;
 
-            return this.ButtonStateChanged(i_Buttons, ButtonState.Released, v_OneIsEnough)
+            return ButtonStateChanged(i_Buttons, ButtonState.Released, v_OneIsEnough)
                 ||
-                this.ButtonStateChanged(i_Buttons, ButtonState.Pressed, v_OneIsEnough);
+                ButtonStateChanged(i_Buttons, ButtonState.Pressed, v_OneIsEnough);
         }
 
         private bool ButtonStateChanged(eInputButtons i_Buttons, ButtonState i_ButtonState, bool i_IsOneEnough)
         {
             const bool v_CheckChanged = true;
 
-            return this.checkButtonsState(i_Buttons, i_ButtonState, i_IsOneEnough, v_CheckChanged);
+            return checkButtonsState(i_Buttons, i_ButtonState, i_IsOneEnough, v_CheckChanged);
         }
 
         private bool checkButtonsState(eInputButtons i_Buttons, ButtonState i_ButtonState, bool i_IsOneEnough)
         {
             const bool v_CheckChanged = true;
-            return this.checkButtonsState(i_Buttons, i_ButtonState, i_IsOneEnough, !v_CheckChanged);
+            return checkButtonsState(i_Buttons, i_ButtonState, i_IsOneEnough, !v_CheckChanged);
         }
 
         private bool checkButtonsState(eInputButtons i_Buttons, ButtonState i_ButtonState, bool i_IsOneEnough, bool i_CheckChanged)
@@ -247,8 +247,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.A) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.A)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.A));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.A)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.A));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -257,8 +257,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.B) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.B)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.B));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.B)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.B));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -267,8 +267,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.X) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.X)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.X));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.X)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.X));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -277,8 +277,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.Y) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.Y)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.Y));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.Y)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.Y));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -287,8 +287,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.DPadDown) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.DPadDown)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.DPadDown));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.DPadDown)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.DPadDown));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -297,8 +297,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.DPadUp) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.DPadUp)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.DPadUp));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.DPadUp)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.DPadUp));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -307,8 +307,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.DPadLeft) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.DPadLeft)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.DPadLeft));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.DPadLeft)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.DPadLeft));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -317,8 +317,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.DPadRight) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.DPadRight)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.DPadRight));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.DPadRight)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.DPadRight));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -327,8 +327,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.Back) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.Back)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.Back));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.Back)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.Back));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -337,8 +337,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.Start) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.Start)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.Start));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.Start)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.Start));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -347,8 +347,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.LeftShoulder) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.LeftShoulder)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.LeftShoulder));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.LeftShoulder)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.LeftShoulder));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -357,8 +357,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.RightShoulder) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.RightShoulder)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.RightShoulder));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.RightShoulder)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.RightShoulder));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -367,8 +367,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.LeftStick) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.LeftStick)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.LeftStick));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.LeftStick)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.LeftStick));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -377,8 +377,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.RightStick) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.RightStick)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.RightStick));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.RightStick)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.RightStick));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -387,8 +387,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.LeftThumbstickDown) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.LeftThumbstickDown)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.LeftThumbstickDown));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.LeftThumbstickDown)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.LeftThumbstickDown));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -397,8 +397,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.LeftThumbstickUp) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.LeftThumbstickUp)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.LeftThumbstickUp));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.LeftThumbstickUp)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.LeftThumbstickUp));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -407,8 +407,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.LeftThumbstickLeft) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.LeftThumbstickLeft)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.LeftThumbstickLeft));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.LeftThumbstickLeft)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.LeftThumbstickLeft));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -416,8 +416,8 @@ namespace Infrastructure
 
             if ((i_Buttons & eInputButtons.LeftThumbstickRight) != 0)
             {
-                currCheck = checkRelease == this.m_GamePadState.IsButtonUp(Buttons.LeftThumbstickRight)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.LeftThumbstickRight));
+                currCheck = checkRelease == m_GamePadState.IsButtonUp(Buttons.LeftThumbstickRight)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.LeftThumbstickRight));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -426,8 +426,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.RightThumbstickDown) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.RightThumbstickDown)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.RightThumbstickDown));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.RightThumbstickDown)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.RightThumbstickDown));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -436,8 +436,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.RightThumbstickUp) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.RightThumbstickUp)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.RightThumbstickUp));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.RightThumbstickUp)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.RightThumbstickUp));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -446,8 +446,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.RightThumbstickLeft) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.RightThumbstickLeft)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.RightThumbstickLeft));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.RightThumbstickLeft)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.RightThumbstickLeft));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -456,8 +456,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.RightThumbstickRight) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.RightThumbstickRight)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.RightThumbstickRight));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.RightThumbstickRight)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.RightThumbstickRight));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -466,8 +466,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.LeftTrigger) != 0)
             {
                 currCheck =
-                    checkRelease == this.m_GamePadState.IsButtonUp(Buttons.LeftTrigger)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.LeftTrigger));
+                    checkRelease == m_GamePadState.IsButtonUp(Buttons.LeftTrigger)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.LeftTrigger));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -476,8 +476,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.RightTrigger) != 0)
             {
                 currCheck =
-                     checkRelease == this.m_GamePadState.IsButtonUp(Buttons.RightTrigger)
-                    && (!i_CheckChanged || checkRelease != this.m_PrevGamePadState.IsButtonUp(Buttons.RightTrigger));
+                     checkRelease == m_GamePadState.IsButtonUp(Buttons.RightTrigger)
+                    && (!i_CheckChanged || checkRelease != m_PrevGamePadState.IsButtonUp(Buttons.RightTrigger));
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -488,8 +488,8 @@ namespace Infrastructure
             if ((i_Buttons & eInputButtons.Left) != 0)
             {
                 currCheck =
-                    this.m_MouseState.LeftButton == currState
-                    && ((this.m_PrevMouseState.LeftButton == prevState) || !i_CheckChanged);
+                    m_MouseState.LeftButton == currState
+                    && ((m_PrevMouseState.LeftButton == prevState) || !i_CheckChanged);
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -497,8 +497,8 @@ namespace Infrastructure
             else if ((i_Buttons & eInputButtons.Middle) != 0)
             {
                 currCheck =
-                    this.m_MouseState.MiddleButton == currState
-                    && ((this.m_PrevMouseState.MiddleButton == prevState) || !i_CheckChanged);
+                    m_MouseState.MiddleButton == currState
+                    && ((m_PrevMouseState.MiddleButton == prevState) || !i_CheckChanged);
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -506,8 +506,8 @@ namespace Infrastructure
             else if ((i_Buttons & eInputButtons.Right) != 0)
             {
                 currCheck =
-                    this.m_MouseState.RightButton == currState
-                    && ((this.m_PrevMouseState.RightButton == prevState) || !i_CheckChanged);
+                    m_MouseState.RightButton == currState
+                    && ((m_PrevMouseState.RightButton == prevState) || !i_CheckChanged);
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -515,8 +515,8 @@ namespace Infrastructure
             else if ((i_Buttons & eInputButtons.XButton1) != 0)
             {
                 currCheck =
-                    this.m_MouseState.XButton1 == currState
-                    && ((this.m_PrevMouseState.XButton1 == prevState) || !i_CheckChanged);
+                    m_MouseState.XButton1 == currState
+                    && ((m_PrevMouseState.XButton1 == prevState) || !i_CheckChanged);
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -524,8 +524,8 @@ namespace Infrastructure
             else if ((i_Buttons & eInputButtons.XButton2) != 0)
             {
                 currCheck =
-                    this.m_MouseState.XButton2 == currState
-                    && ((this.m_PrevMouseState.XButton2 == prevState) || !i_CheckChanged);
+                    m_MouseState.XButton2 == currState
+                    && ((m_PrevMouseState.XButton2 == prevState) || !i_CheckChanged);
 
                 atLeastOneIsTrue |= currCheck;
                 allTrue &= currCheck;
@@ -546,7 +546,7 @@ namespace Infrastructure
         public bool ButtonIsDown(eInputButtons i_MouseButtons)
         {
             const bool v_OneIsEnough = true;
-            return this.checkButtonsState(i_MouseButtons, ButtonState.Pressed, v_OneIsEnough);
+            return checkButtonsState(i_MouseButtons, ButtonState.Pressed, v_OneIsEnough);
         }
 
         /// <summary>
@@ -560,7 +560,7 @@ namespace Infrastructure
         public bool ButtonsAreDown(eInputButtons i_MouseButtons)
         {
             const bool v_OneIsEnough = true;
-            return this.checkButtonsState(i_MouseButtons, ButtonState.Pressed, !v_OneIsEnough);
+            return checkButtonsState(i_MouseButtons, ButtonState.Pressed, !v_OneIsEnough);
         }
 
         /// <summary>
@@ -574,7 +574,7 @@ namespace Infrastructure
         public bool ButtonIsUp(eInputButtons i_MouseButtons)
         {
             const bool v_OneIsEnough = true;
-            return this.checkButtonsState(i_MouseButtons, ButtonState.Released, v_OneIsEnough);
+            return checkButtonsState(i_MouseButtons, ButtonState.Released, v_OneIsEnough);
         }
 
         /// <summary>
@@ -588,7 +588,7 @@ namespace Infrastructure
         public bool ButtonsAreUp(eInputButtons i_MouseButtons)
         {
             const bool v_OneIsEnough = true;
-            return this.checkButtonsState(i_MouseButtons, ButtonState.Released, !v_OneIsEnough);
+            return checkButtonsState(i_MouseButtons, ButtonState.Released, !v_OneIsEnough);
         }
 
         public Vector2 MousePositionDelta
@@ -596,14 +596,14 @@ namespace Infrastructure
             get
             {
                 return new Vector2(
-                    (float)(this.m_MouseState.X - this.m_PrevMouseState.X),
-                    (float)(this.m_MouseState.Y - this.m_PrevMouseState.Y));
+                    (float)(m_MouseState.X - m_PrevMouseState.X),
+                    (float)(m_MouseState.Y - m_PrevMouseState.Y));
             }
         }
 
         public int ScrollWheelDelta
         {
-            get { return this.m_MouseState.ScrollWheelValue - this.m_PrevMouseState.ScrollWheelValue; }
+            get { return m_MouseState.ScrollWheelValue - m_PrevMouseState.ScrollWheelValue; }
         }
 
         public Vector2 LeftThumbDelta
@@ -611,8 +611,8 @@ namespace Infrastructure
             get
             {
                 return new Vector2(
-                    this.m_GamePadState.ThumbSticks.Left.X - this.m_PrevGamePadState.ThumbSticks.Left.X,
-                    this.m_GamePadState.ThumbSticks.Left.Y - this.m_PrevGamePadState.ThumbSticks.Left.Y);
+                    m_GamePadState.ThumbSticks.Left.X - m_PrevGamePadState.ThumbSticks.Left.X,
+                    m_GamePadState.ThumbSticks.Left.Y - m_PrevGamePadState.ThumbSticks.Left.Y);
             }
         }
 
@@ -621,26 +621,26 @@ namespace Infrastructure
             get
             {
                 return new Vector2(
-                    this.m_GamePadState.ThumbSticks.Right.X - this.m_PrevGamePadState.ThumbSticks.Right.X,
-                    this.m_GamePadState.ThumbSticks.Right.Y - this.m_PrevGamePadState.ThumbSticks.Right.Y);
+                    m_GamePadState.ThumbSticks.Right.X - m_PrevGamePadState.ThumbSticks.Right.X,
+                    m_GamePadState.ThumbSticks.Right.Y - m_PrevGamePadState.ThumbSticks.Right.Y);
             }
         }
 
         public float LeftTrigerDelta
         {
-            get { return this.m_GamePadState.Triggers.Left - this.m_PrevGamePadState.Triggers.Left; }
+            get { return m_GamePadState.Triggers.Left - m_PrevGamePadState.Triggers.Left; }
         }
 
         public float RightTrigerDelta
         {
-            get { return this.m_GamePadState.Triggers.Right - this.m_PrevGamePadState.Triggers.Right; }
+            get { return m_GamePadState.Triggers.Right - m_PrevGamePadState.Triggers.Right; }
         }
 
         public string PressedKeys
         {
             get
             {
-                Keys[] pressedKeys = this.m_KeyboardState.GetPressedKeys();
+                Keys[] pressedKeys = m_KeyboardState.GetPressedKeys();
                 string keys = string.Empty;
 
                 if (pressedKeys.Length > 0)
@@ -666,8 +666,7 @@ namespace Infrastructure
 
         public override string ToString()
         {
-            string status = string.Format(
-@"
+            string status = string.Format(@"
 Keyboard.PressedKeys:       {18}
 
 GamePad.IsConnected:        {0}
@@ -690,25 +689,27 @@ Mouse.XButton2:     {15}
 ScrollWheelValue:   {16}
 ScrollWheelDelta:   {17}
 ",
- this.m_GamePadState.IsConnected,
- this.m_GamePadState.ThumbSticks.Left,
- this.m_GamePadState.ThumbSticks.Right,
- this.m_GamePadState.Triggers.Left,
- this.m_GamePadState.Triggers.Right,
- this.m_GamePadState.DPad,
- this.m_GamePadState.Buttons,
- this.m_GamePadState.PacketNumber,
- this.m_MouseState.X,
- this.m_MouseState.Y,
- this.MousePositionDelta,
- this.m_MouseState.LeftButton,
- this.m_MouseState.MiddleButton,
- this.m_MouseState.RightButton,
- this.m_MouseState.XButton1,
- this.m_MouseState.XButton2,
- this.m_MouseState.ScrollWheelValue,
- this.ScrollWheelDelta,
- this.PressedKeys);
+ m_GamePadState.IsConnected,
+ m_GamePadState.ThumbSticks.Left,
+ m_GamePadState.ThumbSticks.Right,
+ m_GamePadState.Triggers.Left,
+ m_GamePadState.Triggers.Right,
+ m_GamePadState.DPad,
+ m_GamePadState.Buttons,
+ m_GamePadState.PacketNumber,
+
+ m_MouseState.X,
+ m_MouseState.Y,
+ MousePositionDelta,
+ m_MouseState.LeftButton,
+ m_MouseState.MiddleButton,
+ m_MouseState.RightButton,
+ m_MouseState.XButton1,
+ m_MouseState.XButton2,
+ m_MouseState.ScrollWheelValue,
+ ScrollWheelDelta,
+ PressedKeys
+ );
             return status;
         }
     }

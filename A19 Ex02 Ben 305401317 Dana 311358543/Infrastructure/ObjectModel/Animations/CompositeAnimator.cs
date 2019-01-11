@@ -37,23 +37,23 @@ namespace Infrastructure
         public void Add(SpriteAnimator i_Animation)
         {
             i_Animation.BoundSprite = this.BoundSprite;
-            if (this.Name != "AnimationsManager")
+            if (Name != "AnimationsManager")
             {
                 i_Animation.Enabled = true;
             }
 
-            this.m_AnimationsDictionary.Add(i_Animation.Name, i_Animation);
-            this.m_AnimationsList.Add(i_Animation);
+            m_AnimationsDictionary.Add(i_Animation.Name, i_Animation);
+            m_AnimationsList.Add(i_Animation);
         }
 
         public void Remove(string i_AnimationName)
         {
             SpriteAnimator animationToRemove;
-            this.m_AnimationsDictionary.TryGetValue(i_AnimationName, out animationToRemove);
+            m_AnimationsDictionary.TryGetValue(i_AnimationName, out animationToRemove);
             if (animationToRemove != null)
             {
-                this.m_AnimationsDictionary.Remove(i_AnimationName);
-                this.m_AnimationsList.Remove(animationToRemove);
+                m_AnimationsDictionary.Remove(i_AnimationName);
+                m_AnimationsList.Remove(animationToRemove);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Infrastructure
             get
             {
                 SpriteAnimator retVal = null;
-                this.m_AnimationsDictionary.TryGetValue(i_Name, out retVal);
+                m_AnimationsDictionary.TryGetValue(i_Name, out retVal);
                 return retVal;
             }
         }
@@ -71,7 +71,7 @@ namespace Infrastructure
         {
             base.Restart();
 
-            foreach (SpriteAnimator animation in this.m_AnimationsList)
+            foreach (SpriteAnimator animation in m_AnimationsList)
             {
                 animation.Restart();
             }
@@ -81,7 +81,7 @@ namespace Infrastructure
         {
             base.Restart(i_AnimationLength);
 
-            foreach (SpriteAnimator animation in this.m_AnimationsList)
+            foreach (SpriteAnimator animation in m_AnimationsList)
             {
                 animation.Restart();
             }
@@ -89,7 +89,7 @@ namespace Infrastructure
 
         protected override void RevertToOriginal()
         {
-            foreach (SpriteAnimator animation in this.m_AnimationsList)
+            foreach (SpriteAnimator animation in m_AnimationsList)
             {
                 animation.Reset();
             }
@@ -99,15 +99,15 @@ namespace Infrastructure
         {
             base.CloneSpriteInfo();
 
-            foreach (SpriteAnimator animation in this.m_AnimationsList)
+            foreach (SpriteAnimator animation in m_AnimationsList)
             {
-                animation.m_OriginalSpriteInfo = this.m_OriginalSpriteInfo;
+                animation.m_OriginalSpriteInfo = m_OriginalSpriteInfo;
             }
         }
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            foreach (SpriteAnimator animation in this.m_AnimationsList)
+            foreach (SpriteAnimator animation in m_AnimationsList)
             {
                 animation.Update(i_GameTime);
             }
