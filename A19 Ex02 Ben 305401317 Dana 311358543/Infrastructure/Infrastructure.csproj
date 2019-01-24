@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IScreensMananger.cs" />
+    <Compile Include="Managers\DummyInputManager.cs" />
+    <Compile Include="Managers\ScreenManager.cs" />
     <Compile Include="ObjectModel\CollidableSprite.cs" />
     <Compile Include="Interfaces\ICollidable.cs" />
     <Compile Include="Interfaces\ICollisionsManager.cs" />
@@ -62,6 +65,8 @@
     <Compile Include="ObjectModel\GameService.cs" />
     <Compile Include="ObjectModel\RegisteredComponent.cs" />
     <Compile Include="ObjectModel\Sprite.cs" />
+    <Compile Include="ObjectModel\CompositeDrawableComponent.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

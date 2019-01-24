@@ -50,6 +50,14 @@
     <Compile Include="Interfaces\ISpaceInvadersEngine.cs" />
     <Compile Include="Managers\SpaceInvadersEngine.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Screens\GameOverScreen.cs" />
+    <Compile Include="Screens\LevelTransitionScreencs.cs" />
+    <Compile Include="Screens\MainMenuScreen.cs" />
+    <Compile Include="Screens\PauseScreen.cs" />
+    <Compile Include="Screens\PlayScreen.cs" />
+    <Compile Include="Screens\SettingsScreen.cs" />
+    <Compile Include="Screens\SoundSettingsScreen.cs" />
+    <Compile Include="Screens\WelcomeScreen.cs" />
     <Compile Include="SpaceInvaders.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -16,7 +16,7 @@ namespace Infrastructure
         : base(i_Game)
         {
             this.UpdateOrder = i_UpdateOrder;
-            Game.Components.Add(this); // self-register as a coponent
+            i_Game.Components.Add(this); // self-register as a coponent
         }
 
         public RegisteredComponent(Game i_Game)

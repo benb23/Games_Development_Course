@@ -14,10 +14,10 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class Player : RegisteredComponent, IScoreable
+    public class Player : GameComponent, IScoreable
     {
         private const int k_NumOfSouls = 3;
-        private Game m_Game;
+        private GameScreen m_GameScreen;
         private IInputManager m_InputManager;
         private bool m_IsAllowedToUseMouse;
         private Keys m_RightMoveKey;
@@ -51,8 +51,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_Score = value; }
         }
 
-        public Player(Game i_Game, PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey, bool i_IsAllowdToUseMouse, Vector2 initialPosition)
-            : base(i_Game)
+        public Player(GameScreen i_GameScreen, PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey, bool i_IsAllowdToUseMouse, Vector2 initialPosition)
+            : base(i_GameScreen.Game)
         {
             m_Souls = new List<Soul>(k_NumOfSouls);
             m_LeftMoveKey = i_LeftKey;
@@ -60,16 +60,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_ShootKey = i_ShootKey;
             m_IsAllowedToUseMouse = i_IsAllowdToUseMouse;
             m_PlayerType = i_PlayerType;
-            m_Game = i_Game;
+            m_GameScreen = i_GameScreen;
             createSpaceShip(i_PlayerType);
             m_CurrentSoulsNumber = m_Souls.Capacity;
+            i_GameScreen.Add(this);
         }
 
         public override void Update(GameTime i_GameTime)
         {
             if(!m_Initialized)
             {
-                m_SpaceShip.Position = new Vector2(((int)m_PlayerType * m_SpaceShip.Texture.Width / 2) + m_SpaceShip.Texture.Width, m_Game.GraphicsDevice.Viewport.Height);
+                m_SpaceShip.Position = new Vector2(((int)m_PlayerType * m_SpaceShip.Texture.Width / 2) + m_SpaceShip.Texture.Width, Game.GraphicsDevice.Viewport.Height);
                 m_Initialized = true;
             }
 
@@ -86,7 +87,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_CurrentSoulsNumber = m_Souls.Count;
-            m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, m_Game.GraphicsDevice.Viewport.Width - (m_SpaceShip.Texture.Width / 2)), m_SpaceShip.Position.Y);
+            m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, Game.GraphicsDevice.Viewport.Width - (m_SpaceShip.Texture.Width / 2)), m_SpaceShip.Position.Y);
         }
 
         private bool isPlayerAskedToShoot(Keys i_shootKey)
@@ -123,11 +124,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(i_PlayerType == PlayerIndex.One)
             {
-                m_SpaceShip = new SpaceShip(m_Game, @"Sprites\Ship01_32x32", Bullet.eBulletType.PlayerOneBullet, PlayerIndex.One);
+                m_SpaceShip = new SpaceShip(m_GameScreen, @"Sprites\Ship01_32x32", Bullet.eBulletType.PlayerOneBullet, PlayerIndex.One);
             }
             else
             {
-                m_SpaceShip = new SpaceShip(m_Game, @"Sprites\Ship02_32x32", Bullet.eBulletType.PlayerTwoBullet, PlayerIndex.Two);
+                m_SpaceShip = new SpaceShip(m_GameScreen, @"Sprites\Ship02_32x32", Bullet.eBulletType.PlayerTwoBullet, PlayerIndex.Two);
             }
         }
 
@@ -141,7 +142,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             for (int i = 0; i < m_Souls.Capacity; i++)
             {
-                this.m_Souls.Add(new Soul(Game, new Vector2(0.5f), 0.5f, SpaceShip.AssetName, m_PlayerType, i));
+                this.m_Souls.Add(new Soul(m_GameScreen, new Vector2(0.5f), 0.5f, SpaceShip.AssetName, m_PlayerType, i));
             }
 
             if (m_InputManager == null)

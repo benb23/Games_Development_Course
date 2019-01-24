@@ -23,7 +23,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         private bool m_OnMove = false;
 
-        public MotherSpaceShip(Game i_Game) : base(k_AssteName, i_Game)
+        public MotherSpaceShip(GameScreen i_GameScreen) : base(k_AssteName, i_GameScreen)
 		{
             this.m_TintColor = Color.Red;
             this.Velocity = new Vector2(40, 0);

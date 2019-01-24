@@ -42,7 +42,7 @@ namespace Infrastructure
             get { return m_CollidedPixelsIndex; }
         }
 
-        public CollidableSprite(string i_AssetName, Game i_Game) : base(i_AssetName, i_Game)
+        public CollidableSprite(string i_AssetName, GameScreen i_GameScreen) : base(i_AssetName, i_GameScreen)
         {
             m_CollidedPixelsPositions = new List<Vector2>();
             m_CollidedPixelsIndex = new List<Vector2>();

@@ -33,10 +33,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private List<Player> m_Players;
         private ScoreBoardHeader m_ScoreBoard;
         
-        public SpaceInvadersEngine(Game i_Game) : base(i_Game)
+        public SpaceInvadersEngine(GameScreen i_GameScreen) : base(i_GameScreen.Game)
         {
-            this.m_Game = i_Game;
-            m_ScoreBoard = new ScoreBoardHeader(i_Game);
+            this.m_Game = i_GameScreen.Game;
+            m_ScoreBoard = new ScoreBoardHeader(i_GameScreen);
         }
 
         public override void Update(GameTime gameTime)

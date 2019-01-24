@@ -20,8 +20,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         private Vector2 m_StartingPosition;
         
-        public Wall(Game i_Game)
-            : base(k_AssteName, i_Game)
+        public Wall(GameScreen i_GameScreen)
+            : base(k_AssteName, i_GameScreen)
         {
             this.m_Velocity = new Vector2(45, 0);
         }

@@ -13,30 +13,33 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class WallsGroup : RegisteredComponent
+    public class WallsGroup : GameComponent
     {
         private bool m_Initialize;
         private int m_NumOfWalls;
         private List<Wall> m_Walls;
         private Vector2 m_GroupPosition;
         private float m_GroupYShift;
+        private GameScreen m_GameScreen;
 
         public float WallsYShift
         {
             set { this.m_GroupYShift = value; }
         }
  
-        public WallsGroup(Game i_Game, int i_numOfWalls) : base(i_Game)
+        public WallsGroup(GameScreen i_GameScreen, int i_numOfWalls) : base(i_GameScreen.Game)
         {
+            this.m_GameScreen = i_GameScreen;
             this.m_NumOfWalls = i_numOfWalls;
             this.m_Walls = new List<Wall>(this.m_NumOfWalls);
+            i_GameScreen.Add(this);
         }
 
         public override void Initialize()
         {
             for (int i = 0; i < this.m_NumOfWalls; i++)
             {
-                this.m_Walls.Add(new Wall(Game));
+                this.m_Walls.Add(new Wall(m_GameScreen));
             }
 
             base.Initialize();

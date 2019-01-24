@@ -14,7 +14,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    class EnemiesGroup : RegisteredComponent
+    class EnemiesGroup : GameComponent
     {
         public enum eDirection
         {
@@ -34,10 +34,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private ISpaceInvadersEngine m_GameEngine;
+        private GameScreen m_GameScreen;
 
-        public EnemiesGroup(Game i_Game) : base(i_Game)
+        public EnemiesGroup(GameScreen i_GameScreen) : base(i_GameScreen.Game)
         {
+            m_GameScreen = i_GameScreen;
             this.m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
+            i_GameScreen.Add(this);
         }
 
         public override void Update(GameTime i_GameTime)
@@ -67,6 +70,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             cheackGameOver();
+        }
+
+        public void AddEnemiesToScreenComponentd(GameScreen i_GameScreen)
+        {
+            foreach(Enemy enemy in m_EnemiesMatrix)
+            {
+                i_GameScreen.Add(enemy);
+            }
         }
 
         private bool cheackGameOver()
@@ -134,7 +145,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
-                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(Game, i_Tint, i_StartSqureIndex, i_Row, colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
+                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(m_GameScreen, i_Tint, i_StartSqureIndex, i_Row, colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
                 m_AliveEnemiesByRow.Add(m_EnemiesMatrix[i_Row, colum]);
                 m_EnemiesMatrix[i_Row, colum].m_Toggeler = i_Toggeler;
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.updateAliveLists;
@@ -237,5 +248,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_TimeUntilNextStepInSec -= this.m_TimeUntilNextStepInSec * i_TimeToIncrease;
         }
+
     }
 }

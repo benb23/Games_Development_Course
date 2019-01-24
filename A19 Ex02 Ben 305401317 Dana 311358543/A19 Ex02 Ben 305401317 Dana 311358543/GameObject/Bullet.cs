@@ -27,7 +27,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Vector2 k_BulletVelocity = new Vector2(0, 155);
         private eBulletType m_Type;
 
-        public Bullet(Game i_Game, eBulletType i_BulletType) : base(k_AssteName, i_Game)
+        public Bullet(GameScreen i_GameScreen, eBulletType i_BulletType) : base(k_AssteName, i_GameScreen)
         {
             this.m_Type = i_BulletType;
 

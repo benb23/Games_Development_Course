@@ -21,8 +21,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private int m_SoulIndx;
         private PlayerIndex m_SoulOwner;
 
-        public Soul(Game i_Game, Vector2 i_Scale, float i_Opacity, string i_AssteName, PlayerIndex i_SoulOwner, int i_SoulIndex)
-            : base(i_AssteName, i_Game)
+        public Soul(GameScreen i_GameScreen, Vector2 i_Scale, float i_Opacity, string i_AssteName, PlayerIndex i_SoulOwner, int i_SoulIndex)
+            : base(i_AssteName, i_GameScreen)
         {
             Scales = i_Scale;
             Opacity = i_Opacity;  

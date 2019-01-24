@@ -20,9 +20,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         private Game m_Game;
 
-        public ScoreBoardHeader(Game i_Game) : base ("", i_Game)
+        public ScoreBoardHeader(GameScreen i_GameScreen) : base ("", i_GameScreen)
         {
-            m_Game = i_Game;
+            m_Game = i_GameScreen.Game;
         }
 
         public override void Initialize()

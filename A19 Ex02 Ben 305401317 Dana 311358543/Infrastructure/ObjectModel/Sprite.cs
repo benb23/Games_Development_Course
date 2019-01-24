@@ -7,7 +7,11 @@ namespace Infrastructure
     public class Sprite : LoadableDrawableComponent
     {
         protected bool m_Initialize;
-
+        private GameScreen m_GameScreen;
+        protected GameScreen GameScreen
+        {
+            get { return m_GameScreen; }
+        }
         protected CompositeAnimator m_Animations;
 
         public CompositeAnimator Animations
@@ -209,19 +213,22 @@ namespace Infrastructure
             set { this.m_AngularVelocity = value; }
         }
 
-        public Sprite(string i_AssetName, Game i_Game, int i_UpdateOrder, int i_DrawOrder)
-            : base(i_AssetName, i_Game, i_UpdateOrder, i_DrawOrder)
+        public Sprite(string i_AssetName, GameScreen i_GameScreen, int i_UpdateOrder, int i_DrawOrder)
+            : base(i_AssetName, i_GameScreen, i_UpdateOrder, i_DrawOrder)
         {
+            m_GameScreen = i_GameScreen;
         }
 
-        public Sprite(string i_AssetName, Game i_Game, int i_CallsOrder)
-            : base(i_AssetName, i_Game, i_CallsOrder)
+        public Sprite(string i_AssetName, GameScreen i_GameScreen, int i_CallsOrder)
+            : base(i_AssetName, i_GameScreen, i_CallsOrder)
         {
+            m_GameScreen = i_GameScreen;
         }
 
-        public Sprite(string i_AssetName, Game i_Game)
-            : base(i_AssetName, i_Game, int.MaxValue)
+        public Sprite(string i_AssetName, GameScreen i_GameScreen)
+            : base(i_AssetName, i_GameScreen, int.MaxValue)
         {
+            m_GameScreen = i_GameScreen;
         }
 
         protected override void InitBounds()

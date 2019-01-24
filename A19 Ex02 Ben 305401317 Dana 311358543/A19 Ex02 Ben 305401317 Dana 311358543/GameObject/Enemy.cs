@@ -42,8 +42,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return m_Colum; }
         }
 
-        public Enemy(Game i_Game, Color i_Tint, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec) 
-            : base(k_AssteName, i_Game)
+        public Enemy(GameScreen i_GameSreen, Color i_Tint, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec) 
+            : base(k_AssteName, i_GameSreen)
         {
             m_Random = Game.Services.GetService(typeof(Random)) as Random; 
             m_TimeUntilNextStepInSec = TimeSpan.FromSeconds(i_TimeUntilNextStepInSec);
@@ -62,7 +62,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
-            m_Gun = new Gun(Game, 1, Bullet.eBulletType.EnemyBullet, 1);
+            m_Gun = new Gun(GameScreen, 1, Bullet.eBulletType.EnemyBullet, 1);
             initPosition();
 
             initAnimations();
