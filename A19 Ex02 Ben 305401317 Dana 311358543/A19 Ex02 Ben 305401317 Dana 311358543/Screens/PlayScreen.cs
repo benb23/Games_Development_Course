@@ -67,13 +67,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.ActivationLength = TimeSpan.Zero;
         }
 
-        //protected override void LoadContent()
-        //{
-        //    base.LoadContent();
-
-        //    //m_FontCalibri = ContentManager.Load<SpriteFont>(@"Fonts\Calibri");
-        //}
-
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -82,29 +75,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 ScreensManager.SetCurrentScreen(m_PauseScreenScreen);
             }
-
-            if(!m_initialize)//todo: fix
-            {
-                m_WallsGroup.WallsYShift = GraphicsDevice.Viewport.Height - (2 * m_Players[(int)PlayerIndex.One].SpaceShip.Texture.Height);
-                m_initialize = true;
-            }
         }
 
         public override void Initialize()
         {
-            //m_SpriteBatch = new SpriteBatch(GraphicsDevice);
-            //this.Game.Services.AddService(typeof(SpriteBatch), m_SpriteBatch);
             this.Game.Services.AddService(typeof(Random), m_Random);
             this.Game.Window.Title = k_GameName;
             base.Initialize();
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.Black);
-            m_SpriteBatch.Begin();
-            base.Draw(gameTime);
-            m_SpriteBatch.End();
+            m_WallsGroup.Position = new Vector2(m_WallsGroup.Position.X, GraphicsDevice.Viewport.Height - (2 * m_Players[(int)PlayerIndex.One].SpaceShip.Texture.Height));
         }
     }
 }

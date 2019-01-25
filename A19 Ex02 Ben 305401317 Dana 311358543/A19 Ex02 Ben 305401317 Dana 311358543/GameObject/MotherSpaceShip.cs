@@ -27,6 +27,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 		{
             this.m_TintColor = Color.Red;
             this.Velocity = new Vector2(40, 0);
+            Visible = false;
         }
 
         public override void Initialize()
@@ -52,6 +53,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 if (m_Random.Next(0, k_MaxRandomNumber) <= k_MaxRandomNumToDrawMotherShip)
                 {
+                    Visible = true;
                     m_OnMove = true;
                 }
             }
@@ -60,6 +62,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 base.Update(i_GameTime);
                 if (m_Position.X >= GraphicsDevice.Viewport.Width)
                 {
+                    Visible = false;
                     m_OnMove = false;
                     m_Initialize = false;
                 }

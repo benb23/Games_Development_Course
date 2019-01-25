@@ -14,28 +14,29 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class ScoreBoardHeader : Sprite
+    public class ScoreBoardHeader : DrawableGameComponent
     {
         private SpriteFont m_Font;
         private ISpaceInvadersEngine m_GameEngine;
-        private Game m_Game;
+        private GameScreen m_GameScreen;
 
-        public ScoreBoardHeader(GameScreen i_GameScreen) : base ("", i_GameScreen)
+        public ScoreBoardHeader(GameScreen i_GameScreen) : base (i_GameScreen.Game)
         {
-            m_Game = i_GameScreen.Game;
+            m_GameScreen = i_GameScreen;
+            i_GameScreen.Add(this);
         }
 
         public override void Initialize()
         {
-            m_GameEngine = m_Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            m_GameEngine = m_GameScreen.Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            m_SpriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            this.m_Font = m_Game.Content.Load<SpriteFont>(@"Fonts\ComicSansMS");
+            //m_SpriteBatch = new SpriteBatch(Game.GraphicsDevice);
+            this.m_Font = m_GameScreen.Game.Content.Load<SpriteFont>(@"Fonts\ComicSansMS");
         }
 
         public override void Draw(GameTime i_GameTime)
@@ -43,10 +44,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             int playerOneScore = m_GameEngine.Players[(int)PlayerIndex.One].Score;
             int playerTwoScore = m_GameEngine.Players[(int)PlayerIndex.Two].Score;
 
-            this.m_SpriteBatch.Begin();
-            this.m_SpriteBatch.DrawString(this.m_Font, String.Format("P1 Score: {0}", playerOneScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.One * 15)), new Color(46, 145, 232));
-            this.m_SpriteBatch.DrawString(this.m_Font, String.Format("P2 Score: {0}", playerTwoScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.Two * 15)), new Color(55, 232, 46));
-            this.m_SpriteBatch.End();
+            this.m_GameScreen.SpriteBatch.Begin();
+            this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, String.Format("P1 Score: {0}", playerOneScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.One * 15)), new Color(46, 145, 232));
+            this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, String.Format("P2 Score: {0}", playerTwoScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.Two * 15)), new Color(55, 232, 46));
+            this.m_GameScreen.SpriteBatch.End();
         }
     }
 }

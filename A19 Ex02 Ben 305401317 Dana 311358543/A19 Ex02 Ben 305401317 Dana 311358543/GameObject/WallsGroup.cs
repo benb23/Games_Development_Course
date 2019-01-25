@@ -18,10 +18,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private bool m_Initialize;
         private int m_NumOfWalls;
         private List<Wall> m_Walls;
-        private Vector2 m_GroupPosition;
+        private Vector2 m_Position;
         private float m_GroupYShift;
         private GameScreen m_GameScreen;
 
+        public Vector2 Position
+        {
+            get { return m_Position; }
+            set { m_Position = value; }
+        }
         public float WallsYShift
         {
             set { this.m_GroupYShift = value; }
@@ -47,11 +52,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initWallsPositions()
         {
-            this.m_GroupPosition = new Vector2((Game.GraphicsDevice.Viewport.Width / 3) - (this.m_Walls[0].Texture.Width / 2), this.m_GroupYShift);
+            this.m_Position.X = Game.GraphicsDevice.Viewport.Width / 3 - this.m_Walls[0].Texture.Width / 2;
 
             for (int i = 0; i < this.m_NumOfWalls; i++)
             {
-                this.m_Walls[i].Position = this.m_GroupPosition + new Vector2(this.m_Walls[i].Texture.Width * 2 * i, 0);
+                this.m_Walls[i].Position = this.m_Position + new Vector2(this.m_Walls[i].Texture.Width * 2 * i, 0);
             }
         }
 

@@ -72,14 +72,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             cheackGameOver();
         }
 
-        public void AddEnemiesToScreenComponentd(GameScreen i_GameScreen)
-        {
-            foreach(Enemy enemy in m_EnemiesMatrix)
-            {
-                i_GameScreen.Add(enemy);
-            }
-        }
-
         private bool cheackGameOver()
         {
             bool isGameOver = this.isEnemiesGroupTouchTheBotton() || this.isAllEnemiesDead();

@@ -242,14 +242,6 @@ namespace Infrastructure
 
         public override void Draw(GameTime gameTime)
         {
-            foreach (IDrawable drawable in m_DrawableComponents)
-            {
-                if (drawable.Visible)
-                {
-                    drawable.Draw(gameTime);
-                }
-            }
-
             m_SpriteBatch.Begin(
                 this.SpritesSortMode, this.BlendState, this.SamplerState,
                 this.DepthStencilState, this.RasterizerState, this.Shader, this.TransformMatrix);
@@ -262,6 +254,14 @@ namespace Infrastructure
                 }
             }
             m_SpriteBatch.End();
+
+            foreach (IDrawable drawable in m_DrawableComponents) //todo : was first
+            {
+                if (drawable.Visible)
+                {
+                    drawable.Draw(gameTime);
+                }
+            }
         }
 
         protected override void Dispose(bool disposing)
