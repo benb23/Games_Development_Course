@@ -51,6 +51,30 @@
 /processorParam:TextureFormat=Color
 /build:Screens/gradient.png
 
+#begin Screens/Wellcome/PlayGame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Screens/Wellcome/PlayGame.png
+
+#begin Screens/Wellcome/SpaceInvadersLogo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Screens/Wellcome/SpaceInvadersLogo.png
+
 #begin Sprites/Barrier_44x32.png
 /importer:TextureImporter
 /processor:TextureProcessor

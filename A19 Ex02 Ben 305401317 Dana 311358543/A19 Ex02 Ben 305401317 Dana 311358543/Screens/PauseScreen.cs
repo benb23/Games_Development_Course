@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 using Infrastructure;
 
+
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class PauseScreen : GameScreen
@@ -19,6 +20,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public PauseScreen(Game i_Game)
         : base(i_Game)
         {
+            this.IsModal = true;
+            this.IsOverlayed = true;
+            this.UseGradientBackground = true;
+            this.BlackTintAlpha = 0.4f;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (InputManager.KeyPressed(Keys.R))
+            {
+                ExitScreen();
+            }
         }
     }
 }

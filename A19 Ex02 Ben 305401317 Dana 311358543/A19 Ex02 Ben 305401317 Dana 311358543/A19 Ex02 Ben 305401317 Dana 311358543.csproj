@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="GameObject\EnemiesGroup.cs" />
     <Compile Include="GameObject\Gun.cs" />
+    <Compile Include="GameObject\MenuHeader.cs" />
     <Compile Include="GameObject\MotherSpaceShip.cs" />
     <Compile Include="GameObject\ScoreBoardHeader.cs" />
     <Compile Include="GameObject\Wall.cs" />
