@@ -52,6 +52,8 @@ namespace Infrastructure
 
         MouseState MouseState { get; }
 
+        MouseState PrevMouseState { get; }
+
         // Allows querying buttons current state (Mouse and GamePad):
         bool ButtonIsDown(eInputButtons i_MouseButtons);
 

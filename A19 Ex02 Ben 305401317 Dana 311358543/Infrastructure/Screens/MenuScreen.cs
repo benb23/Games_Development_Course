@@ -40,10 +40,12 @@ namespace Infrastructure
                     item.Position = m_firstItemPosition + item.ItemNumber * (new Vector2(0, m_GapBetweenItems + 33));   //TODO: change 33
                 }
 
+                m_MenuItems[0].IsActive = true;
                 m_MenuItems[0].TintColor = Color.Red;
+
             }
-            
-            
+
+
             base.Initialize();
         }
 
@@ -52,12 +54,12 @@ namespace Infrastructure
             m_MenuItems.Add(i_Item);
         }
 
-        public override void Update(GameTime gameTime)
+
+        private void useKeyboardToNavigateMenu()
         {
             if (InputManager.KeyPressed(Keys.Down))
             {
                 m_currItemNumber = (m_currItemNumber + 1) % m_MenuItems.Count;
-                m_MenuItems[m_currItemNumber].isActive = true;
             }
             else if (InputManager.KeyPressed(Keys.Up))
             {
@@ -69,20 +71,35 @@ namespace Infrastructure
                 {
                     m_currItemNumber = (m_currItemNumber - 1) % m_MenuItems.Count;
                 }
-                
-                m_MenuItems[m_currItemNumber].isActive = true;
             }
+        }
+
+        private bool isMouseHoverItem(MenuItem i_Item)
+        {
+            return i_Item.Bounds.Contains(new Vector2(InputManager.MouseState.X, InputManager.MouseState.Y));
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            
+            useKeyboardToNavigateMenu();
 
 
-            for (int i = 0; i < m_MenuItems.Count; i++)
+            foreach (MenuItem item in m_MenuItems)
             {
-                if (i == m_currItemNumber)
+                if (isMouseHoverItem(item))
                 {
-                    m_MenuItems[i].isActive = true;
+                    m_currItemNumber = item.ItemNumber;
+                }
+
+
+                if (item.ItemNumber == m_currItemNumber)
+                {
+                    m_MenuItems[item.ItemNumber].IsActive = true;
                 }
                 else
                 {
-                    m_MenuItems[i].isActive = false;
+                    m_MenuItems[item.ItemNumber].IsActive = false;
                 }
             }
 
