@@ -30,12 +30,6 @@ namespace Infrastructure
         bool m_IsActive;
         bool m_IsMouseHover;
         
-
-        public void ItemClicked()
-        {
-
-        }
-
         public MenuItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen)
         {
             this.m_GameScreen = i_GameScreen;

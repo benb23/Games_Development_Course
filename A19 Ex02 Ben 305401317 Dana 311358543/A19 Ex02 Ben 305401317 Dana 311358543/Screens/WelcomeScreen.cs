@@ -16,11 +16,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class WelcomeScreen : MenuScreen
     {
+        private MainMenuScreen m_MainMenuScreen;
+        private PlayScreen m_PlayScreen;
+
         private Background m_Background;
         private MenuHeader m_MenuHeader;
 
         public WelcomeScreen(Game i_Game) : base(i_Game, new Vector2(250 ,250), 15f)
         {
+            //todo : new?
+            this.m_PlayScreen = new PlayScreen(Game);
+            this.m_MainMenuScreen = new MainMenuScreen(Game);
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo");
         }
@@ -28,8 +34,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             int index = 0;
-            AddMenuItem(new MenuItem(@"Screens\Wellcome\PlayGame", this, index++));
-            AddMenuItem(new MenuItem(@"Screens\Wellcome\PlayGame", this, index++));
+            AddMenuItem(new ClickItem(@"Screens\Wellcome\PlayGame", this, index++, m_PlayScreen));
+            AddMenuItem(new ClickItem(@"Screens\Wellcome\PlayGame", this, index++, m_MainMenuScreen));
             AddMenuItem(new MenuItem(@"Screens\Wellcome\PlayGame", this, index++));
             AddMenuItem(new MenuItem(@"Screens\Wellcome\PlayGame", this, index++));
 
@@ -41,14 +47,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-            if (InputManager.KeyPressed(Keys.Enter))
-            {
-                ExitScreen();
-            }
-            if (InputManager.KeyPressed(Keys.Escape))
-            {
-                Game.Exit();
-            }
+            //if (InputManager.KeyPressed(Keys.Enter))
+            //{
+            //    ExitScreen();
+            //}
+            //if (InputManager.KeyPressed(Keys.Escape))
+            //{
+            //    Game.Exit();
+            //}
 
             base.Update(gameTime);
         }

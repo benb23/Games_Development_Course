@@ -102,10 +102,13 @@ namespace Infrastructure
             updateCurrActiveItem();
 
             m_MenuItems[m_currItemNumber].IsActive = true;
-            if (this.InputManager.KeyPressed(Keys.Enter))
+
+            // TODO: bool for isHover in each item
+            if (m_MenuItems[m_currItemNumber] is ClickItem && (this.InputManager.KeyPressed(Keys.Enter))
+                || (isMouseHoverItem(m_MenuItems[m_currItemNumber]) && this.InputManager.ButtonPressed(eInputButtons.Left)))
             {
                 ExitScreen();
-                m_MenuItems[m_currItemNumber].ItemClicked();
+                (m_MenuItems[m_currItemNumber] as ClickItem).ItemClicked();
             }
 
             base.Update(gameTime);

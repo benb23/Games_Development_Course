@@ -13,8 +13,6 @@ namespace Infrastructure
         public KeyboardState KeyboardState { get { return m_DummyKeyboardState; } }
         private MouseState m_DummyMouseState = new MouseState();
         public MouseState MouseState { get { return m_DummyMouseState; } }
-        public MouseState PrevMouseState { get { return m_DummyMouseState; } }
-
 
         // Allows querying buttons current state (Mouse and GamePad):
         public bool ButtonIsDown(eInputButtons i_MouseButtons) { return false; }
