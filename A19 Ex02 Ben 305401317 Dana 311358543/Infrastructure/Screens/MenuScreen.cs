@@ -39,13 +39,11 @@ namespace Infrastructure
                 {
                     item.Position = m_firstItemPosition + item.ItemNumber * (new Vector2(0, m_GapBetweenItems + 33));   //TODO: change 33
                 }
-
+                //name
                 m_MenuItems[0].IsActive = true;
                 m_MenuItems[0].TintColor = Color.Red;
 
             }
-
-
             base.Initialize();
         }
 
@@ -53,7 +51,6 @@ namespace Infrastructure
         {
             m_MenuItems.Add(i_Item);
         }
-
 
         private void useKeyboardToNavigateMenu()
         {
@@ -74,6 +71,27 @@ namespace Infrastructure
             }
         }
 
+        private void useMouseToNavigateMenu()
+        {
+            foreach (MenuItem item in m_MenuItems)
+            {
+                if (isMouseHoverItem(item))
+                {
+                    m_currItemNumber = item.ItemNumber;
+                }
+                else
+                {
+                    item.IsActive = false;
+                }
+            }
+        }
+
+        private void updateCurrActiveItem()
+        {
+            useKeyboardToNavigateMenu();
+            useMouseToNavigateMenu();
+        }
+
         private bool isMouseHoverItem(MenuItem i_Item)
         {
             return i_Item.Bounds.Contains(new Vector2(InputManager.MouseState.X, InputManager.MouseState.Y));
@@ -81,26 +99,13 @@ namespace Infrastructure
 
         public override void Update(GameTime gameTime)
         {
-            
-            useKeyboardToNavigateMenu();
+            updateCurrActiveItem();
 
-
-            foreach (MenuItem item in m_MenuItems)
+            m_MenuItems[m_currItemNumber].IsActive = true;
+            if (this.InputManager.KeyPressed(Keys.Enter))
             {
-                if (isMouseHoverItem(item))
-                {
-                    m_currItemNumber = item.ItemNumber;
-                }
-
-
-                if (item.ItemNumber == m_currItemNumber)
-                {
-                    m_MenuItems[item.ItemNumber].IsActive = true;
-                }
-                else
-                {
-                    m_MenuItems[item.ItemNumber].IsActive = false;
-                }
+                ExitScreen();
+                m_MenuItems[m_currItemNumber].ItemClicked();
             }
 
             base.Update(gameTime);
