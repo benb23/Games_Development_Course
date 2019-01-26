@@ -17,11 +17,10 @@ namespace Infrastructure
     public abstract class MenuScreen : GameScreen
     {
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
-        private string m_TitleAsset;
+       // private string m_TitleAsset;
         private Vector2 m_firstItemPosition;
         float m_GapBetweenItems;
         int m_currItemNumber;
-        int m_prevItemNumber;
 
 
 
@@ -49,11 +48,11 @@ namespace Infrastructure
             base.Initialize();
         }
 
-        public void AddMenuItem(MenuItem i_Item)
+        // TODO: change the way that item added to list
+        public void AddMenuItem(MenuItem i_Item)        
         {
             m_MenuItems.Add(i_Item);
         }
-
 
         private void useKeyboardToNavigateMenu()
         {
@@ -105,14 +104,6 @@ namespace Infrastructure
 
             base.Update(gameTime);
         }
-
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-
-        }
-
-
 
     }
 }
