@@ -35,7 +35,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             int index = 0;
-            AddMenuItem(new ToggleItem(@"Screens\MainMenu\PlayersWhite", @"Screens\MainMenu\PlayersOptions_70x50", this, index++, 2));
+            ToggleItem playersItem = new ToggleItem(@"Screens\MainMenu\PlayersWhite", @"Screens\MainMenu\PlayersOptions_70x50", this, index++);
+            playersItem.selectedOptionChanged += new EventHandler<EventArgs>(OnSelectedOptionChanged);
+            AddMenuItem(playersItem);
             AddMenuItem(new ClickItem(@"Screens\MainMenu\ScreenSettings", this, index++, this.m_SettingsScreen));
             AddMenuItem(new ClickItem(@"Screens\MainMenu\SoundSettings", this, index++, this.m_SoundSettingsScreen));
             AddMenuItem(new ClickItem(@"Screens\MainMenu\PlayGameWhite", this, index++, this.m_PlayScreen));//todo: new game??
@@ -44,6 +46,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_MenuHeader.Position = new Vector2(GraphicsDevice.Viewport.Width / 10, 20);
 
             base.Initialize();
+        }
+
+        private void OnSelectedOptionChanged(object sender, EventArgs args)
+        {
+            
         }
     }
 }

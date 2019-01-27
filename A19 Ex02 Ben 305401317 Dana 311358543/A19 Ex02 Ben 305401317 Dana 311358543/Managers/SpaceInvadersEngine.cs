@@ -25,6 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             YellowEnemy = 110
         }
 
+        
         private const double m_sizeOfBulletHitEffect = 0.7;
         private Random m_Random;
         private PlayerIndex? m_Winner;
