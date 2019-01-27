@@ -51,6 +51,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_Score = value; }
         }
 
+        // TODO: move createSpaceShip & createSouls out from ctor
         public Player(GameScreen i_GameScreen, PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey, bool i_IsAllowdToUseMouse, Vector2 initialPosition)
             : base(i_GameScreen.Game)
         {
@@ -62,8 +63,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_PlayerType = i_PlayerType;
             m_GameScreen = i_GameScreen;
             createSpaceShip(i_PlayerType);
+            createSouls();
             m_CurrentSoulsNumber = m_Souls.Capacity;
             i_GameScreen.Add(this);
+        }
+
+        private void createSouls()
+        {
+            for (int i = 0; i < m_Souls.Capacity; i++)
+            {
+                this.m_Souls.Add(new Soul(m_GameScreen, new Vector2(0.5f), 0.5f, SpaceShip.AssetName, m_PlayerType, i));
+            }
         }
 
         public override void Update(GameTime i_GameTime)
@@ -140,11 +150,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
-            for (int i = 0; i < m_Souls.Capacity; i++)
-            {
-                this.m_Souls.Add(new Soul(m_GameScreen, new Vector2(0.5f), 0.5f, SpaceShip.AssetName, m_PlayerType, i));
-            }
-
             if (m_InputManager == null)
             {
                 m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;

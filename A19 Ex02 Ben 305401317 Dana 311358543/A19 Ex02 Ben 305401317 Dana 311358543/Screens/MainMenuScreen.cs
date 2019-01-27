@@ -27,6 +27,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_SettingsScreen = new SettingsScreen(Game);
             m_SoundSettingsScreen = new SoundSettingsScreen(Game);
             m_PlayScreen = new PlayScreen(Game);
+            IsUsingKeyboard = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\MainMenu\MainMenuLogo");
         }
