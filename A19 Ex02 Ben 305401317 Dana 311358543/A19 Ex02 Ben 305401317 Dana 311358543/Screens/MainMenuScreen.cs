@@ -35,7 +35,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             int index = 0;
             ToggleItem playersItem = new ToggleItem(@"Screens\MainMenu\PlayersWhite", @"Screens\MainMenu\PlayersOptions_70x50", this, index++);
-            playersItem.selectedOptionChanged += new EventHandler<EventArgs>(OnSelectedOptionChanged);
+            playersItem.ToggleValueChanched += new EventHandler<EventArgs>(OnNumOfPlayersChanged);
             AddMenuItem(playersItem);
             AddMenuItem(new ClickItem(@"Screens\MainMenu\ScreenSettings", this, index++, this.m_SettingsScreen));
             AddMenuItem(new ClickItem(@"Screens\MainMenu\SoundSettings", this, index++, this.m_SoundSettingsScreen));
@@ -47,7 +47,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.Initialize();
         }
 
-        private void OnSelectedOptionChanged(object sender, EventArgs args)
+        private void OnNumOfPlayersChanged(object sender, EventArgs args)
         {
             
         }

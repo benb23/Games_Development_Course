@@ -31,7 +31,7 @@ namespace Infrastructure
 
     public class ToggleItem : MenuItem
     {
-        private int m_CurrSelectedOption; //defult is 0
+        private int m_CurrToggleValue; //defult is 0
         private const int k_numOfOptions = 2;
         private Texture2D m_SeperatorTexture;
         private Vector2 m_SeperatorPosition;
@@ -40,13 +40,13 @@ namespace Infrastructure
         private List<MenuOption> m_Options; 
         private Texture2D m_OptionsTexture;
 
-        public event EventHandler<EventArgs> selectedOptionChanged;
+        public event EventHandler<EventArgs> ToggleValueChanched;
 
-        protected virtual void OnSelectedOptionChanged(object sender, EventArgs args)
+        protected virtual void OnToggeleValueChanged(object sender, EventArgs args)
         {
-            if (selectedOptionChanged != null)
+            if (ToggleValueChanched != null)
             {
-                selectedOptionChanged.Invoke(sender, args);
+                ToggleValueChanched.Invoke(sender, args);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Infrastructure
                     new Vector2(this.Position.X + this.Texture.Width + 5 + i *( m_OptionsTexture.Width + m_SeperatorTexture.Width), this.Position.Y)));
             }
             m_SeperatorPosition = new Vector2(m_Options[0].Position.X + m_OptionsTexture.Width, m_Options[0].Position.Y);
-            m_Options[m_CurrSelectedOption].TintColor = Color.Yellow;//default
+            m_Options[m_CurrToggleValue].TintColor = Color.Yellow;//default
         }
 
         public override void Draw(GameTime gameTime)
@@ -91,7 +91,7 @@ namespace Infrastructure
                 int addition = 0;
                 if(this.GameScreen.InputManager.KeyPressed(Keys.PageDown))
                 {
-                    if(m_CurrSelectedOption == k_numOfOptions -1)
+                    if(m_CurrToggleValue == k_numOfOptions -1)
                     {
                         addition = -(k_numOfOptions - 1);
                     }
@@ -103,10 +103,10 @@ namespace Infrastructure
                     addition = k_numOfOptions - 1;
                 }
 
-                m_Options[m_CurrSelectedOption].TintColor = Color.White;
-                m_CurrSelectedOption = (m_CurrSelectedOption + addition) % k_numOfOptions;
-                m_Options[m_CurrSelectedOption].TintColor = Color.Yellow;
-                OnSelectedOptionChanged(this, EventArgs.Empty);
+                m_Options[m_CurrToggleValue].TintColor = Color.White;
+                m_CurrToggleValue = (m_CurrToggleValue + addition) % k_numOfOptions;
+                m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
+                OnToggeleValueChanged(this, EventArgs.Empty);
             }
             base.Update(gameTime);  
         }
