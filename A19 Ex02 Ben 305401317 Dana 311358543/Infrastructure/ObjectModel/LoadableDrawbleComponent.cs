@@ -69,6 +69,12 @@ namespace Infrastructure
             i_GameScreen.Add(this);
         }
 
+        //composite member
+        public LoadableDrawableComponent(string i_AssetName, Game i_Game): base(i_Game)
+        {
+            this.AssetName = i_AssetName;
+        }
+
         public LoadableDrawableComponent(
             string i_AssetName,
              GameScreen i_GameScreen,

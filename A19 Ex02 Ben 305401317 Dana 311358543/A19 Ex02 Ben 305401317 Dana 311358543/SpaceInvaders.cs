@@ -26,6 +26,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_GraphicsMgr.PreferredBackBufferHeight = 600;
             this.m_GraphicsMgr.ApplyChanges();
 
+            new CollisionsManager(this);
+            new SpaceInvadersEngine(this);
+
             InputManager inputManager = new InputManager(this);
 
             ScreensMananger screensMananger = new ScreensMananger(this);

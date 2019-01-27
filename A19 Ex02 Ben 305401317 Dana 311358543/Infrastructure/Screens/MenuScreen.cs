@@ -20,14 +20,19 @@ namespace Infrastructure
        // private string m_TitleAsset;
         private Vector2 m_firstItemPosition;
         float m_GapBetweenItems;
-        int m_currItemNumber;
+        int? m_currItemNumber;
 
-
+        private bool m_IsUsingKeyboardArrows = true;
 
         public MenuScreen(Game i_Game, Vector2 i_firstItemPosition, float i_GapBetweenItems) : base(i_Game)
         {
             this.m_GapBetweenItems = i_GapBetweenItems;
             this.m_firstItemPosition = i_firstItemPosition;
+        }
+
+        public bool IsUsingKeyboard
+        {
+            set { m_IsUsingKeyboardArrows = value; }
         }
 
         public override void Initialize()
@@ -39,9 +44,12 @@ namespace Infrastructure
                     item.Position = m_firstItemPosition + item.ItemNumber * (new Vector2(0, m_GapBetweenItems + 33));   //TODO: change 33
                 }
                 //name
-                m_MenuItems[0].IsActive = true;
-                m_MenuItems[0].TintColor = Color.Red;
-
+                if (m_IsUsingKeyboardArrows)
+                {
+                    m_MenuItems[0].IsActive = true;
+                    m_MenuItems[0].TintColor = Color.Red;
+                }
+                
             }
             base.Initialize();
         }
@@ -79,16 +87,21 @@ namespace Infrastructure
                 {
                     m_currItemNumber = item.ItemNumber;
                 }
-                else
+                else if(item.IsActive == true)
                 {
                     item.IsActive = false;
                 }
+
+             
             }
         }
 
         private void updateCurrActiveItem()
         {
-            useKeyboardToNavigateMenu();
+            if (m_IsUsingKeyboardArrows)
+            {
+                useKeyboardToNavigateMenu();
+            }
             useMouseToNavigateMenu();
         }
 
@@ -101,16 +114,25 @@ namespace Infrastructure
         {
             updateCurrActiveItem();
 
-            m_MenuItems[m_currItemNumber].IsActive = true;
-
-            // TODO: bool for isHover in each item
-            if (m_MenuItems[m_currItemNumber] is ClickItem && (this.InputManager.KeyPressed(Keys.Enter))
-                || (isMouseHoverItem(m_MenuItems[m_currItemNumber]) && this.InputManager.ButtonPressed(eInputButtons.Left)))
+            if (m_currItemNumber != null)
             {
-                ExitScreen();
-                (m_MenuItems[m_currItemNumber] as ClickItem).ItemClicked();
+                if (!isMouseHoverItem(m_MenuItems[(int)m_currItemNumber]) && !m_IsUsingKeyboardArrows)
+                {
+                    m_MenuItems[(int)m_currItemNumber].IsActive = false;
+                }
+                else
+                {
+                    m_MenuItems[(int)m_currItemNumber].IsActive = true;
+                }
+                
+                // TODO: bool for isHover in each item
+                if (m_MenuItems[(int)m_currItemNumber] is ClickItem && (this.InputManager.KeyPressed(Keys.Enter)
+                    || (isMouseHoverItem(m_MenuItems[(int)m_currItemNumber]) && this.InputManager.ButtonPressed(eInputButtons.Left))))
+                {
+                    ExitScreen();
+                    (m_MenuItems[(int)m_currItemNumber] as ClickItem).ItemClicked();
+                }
             }
-
             base.Update(gameTime);
         }
 

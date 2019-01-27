@@ -14,17 +14,31 @@ namespace Infrastructure
 {
     public class ClickItem : MenuItem
     {
-
-        GameScreen m_NextScreen;
+        private GameScreen m_NextScreen;
+        private bool m_IsExitItem;
 
         public ClickItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber, GameScreen i_NextScreen) : base(i_AssetName, i_GameScreen, i_ItemNumber)
         {
             this.m_NextScreen = i_NextScreen;
         }
 
-        public void ItemClicked()
+        //exit item
+        public ClickItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen, i_ItemNumber)
         {
-            this.GameScreen.ScreensManager.SetCurrentScreen(m_NextScreen);
+            this.m_IsExitItem = true;
+
+    }
+
+    public void ItemClicked()
+        {
+            if (!m_IsExitItem)
+            {
+                this.GameScreen.ScreensManager.SetCurrentScreen(m_NextScreen);
+            }
+            else
+            {
+                this.Game.Exit();
+            }
         }
     }
 }

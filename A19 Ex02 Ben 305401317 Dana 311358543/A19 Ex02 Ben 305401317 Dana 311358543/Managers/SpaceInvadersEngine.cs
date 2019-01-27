@@ -31,12 +31,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
-        private ScoreBoardHeader m_ScoreBoard;
+        //private ScoreBoardHeader m_ScoreBoard;
         
-        public SpaceInvadersEngine(GameScreen i_GameScreen) : base(i_GameScreen.Game)
+        public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
-            this.m_Game = i_GameScreen.Game;
-            m_ScoreBoard = new ScoreBoardHeader(i_GameScreen);
+            this.m_Game = i_Game;
+            //m_ScoreBoard = new ScoreBoardHeader(i_GameScreen);
         }
 
         public override void Update(GameTime gameTime)
