@@ -73,7 +73,7 @@ namespace Infrastructure
         {
             if (m_IsActive)
             {
-                this.TintColor = Color.Red;
+                this.TintColor = new Color(255, 74, 47);
             }
             else
             {

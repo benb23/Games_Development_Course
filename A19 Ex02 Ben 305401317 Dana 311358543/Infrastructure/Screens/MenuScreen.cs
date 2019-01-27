@@ -43,13 +43,11 @@ namespace Infrastructure
                 {
                     item.Position = m_firstItemPosition + item.ItemNumber * (new Vector2(0, m_GapBetweenItems + 33));   //TODO: change 33
                 }
-                //name
+                
                 if (m_IsUsingKeyboardArrows)
                 {
-                    m_MenuItems[0].IsActive = true;
-                    m_MenuItems[0].TintColor = Color.Red;
+                    m_currItemNumber = 0;
                 }
-                
             }
             base.Initialize();
         }
