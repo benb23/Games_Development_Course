@@ -91,8 +91,6 @@ namespace Infrastructure
                 {
                     item.IsActive = false;
                 }
-
-             
             }
         }
 
