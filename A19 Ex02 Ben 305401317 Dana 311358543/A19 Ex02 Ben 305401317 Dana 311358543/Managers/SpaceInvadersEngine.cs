@@ -16,6 +16,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class SpaceInvadersEngine : GameService, ISpaceInvadersEngine
     {
+        private int k_NumOfPlayers = 2;
         private enum eScoreValue
         {
             MotherShip = 850,
@@ -25,14 +26,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             YellowEnemy = 110
         }
 
-        
         private const double m_sizeOfBulletHitEffect = 0.7;
         private Random m_Random;
         private PlayerIndex? m_Winner;
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
-        //private ScoreBoardHeader m_ScoreBoard;
+
         
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
@@ -40,6 +40,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             //m_ScoreBoard = new ScoreBoardHeader(i_GameScreen);
         }
 
+        public void CreatePlayers(GameScreen i_GameScreen)
+        {
+            m_Players = new List<Player>(k_NumOfPlayers);
+            m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
+            m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+        }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

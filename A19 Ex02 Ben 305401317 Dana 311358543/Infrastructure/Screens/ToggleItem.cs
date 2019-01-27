@@ -12,11 +12,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Infrastructure
 {
-    public class MenuOption : Sprite
+    public class ToggleOption : Sprite
     {
         private Rectangle m_TextureRectangle;
 
-        public MenuOption(GameScreen i_GameScreen,string i_AssetName, Rectangle i_Rec , Vector2 i_Position) 
+        public ToggleOption(GameScreen i_GameScreen,string i_AssetName, Rectangle i_Rec , Vector2 i_Position) 
             : base(i_AssetName, i_GameScreen)
         {
             this.Position = i_Position;
@@ -37,7 +37,7 @@ namespace Infrastructure
         private Vector2 m_SeperatorPosition;
         private string m_SeperatorAsset = @"Screens\MainMenu\OptionsSeperator";
         private string m_OptionsAssetName;
-        private List<MenuOption> m_Options; 
+        private List<ToggleOption> m_Options; 
         private Texture2D m_OptionsTexture;
 
         public event EventHandler<EventArgs> ToggleValueChanched;
@@ -66,11 +66,11 @@ namespace Infrastructure
 
         private void initOptions()
         {
-            m_Options = new List<MenuOption>(k_numOfOptions);
+            m_Options = new List<ToggleOption>(k_numOfOptions);
 
             for (int i = 0; i < k_numOfOptions; i++)
             {
-                m_Options.Add(new MenuOption(this.GameScreen, m_OptionsAssetName,
+                m_Options.Add(new ToggleOption(this.GameScreen, m_OptionsAssetName,
                     new Rectangle(0, i * m_OptionsTexture.Height / 2, m_OptionsTexture.Width, m_OptionsTexture.Height / 2),
                     new Vector2(this.Position.X + this.Texture.Width + 5 + i *( m_OptionsTexture.Width + m_SeperatorTexture.Width), this.Position.Y)));
             }
@@ -88,23 +88,8 @@ namespace Infrastructure
         {
             if( IsActive && (this.GameScreen.InputManager.KeyPressed(Keys.PageDown) || this.GameScreen.InputManager.KeyPressed(Keys.PageUp)))
             {
-                int addition = 0;
-                if(this.GameScreen.InputManager.KeyPressed(Keys.PageDown))
-                {
-                    if(m_CurrToggleValue == k_numOfOptions -1)
-                    {
-                        addition = -(k_numOfOptions - 1);
-                    }
-                    addition = 1;
-                }
-                else if(this.GameScreen.InputManager.KeyPressed(Keys.PageUp))
-                {
-                    addition = -1;
-                    addition = k_numOfOptions - 1;
-                }
-
                 m_Options[m_CurrToggleValue].TintColor = Color.White;
-                m_CurrToggleValue = (m_CurrToggleValue + addition) % k_numOfOptions;
+                m_CurrToggleValue = (1-m_CurrToggleValue) % k_numOfOptions;
                 m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
                 OnToggeleValueChanged(this, EventArgs.Empty);
             }

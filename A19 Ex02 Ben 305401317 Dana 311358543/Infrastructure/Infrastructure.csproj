@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IScreenSettingsManager.cs" />
     <Compile Include="Interfaces\IScreensMananger.cs" />
+    <Compile Include="Interfaces\ISoundSettingsManager.cs" />
     <Compile Include="Managers\DummyInputManager.cs" />
     <Compile Include="Managers\ScreenManager.cs" />
     <Compile Include="ObjectModel\CollidableSprite.cs" />
@@ -72,6 +74,8 @@
     <Compile Include="Screens\MenuScreen.cs" />
     <Compile Include="Screens\ToggleItem.cs" />
     <Compile Include="Screens\VolumeItem.cs" />
+    <Compile Include="Managers\SettingsManagers\ScreenSettingsManager.cs" />
+    <Compile Include="Managers\SettingsManagers\SoundSettingsManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

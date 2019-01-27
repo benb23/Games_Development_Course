@@ -17,7 +17,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class SpaceInvaders : Game
     {
         GraphicsDeviceManager m_GraphicsMgr;
-
         public SpaceInvaders()
         {
             m_GraphicsMgr = new GraphicsDeviceManager(this);
@@ -28,12 +27,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             new CollisionsManager(this);
             new SpaceInvadersEngine(this);
-
-            InputManager inputManager = new InputManager(this);
+            new InputManager(this);
 
             ScreensMananger screensMananger = new ScreensMananger(this);
             screensMananger.Push(new GameOverScreen(this));
-            //screensMananger.Push(new PlayScreen(this));
             screensMananger.SetCurrentScreen(new WelcomeScreen(this));
 
             Content.RootDirectory = "Content";

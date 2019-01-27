@@ -28,6 +28,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void HandleHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet);
 
+        void CreatePlayers(GameScreen i_GameScreen);
+
         void ShowGameOverMessage();
     }
 }

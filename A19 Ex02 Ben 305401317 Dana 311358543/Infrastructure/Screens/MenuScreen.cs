@@ -13,11 +13,20 @@ using Infrastructure;
 
 namespace Infrastructure
 {
+    public class ScreenEventArgs : EventArgs
+    {
+        public ScreenEventArgs(string i_String)
+        {
+            ScreenName = i_String;
+        }
+        public string ScreenName { get; set; }
+    }
 
     public abstract class MenuScreen : GameScreen
     {
+        protected Dictionary<String, GameScreen> m_screens = new Dictionary<string, GameScreen>();//??????????
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
-       // private string m_TitleAsset;
+        // private string m_TitleAsset;
         private Vector2 m_firstItemPosition;
         float m_GapBetweenItems;
         int? m_currItemNumber;
@@ -42,6 +51,10 @@ namespace Infrastructure
                 foreach (MenuItem item in m_MenuItems)
                 {
                     item.Position = m_firstItemPosition + item.ItemNumber * (new Vector2(0, m_GapBetweenItems + 33));   //TODO: change 33
+                    if (!m_IsUsingKeyboardArrows && item is ClickItem)
+                    {
+                        (item as ClickItem).IsUsingKeyboard = false;
+                    }
                 }
                 
                 if (m_IsUsingKeyboardArrows)
@@ -81,7 +94,7 @@ namespace Infrastructure
         {
             foreach (MenuItem item in m_MenuItems)
             {
-                if (isMouseHoverItem(item))
+                if (item.isMouseHoverItem())
                 {
                     m_currItemNumber = item.ItemNumber;
                 }
@@ -101,18 +114,13 @@ namespace Infrastructure
             useMouseToNavigateMenu();
         }
 
-        private bool isMouseHoverItem(MenuItem i_Item)
-        {
-            return i_Item.Bounds.Contains(new Vector2(InputManager.MouseState.X, InputManager.MouseState.Y));
-        }
-
         public override void Update(GameTime gameTime)
         {
             updateCurrActiveItem();
 
             if (m_currItemNumber != null)
             {
-                if (!isMouseHoverItem(m_MenuItems[(int)m_currItemNumber]) && !m_IsUsingKeyboardArrows)
+                if (!m_MenuItems[(int)m_currItemNumber].isMouseHoverItem() && !m_IsUsingKeyboardArrows)
                 {
                     m_MenuItems[(int)m_currItemNumber].IsActive = false;
                 }
@@ -120,17 +128,11 @@ namespace Infrastructure
                 {
                     m_MenuItems[(int)m_currItemNumber].IsActive = true;
                 }
-                
-                // TODO: bool for isHover in each item
-                if (m_MenuItems[(int)m_currItemNumber] is ClickItem && (this.InputManager.KeyPressed(Keys.Enter)
-                    || (isMouseHoverItem(m_MenuItems[(int)m_currItemNumber]) && this.InputManager.ButtonPressed(eInputButtons.Left))))
-                {
-                    ExitScreen();
-                    (m_MenuItems[(int)m_currItemNumber] as ClickItem).ItemClicked();
-                }
             }
             base.Update(gameTime);
         }
+
+        // mutual menuScreens methods
 
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="Screens\PlayScreen.cs" />
     <Compile Include="Screens\SettingsScreen.cs" />
     <Compile Include="Screens\SoundSettingsScreen.cs" />
+    <Compile Include="Screens\MenuUtils.cs" />
     <Compile Include="Screens\WelcomeScreen.cs" />
     <Compile Include="SpaceInvaders.cs" />
     <Compile Include="Program.cs" />

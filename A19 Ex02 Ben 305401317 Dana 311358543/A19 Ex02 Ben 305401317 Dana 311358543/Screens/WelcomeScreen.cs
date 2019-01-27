@@ -16,16 +16,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class WelcomeScreen : MenuScreen
     {
-        private MainMenuScreen m_MainMenuScreen;
-        private PlayScreen m_PlayScreen;
         private Background m_Background;
         private MenuHeader m_MenuHeader;
 
         public WelcomeScreen(Game i_Game) : base(i_Game, new Vector2(250 ,250), 15f)
         {
             this.IsUsingKeyboard = false;
-            this.m_PlayScreen = new PlayScreen(Game);
-            this.m_MainMenuScreen = new MainMenuScreen(Game);
+            m_screens.Add("PlayScreen", new PlayScreen(Game));
+            m_screens.Add("MainMenuScreen", new MainMenuScreen(Game));
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo");
         }
@@ -33,9 +31,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             int index = 0;
-            AddMenuItem(new ClickItem(@"Screens\Wellcome\PlayGame", this, index++, m_PlayScreen));
-            AddMenuItem(new ClickItem(@"Screens\Wellcome\MainMenu", this, index++, m_MainMenuScreen));
-            AddMenuItem(new ClickItem(@"Screens\Wellcome\QuitGame", this, index++));
+            ClickItem playItem = new ClickItem("PlayScreen",@"Screens\Wellcome\PlayGame", this, index++);
+            ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
+            ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
+
+            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+
+            AddMenuItem(playItem);
+            AddMenuItem(mainMenuItem);
+            AddMenuItem(QuitItem);
 
             m_MenuHeader.Scales *= 0.8f;
             m_MenuHeader.Position = new Vector2(GraphicsDevice.Viewport.Width / 10, 20);
@@ -43,22 +49,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.Initialize();
         }
 
+        private void OnItemClicked(object sender, ScreenEventArgs args)
+        {
+            if (args.ScreenName == "Quit")
+            {
+                Game.Exit();
+            }
+            else
+            {
+                MenuUtils.OnItemClicked(this, m_screens[args.ScreenName]);
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
             if (InputManager.KeyPressed(Keys.Enter))
             {
-                ExitScreen();
-                this.ScreensManager.SetCurrentScreen(m_PlayScreen);
+                OnItemClicked(this, new ScreenEventArgs("PlayScreen"));
             }
             else if(InputManager.KeyPressed(Keys.T))
             {
-                ExitScreen();
-                this.ScreensManager.SetCurrentScreen(m_MainMenuScreen);
+                OnItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
             }
             else if (InputManager.KeyPressed(Keys.Escape))
             {
-                Game.Exit();
-                Game.Exit();
+                OnItemClicked(this, new ScreenEventArgs("Quit"));
             }
 
             base.Update(gameTime);

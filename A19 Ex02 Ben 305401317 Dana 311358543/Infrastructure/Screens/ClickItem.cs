@@ -14,31 +14,45 @@ namespace Infrastructure
 {
     public class ClickItem : MenuItem
     {
-        private GameScreen m_NextScreen;
-        private bool m_IsExitItem;
+        //private GameScreen m_NextScreen;
+        //private bool m_IsExitItem;
+        private string m_ItemName;
+        private bool m_IsUsingKeyboard = true;
 
-        public ClickItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber, GameScreen i_NextScreen) : base(i_AssetName, i_GameScreen, i_ItemNumber)
+        public event EventHandler<ScreenEventArgs> ItemClicked;
+
+        public bool IsUsingKeyboard
         {
-            this.m_NextScreen = i_NextScreen;
+            set { m_IsUsingKeyboard = value; }
+        }
+        protected virtual void OnItemClicked(object sender, EventArgs args)
+        {
+            if (ItemClicked != null)
+            {
+                ItemClicked.Invoke(sender, new ScreenEventArgs(m_ItemName));
+            }
         }
 
-        //exit item
-        public ClickItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen, i_ItemNumber)
-        {
-            this.m_IsExitItem = true;
+        //public ClickItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber, GameScreen i_NextScreen) : base(i_AssetName, i_GameScreen, i_ItemNumber)
+        //{
+        //    this.m_NextScreen = i_NextScreen;
+        //}
 
-    }
-
-    public void ItemClicked()
+        public ClickItem(string i_ItemName, string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen, i_ItemNumber)
         {
-            if (!m_IsExitItem)
+            this.m_ItemName = i_ItemName;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (this.IsActive)
             {
-                this.GameScreen.ScreensManager.SetCurrentScreen(m_NextScreen);
+                if ((this.GameScreen.InputManager.KeyPressed(Keys.Enter) && this.m_IsUsingKeyboard)|| this.GameScreen.InputManager.ButtonPressed(eInputButtons.Left))
+                {
+                    OnItemClicked(this, EventArgs.Empty);
+                }
             }
-            else
-            {
-                this.Game.Exit();
-            }
+            base.Update(gameTime);
         }
     }
 }

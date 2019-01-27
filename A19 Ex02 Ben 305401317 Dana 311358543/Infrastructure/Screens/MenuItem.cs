@@ -68,6 +68,10 @@ namespace Infrastructure
 
             base.Initialize();
         }
+        public bool isMouseHoverItem()
+        {
+            return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
+        }
 
         private void OnActiveChanged(object sender, EventArgs e)
         {
