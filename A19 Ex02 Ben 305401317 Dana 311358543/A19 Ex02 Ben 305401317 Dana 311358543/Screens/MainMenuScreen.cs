@@ -37,7 +37,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             playersItem.ToggleValueChanched += new EventHandler<EventArgs>(OnNumOfPlayersChanged);
             AddMenuItem(playersItem);
 
-            ClickItem SettingsScreenItem = new ClickItem("SettingsScreen", @"Screens\MainMenu\SettingsScreen", this, index++);
+            ClickItem SettingsScreenItem = new ClickItem("SettingsScreen", @"Screens\MainMenu\ScreenSettings", this, index++);
             ClickItem SoundSettingsItem = new ClickItem("SoundSettingsScreen", @"Screens\MainMenu\SoundSettings", this, index++);
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\MainMenu\PlayGameWhite", this, index++);
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);

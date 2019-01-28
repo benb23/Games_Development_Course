@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Infrastructure
 {
-    public class ScreenSettingsManager : GameService, IScreenSettingsManager
+    public class ScreenSettingsManager : GameService
     {
         Game m_Game;
         private bool isMouseVisible = true;
@@ -33,7 +33,6 @@ namespace Infrastructure
 
         public void ToggleFullScreenModeConfig()
         {
-            this.m_Game.
         }
 
     }
