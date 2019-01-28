@@ -92,29 +92,30 @@ namespace Infrastructure
 
         public override void Update(GameTime gameTime)
         {
-            if( IsActive && (this.GameScreen.InputManager.KeyPressed(Keys.PageDown) || this.GameScreen.InputManager.KeyPressed(Keys.PageUp)))
+            if (IsActive)
             {
-                m_Options[m_CurrToggleValue].TintColor = Color.White;
-                m_CurrToggleValue = (1-m_CurrToggleValue) % k_numOfOptions;
-                m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
-                OnToggeleValueChanged(this, EventArgs.Empty);
-            }
-
-            for (int i = 0; i < k_numOfOptions; i++)
-            {
-                if (m_Options[i].isMouseHover())
+                if (this.GameScreen.InputManager.KeyPressed(Keys.PageDown) || this.GameScreen.InputManager.KeyPressed(Keys.PageUp))
                 {
-                    if (m_CurrToggleValue != i)
+                    UpdateToggleValue();
+                }
+
+                for (int i = 0; i < k_numOfOptions; i++) //todo : only if is active??
+                {
+                    if (m_Options[i].isMouseHover() && m_CurrToggleValue != i)
                     {
-                        m_Options[m_CurrToggleValue].TintColor = Color.White;
-                        m_CurrToggleValue = (1 - m_CurrToggleValue) % k_numOfOptions;
-                        m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
-                        OnToggeleValueChanged(this, EventArgs.Empty);
+                            UpdateToggleValue();
                     }
                 }
             }
-
             base.Update(gameTime);  
+        }
+
+        private void UpdateToggleValue()
+        {
+            m_Options[m_CurrToggleValue].TintColor = Color.White;
+            m_CurrToggleValue = (1 - m_CurrToggleValue) % k_numOfOptions;
+            m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
+            OnToggeleValueChanged(this, EventArgs.Empty);
         }
     }
 }

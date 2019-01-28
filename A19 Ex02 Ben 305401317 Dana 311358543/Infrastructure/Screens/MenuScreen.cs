@@ -24,7 +24,7 @@ namespace Infrastructure
 
     public abstract class MenuScreen : GameScreen
     {
-        protected Dictionary<String, GameScreen> m_screens = new Dictionary<string, GameScreen>();//??????????
+        protected Dictionary<string, GameScreen> m_screens = new Dictionary<string, GameScreen>();
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
         // private string m_TitleAsset;
         private Vector2 m_firstItemPosition;
@@ -133,6 +133,5 @@ namespace Infrastructure
         }
 
         // mutual menuScreens methods
-
     }
 }

@@ -16,6 +16,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class SpaceInvadersEngine : GameService, ISpaceInvadersEngine
     {
+        private bool m_IsGameOver = false;
+
+        public bool IsGameOver
+        {
+            get { return m_IsGameOver; }
+        }
+
         private int k_NumOfPlayers = 2;
         private enum eScoreValue
         {
@@ -77,21 +84,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void player_Died(object sender, EventArgs e)
         {
-            bool gameIsOver = true;
+            m_IsGameOver = true;
             foreach(Player player in m_Players)
             {
                 if(player.Souls.Count != 0)
                 {
-                    gameIsOver = false;
+                    m_IsGameOver = false;
                     break;
                 }
             }
 
-            if (gameIsOver)
+            if (m_IsGameOver)
             {
                 m_Winner = getWinner();
-                ShowGameOverMessage();
-                this.m_Game.Exit();
+                //ShowGameOverMessage();
+                //this.m_Game.Exit();
             }
         }
 

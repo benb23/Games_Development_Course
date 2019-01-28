@@ -18,6 +18,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         List<Player> Players { get; set; }
 
+        bool IsGameOver { get; }
+
         void HandleHit(Wall i_wall, ICollidable i_Collidable);
 
         void HandleHit(Bullet i_Bullet, ICollidable i_Collidable);

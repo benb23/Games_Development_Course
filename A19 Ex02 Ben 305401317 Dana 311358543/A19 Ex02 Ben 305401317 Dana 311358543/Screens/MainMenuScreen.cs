@@ -22,7 +22,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public MainMenuScreen(Game i_Game) : base(i_Game, new Vector2(250, 250), 15f)
         {
             m_screens.Add("PlayScreen", new PlayScreen(Game));
-            m_screens.Add("SttingsScreen",new SettingsScreen(Game));
+            m_screens.Add("SttingsScreen", new SettingsScreen(Game));
             m_screens.Add("SoundSettingsScreen", new SoundSettingsScreen(Game));
             IsUsingKeyboard = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
@@ -44,7 +44,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             ScreenSettingsItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
             SoundSettingsItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
             playItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnQuitItemClicked);
 
             AddMenuItem(ScreenSettingsItem);
             AddMenuItem(SoundSettingsItem);
@@ -57,17 +57,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.Initialize();
         }
 
+        private void OnQuitItemClicked(object sender, ScreenEventArgs args)
+        {
+            Game.Exit();
 
+        }
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
-            if (args.ScreenName == "Quit")
-            {
-                Game.Exit();
-            }
-            else
-            {
-                MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
-            }
+            MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
         }
 
         private void OnNumOfPlayersChanged(object sender, EventArgs args)

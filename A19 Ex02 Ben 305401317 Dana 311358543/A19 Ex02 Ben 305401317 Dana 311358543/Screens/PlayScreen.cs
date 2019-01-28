@@ -49,6 +49,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnGameOver()//TODO: CALL 
         {
+
             this.ExitScreen();
         }
 
@@ -64,10 +65,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             base.Update(gameTime);
 
-            if (InputManager.KeyPressed(Keys.P))
+            if (this.m_State == eScreenState.Active)
             {
-                ScreensManager.SetCurrentScreen(m_PauseScreenScreen);
+                if(m_GameEngine.IsGameOver)
+                {
+                    this.ExitScreen();
+                    this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game)); 
+                }
+
+                if (InputManager.KeyPressed(Keys.P))
+                {
+                    ScreensManager.SetCurrentScreen(m_PauseScreenScreen);
+                }
             }
+            
         }
 
         public override void Initialize()

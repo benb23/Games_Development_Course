@@ -37,7 +37,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             playItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
             mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnQuitItemClicked);
 
             AddMenuItem(playItem);
             AddMenuItem(mainMenuItem);
@@ -49,16 +49,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.Initialize();
         }
 
+        private void OnQuitItemClicked(object sender, ScreenEventArgs args)
+        {
+            Game.Exit();
+        }
+
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
-            if (args.ScreenName == "Quit")
-            {
-                Game.Exit();
-            }
-            else
-            {
-                MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
-            }
+            MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
         }
 
         public override void Update(GameTime gameTime)

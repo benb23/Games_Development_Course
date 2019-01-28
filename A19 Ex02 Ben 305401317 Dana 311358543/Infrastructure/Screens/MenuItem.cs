@@ -28,7 +28,7 @@ namespace Infrastructure
         // private eMenuItemType m_ItemType;
         private int m_ItemNumber;
         bool m_IsActive;
-        bool m_IsMouseHover;
+        //bool m_IsMouseHover;
         
         public MenuItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen)
         {
@@ -55,7 +55,6 @@ namespace Infrastructure
             }
         }
 
-
         public override void Initialize()
         {
             if (m_ItemNumber == 0)
@@ -68,6 +67,7 @@ namespace Infrastructure
 
             base.Initialize();
         }
+
         public bool isMouseHoverItem()
         {
             return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
