@@ -23,7 +23,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public MainMenuScreen(Game i_Game) : base(i_Game, new Vector2(250, 250), 15f)
         {
             m_screens.Add("PlayScreen", new PlayScreen(Game));
-            m_screens.Add("SttingsScreen", new SettingsScreen(Game));
+            m_screens.Add("SettingsScreen", new SettingsScreen(Game));
             m_screens.Add("SoundSettingsScreen", new SoundSettingsScreen(Game));
             IsUsingKeyboard = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);

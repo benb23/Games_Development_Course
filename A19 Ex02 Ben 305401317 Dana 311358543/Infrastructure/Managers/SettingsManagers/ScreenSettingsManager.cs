@@ -8,31 +8,36 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Infrastructure
 {
-    public class ScreenSettingsManager : GameService
+    public class ScreenSettingsManager : GameService, IScreenSettingsManager
     {
         Game m_Game;
+        GraphicsDeviceManager m_GraphicDeviceManager;
+
         private bool isMouseVisible = true;
         private bool isWindowResizingAllowed = true;
         private bool isFullScreenMode = true;
 
 
-        public ScreenSettingsManager(GameScreen i_GameScreen) : base(i_GameScreen.Game)
+        public ScreenSettingsManager(Game i_Game) : base(i_Game)
         {
-            m_Game = i_GameScreen.Game;
+            this.m_Game = i_Game;
+            this.m_GraphicDeviceManager = m_Game.Services.GetService(typeof(GraphicsDeviceManager)) as GraphicsDeviceManager;
         }
 
-        public void ToggleMouseVisabilityConfig()
+
+        public void ToggleMouseVisabilityConfig(object sender, EventArgs args)
         {
             this.m_Game.IsMouseVisible = !this.m_Game.IsMouseVisible;
         }
 
-        public void ToggleAllowWindowResizingConfig()
+        public void ToggleAllowWindowResizingConfig(object sender, EventArgs args)
         {
             this.m_Game.Window.AllowUserResizing = !this.m_Game.Window.AllowUserResizing;
         }
 
-        public void ToggleFullScreenModeConfig()
+        public void ToggleFullScreenModeConfig(object sender, EventArgs args)
         {
+            this.m_GraphicDeviceManager.IsFullScreen = !this.m_GraphicDeviceManager.IsFullScreen;
         }
 
     }

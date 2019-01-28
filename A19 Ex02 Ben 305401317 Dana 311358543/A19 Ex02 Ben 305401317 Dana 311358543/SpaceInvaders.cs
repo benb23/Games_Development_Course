@@ -25,6 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_GraphicsMgr.PreferredBackBufferHeight = 600;
             this.m_GraphicsMgr.ApplyChanges();
 
+            new ScreenSettingsManager(this);
             new CollisionsManager(this);
             new SpaceInvadersEngine(this);
             new InputManager(this);
@@ -39,6 +40,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         protected override void Initialize()
         {
             base.Initialize();
+            this.Services.AddService(typeof(GraphicsDeviceManager), m_GraphicsMgr);
             this.Window.Title = "Space Invaders";
         }
 
