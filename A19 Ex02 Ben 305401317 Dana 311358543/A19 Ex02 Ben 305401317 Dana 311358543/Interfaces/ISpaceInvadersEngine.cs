@@ -16,11 +16,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public interface ISpaceInvadersEngine
     {
-        SpaceInvadersEngine.eLevel Level { get; }
+        int EnemyScoreAddition { get; }
+        int EnemyShootingFrequencyAddition { get; }
+
+        void InitGameEngineForNewGame();
+
+        void InitGameEngineForNextLevel();
+        SpaceInvadersEngine.eLevel Level { get; set; }
+
         List<Player> Players { get; set; }
 
         SpaceInvadersEngine.eNumOfPlayers NumOfPlayers { get; set; }
-        bool IsGameOver { get; }
+        bool IsGameOver { get; set; }
 
         void HandleHit(Wall i_wall, ICollidable i_Collidable);
 
@@ -33,7 +40,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         void HandleHit(MotherSpaceShip i_MotherSpaceShip, Bullet i_Bullet);
 
         void CreatePlayers(GameScreen i_GameScreen);
-
-        void ShowGameOverMessage();
     }
 }

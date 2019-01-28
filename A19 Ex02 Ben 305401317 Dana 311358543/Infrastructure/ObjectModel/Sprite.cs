@@ -7,11 +7,17 @@ namespace Infrastructure
     public class Sprite : LoadableDrawableComponent
     {
         protected int m_ScoreValue; // todo : dana , in sprite?
+        protected int m_OriginalScoreValue; // todo : dana , in sprite?
 
         public int ScoreValue
         {
             get { return this.m_ScoreValue; }
             set { this.m_ScoreValue = value; }
+        }
+
+        public int OriginalScoreValue
+        {
+            get { return this.m_OriginalScoreValue; }
         }
 
         protected bool m_Initialize;

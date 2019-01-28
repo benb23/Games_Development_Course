@@ -14,6 +14,15 @@ namespace Infrastructure
             i_Game.Components.Add(this);
         }
 
+        protected Dictionary<string, GameScreen> m_screens = new Dictionary<string, GameScreen>();
+
+
+
+        public GameScreen GetScreen(string i_ScreenName)
+        {
+            return m_screens[i_ScreenName];
+        }
+
         private Stack<GameScreen> m_ScreensStack = new Stack<GameScreen>();
 
         public GameScreen ActiveScreen
@@ -104,6 +113,11 @@ namespace Infrastructure
         private new void Add(GameScreen i_Component)
         {
             base.Add(i_Component);
+        }
+
+        public void AddToDictScreens(GameScreen i_Screen)
+        {
+            m_screens.Add(i_Screen.ToString(), i_Screen);
         }
 
         public event EventHandler<StateChangedEventArgs> ScreenStateChanged;

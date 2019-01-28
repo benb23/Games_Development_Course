@@ -28,8 +28,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Services.AddService(typeof(Random), new Random());
 
             ScreensMananger screensMananger = new ScreensMananger(this);
-            screensMananger.Push(new GameOverScreen(this)); //todo: delete
-            screensMananger.SetCurrentScreen(new WelcomeScreen(this));
+
+            GameScreen welcomeScreen = new WelcomeScreen(this);
+            GameScreen gameOverScreen = new GameOverScreen(this);
+
+            screensMananger.AddToDictScreens(welcomeScreen);
+            screensMananger.AddToDictScreens(new GameOverScreen(this));
+            screensMananger.AddToDictScreens(new PlayScreen(this));
+            screensMananger.AddToDictScreens(new MainMenuScreen(this));
+            screensMananger.AddToDictScreens(new PauseScreen(this));
+            screensMananger.AddToDictScreens(new SettingsScreen(this));
+            screensMananger.AddToDictScreens(new SoundSettingsScreen(this));
+            screensMananger.AddToDictScreens(new LevelTransitionScreencs(this));
+
+            screensMananger.SetCurrentScreen(gameOverScreen);
+            screensMananger.SetCurrentScreen(welcomeScreen);
 
             Content.RootDirectory = "Content";
         }

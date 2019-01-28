@@ -27,11 +27,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
-
-            if (m_GameEngine.Level != SpaceInvadersEngine.eLevel.One)
-            {
-                this.m_Velocity = new Vector2(45, 0);
-            }
         }
 
         protected override void LoadContent()
@@ -70,12 +65,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(this.CurrTexture == null)
             {
-                this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
-                Color[] texturePixels = new Color[Texture.Width * Texture.Height];
-                this.CurrTexture.SetData(texturePixels);
+                createNewTexture();
             }
 
             this.m_GameEngine.HandleHit(this, i_Collidable);
+        }
+
+        public void createNewTexture()
+        {
+            this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
+            //Color[] texturePixels = new Color[Texture.Width * Texture.Height];
+            this.CurrTexture.SetData(OriginalPixels);
         }
     }
 }

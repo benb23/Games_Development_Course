@@ -39,5 +39,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 ExitScreen();
             }
         }
+
+        public override string ToString()
+        {
+            return "PauseScreen";
+        }
     }
 }

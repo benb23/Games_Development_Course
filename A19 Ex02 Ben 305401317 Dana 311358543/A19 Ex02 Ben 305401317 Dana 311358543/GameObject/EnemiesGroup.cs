@@ -22,6 +22,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             right = 1,
         }
 
+        public event EventHandler<EventArgs> AllEnemiesDied;
+
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
         private float m_Direction = 1f;
@@ -43,6 +45,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             i_GameScreen.Add(this);
         }
 
+        protected virtual void OnAllEnemiesDied(object sender, EventArgs args)
+        {
+            if (AllEnemiesDied != null)
+            {
+                AllEnemiesDied.Invoke(sender, args);
+            }
+        }
         public override void Update(GameTime i_GameTime)
         {
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
@@ -69,24 +78,48 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            cheackGameOver();
+            if(this.isEnemiesGroupTouchTheBotton())
+            {
+                m_GameEngine.IsGameOver = true;
+            }
+            if (this.isAllEnemiesDead())
+            {
+                OnAllEnemiesDied(this, EventArgs.Empty);
+            }
         }
 
-        private bool cheackGameOver()
+        public void InitEnemyGroupForNextLevel()
         {
-            bool isGameOver = this.isEnemiesGroupTouchTheBotton() || this.isAllEnemiesDead();
-            if (isGameOver)
+            foreach(Enemy enemy in m_EnemiesMatrix)
             {
-                if (m_GameEngine == null)
-                {
-                    m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-                }
+                updateScoreValueAndShootingFrequency(enemy);
+                enemy.Enabled = true;
+                enemy.Visible = true;
+                enemy.initPosition();
+                m_AliveEnemiesByRow.Add(enemy);
+            }
+            m_TimeUntilNextStepInSec = 0.5f;
+            m_TimeCounter = 0f;
+            initAliveEnemiesByColum();
+        }
 
-                m_GameEngine.ShowGameOverMessage();
-                Game.Exit();
+        private void updateScoreValueAndShootingFrequency(Enemy i_Enemy)
+        {
+            if (m_GameEngine == null)
+            {
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
-            return isGameOver;
+            if (m_GameEngine.Level == SpaceInvadersEngine.eLevel.One)
+            {
+                i_Enemy.m_MaxRandomToShoot = i_Enemy.m_OriginalMaxRandomToShoot;
+                i_Enemy.ScoreValue = i_Enemy.OriginalScoreValue;
+            }
+            else
+            {
+                i_Enemy.m_MaxRandomToShoot += m_GameEngine.EnemyShootingFrequencyAddition;
+                i_Enemy.ScoreValue += m_GameEngine.EnemyScoreAddition;
+            }
         }
 
         private void jump(Vector2 i_StepToJump)
@@ -165,8 +198,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private bool isEnemiesGroupTouchTheBotton()
         {
-            bool isEnemiesGroupTouchTheBotton = this.getBottomGroupBorder() >= Game.GraphicsDevice.Viewport.Height;
+            bool isEnemiesGroupTouchTheBotton = false;
 
+            if (m_AliveEnemiesByRow.Count > 0)
+            {
+                isEnemiesGroupTouchTheBotton = this.getBottomGroupBorder() >= Game.GraphicsDevice.Viewport.Height;
+            }
             return isEnemiesGroupTouchTheBotton;
         }
 

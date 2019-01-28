@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+
 namespace Infrastructure
 {
     public class CollidableSprite : Sprite
@@ -23,12 +24,17 @@ namespace Infrastructure
         }
 
         private Color[] m_Pixels;
-
+        private Color[] m_OriginalPixels;
         public Color[] Pixels
         {
             get { return m_Pixels; }
-        } 
+            set { m_Pixels = value; }
 
+        }
+        public Color[] OriginalPixels
+        {
+            get { return m_OriginalPixels; }
+        }
         protected List<Vector2> m_CollidedPixelsPositions;
         protected List<Vector2> m_CollidedPixelsIndex;
 
@@ -51,8 +57,8 @@ namespace Infrastructure
         protected override void LoadContent()
         {
             base.LoadContent();
-            m_Pixels = new Color[this.Texture.Width * this.Texture.Height];
-            this.Texture.GetData<Color>(m_Pixels);
+            m_OriginalPixels = m_Pixels = new Color[this.Texture.Width * this.Texture.Height];
+            this.Texture.GetData<Color>(m_OriginalPixels);
         }
 
         public virtual bool CheckCollision(ICollidable i_Source)

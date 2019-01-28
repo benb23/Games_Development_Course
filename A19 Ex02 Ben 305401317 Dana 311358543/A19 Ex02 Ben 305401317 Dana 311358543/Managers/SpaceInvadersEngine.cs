@@ -18,9 +18,23 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         private eLevel m_Level = eLevel.One;
 
+        private const int k_EnemyScoreAddition = 120;
+
+        public int EnemyScoreAddition
+        {
+            get { return k_EnemyScoreAddition; }
+        }
+        private const int k_EnemyShootingFrequencyAddition = 120;
+
+        public int EnemyShootingFrequencyAddition
+        {
+            get { return k_EnemyShootingFrequencyAddition; }
+        }
+
         public eLevel Level
         {
             get { return m_Level; }
+            set { m_Level = value; }
         }
         public enum eLevel
         {
@@ -43,6 +57,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public bool IsGameOver
         {
             get { return m_IsGameOver; }
+            set { m_IsGameOver = value; }
         }
 
         public eNumOfPlayers NumOfPlayers
@@ -74,6 +89,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             //m_ScoreBoard = new ScoreBoardHeader(i_GameScreen);
         }
 
+        public void InitGameEngineForNewGame()
+        {
+            this.m_Level = eLevel.One;
+            InitNewPlayers();
+            this.IsGameOver = false;
+            InitGameEngineForNextLevel();
+        }
+
+        private void InitNewPlayers()
+        {
+            foreach(Player player in m_Players)
+            {
+                player.Score = 0;
+            }
+        }
         public void CreatePlayers(GameScreen i_GameScreen)
         {
             m_Players = new List<Player>((int)m_NumOfPlayers);
@@ -130,7 +160,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_Winner = getWinner();
             }
         }
-
+        
         private PlayerIndex? getWinner()
         {
             PlayerIndex? winner;
@@ -160,6 +190,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             player.Souls.Remove(player.Souls.First());
         }
 
+        public void InitGameEngineForNextLevel()
+        {
+            initPlayersSpaceShipsForNextLevel();
+            this.m_Level = (eLevel)MathHelper.Clamp((int)this.Level +1, 0, (int)eLevel.Six);
+        }
+
+        private void initPlayersSpaceShipsForNextLevel()
+        {
+            foreach (Player player in m_Players)
+            {
+                player.initSpaceShipPosition();
+            }
+        }
+
         private void updatePlayerScoreAfterHitEnemy(IScoreable i_Player, Enemy i_Enemy)
         {
             i_Player.Score += i_Enemy.ScoreValue;
@@ -170,32 +214,32 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             Game.Services.AddService(typeof(ISpaceInvadersEngine), this);
         }
 
-        public void ShowGameOverMessage()
-        {
-            string winner;
+//        public void ShowGameOverMessage()
+//        {
+//            string winner;
 
-            if(this.m_Winner == null)
-            {
-                winner = "Tie";
-            }
-            else if(this.m_Winner == PlayerIndex.One)
-            {
-                winner = "player 1";
-            }
-            else
-            {
-                winner = "player 2";
-            }
+//            if(this.m_Winner == null)
+//            {
+//                winner = "Tie";
+//            }
+//            else if(this.m_Winner == PlayerIndex.One)
+//            {
+//                winner = "player 1";
+//            }
+//            else
+//            {
+//                winner = "player 2";
+//            }
 
-            System.Windows.Forms.MessageBox.Show(string.Format(
-@"Game Over 
-player 1 score is : {0}
-Player 2 score is : {1}
-The winner is : {2} !", 
-this.Players[(int)PlayerIndex.One].Score.ToString(), 
-this.Players[(int)PlayerIndex.Two].Score.ToString(), 
-winner)); 
-        }
+//            System.Windows.Forms.MessageBox.Show(string.Format(
+//@"Game Over 
+//player 1 score is : {0}
+//Player 2 score is : {1}
+//The winner is : {2} !", 
+//this.Players[(int)PlayerIndex.One].Score.ToString(), 
+//this.Players[(int)PlayerIndex.Two].Score.ToString(), 
+//winner)); 
+//        }
 
         public void HandleHit(Bullet bullet, ICollidable i_Collidable)
         {
@@ -243,8 +287,7 @@ winner));
             }
             else if (i_Collidable is Enemy)
             {
-                this.ShowGameOverMessage();
-                this.m_Game.Exit();
+                this.m_IsGameOver = true;
             }
         }
 
@@ -275,6 +318,11 @@ winner));
             {
                 this.m_Players[(int)PlayerIndex.Two].Score += i_MotherSpaceShip.ScoreValue;
             }
+        }
+
+        private void initNewLevel()
+        {
+
         }
 
         public void HandleHit(Wall i_Wall, ICollidable i_Collidable)

@@ -130,6 +130,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
+        public void initSpaceShipPosition()
+        {
+            m_Initialized = false; //todo: dana , change
+        }
+
         private void createSpaceShip(PlayerIndex i_PlayerType)
         {
             if(i_PlayerType == PlayerIndex.One)
