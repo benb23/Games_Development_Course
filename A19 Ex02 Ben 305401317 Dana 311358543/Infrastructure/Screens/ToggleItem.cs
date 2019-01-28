@@ -15,17 +15,23 @@ namespace Infrastructure
     public class ToggleOption : Sprite
     {
         private Rectangle m_TextureRectangle;
+        private GameScreen m_GameScreen;
 
         public ToggleOption(GameScreen i_GameScreen,string i_AssetName, Rectangle i_Rec , Vector2 i_Position) 
             : base(i_AssetName, i_GameScreen)
         {
             this.Position = i_Position;
+            this.m_GameScreen = i_GameScreen;
             this.m_TextureRectangle = i_Rec;
         }
 
         public override void Draw(GameTime gameTime)
         {
             GameScreen.SpriteBatch.Draw(this.Texture , this.Position, this.m_TextureRectangle, this.m_TintColor);
+        }
+        public bool isMouseHover()
+        {
+            return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
         }
     }
 
@@ -93,6 +99,21 @@ namespace Infrastructure
                 m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
                 OnToggeleValueChanged(this, EventArgs.Empty);
             }
+
+            for (int i = 0; i < k_numOfOptions; i++)
+            {
+                if (m_Options[i].isMouseHover())
+                {
+                    if (m_CurrToggleValue != i)
+                    {
+                        m_Options[m_CurrToggleValue].TintColor = Color.White;
+                        m_CurrToggleValue = (1 - m_CurrToggleValue) % k_numOfOptions;
+                        m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
+                        OnToggeleValueChanged(this, EventArgs.Empty);
+                    }
+                }
+            }
+
             base.Update(gameTime);  
         }
     }

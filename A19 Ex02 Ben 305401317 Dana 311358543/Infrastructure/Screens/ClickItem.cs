@@ -14,8 +14,6 @@ namespace Infrastructure
 {
     public class ClickItem : MenuItem
     {
-        //private GameScreen m_NextScreen;
-        //private bool m_IsExitItem;
         private string m_ItemName;
         private bool m_IsUsingKeyboard = true;
 
@@ -32,11 +30,6 @@ namespace Infrastructure
                 ItemClicked.Invoke(sender, new ScreenEventArgs(m_ItemName));
             }
         }
-
-        //public ClickItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber, GameScreen i_NextScreen) : base(i_AssetName, i_GameScreen, i_ItemNumber)
-        //{
-        //    this.m_NextScreen = i_NextScreen;
-        //}
 
         public ClickItem(string i_ItemName, string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen, i_ItemNumber)
         {
