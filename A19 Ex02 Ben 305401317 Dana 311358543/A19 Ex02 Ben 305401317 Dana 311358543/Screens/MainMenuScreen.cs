@@ -28,6 +28,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             IsUsingKeyboard = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\MainMenu\MainMenuLogo");
+            this.m_MenuHeader.OffsetX = 20;
         }
 
         public override void Initialize()

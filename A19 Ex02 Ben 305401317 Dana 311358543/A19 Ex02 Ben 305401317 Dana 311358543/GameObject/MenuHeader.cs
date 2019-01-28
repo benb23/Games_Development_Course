@@ -17,7 +17,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class MenuHeader : Sprite
     {
         GameScreen m_GameScreen;
-        float m_HeigthFromTop = 20;
+        float m_OffsetY = 20;
+        float m_OffsetX = 0;
+
 
         public MenuHeader(GameScreen i_GameScreen, string i_AssetName) : base(i_AssetName, i_GameScreen)
         {
@@ -30,9 +32,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Scales = i_Scale;
         }
 
-        public float HeigthFromTop
+        public float OffsetY
         {
-            set { m_HeigthFromTop = value; }
+            set { m_OffsetY = value; }
+        }
+
+        public float OffsetX
+        {
+            set { m_OffsetX = value; }
         }
 
         public override void Update(GameTime gameTime)
@@ -40,7 +47,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (!m_Initialize)
             {
                 InitOrigins();
-                this.Position = new Vector2(m_GameScreen.Game.GraphicsDevice.Viewport.Width / 2, m_HeigthFromTop);
+                this.Position = new Vector2(m_GameScreen.Game.GraphicsDevice.Viewport.Width / 2 + m_OffsetX, m_OffsetY);
                 m_Initialize = true;
             }
 

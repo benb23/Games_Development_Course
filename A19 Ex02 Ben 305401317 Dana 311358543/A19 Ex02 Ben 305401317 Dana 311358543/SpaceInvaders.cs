@@ -36,12 +36,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void Initialize()
         {
-
             base.Initialize();
             this.m_GraphicsMgr.IsFullScreen = true;
             this.m_GraphicsMgr.PreferredBackBufferWidth = 800;
             this.m_GraphicsMgr.PreferredBackBufferHeight = 600;
-            m_GraphicsMgr.ApplyChanges();
+            this.m_GraphicsMgr.ApplyChanges();
             this.Window.Title = "Space Invaders";
         }
 
