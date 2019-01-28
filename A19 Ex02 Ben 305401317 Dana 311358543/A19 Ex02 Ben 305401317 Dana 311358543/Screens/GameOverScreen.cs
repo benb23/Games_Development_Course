@@ -34,7 +34,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             int index = 0;
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
-            ClickItem playItem = new ClickItem("PlayScreen", @"Screens\Wellcome\PlayGame", this, index++);
+            ClickItem playItem = new ClickItem("PlayScreen", @"Screens\GameOver\Restart", this, index++);
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
 
             QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnQuitItemClicked);
