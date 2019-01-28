@@ -43,9 +43,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(mainMenuItem);
             AddMenuItem(QuitItem);
 
-            //m_MenuHeader.Position = m_MenuHeader.Position + new Vector2(300, 0);
-
-
             base.Initialize();
         }
 
@@ -56,7 +53,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
-            MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
+            //MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
+            MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
 
         public override void Update(GameTime gameTime)
@@ -75,6 +73,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             base.Update(gameTime);
+        }
+
+        public override string ToString()
+        {
+            return "WellcomeScreen";
         }
     }
 }

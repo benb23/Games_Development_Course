@@ -37,6 +37,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             initAnimations();
         }
 
+        public void InitMotherShipForNextLevel()
+        {
+            m_Initialize = false;
+            m_OnMove = false;
+        }
+
         public override void Update(GameTime i_GameTime)
         {
             if (!m_Initialize)

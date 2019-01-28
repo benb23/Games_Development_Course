@@ -19,7 +19,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private List<Bullet> m_Bullets = new List<Bullet>(5);
         private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
         private Gun m_Gun;
-        private const int k_MaxRandomToShoot = 10; 
+        public int m_OriginalMaxRandomToShoot = 10;
+        public int m_MaxRandomToShoot = 10;
         public const int k_MaxRandomNumber = 50000;
         private ISpaceInvadersEngine m_GameEngine;
         private int k_NumOfTOtalFrames = 6;
@@ -45,8 +46,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public Enemy(GameScreen i_GameSreen, Color i_Tint,int i_ScoreValue, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec) 
             : base(k_AssteName, i_GameSreen)
         {
-            m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            m_ScoreValue = i_ScoreValue + (int)m_GameEngine.Level*120; // todo : dana  const?
+            //m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            m_OriginalScoreValue= m_ScoreValue = i_ScoreValue; //+ (int)m_GameEngine.Level*120; // todo : dana  const?
             m_Random = Game.Services.GetService(typeof(Random)) as Random; 
             m_TimeUntilNextStepInSec = TimeSpan.FromSeconds(i_TimeUntilNextStepInSec);
             m_Gap = i_Gap;
@@ -70,7 +71,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             initAnimations();
         }
 
-        private void initPosition()
+        public void initPosition()
         {
             float halfEnemySize = this.Texture.Height / 2;
             m_Position = new Vector2(halfEnemySize + m_Colum * (Texture.Height * 1.5f + m_Gap), this.Texture.Height * 3f + m_Row * (Texture.Height * 1.5f + m_Gap));
@@ -103,9 +104,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.Animations["CellAnimation"].Restart();
             }
 
+            //test for level
+            //m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            //if (m_GameEngine.Level == SpaceInvadersEngine.eLevel.One)
+            //{
+            //    Visible = false;
+            //    Enabled = false;
+            //}
+            /////
             int rnd = m_Random.Next(0, k_MaxRandomNumber);    
 
-            if (rnd <= k_MaxRandomToShoot && m_Gun.PermitionToShoot())
+            if (rnd <= m_MaxRandomToShoot && m_Gun.PermitionToShoot())
             {
                 shoot();
             }
@@ -120,6 +129,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
+            if (m_GameEngine == null)
+            {
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            }
+
             if ((!this.m_Animations["dyingEnemy"].Enabled))
             {
                 m_GameEngine.HandleHit(this, i_Collidable);

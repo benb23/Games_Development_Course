@@ -36,5 +36,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.Update(i_GameTime);
         }
 
+        public override string ToString()
+        {
+            return "LevelTransitionScreencs";
+        }
+
     }
 }

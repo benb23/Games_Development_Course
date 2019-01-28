@@ -40,7 +40,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
             m_Players = m_GameEngine.Players;
-            
+
             this.m_EnemysGroup = new EnemiesGroup(this);
             this.m_WallsGroup = new WallsGroup(this, k_NumOfWalls);
             m_PauseScreenScreen = new PauseScreen(this.Game);
@@ -48,8 +48,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnGameOver()//TODO: CALL 
         {
-
-            this.ExitScreen();
+            //ExitScreen(); ??
+            this.m_GameEngine.InitGameEngineForNewGame();
+            this.initSpritesForNewGame();
+            this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
         }
 
         protected override void OnActivated()
@@ -64,12 +66,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             base.Update(gameTime);
 
+            if(m_GameEngine.IsGameOver)
+            {
+                OnGameOver();
+            }
+
             if (this.m_State == eScreenState.Active)
             {
-                if(m_GameEngine.IsGameOver)
+                if (m_GameEngine.IsGameOver)
                 {
                     this.ExitScreen();
-                    this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game)); 
+                    this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
                 }
 
                 if (InputManager.KeyPressed(Keys.P))
@@ -77,7 +84,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     ScreensManager.SetCurrentScreen(m_PauseScreenScreen);
                 }
             }
-            
         }
 
         public override void Initialize()
@@ -87,6 +93,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Game.Window.Title = k_GameName;
             base.Initialize();
             m_WallsGroup.Position = new Vector2(m_WallsGroup.Position.X, GraphicsDevice.Viewport.Height - (2 * m_Players[(int)PlayerIndex.One].SpaceShip.Texture.Height));
+            m_EnemysGroup.AllEnemiesDied += new EventHandler<EventArgs>(OnLevelEnded);
+
+        }
+        private void initSpritesForNewGame()
+        {
+            initSpritesForNewLevel();
+        }
+
+        private void initSpritesForNewLevel()
+        {
+            m_GameEngine.InitGameEngineForNextLevel();
+            m_EnemysGroup.InitEnemyGroupForNextLevel();
+            m_WallsGroup.InitWallsForNextLevel();
+            m_MotherSpaceShip.InitMotherShipForNextLevel();
+            this.ScreensManager.SetCurrentScreen(new LevelTransitionScreencs(this.Game));
+
+        }
+        private void OnLevelEnded(object sender, EventArgs args)
+        {
+            initSpritesForNewLevel();
+        }
+
+        public override string ToString()
+        {
+            return "PlayScreen";
         }
     }
 }

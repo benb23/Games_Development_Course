@@ -55,6 +55,8 @@ namespace Infrastructure
             this.Visible = false;
         }
 
+        
+
         protected eScreenState m_State = eScreenState.Inactive;
 
         public eScreenState State
