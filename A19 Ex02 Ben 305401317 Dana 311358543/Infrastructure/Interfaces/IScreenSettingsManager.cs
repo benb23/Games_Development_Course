@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public interface ISettingsScreenManager
+    public interface IScreenSettingsManager
     {
+
+        void ToggleMouseVisabilityConfig(object sender, EventArgs args);
+
+        void ToggleAllowWindowResizingConfig(object sender, EventArgs args);
+
+        void ToggleFullScreenModeConfig(object sender, EventArgs args);
+
     }
 }

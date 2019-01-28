@@ -20,10 +20,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public SpaceInvaders()
         {
             m_GraphicsMgr = new GraphicsDeviceManager(this);
-            this.m_GraphicsMgr.IsFullScreen = false;
-            this.m_GraphicsMgr.PreferredBackBufferWidth = 800;
-            this.m_GraphicsMgr.PreferredBackBufferHeight = 600;
-            this.m_GraphicsMgr.ApplyChanges();
 
             new ScreenSettingsManager(this);
             new CollisionsManager(this);
@@ -37,10 +33,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             Content.RootDirectory = "Content";
         }
+
         protected override void Initialize()
         {
+
             base.Initialize();
-            this.Services.AddService(typeof(GraphicsDeviceManager), m_GraphicsMgr);
+            this.m_GraphicsMgr.IsFullScreen = true;
+            this.m_GraphicsMgr.PreferredBackBufferWidth = 800;
+            this.m_GraphicsMgr.PreferredBackBufferHeight = 600;
+            m_GraphicsMgr.ApplyChanges();
             this.Window.Title = "Space Invaders";
         }
 

@@ -18,14 +18,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         private Background m_Background;
         private MenuHeader m_MenuHeader;
-        private ScreenSettingsManager m_ScreenSettingMng;
+        private IScreenSettingsManager m_ScreenSettingMng;
 
 
         public SettingsScreen(Game i_Game) : base(i_Game, new Vector2(250, 250), 15f)
         {
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\Settings\ScreenSettingsLogo");
-            this.m_ScreenSettingMng = i_Game.Services.GetService(typeof(ScreenSettingsManager)) as ScreenSettingsManager;
+            this.m_ScreenSettingMng = i_Game.Services.GetService(typeof(IScreenSettingsManager)) as IScreenSettingsManager;
         }
 
 
