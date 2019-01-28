@@ -12,14 +12,16 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Infrastructure
 {
-    public class MenuOption : Sprite
+    public class ToggleOption : Sprite
     {
         private Rectangle m_TextureRectangle;
+        private GameScreen m_GameScreen;
 
-        public MenuOption(GameScreen i_GameScreen,string i_AssetName, Rectangle i_Rec , Vector2 i_Position) 
+        public ToggleOption(GameScreen i_GameScreen,string i_AssetName, Rectangle i_Rec , Vector2 i_Position) 
             : base(i_AssetName, i_GameScreen)
         {
             this.Position = i_Position;
+            this.m_GameScreen = i_GameScreen;
             this.m_TextureRectangle = i_Rec;
         }
 
@@ -27,26 +29,30 @@ namespace Infrastructure
         {
             GameScreen.SpriteBatch.Draw(this.Texture , this.Position, this.m_TextureRectangle, this.m_TintColor);
         }
+        public bool isMouseHover()
+        {
+            return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
+        }
     }
 
     public class ToggleItem : MenuItem
     {
-        private int m_CurrSelectedOption; //defult is 0
+        private int m_CurrToggleValue; //defult is 0
         private const int k_numOfOptions = 2;
         private Texture2D m_SeperatorTexture;
         private Vector2 m_SeperatorPosition;
         private string m_SeperatorAsset = @"Screens\MainMenu\OptionsSeperator";
         private string m_OptionsAssetName;
-        private List<MenuOption> m_Options; 
+        private List<ToggleOption> m_Options; 
         private Texture2D m_OptionsTexture;
 
-        public event EventHandler<EventArgs> selectedOptionChanged;
+        public event EventHandler<EventArgs> ToggleValueChanched;
 
-        protected virtual void OnSelectedOptionChanged(object sender, EventArgs args)
+        protected virtual void OnToggeleValueChanged(object sender, EventArgs args)
         {
-            if (selectedOptionChanged != null)
+            if (ToggleValueChanched != null)
             {
-                selectedOptionChanged.Invoke(sender, args);
+                ToggleValueChanched.Invoke(sender, args);
             }
         }
 
@@ -66,16 +72,16 @@ namespace Infrastructure
 
         private void initOptions()
         {
-            m_Options = new List<MenuOption>(k_numOfOptions);
+            m_Options = new List<ToggleOption>(k_numOfOptions);
 
             for (int i = 0; i < k_numOfOptions; i++)
             {
-                m_Options.Add(new MenuOption(this.GameScreen, m_OptionsAssetName,
+                m_Options.Add(new ToggleOption(this.GameScreen, m_OptionsAssetName,
                     new Rectangle(0, i * m_OptionsTexture.Height / 2, m_OptionsTexture.Width, m_OptionsTexture.Height / 2),
                     new Vector2(this.Position.X + this.Texture.Width + 5 + i *( m_OptionsTexture.Width + m_SeperatorTexture.Width), this.Position.Y)));
             }
             m_SeperatorPosition = new Vector2(m_Options[0].Position.X + m_OptionsTexture.Width, m_Options[0].Position.Y);
-            m_Options[m_CurrSelectedOption].TintColor = Color.Yellow;//default
+            m_Options[m_CurrToggleValue].TintColor = Color.Yellow;//default
         }
 
         public override void Draw(GameTime gameTime)
@@ -86,29 +92,30 @@ namespace Infrastructure
 
         public override void Update(GameTime gameTime)
         {
-            if( IsActive && (this.GameScreen.InputManager.KeyPressed(Keys.PageDown) || this.GameScreen.InputManager.KeyPressed(Keys.PageUp)))
+            if (IsActive)
             {
-                int addition = 0;
-                if(this.GameScreen.InputManager.KeyPressed(Keys.PageDown))
+                if (this.GameScreen.InputManager.KeyPressed(Keys.PageDown) || this.GameScreen.InputManager.KeyPressed(Keys.PageUp))
                 {
-                    if(m_CurrSelectedOption == k_numOfOptions -1)
-                    {
-                        addition = -(k_numOfOptions - 1);
-                    }
-                    addition = 1;
-                }
-                else if(this.GameScreen.InputManager.KeyPressed(Keys.PageUp))
-                {
-                    addition = -1;
-                    addition = k_numOfOptions - 1;
+                    UpdateToggleValue();
                 }
 
-                m_Options[m_CurrSelectedOption].TintColor = Color.White;
-                m_CurrSelectedOption = (m_CurrSelectedOption + addition) % k_numOfOptions;
-                m_Options[m_CurrSelectedOption].TintColor = Color.Yellow;
-                OnSelectedOptionChanged(this, EventArgs.Empty);
+                for (int i = 0; i < k_numOfOptions; i++) //todo : only if is active??
+                {
+                    if (m_Options[i].isMouseHover() && m_CurrToggleValue != i)
+                    {
+                            UpdateToggleValue();
+                    }
+                }
             }
             base.Update(gameTime);  
+        }
+
+        private void UpdateToggleValue()
+        {
+            m_Options[m_CurrToggleValue].TintColor = Color.White;
+            m_CurrToggleValue = (1 - m_CurrToggleValue) % k_numOfOptions;
+            m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
+            OnToggeleValueChanged(this, EventArgs.Empty);
         }
     }
 }

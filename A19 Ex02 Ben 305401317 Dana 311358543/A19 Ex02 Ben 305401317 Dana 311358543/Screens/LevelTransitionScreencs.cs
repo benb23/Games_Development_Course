@@ -16,9 +16,25 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class LevelTransitionScreencs : GameScreen
     {
+        private float m_TimeLeftForScreen = 3;
+        private Background m_Background;
+
         public LevelTransitionScreencs(Game i_Game)
         : base(i_Game)
         {
+            this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
         }
+
+        public override void Update(GameTime i_GameTime)
+        {
+            this.m_TimeLeftForScreen -= (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+
+            if (this.m_TimeLeftForScreen <= 0)
+            {
+                this.ExitScreen();
+            }
+            base.Update(i_GameTime);
+        }
+
     }
 }

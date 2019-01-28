@@ -217,7 +217,7 @@ namespace Infrastructure
             }
         }
 
-        protected void ExitScreen()
+        public void ExitScreen() //  todo: was protected
         {
             this.State = eScreenState.Closing;
             if (DeactivationLength == TimeSpan.Zero)

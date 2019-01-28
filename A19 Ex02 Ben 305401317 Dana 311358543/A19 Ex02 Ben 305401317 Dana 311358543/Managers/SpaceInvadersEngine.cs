@@ -16,6 +16,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class SpaceInvadersEngine : GameService, ISpaceInvadersEngine
     {
+        private bool m_IsGameOver = false;
+        private int m_NumOfPlayers = 1; // ??
+        public bool IsGameOver
+        {
+            get { return m_IsGameOver; }
+        }
+
+        public int NumOfPlayers
+        {
+            get { return m_NumOfPlayers; }
+        }
+        //private int k_NumOfPlayers = 2;
         private enum eScoreValue
         {
             MotherShip = 850,
@@ -25,14 +37,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             YellowEnemy = 110
         }
 
-        
         private const double m_sizeOfBulletHitEffect = 0.7;
         private Random m_Random;
         private PlayerIndex? m_Winner;
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
-        //private ScoreBoardHeader m_ScoreBoard;
+
         
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
@@ -40,6 +51,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             //m_ScoreBoard = new ScoreBoardHeader(i_GameScreen);
         }
 
+        public void CreatePlayers(GameScreen i_GameScreen)
+        {
+            m_Players = new List<Player>(m_NumOfPlayers);
+            m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
+            if (m_NumOfPlayers == 2)
+            {
+                m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+            }
+        }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -71,21 +91,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void player_Died(object sender, EventArgs e)
         {
-            bool gameIsOver = true;
+            this.m_IsGameOver = true;
             foreach(Player player in m_Players)
             {
                 if(player.Souls.Count != 0)
                 {
-                    gameIsOver = false;
+                    m_IsGameOver = false;
                     break;
                 }
             }
 
-            if (gameIsOver)
+            if (this.m_IsGameOver && this.m_NumOfPlayers == 2)
             {
                 m_Winner = getWinner();
-                ShowGameOverMessage();
-                this.m_Game.Exit();
+                //ShowGameOverMessage();
+                //this.m_Game.Exit();
             }
         }
 
