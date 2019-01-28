@@ -17,13 +17,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class SpaceInvadersEngine : GameService, ISpaceInvadersEngine
     {
         private bool m_IsGameOver = false;
-
+        private int m_NumOfPlayers = 1; // ??
         public bool IsGameOver
         {
             get { return m_IsGameOver; }
         }
 
-        private int k_NumOfPlayers = 2;
+        public int NumOfPlayers
+        {
+            get { return m_NumOfPlayers; }
+        }
+        //private int k_NumOfPlayers = 2;
         private enum eScoreValue
         {
             MotherShip = 850,
@@ -49,9 +53,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void CreatePlayers(GameScreen i_GameScreen)
         {
-            m_Players = new List<Player>(k_NumOfPlayers);
+            m_Players = new List<Player>(m_NumOfPlayers);
             m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
-            m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+            if (m_NumOfPlayers == 2)
+            {
+                m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+            }
         }
         public override void Update(GameTime gameTime)
         {
@@ -84,7 +91,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void player_Died(object sender, EventArgs e)
         {
-            m_IsGameOver = true;
+            this.m_IsGameOver = true;
             foreach(Player player in m_Players)
             {
                 if(player.Souls.Count != 0)
@@ -94,7 +101,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            if (m_IsGameOver)
+            if (this.m_IsGameOver && this.m_NumOfPlayers == 2)
             {
                 m_Winner = getWinner();
                 //ShowGameOverMessage();
