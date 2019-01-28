@@ -6,6 +6,14 @@ namespace Infrastructure
 {
     public class Sprite : LoadableDrawableComponent
     {
+        protected int m_ScoreValue; // todo : dana , in sprite?
+
+        public int ScoreValue
+        {
+            get { return this.m_ScoreValue; }
+            set { this.m_ScoreValue = value; }
+        }
+
         protected bool m_Initialize;
         private GameScreen m_GameScreen;
         protected GameScreen GameScreen

@@ -16,19 +16,42 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class SpaceInvadersEngine : GameService, ISpaceInvadersEngine
     {
+        private eLevel m_Level = eLevel.One;
+
+        public eLevel Level
+        {
+            get { return m_Level; }
+        }
+        public enum eLevel
+        {
+            One,
+            Two,
+            tree,
+            Four,
+            Five,
+            Six
+        };
+
+        public enum eNumOfPlayers
+        {
+            OnePlayer,
+            TwoPlayers
+        };
+
         private bool m_IsGameOver = false;
-        private int m_NumOfPlayers = 1; // ??
+        private eNumOfPlayers m_NumOfPlayers = eNumOfPlayers.OnePlayer; // default
         public bool IsGameOver
         {
             get { return m_IsGameOver; }
         }
 
-        public int NumOfPlayers
+        public eNumOfPlayers NumOfPlayers
         {
             get { return m_NumOfPlayers; }
+            set { m_NumOfPlayers = value; }
         }
         //private int k_NumOfPlayers = 2;
-        private enum eScoreValue
+        public enum eScoreValue
         {
             MotherShip = 850,
             Soul = -1100,
@@ -53,13 +76,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void CreatePlayers(GameScreen i_GameScreen)
         {
-            m_Players = new List<Player>(m_NumOfPlayers);
+            m_Players = new List<Player>((int)m_NumOfPlayers);
             m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
-            if (m_NumOfPlayers == 2)
+            if (m_NumOfPlayers == SpaceInvadersEngine.eNumOfPlayers.TwoPlayers)
             {
                 m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
             }
         }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -101,11 +125,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            if (this.m_IsGameOver && this.m_NumOfPlayers == 2)
+            if (this.m_IsGameOver && this.m_NumOfPlayers == SpaceInvadersEngine.eNumOfPlayers.TwoPlayers)
             {
                 m_Winner = getWinner();
-                //ShowGameOverMessage();
-                //this.m_Game.Exit();
             }
         }
 
@@ -133,25 +155,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             Player player = m_Players[(int)i_PlayerIndex];
 
-            player.Score = (int)MathHelper.Clamp(player.Score + (int)eScoreValue.Soul, 0, float.PositiveInfinity);
+            player.Score = (int)MathHelper.Clamp(player.Score + player.Souls[0].ScoreValue, 0, float.PositiveInfinity);
             player.Souls.First().Visible = false;
             player.Souls.Remove(player.Souls.First());
         }
 
         private void updatePlayerScoreAfterHitEnemy(IScoreable i_Player, Enemy i_Enemy)
         {
-            if(i_Enemy.TintColor == Color.Pink)
-            {
-                i_Player.Score += (int)eScoreValue.PinkEnemy;
-            }
-            else if(i_Enemy.TintColor == Color.LightBlue)
-            {
-                i_Player.Score += (int)eScoreValue.BlueEnemy;
-            }
-            else if(i_Enemy.TintColor == Color.LightYellow)
-            {
-                i_Player.Score += (int)eScoreValue.YellowEnemy;
-            }
+            i_Player.Score += i_Enemy.ScoreValue;
         }
 
         protected override void RegisterAsService()
@@ -258,11 +269,11 @@ winner));
         {
             if (i_Bullet.Type == Bullet.eBulletType.PlayerOneBullet)
             {
-                this.m_Players[(int)PlayerIndex.One].Score += (int)eScoreValue.MotherShip;
+                this.m_Players[(int)PlayerIndex.One].Score += i_MotherSpaceShip.ScoreValue;
             }
             else if (i_Bullet.Type == Bullet.eBulletType.PlayerTwoBullet)
             {
-                this.m_Players[(int)PlayerIndex.Two].Score += (int)eScoreValue.MotherShip;
+                this.m_Players[(int)PlayerIndex.Two].Score += i_MotherSpaceShip.ScoreValue;
             }
         }
 

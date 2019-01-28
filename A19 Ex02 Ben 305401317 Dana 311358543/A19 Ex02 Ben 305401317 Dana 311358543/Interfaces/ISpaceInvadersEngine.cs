@@ -16,9 +16,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public interface ISpaceInvadersEngine
     {
+        SpaceInvadersEngine.eLevel Level { get; }
         List<Player> Players { get; set; }
 
-        int NumOfPlayers { get; }
+        SpaceInvadersEngine.eNumOfPlayers NumOfPlayers { get; set; }
         bool IsGameOver { get; }
 
         void HandleHit(Wall i_wall, ICollidable i_Collidable);

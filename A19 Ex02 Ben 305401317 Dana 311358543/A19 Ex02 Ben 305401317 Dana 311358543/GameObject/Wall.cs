@@ -23,7 +23,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public Wall(GameScreen i_GameScreen)
             : base(k_AssteName, i_GameScreen)
         {
-            this.m_Velocity = new Vector2(45, 0);
+            if (this.m_GameEngine == null)
+            {
+                this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            }
+
+            if (m_GameEngine.Level != SpaceInvadersEngine.eLevel.One)
+            {
+                this.m_Velocity = new Vector2(45, 0);
+            }
         }
 
         protected override void LoadContent()
@@ -38,15 +46,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_StartingPosition = this.Position;
                 this.m_Initialize = true;
             }
-
-            if((Position.X - this.m_StartingPosition.X >= (Texture.Width / 2)) || (Position.X + (Texture.Width / 2) <= this.m_StartingPosition.X))
+            if (m_GameEngine.Level != SpaceInvadersEngine.eLevel.One)
             {
-                this.Velocity *= -1;
+                moveWall();
             }
-
             base.Update(gameTime);
         }
 
+        private void moveWall()
+        {
+            if ((Position.X - this.m_StartingPosition.X >= (Texture.Width / 2)) || (Position.X + (Texture.Width / 2) <= this.m_StartingPosition.X))
+            {
+                this.Velocity *= -1;
+            }
+        }
         protected override void InitOrigins()
         {
             this.m_PositionOrigin = new Vector2(Texture.Width / 2, Texture.Height);
@@ -55,11 +68,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if (this.m_GameEngine == null)
-            {
-                this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            }
-
             if(this.CurrTexture == null)
             {
                 this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);

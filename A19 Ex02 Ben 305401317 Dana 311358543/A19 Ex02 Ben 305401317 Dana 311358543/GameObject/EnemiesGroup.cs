@@ -111,19 +111,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 switch (row)
                 {
                     case 0:
-                        this.initEnemiesRow(0, 0, Color.Pink, 1);
+                        this.initEnemiesRow(0, 0, Color.Pink, 1, SpaceInvadersEngine.eScoreValue.PinkEnemy);
                         break;
                     case 1:
-                        this.initEnemiesRow(1, 2, Color.LightBlue, 1);
+                        this.initEnemiesRow(1, 2, Color.LightBlue, 1, SpaceInvadersEngine.eScoreValue.BlueEnemy);
                         break;
                     case 2:
-                        this.initEnemiesRow(2, 3, Color.LightBlue, -1);
+                        this.initEnemiesRow(2, 3, Color.LightBlue, -1, SpaceInvadersEngine.eScoreValue.BlueEnemy);
                         break;
                     case 3:
-                        this.initEnemiesRow(3, 4, Color.LightYellow, 1);
+                        this.initEnemiesRow(3, 4, Color.LightYellow, 1, SpaceInvadersEngine.eScoreValue.YellowEnemy);
                         break;
                     case 4:
-                        this.initEnemiesRow(4, 5, Color.LightYellow, -1);
+                        this.initEnemiesRow(4, 5, Color.LightYellow, -1, SpaceInvadersEngine.eScoreValue.YellowEnemy);
                         break;
                 }
             }
@@ -133,11 +133,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_EnemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
         }
   
-        private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint, int i_Toggeler)
+        private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint, int i_Toggeler, SpaceInvadersEngine.eScoreValue i_ScoreValue)
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
-                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(m_GameScreen, i_Tint, i_StartSqureIndex, i_Row, colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
+                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(m_GameScreen, i_Tint, (int)i_ScoreValue, i_StartSqureIndex, i_Row, colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
                 m_AliveEnemiesByRow.Add(m_EnemiesMatrix[i_Row, colum]);
                 m_EnemiesMatrix[i_Row, colum].m_Toggeler = i_Toggeler;
                 this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.updateAliveLists;

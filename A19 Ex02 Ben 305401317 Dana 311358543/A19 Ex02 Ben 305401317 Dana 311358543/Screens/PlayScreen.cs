@@ -22,7 +22,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         public const int k_MaxRandomNumber = 50000;
         private const string k_GameName = "Space Invaders";
-        public Random m_Random = new Random();
+        //public Random m_Random = new Random();
         private MotherSpaceShip m_MotherSpaceShip;
         private EnemiesGroup m_EnemysGroup;
         private Background m_Background;
@@ -36,7 +36,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             m_ScoreBoard = new ScoreBoardHeader(this);
             this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            //this.m_GameEngine.CreatePlayers(this);
             i_Game.IsMouseVisible = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
@@ -85,7 +84,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_GameEngine.CreatePlayers(this);
             m_Players = m_GameEngine.Players;
-            this.Game.Services.AddService(typeof(Random), m_Random);
             this.Game.Window.Title = k_GameName;
             base.Initialize();
             m_WallsGroup.Position = new Vector2(m_WallsGroup.Position.X, GraphicsDevice.Viewport.Height - (2 * m_Players[(int)PlayerIndex.One].SpaceShip.Texture.Height));
