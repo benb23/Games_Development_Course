@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Infrastructure
 {
-    public class ScreenSettingsManager : GameService, IScreenSettingsManager
+    public class ScreenSettingsManager : GameService
     {
         Game m_Game;
         GraphicsDeviceManager m_GraphicDeviceManager;
