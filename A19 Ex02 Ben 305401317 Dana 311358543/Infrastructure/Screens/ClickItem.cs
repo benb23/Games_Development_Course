@@ -23,6 +23,7 @@ namespace Infrastructure
         {
             set { m_IsUsingKeyboard = value; }
         }
+
         protected virtual void OnItemClicked(object sender, EventArgs args)
         {
             if (ItemClicked != null)
