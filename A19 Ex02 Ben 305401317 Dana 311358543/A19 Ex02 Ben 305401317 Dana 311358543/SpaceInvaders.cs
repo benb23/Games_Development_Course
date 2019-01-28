@@ -28,6 +28,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             new CollisionsManager(this);
             new SpaceInvadersEngine(this);
             new InputManager(this);
+            this.Services.AddService(typeof(Random), new Random());
 
             ScreensMananger screensMananger = new ScreensMananger(this);
             screensMananger.Push(new GameOverScreen(this)); //todo: delete

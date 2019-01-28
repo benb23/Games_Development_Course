@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public class ScreenSettingsManager : GameService, IScreenSettingsManager
+    public class SettingsScreenManager : GameService, ISettingsScreenManager
     {
-        public ScreenSettingsManager(GameScreen i_GameScren) : base(i_GameScren.Game)
+        public SettingsScreenManager(GameScreen i_GameScren) : base(i_GameScren.Game)
         {
 
         }

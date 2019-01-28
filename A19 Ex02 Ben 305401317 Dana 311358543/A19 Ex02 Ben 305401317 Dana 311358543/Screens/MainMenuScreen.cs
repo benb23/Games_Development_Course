@@ -18,6 +18,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         private Background m_Background;
         private MenuHeader m_MenuHeader;
+        private ISpaceInvadersEngine m_GameEngine;
 
         public MainMenuScreen(Game i_Game) : base(i_Game, new Vector2(250, 250), 15f)
         {
@@ -36,17 +37,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             playersItem.ToggleValueChanched += new EventHandler<EventArgs>(OnNumOfPlayersChanged);
             AddMenuItem(playersItem);
 
-            ClickItem ScreenSettingsItem = new ClickItem("SettingsScreen", @"Screens\MainMenu\ScreenSettings", this, index++);
+            ClickItem SettingsScreenItem = new ClickItem("SettingsScreen", @"Screens\MainMenu\SettingsScreen", this, index++);
             ClickItem SoundSettingsItem = new ClickItem("SoundSettingsScreen", @"Screens\MainMenu\SoundSettings", this, index++);
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\MainMenu\PlayGameWhite", this, index++);
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
 
-            ScreenSettingsItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+            SettingsScreenItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
             SoundSettingsItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
             playItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
             QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnQuitItemClicked);
 
-            AddMenuItem(ScreenSettingsItem);
+            AddMenuItem(SettingsScreenItem);
             AddMenuItem(SoundSettingsItem);
             AddMenuItem(playItem);
             AddMenuItem(QuitItem);
@@ -69,7 +70,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnNumOfPlayersChanged(object sender, EventArgs args)
         {
+            if (m_GameEngine == null)
+            {
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            }
             
+            if(m_GameEngine.NumOfPlayers == SpaceInvadersEngine.eNumOfPlayers.OnePlayer)
+            {
+                m_GameEngine.NumOfPlayers = SpaceInvadersEngine.eNumOfPlayers.TwoPlayers;
+            }
+            else
+            {
+                m_GameEngine.NumOfPlayers = SpaceInvadersEngine.eNumOfPlayers.OnePlayer;
+            }
         }
     }
 }

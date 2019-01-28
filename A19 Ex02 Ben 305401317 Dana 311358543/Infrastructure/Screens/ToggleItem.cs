@@ -43,9 +43,13 @@ namespace Infrastructure
         private Vector2 m_SeperatorPosition;
         private string m_SeperatorAsset = @"Screens\MainMenu\OptionsSeperator";
         private string m_OptionsAssetName;
-        private List<ToggleOption> m_Options; 
+        private List<ToggleOption> m_Options;
         private Texture2D m_OptionsTexture;
 
+        public int ToggleValue
+        {
+            get { return m_CurrToggleValue; }
+        }
         public event EventHandler<EventArgs> ToggleValueChanched;
 
         protected virtual void OnToggeleValueChanged(object sender, EventArgs args)
