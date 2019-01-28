@@ -25,7 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_screens.Add("PlayScreen", new PlayScreen(Game));
             m_screens.Add("MainMenuScreen", new MainMenuScreen(Game));
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
-            this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo");
+            this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo", new Vector2(0.8f));
         }
 
         public override void Initialize()
@@ -43,8 +43,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(mainMenuItem);
             AddMenuItem(QuitItem);
 
-            m_MenuHeader.Scales *= 0.8f;
-            m_MenuHeader.Position = new Vector2(GraphicsDevice.Viewport.Width / 10, 20);
+            //m_MenuHeader.Position = m_MenuHeader.Position + new Vector2(300, 0);
+
 
             base.Initialize();
         }

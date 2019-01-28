@@ -24,6 +24,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_GameScreen = i_GameScreen;
         }
 
+        public MenuHeader(GameScreen i_GameScreen, string i_AssetName, Vector2 i_Scale) : base(i_AssetName, i_GameScreen)
+        {
+            this.m_GameScreen = i_GameScreen;
+            this.m_Scales = i_Scale;
+        }
+
         public float HeigthFromTop
         {
             set { m_HeigthFromTop = value; }
