@@ -17,13 +17,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class PauseScreen : GameScreen
     {
-        public PauseScreen(Game i_Game)
-        : base(i_Game)
+        private MenuHeader m_PauseMsg;
+
+        public PauseScreen(Game i_Game) : base(i_Game)
         {
             this.IsModal = true;
             this.IsOverlayed = true;
             this.UseGradientBackground = true;
             this.BlackTintAlpha = 0.4f;
+            this.m_PauseMsg = new MenuHeader(this, @"Screens\Pause\PausedMessage");
+            this.m_PauseMsg.HeigthFromTop = 250;
         }
 
         public override void Update(GameTime gameTime)
