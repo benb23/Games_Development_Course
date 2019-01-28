@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Infrastructure
 {
-    public class ScreenSettingsManager : GameService, IScreenSettingsManager
+    public class ScreenSettingsManager : GameService/* , IScreenSettingsManager*/
     {
         Game m_Game;
         GraphicsDeviceManager m_GraphicDeviceManager;
@@ -37,7 +37,7 @@ namespace Infrastructure
 
         public void ToggleFullScreenModeConfig(object sender, EventArgs args)
         {
-            this.m_GraphicDeviceManager.IsFullScreen = !this.m_GraphicDeviceManager.IsFullScreen;
+            this.m_GraphicDeviceManager.IsFullScreen = ! this.m_GraphicDeviceManager.IsFullScreen;
         }
 
     }
