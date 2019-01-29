@@ -39,6 +39,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
+            initPosition();
+        }
+
+        private void initPosition()
+        {
             this.m_CurrSoulsNumber -= this.m_SoulIndx;
             float soulsGap = 5;
             this.Position = new Vector2(Game.GraphicsDevice.Viewport.Width - (this.m_CurrSoulsNumber * (Width + soulsGap)), 1 + ((int)m_SoulOwner * 20));

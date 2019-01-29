@@ -100,10 +100,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             for(int i=0 ; i<(int) i_NumOfPlayers ; i++)
             {
-                m_Players[i].Score = 0;
-                m_Players[i].Enabled = true;
-                m_Players[i].SpaceShip.Enabled = true;
-                m_Players[i].SpaceShip.Visible = true;
+                this.m_Players[i].InitSouls();
+                this.m_Players[i].Score = 0;
+                this.m_Players[i].Enabled = true;
+                this.m_Players[i].SpaceShip.Enabled = true;
+                this.m_Players[i].SpaceShip.Visible = true;
             }
             initPlayersForNextLevel();
         }
@@ -159,7 +160,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_IsGameOver = true;
             foreach(Player player in m_Players)
             {
-                if(player.Souls.Count != 0)
+                if(player.CurrentSoulsNum != 0)
                 {
                     m_IsGameOver = false;
                     break;
@@ -197,8 +198,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             Player player = m_Players[(int)i_PlayerIndex];
 
             player.Score = (int)MathHelper.Clamp(player.Score + player.Souls[0].ScoreValue, 0, float.PositiveInfinity);
-            player.Souls.First().Visible = false;
-            player.Souls.Remove(player.Souls.First());
+            player.KillSoul(player);
+
+            //player.Souls.Remove(player.Souls.First());
         }
 
         public void InitGameEngineForNextLevel()
@@ -285,7 +287,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (i_Collidable is Bullet)
             {
                 this.updatePlayerScoreAndSouls(i_Target.Owner);
-                if (player.Souls.Count == 0)
+                if (player.CurrentSoulsNum == 0)
                 {
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.m_Players[(int)i_Target.Owner].destroyed_Finished);
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.player_Died);
