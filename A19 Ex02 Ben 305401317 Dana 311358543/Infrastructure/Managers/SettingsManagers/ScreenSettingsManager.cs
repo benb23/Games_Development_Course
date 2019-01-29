@@ -37,6 +37,13 @@ namespace Infrastructure
         public void ToggleFullScreenModeConfig(object sender, EventArgs args)
         {
             this.m_GraphicDeviceManager.IsFullScreen = !this.m_GraphicDeviceManager.IsFullScreen;
+
+            if (!this.m_GraphicDeviceManager.IsFullScreen)
+            {
+                this.m_GraphicDeviceManager.PreferredBackBufferWidth = 800;
+                this.m_GraphicDeviceManager.PreferredBackBufferHeight = 600;
+            }
+
             this.m_GraphicDeviceManager.ApplyChanges();
         }
 

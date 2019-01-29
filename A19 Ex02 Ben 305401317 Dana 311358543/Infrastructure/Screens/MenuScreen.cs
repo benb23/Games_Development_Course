@@ -24,17 +24,24 @@ namespace Infrastructure
 
     public abstract class MenuScreen : GameScreen
     {
+        Game m_Game;
         protected Dictionary<string, GameScreen> m_screens = new Dictionary<string, GameScreen>();
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
-        // private string m_TitleAsset;
         private Vector2 m_firstItemPosition;
-        float m_GapBetweenItems;
+        float m_GapBetweenItems = 15f;
         int? m_currItemNumber;
 
         private bool m_IsUsingKeyboardArrows = true;
 
+        public MenuScreen(Game i_Game) : base(i_Game)
+        {
+            m_Game = i_Game;
+
+        }
+
         public MenuScreen(Game i_Game, Vector2 i_firstItemPosition, float i_GapBetweenItems) : base(i_Game)
         {
+            m_Game = i_Game;
             this.m_GapBetweenItems = i_GapBetweenItems;
             this.m_firstItemPosition = i_firstItemPosition;
         }
@@ -46,6 +53,7 @@ namespace Infrastructure
 
         public override void Initialize()
         {
+            m_firstItemPosition = new Vector2(m_Game.GraphicsDevice.Viewport.Width / 2 + 100, m_Game.GraphicsDevice.Viewport.Height / 2);
             if (m_MenuItems != null)
             {
                 foreach (MenuItem item in m_MenuItems)
@@ -63,6 +71,11 @@ namespace Infrastructure
                 }
             }
             base.Initialize();
+        }
+
+        private void initItemesPositions()
+        {
+
         }
 
         // TODO: change the way that item added to list
