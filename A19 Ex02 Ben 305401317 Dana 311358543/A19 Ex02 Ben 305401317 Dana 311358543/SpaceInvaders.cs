@@ -37,7 +37,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             screensMananger.AddToDictScreens(new PlayScreen(this));
             screensMananger.AddToDictScreens(new MainMenuScreen(this));
             screensMananger.AddToDictScreens(new PauseScreen(this));
-            screensMananger.AddToDictScreens(new SettingsScreen(this));
+            screensMananger.AddToDictScreens(new ScreenSettingsScreen(this));
             screensMananger.AddToDictScreens(new SoundSettingsScreen(this));
             screensMananger.AddToDictScreens(new LevelTransitionScreencs(this));
 

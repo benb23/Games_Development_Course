@@ -90,6 +90,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void InitEnemyGroupForNextLevel()
         {
+            m_AliveEnemiesByRow.Clear();
+            m_AliveEnemiesByColum.Clear();
+
             this.m_Direction = 1f;
             foreach(Enemy enemy in m_EnemiesMatrix)
             {
@@ -262,7 +265,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (this.m_Direction ==(float)i_MoveDirection)
             {
-                isLastStep = i_LastStep <= (this.m_EnemiesMatrix[0, 0].Texture.Height) && i_LastStep > 0;
+                isLastStep = i_LastStep < (this.m_EnemiesMatrix[0, 0].Texture.Height) && i_LastStep > 0;
             }
 
             return isLastStep;
