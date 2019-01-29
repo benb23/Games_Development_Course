@@ -57,8 +57,10 @@ namespace Infrastructure
         protected override void LoadContent()
         {
             base.LoadContent();
-            m_OriginalPixels = m_Pixels = new Color[this.Texture.Width * this.Texture.Height];
+            m_OriginalPixels = new Color[this.Texture.Width * this.Texture.Height];
+            m_Pixels = new Color[this.Texture.Width * this.Texture.Height];
             this.Texture.GetData<Color>(m_OriginalPixels);
+            m_Pixels = (Color[])m_OriginalPixels.Clone();
         }
 
         public virtual bool CheckCollision(ICollidable i_Source)

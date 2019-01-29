@@ -63,12 +63,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_PlayerType = i_PlayerType;
             m_GameScreen = i_GameScreen;
             createSpaceShip(i_PlayerType);
-            createSouls();
+            CreateSouls();
             m_CurrentSoulsNumber = m_Souls.Capacity;
             i_GameScreen.Add(this);
         }
 
-        private void createSouls()
+        public void CreateSouls()
         {
             for (int i = 0; i < m_Souls.Capacity; i++)
             {

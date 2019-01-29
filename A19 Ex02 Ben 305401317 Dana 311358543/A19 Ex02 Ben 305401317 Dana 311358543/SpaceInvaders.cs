@@ -37,7 +37,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             screensMananger.AddToDictScreens(new PlayScreen(this));
             screensMananger.AddToDictScreens(new MainMenuScreen(this));
             screensMananger.AddToDictScreens(new PauseScreen(this));
-            screensMananger.AddToDictScreens(new SettingsScreen(this));
+            screensMananger.AddToDictScreens(new ScreenSettingsScreen(this));
             screensMananger.AddToDictScreens(new SoundSettingsScreen(this));
             screensMananger.AddToDictScreens(new LevelTransitionScreencs(this));
 
@@ -50,7 +50,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         protected override void Initialize()
         {
             base.Initialize();
-            this.m_GraphicsMgr.IsFullScreen = true;
+            this.m_GraphicsMgr.IsFullScreen = false;
             this.m_GraphicsMgr.PreferredBackBufferWidth = 800;
             this.m_GraphicsMgr.PreferredBackBufferHeight = 600;
             this.m_GraphicsMgr.ApplyChanges();

@@ -67,7 +67,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             RoataterAnimator roataterAnimator = new RoataterAnimator(4, TimeSpan.FromSeconds(2.5));
             FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(2.5));
             CompositeAnimator DestroyAnimator = new CompositeAnimator("Destroy", TimeSpan.FromSeconds(2.5), this, fadeAnimator, roataterAnimator);
-            DestroyAnimator.ResetAfterFinish = false;
+            //DestroyAnimator.ResetAfterFinish = false;
             this.Animations.Add(DestroyAnimator);
         }
 

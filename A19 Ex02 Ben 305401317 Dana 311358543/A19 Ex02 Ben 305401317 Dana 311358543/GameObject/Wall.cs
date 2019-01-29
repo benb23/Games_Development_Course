@@ -65,17 +65,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if(this.CurrTexture == null)
             {
-                createNewTexture();
+                this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
+                //Color[] texturePixels = new Color[Texture.Width * Texture.Height];
+                this.CurrTexture.SetData(OriginalPixels);
             }
 
             this.m_GameEngine.HandleHit(this, i_Collidable);
         }
 
-        public void createNewTexture()
-        {
-            this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
-            //Color[] texturePixels = new Color[Texture.Width * Texture.Height];
-            this.CurrTexture.SetData(OriginalPixels);
-        }
+        //public void createNewTexture()
+        //{
+        //    this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
+        //    //Color[] texturePixels = new Color[Texture.Width * Texture.Height];
+        //    this.CurrTexture.SetData(OriginalPixels);
+        //}
     }
 }

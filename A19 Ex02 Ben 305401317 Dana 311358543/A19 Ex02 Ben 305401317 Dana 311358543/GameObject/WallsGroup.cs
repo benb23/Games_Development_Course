@@ -65,7 +65,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             foreach(Wall wall in m_Walls)
             {
                 wall.Pixels = wall.OriginalPixels;
-                wall.createNewTexture();
+                if (wall.CurrTexture != null)
+                {
+                    wall.CurrTexture.SetData(wall.Pixels);
+                }
                 if (wall.Velocity !=new Vector2(0)) // not level 2 , todo : dana change
                 {
                     wall.Velocity -= wall.Velocity * new Vector2((float)0.7 * wall.Velocity.X, 0); // todo: const

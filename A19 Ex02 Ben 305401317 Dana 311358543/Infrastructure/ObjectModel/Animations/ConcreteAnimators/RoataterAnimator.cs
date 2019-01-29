@@ -48,6 +48,7 @@ namespace Infrastructure
         protected override void RevertToOriginal()
         {
             this.BoundSprite.Scales = this.m_OriginalSpriteInfo.Scales;
+            this.BoundSprite.Rotation = 0; 
         }
     }
 }

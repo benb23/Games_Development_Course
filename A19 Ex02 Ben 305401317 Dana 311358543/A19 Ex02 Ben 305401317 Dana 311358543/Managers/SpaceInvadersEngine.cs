@@ -24,7 +24,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             get { return k_EnemyScoreAddition; }
         }
-        private const int k_EnemyShootingFrequencyAddition = 120;
+        private const int k_EnemyShootingFrequencyAddition = 5;
 
         public int EnemyShootingFrequencyAddition
         {
@@ -82,7 +82,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private IInputManager m_InputManager;
         private List<Player> m_Players;
 
-        
+
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
@@ -94,16 +94,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Level = eLevel.One;
             InitNewPlayers();
             this.IsGameOver = false;
-            InitGameEngineForNextLevel();
+            initPlayersSpaceShipsForNextLevel();
         }
 
         private void InitNewPlayers()
         {
-            foreach(Player player in m_Players)
+            foreach (Player player in m_Players)
             {
                 player.Score = 0;
+                player.Enabled = true;
+                player.SpaceShip.Enabled = true;
+                player.SpaceShip.Visible = true;
             }
         }
+
         public void CreatePlayers(GameScreen i_GameScreen)
         {
             m_Players = new List<Player>((int)m_NumOfPlayers);

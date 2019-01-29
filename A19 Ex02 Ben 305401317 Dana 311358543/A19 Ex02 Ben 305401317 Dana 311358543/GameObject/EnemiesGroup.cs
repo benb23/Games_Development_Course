@@ -54,6 +54,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
         public override void Update(GameTime i_GameTime)
         {
+            if (this.isEnemiesGroupTouchTheBotton())
+            {
+                m_GameEngine.IsGameOver = true;
+            }
+            if (this.isAllEnemiesDead())
+            {
+                OnAllEnemiesDied(this, EventArgs.Empty);
+            }
+
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
             if (m_IncreaseVelocityWhen4Dead)
@@ -77,19 +86,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     this.jumpHorizontalStep(i_GameTime);
                 }
             }
-
-            if(this.isEnemiesGroupTouchTheBotton())
-            {
-                m_GameEngine.IsGameOver = true;
-            }
-            if (this.isAllEnemiesDead())
-            {
-                OnAllEnemiesDied(this, EventArgs.Empty);
-            }
         }
 
         public void InitEnemyGroupForNextLevel()
         {
+            this.m_Direction = 1f;
             foreach(Enemy enemy in m_EnemiesMatrix)
             {
                 updateScoreValueAndShootingFrequency(enemy);
@@ -261,7 +262,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (this.m_Direction ==(float)i_MoveDirection)
             {
-                isLastStep = i_LastStep < (this.m_EnemiesMatrix[0, 0].Texture.Height) && i_LastStep > 0;
+                isLastStep = i_LastStep <= (this.m_EnemiesMatrix[0, 0].Texture.Height) && i_LastStep > 0;
             }
 
             return isLastStep;

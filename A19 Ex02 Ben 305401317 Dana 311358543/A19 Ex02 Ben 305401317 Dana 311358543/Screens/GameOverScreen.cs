@@ -66,7 +66,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (InputManager.KeyPressed(Keys.Escape))
             {
-                OnQuitItemClicked(this, new ScreenEventArgs("Quit"));
+                OnQuitItemClicked(this, null);
             }
             else if(InputManager.KeyPressed(Keys.Home))
             {

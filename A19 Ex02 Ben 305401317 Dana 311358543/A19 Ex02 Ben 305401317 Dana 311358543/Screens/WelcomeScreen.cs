@@ -69,7 +69,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
             else if (InputManager.KeyPressed(Keys.Escape))
             {
-                OnItemClicked(this, new ScreenEventArgs("Quit"));
+                OnQuitItemClicked(this,null);
             }
 
             base.Update(gameTime);

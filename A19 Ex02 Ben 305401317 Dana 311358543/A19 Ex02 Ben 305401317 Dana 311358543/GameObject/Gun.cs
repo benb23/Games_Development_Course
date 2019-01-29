@@ -25,7 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public Gun(GameScreen i_GameScreen, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection)
         {
             m_GameScreen = i_GameScreen;
-            k_MaxNumOfBullets = i_MaxNumOfBullets;
+            k_MaxNumOfBullets = 100;// i_MaxNumOfBullets;
             m_BulletsType = i_BulletType;
             m_Bullets = new List<Bullet>(k_MaxNumOfBullets);
             m_ShootingDirection = i_ShootingDirection;
