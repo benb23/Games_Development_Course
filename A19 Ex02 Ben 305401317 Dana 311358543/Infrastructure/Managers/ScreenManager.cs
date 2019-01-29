@@ -17,7 +17,6 @@ namespace Infrastructure
         protected Dictionary<string, GameScreen> m_screens = new Dictionary<string, GameScreen>();
 
 
-
         public GameScreen GetScreen(string i_ScreenName)
         {
             return m_screens[i_ScreenName];

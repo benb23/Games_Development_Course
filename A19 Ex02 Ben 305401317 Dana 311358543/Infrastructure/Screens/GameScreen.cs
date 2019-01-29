@@ -47,6 +47,9 @@ namespace Infrastructure
 
     public abstract class GameScreen : CompositeDrawableComponent<IGameComponent>
     {
+
+        protected bool m_initialized;
+
         //CTOR:
         public GameScreen(Game i_Game)
             : base(i_Game)

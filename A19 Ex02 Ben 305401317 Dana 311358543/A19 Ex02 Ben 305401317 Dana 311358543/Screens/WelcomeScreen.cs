@@ -19,19 +19,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Background m_Background;
         private MenuHeader m_MenuHeader;
 
-        public WelcomeScreen(Game i_Game) : base(i_Game, new Vector2(250 ,250), 15f)
+        public WelcomeScreen(Game i_Game) : base(i_Game)
         {
             this.IsUsingKeyboard = false;
-            m_screens.Add("PlayScreen", new PlayScreen(Game));
-            m_screens.Add("MainMenuScreen", new MainMenuScreen(Game));
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo", new Vector2(0.8f));
-        }
 
-        public override void Initialize()
-        {
             int index = 0;
-            ClickItem playItem = new ClickItem("PlayScreen",@"Screens\Wellcome\PlayGame", this, index++);
+            ClickItem playItem = new ClickItem("PlayScreen", @"Screens\Wellcome\PlayGame", this, index++);
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
 
@@ -42,9 +37,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(playItem);
             AddMenuItem(mainMenuItem);
             AddMenuItem(QuitItem);
-
-            base.Initialize();
         }
+
+        //public override void Initialize()
+        //{
+            
+        //    base.Initialize();
+        //}
 
         private void OnQuitItemClicked(object sender, ScreenEventArgs args)
         {
@@ -54,7 +53,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
             //MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
-            MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
+            MenuUtils.GoToScreenAndExitCurrent(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
 
         public override void Update(GameTime gameTime)
