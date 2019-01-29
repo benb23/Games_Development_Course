@@ -17,6 +17,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class SpaceInvaders : Game
     {
         GraphicsDeviceManager m_GraphicsMgr;
+        SoundManager m_SoundManager;
         public SpaceInvaders()
         {
             m_GraphicsMgr = new GraphicsDeviceManager(this);
@@ -35,6 +36,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             new SpaceInvadersEngine(this);
             new InputManager(this);
             ScreensMananger screensMananger = new ScreensMananger(this);
+            m_SoundManager = new SoundManager(this);
             GameScreen welcomeScreen = new WelcomeScreen(this);
             GameScreen gameOverScreen = new GameOverScreen(this);
 
@@ -47,24 +49,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             screensMananger.AddScreen(new SoundSettingsScreen(this));
             screensMananger.AddScreen(new LevelTransitionScreen(this));
 
-            //screensMananger.SetCurrentScreen(gameOverScreen);
             screensMananger.SetCurrentScreen(welcomeScreen);
 
             Content.RootDirectory = "Content";
         }
 
-        //protected override void Initialize()
-        //{
-        //    base.Initialize();
-            
+        protected override void LoadContent()
+        {
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/SSGunShot"), "GunShot");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/MotherShipKill"), "MotherShipKill");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/MenuMove"), "MenuMove");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/LifeDie"), "LifeDie");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/LevelWin"), "LevelWin");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/GameOver"), "GameOver");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/EnemyKill"), "EnemyKill");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/EnemyGunShot"), "EnemyGunShot");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/BarrierHit"), "BarrierHit");
+
+            m_SoundManager.AddSong(this.Content.Load<Song>(@"Sounds/BGMusic"), "BGMusic");
+
+            MediaPlayer.Play(m_SoundManager.GetSong("BGMusic"));
+            MediaPlayer.IsRepeating = true;
 
 
-
-
-        //    //this.m_GraphicsMgr.PreferredBackBufferWidth = this.GraphicsDevice.Adapter.CurrentDisplayMode.Width;
-        //    //this.m_GraphicsMgr.PreferredBackBufferHeight = this.GraphicsDevice.Adapter.CurrentDisplayMode.Height;
-           
-        //}
+            base.LoadContent(); 
+        }
 
         protected override void Draw(GameTime i_GameTime)
         {
