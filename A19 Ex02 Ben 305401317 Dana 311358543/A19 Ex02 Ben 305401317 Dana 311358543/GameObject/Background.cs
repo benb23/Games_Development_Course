@@ -10,6 +10,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.DrawOrder = int.MinValue;
             this.Opacity = i_Opacity;
+            
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            this.m_Scales = new Vector2((float)this.GraphicsDevice.Adapter.CurrentDisplayMode.Width / 1024f, (float)this.GraphicsDevice.Adapter.CurrentDisplayMode.Height / 768f);
         }
     }
 }

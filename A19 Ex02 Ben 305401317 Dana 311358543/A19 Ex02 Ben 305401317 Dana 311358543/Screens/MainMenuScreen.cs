@@ -19,8 +19,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Background m_Background;
         private MenuHeader m_MenuHeader;
         private ISpaceInvadersEngine m_GameEngine;
+        //private 
 
-        public MainMenuScreen(Game i_Game) : base(i_Game, new Vector2(250, 250), 15f)
+
+        public MainMenuScreen(Game i_Game) : base(i_Game)
         {
             m_screens.Add("PlayScreen", new PlayScreen(Game));
             m_screens.Add("SettingsScreen", new SettingsScreen(Game));

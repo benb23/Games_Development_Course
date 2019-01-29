@@ -51,8 +51,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             base.Initialize();
             this.m_GraphicsMgr.IsFullScreen = true;
-            this.m_GraphicsMgr.PreferredBackBufferWidth = 800;
-            this.m_GraphicsMgr.PreferredBackBufferHeight = 600;
+            
+            this.m_GraphicsMgr.PreferredBackBufferWidth = this.GraphicsDevice.Adapter.CurrentDisplayMode.Width;
+            this.m_GraphicsMgr.PreferredBackBufferHeight = this.GraphicsDevice.Adapter.CurrentDisplayMode.Height;
             this.m_GraphicsMgr.ApplyChanges();
             this.Window.Title = "Space Invaders";
         }

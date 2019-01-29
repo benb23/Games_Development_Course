@@ -47,7 +47,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (!m_Initialize)
             {
                 InitOrigins();
-                this.Position = new Vector2(m_GameScreen.Game.GraphicsDevice.Viewport.Width / 2 + m_OffsetX, m_OffsetY);
+                this.Position = new Vector2(m_GameScreen.Game.Window.ClientBounds.Width / 2 + m_OffsetX, m_OffsetY);
                 m_Initialize = true;
             }
 
