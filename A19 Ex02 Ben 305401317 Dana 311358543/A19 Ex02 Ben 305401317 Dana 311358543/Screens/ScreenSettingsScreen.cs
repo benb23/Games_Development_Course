@@ -21,31 +21,47 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private IScreenSettingsManager m_ScreenSettingMng;
 
 
-        public ScreenSettingsScreen(Game i_Game) : base(i_Game, new Vector2(250, 250), 15f)
+        public ScreenSettingsScreen(Game i_Game) : base(i_Game)
         {
+            int index = 0;
+
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\Settings\ScreenSettingsLogo");
             this.m_ScreenSettingMng = i_Game.Services.GetService(typeof(IScreenSettingsManager)) as IScreenSettingsManager;
-        }
 
-
-
-        public override void Initialize()
-        {
-            int index = 0;
             ToggleItem mouseVisability = new ToggleItem(@"Screens\Settings\MouseVisability", @"Screens\Settings\VisibleInvisible_128x50", this, index++);
             ToggleItem windowResizing = new ToggleItem(@"Screens\Settings\AllowResizing", @"Screens\Settings\OnOff_53x52", this, index++);
             ToggleItem fullScreen = new ToggleItem(@"Screens\Settings\FullScreenMode", @"Screens\Settings\OnOff_53x52", this, index++);
+            ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
             mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleMouseVisabilityConfig);
             windowResizing.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleAllowWindowResizingConfig);
             fullScreen.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleFullScreenModeConfig);
+            doneItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
 
             AddMenuItem(mouseVisability);
             AddMenuItem(windowResizing);
             AddMenuItem(fullScreen);
+            AddMenuItem(doneItem);
+        }
 
-            base.Initialize();
+
+
+        //public override void Initialize()
+        //{
+
+        //    base.Initialize();
+
+            
+            
+
+           
+
+        //}
+
+        private void OnItemClicked(object sender, ScreenEventArgs args)
+        {
+            this.ExitScreen();
         }
 
         public override string ToString()

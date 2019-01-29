@@ -24,17 +24,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public MainMenuScreen(Game i_Game) : base(i_Game)
         {
-            m_screens.Add("PlayScreen", new PlayScreen(Game));
-            m_screens.Add("ScreenSettingsScreen", new ScreenSettingsScreen(Game));
-            m_screens.Add("SoundSettingsScreen", new SoundSettingsScreen(Game));
             IsUsingKeyboard = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\MainMenu\MainMenuLogo");
             this.m_MenuHeader.OffsetX = 20;
-        }
 
-        public override void Initialize()
-        {
             int index = 0;
             ToggleItem playersItem = new ToggleItem(@"Screens\MainMenu\PlayersWhite", @"Screens\MainMenu\PlayersOptions_70x50", this, index++);
             playersItem.ToggleValueChanched += new EventHandler<EventArgs>(OnNumOfPlayersChanged);
@@ -54,12 +48,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(SoundSettingsItem);
             AddMenuItem(playItem);
             AddMenuItem(QuitItem);
-
-            m_MenuHeader.Scales *= 0.8f;
-            m_MenuHeader.Position = new Vector2(GraphicsDevice.Viewport.Width / 10, 20);
-
-            base.Initialize();
         }
+
+        //public override void Initialize()
+        //{
+        //    base.Initialize();
+
+            
+
+        //    //m_MenuHeader.Scales *= 0.8f;
+        //    //m_MenuHeader.Position = new Vector2(GraphicsDevice.Viewport.Width / 10, 20);
+
+            
+        //}
 
         private void OnQuitItemClicked(object sender, ScreenEventArgs args)
         {

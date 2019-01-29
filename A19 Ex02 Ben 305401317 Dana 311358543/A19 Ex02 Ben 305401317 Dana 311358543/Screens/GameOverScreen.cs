@@ -19,19 +19,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Background m_Background;
         private MenuHeader m_GameOverHeader;
 
-        public GameOverScreen(Game i_Game) : base(i_Game, new Vector2(250 ,250), 15f)
+        public GameOverScreen(Game i_Game) : base(i_Game)
         {
             this.IsUsingKeyboard = false;
-            m_screens.Add("PlayScreen", new PlayScreen(Game));
-            m_screens.Add("MainMenuScreen", new MainMenuScreen(Game));
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_Background.TintColor = Color.Red;
             this.m_GameOverHeader = new MenuHeader(this, @"Screens\GameOver\GameOverLogo");
-            
-        }
 
-        public override void Initialize()
-        {
             int index = 0;
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\GameOver\Restart", this, index++);
@@ -44,6 +38,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(QuitItem);
             AddMenuItem(playItem);
             AddMenuItem(mainMenuItem);
+
+        }
+
+        public override void Initialize()
+        {
+            
             
             base.Initialize();
         }
@@ -58,7 +58,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
             //MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
-            MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
+            MenuUtils.GoToScreenAndExitCurrent(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
 
         public override void Update(GameTime gameTime)

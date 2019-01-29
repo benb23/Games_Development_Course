@@ -21,6 +21,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             m_GraphicsMgr = new GraphicsDeviceManager(this);
 
+            this.m_GraphicsMgr.IsFullScreen = false;
+
+            this.m_GraphicsMgr.PreferredBackBufferWidth = 800;
+            this.m_GraphicsMgr.PreferredBackBufferHeight = 600;
+            this.m_GraphicsMgr.ApplyChanges();
+            this.Window.Title = "Space Invaders";
+
             new ScreenSettingsManager(this);
             new CollisionsManager(this);
             new SpaceInvadersEngine(this);
@@ -47,16 +54,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             Content.RootDirectory = "Content";
         }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-            this.m_GraphicsMgr.IsFullScreen = true;
+        //protected override void Initialize()
+        //{
+        //    base.Initialize();
             
-            this.m_GraphicsMgr.PreferredBackBufferWidth = this.GraphicsDevice.Adapter.CurrentDisplayMode.Width;
-            this.m_GraphicsMgr.PreferredBackBufferHeight = this.GraphicsDevice.Adapter.CurrentDisplayMode.Height;
-            this.m_GraphicsMgr.ApplyChanges();
-            this.Window.Title = "Space Invaders";
-        }
+
+
+
+
+        //    //this.m_GraphicsMgr.PreferredBackBufferWidth = this.GraphicsDevice.Adapter.CurrentDisplayMode.Width;
+        //    //this.m_GraphicsMgr.PreferredBackBufferHeight = this.GraphicsDevice.Adapter.CurrentDisplayMode.Height;
+           
+        //}
 
         protected override void Draw(GameTime i_GameTime)
         {

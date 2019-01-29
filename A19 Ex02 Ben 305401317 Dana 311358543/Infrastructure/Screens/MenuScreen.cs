@@ -25,7 +25,7 @@ namespace Infrastructure
     public abstract class MenuScreen : GameScreen
     {
         Game m_Game;
-        protected Dictionary<string, GameScreen> m_screens = new Dictionary<string, GameScreen>();
+        //protected Dictionary<string, GameScreen> m_screens = new Dictionary<string, GameScreen>();
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
         private Vector2 m_firstItemPosition;
         float m_GapBetweenItems = 15f;
@@ -53,7 +53,23 @@ namespace Infrastructure
 
         public override void Initialize()
         {
-            m_firstItemPosition = new Vector2(m_Game.GraphicsDevice.Viewport.Width / 2 + 100, m_Game.GraphicsDevice.Viewport.Height / 2);
+            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 2 - 150, m_Game.Window.ClientBounds.Height / 2.5f);
+
+            this.m_Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
+
+            initItemesPositions();
+            base.Initialize();
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 2 - 150, m_Game.Window.ClientBounds.Height / 2.5f);
+            initItemesPositions();
+        }
+
+
+        private void initItemesPositions()
+        {
             if (m_MenuItems != null)
             {
                 foreach (MenuItem item in m_MenuItems)
@@ -64,18 +80,12 @@ namespace Infrastructure
                         (item as ClickItem).IsUsingKeyboard = false;
                     }
                 }
-                
+
                 if (m_IsUsingKeyboardArrows)
                 {
                     m_currItemNumber = 0;
                 }
             }
-            base.Initialize();
-        }
-
-        private void initItemesPositions()
-        {
-
         }
 
         // TODO: change the way that item added to list
