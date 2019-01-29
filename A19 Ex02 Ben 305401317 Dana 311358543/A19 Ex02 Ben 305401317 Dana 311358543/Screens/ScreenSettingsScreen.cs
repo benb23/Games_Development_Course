@@ -21,7 +21,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private IScreenSettingsManager m_ScreenSettingMng;
 
 
-        public ScreenSettingsScreen(Game i_Game) : base(i_Game)
+        public ScreenSettingsScreen(Game i_Game) : base(i_Game, 150f, 15f)
         {
             int index = 0;
 

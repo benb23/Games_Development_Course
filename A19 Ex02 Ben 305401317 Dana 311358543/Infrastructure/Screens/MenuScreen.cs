@@ -29,6 +29,8 @@ namespace Infrastructure
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
         private Vector2 m_firstItemPosition;
         float m_GapBetweenItems = 15f;
+        float m_OffsetX;
+
         int? m_currItemNumber;
 
         private bool m_IsUsingKeyboardArrows = true;
@@ -39,11 +41,11 @@ namespace Infrastructure
 
         }
 
-        public MenuScreen(Game i_Game, Vector2 i_firstItemPosition, float i_GapBetweenItems) : base(i_Game)
+        public MenuScreen(Game i_Game, float i_OffsetX, float i_GapBetweenItems) : base(i_Game)
         {
             m_Game = i_Game;
             this.m_GapBetweenItems = i_GapBetweenItems;
-            this.m_firstItemPosition = i_firstItemPosition;
+            this.m_OffsetX = i_OffsetX;
         }
 
         public bool IsUsingKeyboard
@@ -53,7 +55,7 @@ namespace Infrastructure
 
         public override void Initialize()
         {
-            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 2 - 150, m_Game.Window.ClientBounds.Height / 2.5f);
+            initFirstItemePosition();
 
             this.m_Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
 
@@ -63,10 +65,14 @@ namespace Infrastructure
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 2 - 150, m_Game.Window.ClientBounds.Height / 2.5f);
+            initFirstItemePosition();
             initItemesPositions();
         }
 
+        private void initFirstItemePosition()
+        {
+            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 3 - m_OffsetX, m_Game.Window.ClientBounds.Height / 2.5f);
+        }
 
         private void initItemesPositions()
         {

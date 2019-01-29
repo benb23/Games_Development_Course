@@ -88,6 +88,8 @@ namespace Infrastructure
             m_Options[m_CurrToggleValue].TintColor = Color.Yellow;//default
         }
 
+
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -121,5 +123,7 @@ namespace Infrastructure
             m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
             OnToggeleValueChanged(this, EventArgs.Empty);
         }
+
+        
     }
 }
