@@ -17,7 +17,7 @@ namespace Infrastructure
         private Rectangle m_TextureRectangle;
         private GameScreen m_GameScreen;
 
-        public ToggleOption(GameScreen i_GameScreen,string i_AssetName, Rectangle i_Rec , Vector2 i_Position) 
+        public ToggleOption(GameScreen i_GameScreen,string i_AssetName, Rectangle i_Rec, Vector2 i_Position) 
             : base(i_AssetName, i_GameScreen)
         {
             this.Position = i_Position;
@@ -74,21 +74,42 @@ namespace Infrastructure
             initOptions();
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+
+        private void initOptionsPositions()
+        {
+            for (int i = 0; i < k_numOfOptions; i++)
+            {
+                m_Options[i].Position = new Vector2(this.Position.X + this.Texture.Width + 5 + i *( m_OptionsTexture.Width + m_SeperatorTexture.Width), this.Position.Y);
+            }
+            m_SeperatorPosition = new Vector2(m_Options[0].Position.X + m_OptionsTexture.Width, m_Options[0].Position.Y);
+        }
+
+
         private void initOptions()
         {
+
             m_Options = new List<ToggleOption>(k_numOfOptions);
 
             for (int i = 0; i < k_numOfOptions; i++)
             {
                 m_Options.Add(new ToggleOption(this.GameScreen, m_OptionsAssetName,
                     new Rectangle(0, i * m_OptionsTexture.Height / 2, m_OptionsTexture.Width, m_OptionsTexture.Height / 2),
-                    new Vector2(this.Position.X + this.Texture.Width + 5 + i *( m_OptionsTexture.Width + m_SeperatorTexture.Width), this.Position.Y)));
+                    new Vector2(this.Position.X + this.Texture.Width + 5 + i * (m_OptionsTexture.Width + m_SeperatorTexture.Width), this.Position.Y)));
             }
             m_SeperatorPosition = new Vector2(m_Options[0].Position.X + m_OptionsTexture.Width, m_Options[0].Position.Y);
             m_Options[m_CurrToggleValue].TintColor = Color.Yellow;//default
+
+            //for (int i = 0; i < k_numOfOptions; i++)
+            //{
+            //    m_Options.Add(new ToggleOption(this.GameScreen, this.m_OptionsAssetName, new Rectangle(0, i * m_OptionsTexture.Height / 2, m_OptionsTexture.Width, m_OptionsTexture.Height / 2)));
+            //}
+            //m_Options[m_CurrToggleValue].TintColor = Color.Yellow;//default
+            //initOptionsPositions();
         }
-
-
 
         public override void Draw(GameTime gameTime)
         {
