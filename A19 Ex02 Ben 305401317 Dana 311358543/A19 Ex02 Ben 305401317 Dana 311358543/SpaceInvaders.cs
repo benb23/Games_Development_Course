@@ -38,14 +38,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             GameScreen welcomeScreen = new WelcomeScreen(this);
             GameScreen gameOverScreen = new GameOverScreen(this);
 
-            screensMananger.AddToDictScreens(welcomeScreen);
-            screensMananger.AddToDictScreens(new GameOverScreen(this));
-            screensMananger.AddToDictScreens(new PlayScreen(this));
-            screensMananger.AddToDictScreens(new MainMenuScreen(this));
-            screensMananger.AddToDictScreens(new PauseScreen(this));
-            screensMananger.AddToDictScreens(new ScreenSettingsScreen(this));
-            screensMananger.AddToDictScreens(new SoundSettingsScreen(this));
-            screensMananger.AddToDictScreens(new LevelTransitionScreen(this));
+            screensMananger.AddScreen(welcomeScreen);
+            screensMananger.AddScreen(new GameOverScreen(this));
+            screensMananger.AddScreen(new PlayScreen(this));
+            screensMananger.AddScreen(new MainMenuScreen(this));
+            screensMananger.AddScreen(new PauseScreen(this));
+            screensMananger.AddScreen(new ScreenSettingsScreen(this));
+            screensMananger.AddScreen(new SoundSettingsScreen(this));
+            screensMananger.AddScreen(new LevelTransitionScreen(this));
 
             screensMananger.SetCurrentScreen(gameOverScreen);
             screensMananger.SetCurrentScreen(welcomeScreen);

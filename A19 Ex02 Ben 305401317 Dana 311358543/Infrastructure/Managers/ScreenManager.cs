@@ -114,7 +114,7 @@ namespace Infrastructure
             base.Add(i_Component);
         }
 
-        public void AddToDictScreens(GameScreen i_Screen)
+        public void AddScreen(GameScreen i_Screen)
         {
             m_screens.Add(i_Screen.ToString(), i_Screen);
         }

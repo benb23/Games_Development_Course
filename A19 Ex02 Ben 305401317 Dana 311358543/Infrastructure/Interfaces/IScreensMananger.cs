@@ -19,6 +19,6 @@ namespace Infrastructure
         bool Remove(GameScreen i_Screen);
         void Add(GameScreen i_Screen);
         GameScreen GetScreen(string i_ScreenName);
-        void AddToDictScreens(GameScreen i_Screen);
+        void AddScreen(GameScreen i_Screen);
     }
 }
