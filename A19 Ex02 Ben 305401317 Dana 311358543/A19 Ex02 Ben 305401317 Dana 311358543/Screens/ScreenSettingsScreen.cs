@@ -30,8 +30,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_ScreenSettingMng = i_Game.Services.GetService(typeof(IScreenSettingsManager)) as IScreenSettingsManager;
 
             ToggleItem mouseVisability = new ToggleItem(@"Screens\Settings\MouseVisability", @"Screens\Settings\VisibleInvisible_128x50", this, index++);
-            ToggleItem windowResizing = new ToggleItem(@"Screens\Settings\AllowResizing", @"Screens\Settings\OnOff_53x52", this, index++);
-            ToggleItem fullScreen = new ToggleItem(@"Screens\Settings\FullScreenMode", @"Screens\Settings\OnOff_53x52", this, index++);
+            ToggleItem windowResizing = new ToggleItem(@"Screens\Settings\AllowResizing", @"Screens\Settings\OnOff_53x52", this, index++, 1);
+            ToggleItem fullScreen = new ToggleItem(@"Screens\Settings\FullScreenMode", @"Screens\Settings\OnOff_53x52", this, index++, 1);
             ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
             mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleMouseVisabilityConfig);
@@ -50,12 +50,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         //public override void Initialize()
         //{
 
-        //    base.Initialize();
-
-            
-            
-
-           
+            //  base.Initialize();
 
         //}
 

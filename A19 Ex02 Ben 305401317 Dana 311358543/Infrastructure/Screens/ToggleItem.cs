@@ -45,6 +45,7 @@ namespace Infrastructure
         private string m_OptionsAssetName;
         private List<ToggleOption> m_Options;
         private Texture2D m_OptionsTexture;
+        private Game m_Game;
 
         public int ToggleValue
         {
@@ -64,6 +65,15 @@ namespace Infrastructure
             : base(i_AssetName, i_GameScreen, i_ItemNumber)
         {
             this.m_OptionsAssetName = i_OptionsAssetName;
+            this.m_Game = i_GameScreen.Game;
+        }
+
+        public ToggleItem(string i_AssetName, string i_OptionsAssetName, GameScreen i_GameScreen, int i_ItemNumber, int i_DefualtVal)
+            : base(i_AssetName, i_GameScreen, i_ItemNumber)
+        {
+            m_CurrToggleValue = i_DefualtVal;
+            this.m_OptionsAssetName = i_OptionsAssetName;
+            this.m_Game = i_GameScreen.Game;
         }
 
         protected override void LoadContent()
@@ -77,6 +87,12 @@ namespace Infrastructure
         public override void Initialize()
         {
             base.Initialize();
+            this.m_Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            initOptionsPositions();
         }
 
         private void initOptionsPositions()
@@ -87,7 +103,6 @@ namespace Infrastructure
             }
             m_SeperatorPosition = new Vector2(m_Options[0].Position.X + m_OptionsTexture.Width, m_Options[0].Position.Y);
         }
-
 
         private void initOptions()
         {

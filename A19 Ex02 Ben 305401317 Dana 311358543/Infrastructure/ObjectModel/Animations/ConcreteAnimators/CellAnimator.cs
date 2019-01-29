@@ -16,6 +16,19 @@ namespace Infrastructure
         private bool isFliper = false;
 
         // CTORs
+        public CellAnimator(TimeSpan i_CellTime, int i_NumOfCells, TimeSpan i_AnimationLength, int i_StartingSquareIndex)
+            : base("CellAnimation", i_AnimationLength)
+        {
+            m_CurrCellIdx = i_StartingSquareIndex;
+            this.m_StartingSquareIndex = i_StartingSquareIndex;
+            this.m_CellTime = i_CellTime;
+            this.m_TimeLeftForCell = i_CellTime;
+            this.r_NumOfCells = i_NumOfCells;
+
+            m_Loop = i_AnimationLength == TimeSpan.Zero;
+        }
+
+
         public CellAnimator(TimeSpan i_CellTime, int i_NumOfCells, TimeSpan i_AnimationLength, int i_StartingSquareIndex, bool i_IsFlipper, int i_toggleDIrection)
             : base("CellAnimation", i_AnimationLength)
         {
