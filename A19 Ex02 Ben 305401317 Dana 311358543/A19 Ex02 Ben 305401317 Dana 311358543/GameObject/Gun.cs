@@ -31,6 +31,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_ShootingDirection = i_ShootingDirection;
         }
 
+        public void InitGunForNextLevel()
+        {
+            foreach(Bullet bullet in m_Bullets)
+            {
+                bullet.Enabled = false;
+                bullet.Visible = false;
+            }
+        }
+
         public void Shoot(Vector2 i_ShooterPosition)
         {
             Bullet bullet = getBullet(i_ShooterPosition);

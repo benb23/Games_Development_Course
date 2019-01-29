@@ -52,7 +52,7 @@
     <Compile Include="Managers\SpaceInvadersEngine.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Screens\GameOverScreen.cs" />
-    <Compile Include="Screens\LevelTransitionScreencs.cs" />
+    <Compile Include="Screens\LevelTransitionScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\PauseScreen.cs" />
     <Compile Include="Screens\PlayScreen.cs" />

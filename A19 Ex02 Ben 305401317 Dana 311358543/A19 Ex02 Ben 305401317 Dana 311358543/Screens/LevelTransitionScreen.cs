@@ -14,13 +14,13 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class LevelTransitionScreencs : GameScreen
+    public class LevelTransitionScreen : GameScreen
     {
         private float m_TimeLeftForScreen = 3;
         private Background m_Background;
         private MenuHeader m_Counter;
 
-        public LevelTransitionScreencs(Game i_Game)
+        public LevelTransitionScreen(Game i_Game)
         : base(i_Game)
         {
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
@@ -64,7 +64,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override string ToString()
         {
-            return "LevelTransitionScreencs";
+            return "LevelTransitionScreen";
         }
 
     }

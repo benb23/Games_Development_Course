@@ -28,14 +28,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_GraphicsMgr.ApplyChanges();
             this.Window.Title = "Space Invaders";
 
+            this.Services.AddService(typeof(Random), new Random());
+
             new ScreenSettingsManager(this);
             new CollisionsManager(this);
             new SpaceInvadersEngine(this);
             new InputManager(this);
-            this.Services.AddService(typeof(Random), new Random());
-
             ScreensMananger screensMananger = new ScreensMananger(this);
-
             GameScreen welcomeScreen = new WelcomeScreen(this);
             GameScreen gameOverScreen = new GameOverScreen(this);
 
@@ -46,7 +45,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             screensMananger.AddToDictScreens(new PauseScreen(this));
             screensMananger.AddToDictScreens(new ScreenSettingsScreen(this));
             screensMananger.AddToDictScreens(new SoundSettingsScreen(this));
-            screensMananger.AddToDictScreens(new LevelTransitionScreencs(this));
+            screensMananger.AddToDictScreens(new LevelTransitionScreen(this));
 
             //screensMananger.SetCurrentScreen(gameOverScreen);
             screensMananger.SetCurrentScreen(welcomeScreen);

@@ -88,7 +88,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnLevelEnded(object sender, EventArgs args)
         {
-            //MenuUtils.GoToScreen(this,this.ScreensManager.GetScreen("LevelTransitionScreen"));
+            MenuUtils.GoToScreen(this,this.ScreensManager.GetScreen("LevelTransitionScreen"));
             m_GameEngine.InitGameEngineForNextLevel();
             initSpritesForNewLevel();
         }
@@ -96,10 +96,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnGameOver()//TODO: CALL 
         {
             ExitScreen();
+            this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
             this.m_GameEngine.InitGameEngineForNewGame();
             initSoulsForNewGame();
             this.initSpritesForNewGame();
-            this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
+            //this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
         }
 
         private void initSpritesForNewGame()
@@ -112,7 +113,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_EnemysGroup.InitEnemyGroupForNextLevel();
             m_WallsGroup.InitWallsForNextLevel();
             m_MotherSpaceShip.InitMotherShipForNextLevel();
-            this.ScreensManager.SetCurrentScreen(new LevelTransitionScreencs(this.Game));
+            //this.ScreensManager.SetCurrentScreen(new LevelTransitionScreen(this.Game));
 
         }
 
