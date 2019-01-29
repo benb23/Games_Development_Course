@@ -130,7 +130,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void initSpaceShipPosition()
+        public void initPlayerForForNextLevel()
         {
             m_Initialized = false; //todo: dana , change
         }

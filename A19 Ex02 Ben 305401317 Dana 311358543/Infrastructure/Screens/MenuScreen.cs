@@ -85,6 +85,8 @@ namespace Infrastructure
                     {
                         (item as ClickItem).IsUsingKeyboard = false;
                     }
+                    
+   
                 }
 
                 if (m_IsUsingKeyboardArrows)

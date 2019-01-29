@@ -48,8 +48,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public enum eNumOfPlayers
         {
-            OnePlayer,
-            TwoPlayers
+            OnePlayer = 1,
+            TwoPlayers = 2
         };
 
         private bool m_IsGameOver = false;
@@ -92,29 +92,36 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void InitGameEngineForNewGame()
         {
             this.m_Level = eLevel.One;
-            InitNewPlayers();
+            InitNewPlayers(m_NumOfPlayers);
             this.IsGameOver = false;
-            initPlayersSpaceShipsForNextLevel();
         }
 
-        private void InitNewPlayers()
+        private void InitNewPlayers(eNumOfPlayers i_NumOfPlayers)
         {
-            foreach (Player player in m_Players)
+            for(int i=0 ; i<(int) i_NumOfPlayers ; i++)
             {
-                player.Score = 0;
-                player.Enabled = true;
-                player.SpaceShip.Enabled = true;
-                player.SpaceShip.Visible = true;
+                m_Players[i].Score = 0;
+                m_Players[i].Enabled = true;
+                m_Players[i].SpaceShip.Enabled = true;
+                m_Players[i].SpaceShip.Visible = true;
             }
+            initPlayersForNextLevel();
         }
 
         public void CreatePlayers(GameScreen i_GameScreen)
         {
-            m_Players = new List<Player>((int)m_NumOfPlayers);
-            m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
-            if (m_NumOfPlayers == SpaceInvadersEngine.eNumOfPlayers.TwoPlayers)
+            if (m_Players == null)
             {
-                m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+                m_Players = new List<Player>((int)m_NumOfPlayers);
+                m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
+                if (m_NumOfPlayers == SpaceInvadersEngine.eNumOfPlayers.TwoPlayers)
+                {
+                    m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+                }
+            }
+            else
+            {
+                InitNewPlayers(m_NumOfPlayers);
             }
         }
 
@@ -196,15 +203,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void InitGameEngineForNextLevel()
         {
-            initPlayersSpaceShipsForNextLevel();
+            initPlayersForNextLevel();
             this.m_Level = (eLevel)MathHelper.Clamp((int)this.Level +1, 0, (int)eLevel.Six);
         }
 
-        private void initPlayersSpaceShipsForNextLevel()
+        private void initPlayersForNextLevel()
         {
             foreach (Player player in m_Players)
             {
-                player.initSpaceShipPosition();
+                player.initPlayerForForNextLevel();
             }
         }
 

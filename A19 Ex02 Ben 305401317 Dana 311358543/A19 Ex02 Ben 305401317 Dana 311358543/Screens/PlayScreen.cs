@@ -39,34 +39,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             i_Game.IsMouseVisible = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
-            m_Players = m_GameEngine.Players;
-
             this.m_EnemysGroup = new EnemiesGroup(this);
             this.m_WallsGroup = new WallsGroup(this, k_NumOfWalls);
             m_PauseScreenScreen = new PauseScreen(this.Game);
         }
 
-        private void OnGameOver()//TODO: CALL 
-        {
-            //ExitScreen(); ??
-            this.m_GameEngine.InitGameEngineForNewGame();
-            initSoulsForNewGame();
-            this.initSpritesForNewGame();
-            this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
-        }
-
-        private void initSoulsForNewGame()
-        {
-            foreach (Player player in m_GameEngine.Players)
-            {
-                player.CreateSouls();
-            }
-        }
-
         protected override void OnActivated()
         {
             base.OnActivated();
-
             // we want to fade in only uppon first activation:
             this.ActivationLength = TimeSpan.Zero;
         }
@@ -105,6 +85,23 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_EnemysGroup.AllEnemiesDied += new EventHandler<EventArgs>(OnLevelEnded);
 
         }
+
+        private void OnLevelEnded(object sender, EventArgs args)
+        {
+            //MenuUtils.GoToScreen(this,this.ScreensManager.GetScreen("LevelTransitionScreen"));
+            m_GameEngine.InitGameEngineForNextLevel();
+            initSpritesForNewLevel();
+        }
+
+        private void OnGameOver()//TODO: CALL 
+        {
+            ExitScreen();
+            this.m_GameEngine.InitGameEngineForNewGame();
+            initSoulsForNewGame();
+            this.initSpritesForNewGame();
+            this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
+        }
+
         private void initSpritesForNewGame()
         {
             initSpritesForNewLevel();
@@ -112,16 +109,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initSpritesForNewLevel()
         {
-            m_GameEngine.InitGameEngineForNextLevel();
             m_EnemysGroup.InitEnemyGroupForNextLevel();
             m_WallsGroup.InitWallsForNextLevel();
             m_MotherSpaceShip.InitMotherShipForNextLevel();
             this.ScreensManager.SetCurrentScreen(new LevelTransitionScreencs(this.Game));
 
         }
-        private void OnLevelEnded(object sender, EventArgs args)
+
+        private void initSoulsForNewGame()
         {
-            initSpritesForNewLevel();
+            foreach (Player player in m_GameEngine.Players)
+            {
+                player.CreateSouls();
+            }
         }
 
         public override string ToString()

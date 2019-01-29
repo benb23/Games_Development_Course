@@ -50,6 +50,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * ((bullet.Texture.Height / 2) + 1));
                     bullet.Enabled = true;
                     bullet.Visible = true;
+                }
+
+                if(foundBullet)
+                {
                     break;
                 }
             }
@@ -64,10 +68,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            if(bullet == null)
-            {
-                bullet = null;
-            }
+            //if(bullet == null)
+            //{
+            //    bullet = null;
+            //}
 
             return bullet;
         }

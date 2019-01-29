@@ -104,14 +104,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.Animations["CellAnimation"].Restart();
             }
 
-            //test for level
+            ////test for level
             //m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            //if (m_GameEngine.Level == SpaceInvadersEngine.eLevel.One)
+            //if (m_GameEngine.Level == SpaceInvadersEngine.eLevel.One || m_GameEngine.Level == SpaceInvadersEngine.eLevel.Two)
             //{
             //    Visible = false;
             //    Enabled = false;
             //}
-            /////
+            ///////
+
             int rnd = m_Random.Next(0, k_MaxRandomNumber);    
 
             if (rnd <= m_MaxRandomToShoot && m_Gun.PermitionToShoot())
@@ -142,7 +143,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void dyingEnemy_Finished(object sender, EventArgs e)
         {
-            this.Animations.Enabled = false;
+            //this.Animations.Enabled = false;
             this.Visible = false;
             this.Enabled = false;
         }
