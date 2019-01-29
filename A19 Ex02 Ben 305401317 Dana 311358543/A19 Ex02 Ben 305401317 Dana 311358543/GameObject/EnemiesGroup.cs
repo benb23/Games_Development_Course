@@ -96,6 +96,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Direction = 1f;
             foreach(Enemy enemy in m_EnemiesMatrix)
             {
+                enemy.Animations["CellAnimation"].Reset();
+                enemy.Animations["CellAnimation"].Pause();
                 updateScoreValueAndShootingFrequency(enemy);
                 enemy.Enabled = true;
                 enemy.Visible = true;

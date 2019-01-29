@@ -48,6 +48,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Gun.Shoot(new Vector2(this.Position.X, this.Position.Y - this.Texture.Height));
         }
 
+        public void initSpaceShipForNextLevel()
+        {
+            this.m_Gun.InitGunForNextLevel();
+        }
         public bool PermitionToShoot()
         {
             return this.m_Animations["Destroy"].Enabled == false && this.m_Gun.PermitionToShoot();

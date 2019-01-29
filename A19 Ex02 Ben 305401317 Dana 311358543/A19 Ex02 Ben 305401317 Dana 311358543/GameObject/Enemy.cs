@@ -98,7 +98,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime i_GameTime)
         {
-            if (!m_Initialize)
+            if (!this.Animations["CellAnimation"].Enabled)
             {
                 m_Initialize = true;
                 this.Animations["CellAnimation"].Restart();

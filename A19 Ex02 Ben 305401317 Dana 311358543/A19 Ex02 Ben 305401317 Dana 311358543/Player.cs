@@ -132,6 +132,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void initPlayerForForNextLevel()
         {
+            this.m_SpaceShip.initSpaceShipForNextLevel();
             m_Initialized = false; //todo: dana , change
         }
 
