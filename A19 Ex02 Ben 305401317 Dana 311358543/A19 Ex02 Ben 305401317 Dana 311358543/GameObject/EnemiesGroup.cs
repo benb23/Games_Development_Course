@@ -101,6 +101,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 enemy.Visible = true;
                 enemy.initPosition();
                 m_AliveEnemiesByRow.Add(enemy);
+                enemy.Animations["CellAnimation"].Reset(); 
             }
             m_TimeUntilNextStepInSec = 0.5f;
             m_TimeCounter = 0f;
