@@ -47,7 +47,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             screensMananger.AddScreen(new SoundSettingsScreen(this));
             screensMananger.AddScreen(new LevelTransitionScreen(this));
 
-            screensMananger.SetCurrentScreen(gameOverScreen);
+            //screensMananger.SetCurrentScreen(gameOverScreen);
             screensMananger.SetCurrentScreen(welcomeScreen);
 
             Content.RootDirectory = "Content";

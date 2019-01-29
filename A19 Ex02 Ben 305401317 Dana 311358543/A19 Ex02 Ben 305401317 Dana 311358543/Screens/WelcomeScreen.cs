@@ -53,7 +53,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
             //MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
-            MenuUtils.GoToScreenAndExitCurrent(this, this.m_ScreensManager.GetScreen(args.ScreenName));
+            MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
 
         public override void Update(GameTime gameTime)
