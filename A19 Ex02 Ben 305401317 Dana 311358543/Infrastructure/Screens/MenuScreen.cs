@@ -73,6 +73,11 @@ namespace Infrastructure
             base.Initialize();
         }
 
+        private void initItemesPositions()
+        {
+
+        }
+
         // TODO: change the way that item added to list
         public void AddMenuItem(MenuItem i_Item)        
         {

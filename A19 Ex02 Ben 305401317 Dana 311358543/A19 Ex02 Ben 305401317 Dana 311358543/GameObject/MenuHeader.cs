@@ -30,6 +30,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_GameScreen = i_GameScreen;
             this.m_Scales = i_Scale;
+            
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            this.Position = new Vector2(m_GameScreen.Game.Window.ClientBounds.Width / 2 + m_OffsetX, m_OffsetY);
         }
 
         public float OffsetY
@@ -48,6 +54,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 InitOrigins();
                 this.Position = new Vector2(m_GameScreen.Game.Window.ClientBounds.Width / 2 + m_OffsetX, m_OffsetY);
+                this.m_GameScreen.Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
                 m_Initialize = true;
             }
 
