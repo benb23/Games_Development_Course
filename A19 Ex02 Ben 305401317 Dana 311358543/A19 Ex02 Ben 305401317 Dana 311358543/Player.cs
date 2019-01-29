@@ -35,12 +35,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return m_Souls; }
         }
 
+        public void InitSouls()
+        {
+            foreach (Soul soul in this.m_Souls)
+            {
+                soul.Enabled = true;
+                soul.Visible = true;
+            }
+        }
+
         public SpaceShip SpaceShip
         {
             get{ return m_SpaceShip; }
         }
 
-        private int CurrentSoulsNum
+        public int CurrentSoulsNum
         {
             get { return m_CurrentSoulsNumber; }
         }
@@ -64,7 +73,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_GameScreen = i_GameScreen;
             createSpaceShip(i_PlayerType);
             CreateSouls();
-            m_CurrentSoulsNumber = m_Souls.Capacity;
+            m_CurrentSoulsNumber = k_NumOfSouls;
             i_GameScreen.Add(this);
         }
 
@@ -96,9 +105,44 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_SpaceShip.Shoot();
             }
 
-            m_CurrentSoulsNumber = m_Souls.Count;
+            //m_CurrentSoulsNumber = getNumOfSouls();
             m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, Game.GraphicsDevice.Viewport.Width - (m_SpaceShip.Texture.Width / 2)), m_SpaceShip.Position.Y);
         }
+
+        public void KillSoul(Player i_Player)
+        {
+            bool foundActiveSoul = false;
+
+            foreach (Soul soul in this.m_Souls)
+            {
+                if (soul.Enabled)
+                {
+                    soul.Enabled = false;
+                    soul.Visible = false;
+                    foundActiveSoul = true;
+                }
+                if (foundActiveSoul)
+                {
+                    break;
+                }
+            }
+
+            m_CurrentSoulsNumber--;
+        }
+        //private int getNumOfSouls()
+        //{
+        //    int numOfSouls = 0;
+
+        //    foreach(Soul soul in this.m_Souls)
+        //    {
+        //        if(soul.Enabled)
+        //        {
+        //            numOfSouls++;
+        //        }
+        //    }
+
+        //    return numOfSouls;
+        //}
 
         private bool isPlayerAskedToShoot(Keys i_shootKey)
         {

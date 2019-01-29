@@ -95,10 +95,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnGameOver()//TODO: CALL 
         {
-            ExitScreen();
-            this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
+            //ExitScreen();
+            this.ScreensManager.SetCurrentScreen(this.ScreensManager.GetScreen("GameOverScreen"));
             this.m_GameEngine.InitGameEngineForNewGame();
-            initSoulsForNewGame();
             this.initSpritesForNewGame();
             //this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
         }
@@ -117,13 +116,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         }
 
-        private void initSoulsForNewGame()
-        {
-            foreach (Player player in m_GameEngine.Players)
-            {
-                player.CreateSouls();
-            }
-        }
+        //private void initSoulsForNewGame()
+        //{
+        //    foreach (Player player in m_GameEngine.Players)
+        //    {
+        //        player.CreateSouls();
+        //    }
+        //}
 
         public override string ToString()
         {
