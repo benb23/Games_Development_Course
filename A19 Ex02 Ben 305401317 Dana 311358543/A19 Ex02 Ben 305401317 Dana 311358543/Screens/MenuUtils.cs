@@ -24,5 +24,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 i_SourceScreen.ScreensManager.SetCurrentScreen(new LevelTransitionScreencs(i_SourceScreen.Game));
             }
         }
+
     }
 }
