@@ -16,80 +16,22 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class SpaceInvadersEngine : GameService, ISpaceInvadersEngine
     {
-        private eLevel m_Level = eLevel.One;
-
-        private const int k_EnemyScoreAddition = 120;
-
-        private const float k_WallsVelocitiyAdditionPercent = (float)- 0.7;
-
-        public float WallsVelocitiyAdditionPercent
-        {
-            get { return k_WallsVelocitiyAdditionPercent; }
-        }
-
-        public int EnemyScoreAddition
-        {
-            get { return k_EnemyScoreAddition; }
-        }
-        private const int k_EnemyShootingFrequencyAddition = 5;
-
-        public int EnemyShootingFrequencyAddition
-        {
-            get { return k_EnemyShootingFrequencyAddition; }
-        }
-
-        public eLevel Level
-        {
-            get { return m_Level; }
-            set { m_Level = value; }
-        }
-        public enum eLevel
-        {
-            One,
-            Two,
-            tree,
-            Four,
-            Five,
-            Six
-        };
-
-        public enum eNumOfPlayers
-        {
-            OnePlayer = 1,
-            TwoPlayers = 2
-        };
-
         private bool m_IsGameOver = false;
-        private eNumOfPlayers m_NumOfPlayers = eNumOfPlayers.OnePlayer; // default
+
         public bool IsGameOver
         {
             get { return m_IsGameOver; }
             set { m_IsGameOver = value; }
         }
 
-        public eNumOfPlayers NumOfPlayers
-        {
-            get { return m_NumOfPlayers; }
-            set { m_NumOfPlayers = value; }
-        }
         //private int k_NumOfPlayers = 2;
-        public enum eScoreValue
-        {
-            MotherShip = 850,
-            Soul = -1100,
-            PinkEnemy = 260,
-            BlueEnemy = 140,
-            YellowEnemy = 110
-        }
 
-        private const double m_sizeOfBulletHitEffect = 0.7;
         private Random m_Random;
         private PlayerIndex? m_Winner;
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
         private ISoundMananger m_SoundManager;
-
 
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
@@ -100,14 +42,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void InitGameEngineForNewGame()
         {
-            this.m_Level = eLevel.One;
-            InitNewPlayers(m_NumOfPlayers);
+            SpaceInvadersConfig.m_Level = SpaceInvadersConfig.eLevel.One;
+            InitNewPlayers();
             this.IsGameOver = false;
         }
 
-        private void InitNewPlayers(eNumOfPlayers i_NumOfPlayers)
+        private void InitNewPlayers()
         {
-            for(int i=0 ; i<(int) i_NumOfPlayers ; i++)
+            for(int i=0 ; i<(int)SpaceInvadersConfig.m_NumOfPlayers; i++)
             {
                 this.m_Players[i].InitSouls();
                 this.m_Players[i].Score = 0;
@@ -122,16 +64,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if (m_Players == null)
             {
-                m_Players = new List<Player>((int)m_NumOfPlayers);
+                m_Players = new List<Player>((int)SpaceInvadersConfig.m_NumOfPlayers);
                 m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
-                if (m_NumOfPlayers == SpaceInvadersEngine.eNumOfPlayers.TwoPlayers)
+                if (SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
                 {
                     m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
                 }
             }
             else
             {
-                InitNewPlayers(m_NumOfPlayers);
+                InitNewPlayers();
             }
         }
 
@@ -176,7 +118,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            if (this.m_IsGameOver && this.m_NumOfPlayers == SpaceInvadersEngine.eNumOfPlayers.TwoPlayers)
+            if (this.m_IsGameOver && SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
             {
                 m_Winner = getWinner();
             }
@@ -215,7 +157,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void InitGameEngineForNextLevel()
         {
             initPlayersForNextLevel();
-            this.m_Level = (eLevel)MathHelper.Clamp((int)this.Level +1, 0, (int)eLevel.Six);
+            SpaceInvadersConfig.m_Level = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.m_Level +1, 0, (int)SpaceInvadersConfig.eLevel.Six);
         }
 
         private void initPlayersForNextLevel()
@@ -386,11 +328,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (i_Sender.Velocity.Y < 0) 
             {
                 senderMinY = 0;
-                senderMaxY = (int)(m_sizeOfBulletHitEffect * i_Sender.Texture.Height) + 1;
+                senderMaxY = (int)(SpaceInvadersConfig.m_sizeOfBulletHitEffect * i_Sender.Texture.Height) + 1;
             }
             else
             {
-                senderMinY = (int)((1 - m_sizeOfBulletHitEffect) * i_Sender.Texture.Height);
+                senderMinY = (int)((1 - SpaceInvadersConfig.m_sizeOfBulletHitEffect) * i_Sender.Texture.Height);
                 senderMaxY = i_Sender.Texture.Height;
             }
 
@@ -445,7 +387,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (i_Sender.Velocity.Y < 0)
             {
-                wallColomn -= MathHelper.Clamp((int)(m_sizeOfBulletHitEffect * i_Sender.Texture.Height), 0, wallColomn);
+                wallColomn -= MathHelper.Clamp((int)(SpaceInvadersConfig.m_sizeOfBulletHitEffect * i_Sender.Texture.Height), 0, wallColomn);
             }
 
             return wallColomn;

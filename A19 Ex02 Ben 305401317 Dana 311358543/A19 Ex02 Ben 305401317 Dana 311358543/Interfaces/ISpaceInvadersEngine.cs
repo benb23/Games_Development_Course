@@ -16,21 +16,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public interface ISpaceInvadersEngine
     {
-        int EnemyScoreAddition { get; }
-        int EnemyShootingFrequencyAddition { get; }
+        List<Player> Players { get; set; }
 
-        float WallsVelocitiyAdditionPercent { get; }
+        bool IsGameOver { get; set; }
 
         void InitGameEngineForNewGame();
 
         void InitGameEngineForNextLevel();
-
-        SpaceInvadersEngine.eLevel Level { get; set; }
-
-        List<Player> Players { get; set; }
-
-        SpaceInvadersEngine.eNumOfPlayers NumOfPlayers { get; set; }
-        bool IsGameOver { get; set; }
 
         void HandleHit(Wall i_wall, ICollidable i_Collidable);
 

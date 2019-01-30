@@ -69,7 +69,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
-            //MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
 
@@ -80,13 +79,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
             
-            if(m_GameEngine.NumOfPlayers == SpaceInvadersEngine.eNumOfPlayers.OnePlayer)
+            if(SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.OnePlayer)
             {
-                m_GameEngine.NumOfPlayers = SpaceInvadersEngine.eNumOfPlayers.TwoPlayers;
+                SpaceInvadersConfig.m_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.TwoPlayers;
             }
             else
             {
-                m_GameEngine.NumOfPlayers = SpaceInvadersEngine.eNumOfPlayers.OnePlayer;
+                SpaceInvadersConfig.m_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.OnePlayer;
             }
         }
 

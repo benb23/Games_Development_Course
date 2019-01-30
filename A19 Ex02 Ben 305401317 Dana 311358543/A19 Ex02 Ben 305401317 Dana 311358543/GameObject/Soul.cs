@@ -24,7 +24,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public Soul(GameScreen i_GameScreen, Vector2 i_Scale, float i_Opacity, string i_AssteName, PlayerIndex i_SoulOwner, int i_SoulIndex)
             : base(i_AssteName, i_GameScreen)
         {
-            m_ScoreValue = (int)SpaceInvadersEngine.eScoreValue.Soul;
+            m_ScoreValue = (int)SpaceInvadersConfig.eScoreValue.Soul;
             Scales = i_Scale;
             Opacity = i_Opacity;  
             m_SoulIndx = i_SoulIndex;

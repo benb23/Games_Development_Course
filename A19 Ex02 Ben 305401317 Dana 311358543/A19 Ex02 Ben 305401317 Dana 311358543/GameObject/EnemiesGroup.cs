@@ -117,15 +117,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
-            if (m_GameEngine.Level == SpaceInvadersEngine.eLevel.One)
+            if (SpaceInvadersConfig.m_Level == SpaceInvadersConfig.eLevel.One)
             {
                 i_Enemy.m_MaxRandomToShoot = i_Enemy.m_OriginalMaxRandomToShoot;
                 i_Enemy.ScoreValue = i_Enemy.OriginalScoreValue;
             }
             else
             {
-                i_Enemy.m_MaxRandomToShoot += m_GameEngine.EnemyShootingFrequencyAddition;
-                i_Enemy.ScoreValue += m_GameEngine.EnemyScoreAddition;
+                i_Enemy.m_MaxRandomToShoot += SpaceInvadersConfig.k_EnemyShootingFrequencyAddition; 
+                i_Enemy.ScoreValue += SpaceInvadersConfig.k_EnemyScoreAddition; 
             }
         }
 
@@ -151,19 +151,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 switch (row)
                 {
                     case 0:
-                        this.initEnemiesRow(0, 0, Color.Pink, 1, SpaceInvadersEngine.eScoreValue.PinkEnemy);
+                        this.initEnemiesRow(0, 0, Color.Pink, 1, SpaceInvadersConfig.eScoreValue.PinkEnemy);
                         break;
                     case 1:
-                        this.initEnemiesRow(1, 2, Color.LightBlue, 1, SpaceInvadersEngine.eScoreValue.BlueEnemy);
+                        this.initEnemiesRow(1, 2, Color.LightBlue, 1, SpaceInvadersConfig.eScoreValue.BlueEnemy);
                         break;
                     case 2:
-                        this.initEnemiesRow(2, 3, Color.LightBlue, -1, SpaceInvadersEngine.eScoreValue.BlueEnemy);
+                        this.initEnemiesRow(2, 3, Color.LightBlue, -1, SpaceInvadersConfig.eScoreValue.BlueEnemy);
                         break;
                     case 3:
-                        this.initEnemiesRow(3, 4, Color.LightYellow, 1, SpaceInvadersEngine.eScoreValue.YellowEnemy);
+                        this.initEnemiesRow(3, 4, Color.LightYellow, 1, SpaceInvadersConfig.eScoreValue.YellowEnemy);
                         break;
                     case 4:
-                        this.initEnemiesRow(4, 5, Color.LightYellow, -1, SpaceInvadersEngine.eScoreValue.YellowEnemy);
+                        this.initEnemiesRow(4, 5, Color.LightYellow, -1, SpaceInvadersConfig.eScoreValue.YellowEnemy);
                         break;
                 }
             }
@@ -173,7 +173,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_EnemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
         }
   
-        private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint, int i_Toggeler, SpaceInvadersEngine.eScoreValue i_ScoreValue)
+        private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint, int i_Toggeler, SpaceInvadersConfig.eScoreValue i_ScoreValue)
         {
             for (int colum = 0; colum < k_EnemiesColumns; colum++)
             {
