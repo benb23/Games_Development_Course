@@ -106,7 +106,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void updateScoreValueAndShootingFrequency(Enemy i_Enemy)
         {
-            if (SpaceInvadersConfig.m_Level == SpaceInvadersConfig.eLevel.One)
+            if (SpaceInvadersConfig.m_LogicLevel == SpaceInvadersConfig.eLevel.One)
             {
                 i_Enemy.m_MaxRandomToShoot = i_Enemy.m_OriginalMaxRandomToShoot;
                 i_Enemy.ScoreValue = i_Enemy.OriginalScoreValue;

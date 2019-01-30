@@ -38,7 +38,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void InitGameEngineForNewGame()
         {
-            SpaceInvadersConfig.m_Level = SpaceInvadersConfig.eLevel.One;
+            SpaceInvadersConfig.m_LogicLevel = SpaceInvadersConfig.eLevel.One;
             InitNewPlayers();
             this.IsGameOver = false;
         }
@@ -153,7 +153,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void InitGameEngineForNextLevel()
         {
             initPlayersForNextLevel();
-            SpaceInvadersConfig.m_Level = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.m_Level +1, 0, (int)SpaceInvadersConfig.eLevel.Six);
+            SpaceInvadersConfig.m_Level++;
+            SpaceInvadersConfig.m_LogicLevel = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.m_LogicLevel +1, 0, (int)SpaceInvadersConfig.eLevel.Six);
         }
 
         private void initPlayersForNextLevel()
@@ -260,11 +261,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_SoundManager.GetSoundEffect("MotherShipKill").Play();
-
-        }
-
-        private void initNewLevel()
-        {
 
         }
 

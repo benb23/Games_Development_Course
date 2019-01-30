@@ -32,7 +32,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_StartingPosition = this.Position;
                 this.m_Initialize = true;
             }
-            if (SpaceInvadersConfig.m_Level != SpaceInvadersConfig.eLevel.One)
+            if (SpaceInvadersConfig.m_LogicLevel != SpaceInvadersConfig.eLevel.One)
             {
                 moveWall();
             }

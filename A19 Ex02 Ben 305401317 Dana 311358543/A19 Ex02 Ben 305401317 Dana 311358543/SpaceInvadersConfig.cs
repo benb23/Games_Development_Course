@@ -30,7 +30,9 @@
 
         public static eNumOfPlayers m_NumOfPlayers = eNumOfPlayers.OnePlayer; // default
 
-        public static eLevel m_Level = eLevel.One;
+        public static int m_Level = 1;
+
+        public static eLevel m_LogicLevel = eLevel.One;
 
         public const double m_sizeOfBulletHitEffect = 0.7;
 

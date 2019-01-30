@@ -12,7 +12,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         private Background m_Background;
         private MenuHeader m_GameOverHeader;
-        SpriteFont m_FontCalibri;
+        private SpriteFont m_FontCalibri;
         private string m_Result;
 
         public GameOverScreen(Game i_Game) : base(i_Game, 0f,50f, 15f)
