@@ -75,14 +75,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     wall.CurrTexture.SetData(wall.Pixels);
                 }
-                if(this.m_GameEngine.Level == SpaceInvadersEngine.eLevel.Two)
+                if(SpaceInvadersConfig.m_Level == SpaceInvadersConfig.eLevel.Two)
                 {
                     wall.Velocity = new Vector2(45, 0);
                 }
-                if (this.m_GameEngine.Level != SpaceInvadersEngine.eLevel.One &&
-                    this.m_GameEngine.Level != SpaceInvadersEngine.eLevel.Two) // not level 2 , todo : dana change
+                if (SpaceInvadersConfig.m_Level != SpaceInvadersConfig.eLevel.One &&
+                    SpaceInvadersConfig.m_Level != SpaceInvadersConfig.eLevel.Two) // not level 2 , todo : dana change
                 {
-                    wall.Velocity += wall.Velocity * new Vector2(this.m_GameEngine.WallsVelocitiyAdditionPercent * wall.Velocity.X, 0); // todo: const
+                    wall.Velocity += wall.Velocity * new Vector2(SpaceInvadersConfig.k_WallsVelocitiyAdditionPercent * wall.Velocity.X, 0); // todo: const
                 }
             }
         }

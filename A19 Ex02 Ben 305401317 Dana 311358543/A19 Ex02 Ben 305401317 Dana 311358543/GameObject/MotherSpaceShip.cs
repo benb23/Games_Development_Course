@@ -25,7 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public MotherSpaceShip(GameScreen i_GameScreen) : base(k_AssteName, i_GameScreen)
 		{
-            m_ScoreValue =(int)SpaceInvadersEngine.eScoreValue.MotherShip;
+            m_ScoreValue =(int)SpaceInvadersConfig.eScoreValue.MotherShip;
             this.m_TintColor = Color.Red;
             this.Velocity = new Vector2(40, 0);
             Visible = false;

@@ -38,7 +38,6 @@ namespace Infrastructure
         public MenuScreen(Game i_Game) : base(i_Game)
         {
             m_Game = i_Game;
-
         }
 
         public MenuScreen(Game i_Game, float i_OffsetX, float i_GapBetweenItems) : base(i_Game)
