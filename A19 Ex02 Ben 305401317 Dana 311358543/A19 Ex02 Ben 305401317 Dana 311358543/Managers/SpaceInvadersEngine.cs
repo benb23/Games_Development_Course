@@ -88,11 +88,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
+        private ISoundMananger m_SoundManager;
 
 
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
             this.m_Game = i_Game;
+            this.m_SoundManager = i_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
             //m_ScoreBoard = new ScoreBoardHeader(i_GameScreen);
         }
 
@@ -290,6 +292,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void HandleHit(SpaceShip i_Target, ICollidable i_Collidable)
         {
             Player player = this.m_Players[(int)i_Target.Owner];
+            
 
             if (i_Collidable is Bullet)
             {
@@ -299,6 +302,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.m_Players[(int)i_Target.Owner].destroyed_Finished);
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.player_Died);
                     player.SpaceShip.Animations["Destroy"].Restart();
+                    
                 }
                 else
                 {
@@ -316,6 +320,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (i_Collidable is Bullet && (i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
             {
                 i_Enemy.Animations["dyingEnemy"].Restart();
+                m_SoundManager.GetSoundEffect("EnemyKill").Play();
 
                 if ((i_Collidable as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
                 {
@@ -338,6 +343,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 this.m_Players[(int)PlayerIndex.Two].Score += i_MotherSpaceShip.ScoreValue;
             }
+
+            m_SoundManager.GetSoundEffect("MotherShipKill").Play();
+
         }
 
         private void initNewLevel()
@@ -350,6 +358,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (i_Collidable is Bullet && i_Wall.LastCollisionPixelsIndex.Count > 0)
             {
                 this.deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Collidable as CollidableSprite);
+                m_SoundManager.GetSoundEffect("BarrierHit").Play();
+
             }
             else if(i_Collidable is Enemy)
             {

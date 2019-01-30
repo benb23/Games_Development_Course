@@ -35,14 +35,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
 
 
-        //protected override void LoadContent()
-        //{
-        //    base.LoadContent();
-        //    this.m_Counter.Texture = Game.Content.Load<Texture2D>(@"Screens/Numbers_210x25");
-        //}
 
         public override void Update(GameTime i_GameTime)
         {
+            m_Counter.SourceRecWidth = (int)m_Counter.Width / 10;
             m_Counter.Animations.Restart();
 
             this.m_TimeLeftForScreen -= (float)i_GameTime.ElapsedGameTime.TotalSeconds;
@@ -56,9 +52,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initAnimations()
         {
-            //CellAnimator countDownAnimation = new CellAnimator(new TimeSpan(0, 0, 1), 3, TimeSpan.Zero, 1);
-            //m_Counter.Animations.Add(countDownAnimation);
-            //m_Counter.Animations.Enabled = true;
+
+            CellAnimator countDownAnimation = new CellAnimator(new TimeSpan(0, 0, 1), 3, TimeSpan.Zero, 4);
+            m_Counter.Animations.Add(countDownAnimation);
+            m_Counter.Animations.Enabled = true;
         }
 
 

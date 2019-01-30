@@ -30,6 +30,8 @@ namespace Infrastructure
         private Vector2 m_firstItemPosition;
         float m_GapBetweenItems = 15f;
         float m_OffsetX;
+        float m_OffsetY;
+
 
         int? m_currItemNumber;
 
@@ -38,7 +40,6 @@ namespace Infrastructure
         public MenuScreen(Game i_Game) : base(i_Game)
         {
             m_Game = i_Game;
-
         }
 
         public MenuScreen(Game i_Game, float i_OffsetX, float i_GapBetweenItems) : base(i_Game)
@@ -47,6 +48,16 @@ namespace Infrastructure
             this.m_GapBetweenItems = i_GapBetweenItems;
             this.m_OffsetX = i_OffsetX;
         }
+
+        public MenuScreen(Game i_Game, float i_OffsetX, float i_OffsetY, float i_GapBetweenItems) : base(i_Game)
+        {
+            m_Game = i_Game;
+            this.m_GapBetweenItems = i_GapBetweenItems;
+            this.m_OffsetX = i_OffsetX;
+            this.m_OffsetY = i_OffsetY;
+
+        }
+
 
         public bool IsUsingKeyboard
         {
@@ -71,7 +82,7 @@ namespace Infrastructure
 
         private void initFirstItemePosition()
         {
-            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 3 - m_OffsetX, m_Game.Window.ClientBounds.Height / 2.5f);
+            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 3 - m_OffsetX, m_Game.Window.ClientBounds.Height / 2.5f - m_OffsetY);
         }
 
         private void initItemesPositions()

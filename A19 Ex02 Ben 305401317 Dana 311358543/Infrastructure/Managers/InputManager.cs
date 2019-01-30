@@ -79,7 +79,8 @@ namespace Infrastructure
         /// <summary>
         /// Allows the game component to update itself.
         /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// <param name="gameTime">Provides a snap
+        /// of timing values.</param>
         public override void Update(GameTime gameTime)
         {
             m_PrevKeyboardState = m_KeyboardState;

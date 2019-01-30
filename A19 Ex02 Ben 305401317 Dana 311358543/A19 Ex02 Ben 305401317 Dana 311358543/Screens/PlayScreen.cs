@@ -20,6 +20,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private const int k_NumOfPlayers = 2;
         private const int k_NumOfWalls = 4;
         private ISpaceInvadersEngine m_GameEngine;
+        private ISoundMananger m_SoundManager;
+
         public const int k_MaxRandomNumber = 50000;
         private const string k_GameName = "Space Invaders";
         //public Random m_Random = new Random();
@@ -36,6 +38,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             m_ScoreBoard = new ScoreBoardHeader(this);
             this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            this.m_SoundManager = Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
+
             i_Game.IsMouseVisible = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
@@ -88,6 +92,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnLevelEnded(object sender, EventArgs args)
         {
+            this.m_SoundManager.GetSoundEffect("LevelWin").Play();
             MenuUtils.GoToScreen(this,this.ScreensManager.GetScreen("LevelTransitionScreen"));
             m_GameEngine.InitGameEngineForNextLevel();
             initSpritesForNewLevel();
@@ -96,6 +101,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnGameOver()//TODO: CALL 
         {
             //ExitScreen();
+            this.m_SoundManager.GetSoundEffect("GameOver").Play();
             this.ScreensManager.SetCurrentScreen(this.ScreensManager.GetScreen("GameOverScreen"));
             this.m_GameEngine.InitGameEngineForNewGame();
             this.initSpritesForNewGame();

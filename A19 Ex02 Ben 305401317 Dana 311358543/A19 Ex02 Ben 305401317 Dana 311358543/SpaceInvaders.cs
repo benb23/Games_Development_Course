@@ -33,15 +33,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             new ScreenSettingsManager(this);
             new CollisionsManager(this);
-            new SpaceInvadersEngine(this);
             new InputManager(this);
-            ScreensMananger screensMananger = new ScreensMananger(this);
             m_SoundManager = new SoundManager(this);
+            ScreensMananger screensMananger = new ScreensMananger(this);
+            new SpaceInvadersEngine(this);
             GameScreen welcomeScreen = new WelcomeScreen(this);
             GameScreen gameOverScreen = new GameOverScreen(this);
 
             screensMananger.AddScreen(welcomeScreen);
-            screensMananger.AddScreen(new GameOverScreen(this));
+            screensMananger.AddScreen(gameOverScreen);
             screensMananger.AddScreen(new PlayScreen(this));
             screensMananger.AddScreen(new MainMenuScreen(this));
             screensMananger.AddScreen(new PauseScreen(this));

@@ -13,7 +13,7 @@ using Infrastructure;
 
 namespace Infrastructure
 {
-    public class SoundManager : GameService
+    public class SoundManager : GameService, ISoundMananger
     {
         Dictionary<string, SoundEffect> m_SoundsEffects = new Dictionary<string, SoundEffect>();
         Dictionary<string, Song> m_Songs = new Dictionary<string, Song>();
@@ -22,6 +22,12 @@ namespace Infrastructure
         {
 
         }
+
+        protected override void RegisterAsService()
+        {
+            Game.Services.AddService(typeof(ISoundMananger), this);
+        }
+
 
         public void AddSoundEffect(SoundEffect i_SoundEffect, string i_SoundName)
         {
