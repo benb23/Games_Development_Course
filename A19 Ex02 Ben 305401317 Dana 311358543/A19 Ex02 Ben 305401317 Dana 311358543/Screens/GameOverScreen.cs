@@ -62,21 +62,24 @@ m_GameEngine.Players[0].Score.ToString());
 
             base.Initialize();
         }
+
         private string setWinnerString()
         {
+            PlayerIndex? winnerIndex = m_GameEngine.getWinner();
             string winner;
 
-            if (m_GameEngine.Winner == null)
+            if (winnerIndex == null)
             {
                 winner = "Tie";
             }
             else
             {
-                winner = "Player " + m_GameEngine.Winner.ToString();
+                winner = "Player " + winnerIndex.ToString();
             }
 
             return winner;
         }
+
         private void OnQuitItemClicked(object sender, ScreenEventArgs args)
         {
             Game.Exit();

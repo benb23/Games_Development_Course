@@ -27,6 +27,7 @@
             TwoPlayers = 2
         };
 
+
         public static eNumOfPlayers m_NumOfPlayers = eNumOfPlayers.OnePlayer; // default
 
         public static eLevel m_Level = eLevel.One;

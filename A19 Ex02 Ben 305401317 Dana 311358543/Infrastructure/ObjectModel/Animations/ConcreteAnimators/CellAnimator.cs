@@ -14,7 +14,6 @@ namespace Infrastructure
         private readonly int r_NumOfCells = 1;
         private int m_Direction = 1;
         private int m_OriginalDirection = 1;
-
         private bool isFliper = false;
 
         // CTORs

@@ -16,6 +16,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_Background.TintColor = Color.Green;
             this.m_Counter = new MenuHeader(this, @"Screens/Numbers_210x25");
+            //this.m_Counter.OffsetX = Game.GraphicsDevice.Viewport.Width/2;
+            this.m_Counter.OffsetY = Game.GraphicsDevice.Viewport.Height/2;
+
         }
 
         public override void Initialize()
@@ -23,8 +26,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             base.Initialize();
             initAnimations();
         }
-
-
 
         public override void Update(GameTime i_GameTime)
         {
@@ -43,16 +44,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void initAnimations()
         {
 
-            CellAnimator countDownAnimation = new CellAnimator(new TimeSpan(0, 0, 1), 3, TimeSpan.Zero, 4);
+            CellAnimator countDownAnimation = new CellAnimator(new TimeSpan(0, 0, 1), 3, TimeSpan.Zero, 3);
             m_Counter.Animations.Add(countDownAnimation);
             m_Counter.Animations.Enabled = true;
         }
-
 
         public override string ToString()
         {
             return "LevelTransitionScreen";
         }
-
     }
 }

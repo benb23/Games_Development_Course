@@ -16,12 +16,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_IsGameOver = value; }
         }
 
-        private PlayerIndex? m_Winner;
+        //private PlayerIndex? m_Winner;
 
-        public PlayerIndex? Winner
-        {
-            get { return m_Winner; }
-        }
+        //public PlayerIndex? Winner
+        //{
+        //    get { return m_Winner; }
+        //}
 
         private ISoundMananger m_SoundManager;
         private IInputManager m_InputManager;
@@ -114,13 +114,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            if (this.m_IsGameOver && SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
-            {
-                m_Winner = getWinner();
-            }
+            //if (this.m_IsGameOver && SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
+            //{
+            //    m_Winner = getWinner();
+            //}
         }
         
-        private PlayerIndex? getWinner()
+        public PlayerIndex? getWinner()
         {
             PlayerIndex? winner;
 
@@ -128,13 +128,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 winner = PlayerIndex.One;
             }
-            else if(Players[(int)PlayerIndex.One].Score == Players[(int)PlayerIndex.Two].Score)
+            else if(Players[(int)PlayerIndex.One].Score < Players[(int)PlayerIndex.Two].Score)
             {
-                winner = null;
+                winner = PlayerIndex.Two;
             }
             else
             {
-                winner = PlayerIndex.Two;
+                winner = null;
             }
 
             return winner;
