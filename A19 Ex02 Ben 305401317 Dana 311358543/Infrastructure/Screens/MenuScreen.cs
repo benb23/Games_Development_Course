@@ -140,7 +140,7 @@ namespace Infrastructure
                 {
                     m_currItemNumber = item.ItemNumber;
                 }
-                else if(item.IsActive == true)
+                else if (item.IsActive == true && m_currItemNumber!= item.ItemNumber)
                 {
                     item.IsActive = false;
                 }
@@ -166,7 +166,7 @@ namespace Infrastructure
                 {
                     m_MenuItems[(int)m_currItemNumber].IsActive = false;
                 }
-                else
+                else if(!m_MenuItems[(int)m_currItemNumber].IsActive)
                 {
                     m_MenuItems[(int)m_currItemNumber].IsActive = true;
                 }

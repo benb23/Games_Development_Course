@@ -40,7 +40,6 @@ namespace Infrastructure
             m_Songs.Add(i_SongName, i_Song);
         }
 
-
         public Song GetSong(string i_Name)
         {
             return m_Songs[i_Name];

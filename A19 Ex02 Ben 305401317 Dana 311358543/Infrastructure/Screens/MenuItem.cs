@@ -14,6 +14,7 @@ namespace Infrastructure
 {
     public class MenuItem : Sprite 
     {
+        
         private enum eMenuItemType
         {
             RegularButton,
@@ -23,7 +24,15 @@ namespace Infrastructure
 
         private GameScreen m_GameScreen;
         public event EventHandler<EventArgs> ActiveChanged;
-       
+        ISoundMananger m_SoundManager;
+        private bool m_isSoundOn = true;
+        private string m_SoundOnHover = "MenuMove";
+
+
+        public bool IsSoundOn
+        {
+            set { m_isSoundOn = value; }
+        }
 
         // private eMenuItemType m_ItemType;
         private int m_ItemNumber;
@@ -64,7 +73,10 @@ namespace Infrastructure
             }
 
             ActiveChanged += new EventHandler<EventArgs>(OnActiveChanged);
-
+            if(m_isSoundOn)
+            {
+                m_SoundManager = m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
+            }
 
             base.Initialize();
         }
@@ -79,6 +91,10 @@ namespace Infrastructure
             if (m_IsActive)
             {
                 this.TintColor = new Color(255, 74, 47);
+                if (m_isSoundOn)
+                {
+                    m_SoundManager.GetSoundEffect(m_SoundOnHover).Play();
+                }
                 
             }
             else
