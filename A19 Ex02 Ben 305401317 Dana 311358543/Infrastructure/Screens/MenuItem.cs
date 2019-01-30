@@ -24,10 +24,9 @@ namespace Infrastructure
 
         private GameScreen m_GameScreen;
         public event EventHandler<EventArgs> ActiveChanged;
-        ISoundMananger m_SoundManager;
+        protected ISoundMananger m_SoundManager;
         private bool m_isSoundOn = true;
         private string m_SoundOnHover = "MenuMove";
-
 
         public bool IsSoundOn
         {

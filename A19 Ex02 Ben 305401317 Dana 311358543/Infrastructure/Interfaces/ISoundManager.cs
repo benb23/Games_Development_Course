@@ -14,9 +14,10 @@ namespace Infrastructure
 {
     public interface ISoundMananger
     {
+        Dictionary<string, SoundEffectInstance> SoundEffect { get; }
         void AddSoundEffect(SoundEffect i_SoundEffect, string i_SoundName);
         void AddSong(Song i_Song, string i_SongName);
         Song GetSong(string i_Name);
-        SoundEffect GetSoundEffect(string i_Name);
+        SoundEffectInstance GetSoundEffect(string i_Name);
     }
 }

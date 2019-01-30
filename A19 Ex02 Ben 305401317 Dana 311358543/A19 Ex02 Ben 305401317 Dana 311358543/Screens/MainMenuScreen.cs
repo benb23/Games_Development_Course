@@ -65,7 +65,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnQuitItemClicked(object sender, ScreenEventArgs args)
         {
             Game.Exit();
-
         }
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
