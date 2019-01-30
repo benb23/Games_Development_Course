@@ -15,6 +15,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class WallsGroup : GameComponent
     {
+        ISpaceInvadersEngine m_GameEngine;
         private bool m_Initialize;
         private int m_NumOfWalls;
         private List<Wall> m_Walls;
@@ -61,6 +62,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
         public void InitWallsForNextLevel()
         {
+            if (this.m_GameEngine == null)
+            {
+                this.m_GameEngine = this.Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            }
+
             initWallsPositions();
             foreach(Wall wall in m_Walls)
             {
@@ -69,9 +75,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     wall.CurrTexture.SetData(wall.Pixels);
                 }
-                if (wall.Velocity !=new Vector2(0)) // not level 2 , todo : dana change
+                if(this.m_GameEngine.Level == SpaceInvadersEngine.eLevel.Two)
                 {
-                    wall.Velocity -= wall.Velocity * new Vector2((float)0.7 * wall.Velocity.X, 0); // todo: const
+                    wall.Velocity = new Vector2(45, 0);
+                }
+                if (this.m_GameEngine.Level != SpaceInvadersEngine.eLevel.One &&
+                    this.m_GameEngine.Level != SpaceInvadersEngine.eLevel.Two) // not level 2 , todo : dana change
+                {
+                    wall.Velocity += wall.Velocity * new Vector2(this.m_GameEngine.WallsVelocitiyAdditionPercent * wall.Velocity.X, 0); // todo: const
                 }
             }
         }

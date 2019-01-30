@@ -20,6 +20,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private const int k_EnemyScoreAddition = 120;
 
+        private const float k_WallsVelocitiyAdditionPercent = (float)- 0.7;
+
+        public float WallsVelocitiyAdditionPercent
+        {
+            get { return k_WallsVelocitiyAdditionPercent; }
+        }
+
         public int EnemyScoreAddition
         {
             get { return k_EnemyScoreAddition; }
