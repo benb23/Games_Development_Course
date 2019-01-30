@@ -56,9 +56,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initAnimations()
         {
-            CellAnimator countDownAnimation = new CellAnimator(new TimeSpan(0, 0, 1), 3, TimeSpan.Zero, 1);
-            m_Counter.Animations.Add(countDownAnimation);
-            m_Counter.Animations.Enabled = true;
+            //CellAnimator countDownAnimation = new CellAnimator(new TimeSpan(0, 0, 1), 3, TimeSpan.Zero, 1);
+            //m_Counter.Animations.Add(countDownAnimation);
+            //m_Counter.Animations.Enabled = true;
         }
 
 

@@ -13,28 +13,32 @@ namespace Infrastructure
         private int m_StartingSquareIndex = 0;
         private readonly int r_NumOfCells = 1;
         private int m_Direction = 1;
+        private int m_OriginalDirection = 1;
+
         private bool isFliper = false;
 
         // CTORs
-        public CellAnimator(TimeSpan i_CellTime, int i_NumOfCells, TimeSpan i_AnimationLength, int i_StartingSquareIndex)
-            : base("CellAnimation", i_AnimationLength)
-        {
-            m_CurrCellIdx = i_StartingSquareIndex;
-            this.m_StartingSquareIndex = i_StartingSquareIndex;
-            this.m_CellTime = i_CellTime;
-            this.m_TimeLeftForCell = i_CellTime;
-            this.r_NumOfCells = i_NumOfCells;
+        //public CellAnimator(TimeSpan i_CellTime, int i_NumOfCells, TimeSpan i_AnimationLength, int i_StartingSquareIndex)
+        //    : base("CellAnimation", i_AnimationLength)
+        //{
+            
+        //    this.m_CurrCellIdx = i_StartingSquareIndex;
+        //    this.m_StartingSquareIndex = i_StartingSquareIndex;
+        //    this.m_CellTime = i_CellTime;
+        //    this.m_TimeLeftForCell = i_CellTime;
+        //    this.r_NumOfCells = i_NumOfCells;
 
-            m_Loop = i_AnimationLength == TimeSpan.Zero;
-        }
+        //    m_Loop = i_AnimationLength == TimeSpan.Zero;
+        //}
 
 
         public CellAnimator(TimeSpan i_CellTime, int i_NumOfCells, TimeSpan i_AnimationLength, int i_StartingSquareIndex, bool i_IsFlipper, int i_toggleDIrection)
             : base("CellAnimation", i_AnimationLength)
         {
-            m_Direction = i_toggleDIrection;
-            isFliper = i_IsFlipper;
-            m_CurrCellIdx = i_StartingSquareIndex;
+            this.m_OriginalDirection = i_toggleDIrection;
+            this.m_Direction = i_toggleDIrection;
+            this.isFliper = i_IsFlipper;
+            this.m_CurrCellIdx = i_StartingSquareIndex;
             this.m_StartingSquareIndex = i_StartingSquareIndex;
             this.m_CellTime = i_CellTime;
             this.m_TimeLeftForCell = i_CellTime;
@@ -78,6 +82,9 @@ namespace Infrastructure
         protected override void RevertToOriginal()
         {
             this.BoundSprite.SourceRectangle = m_OriginalSpriteInfo.SourceRectangle;
+            this.m_TimeLeftForCell = TimeSpan.Zero;
+            this.m_Direction = m_OriginalDirection;
+            this.m_CurrCellIdx = this.m_StartingSquareIndex;
         }
 
         protected override void DoFrame(GameTime i_GameTime)
