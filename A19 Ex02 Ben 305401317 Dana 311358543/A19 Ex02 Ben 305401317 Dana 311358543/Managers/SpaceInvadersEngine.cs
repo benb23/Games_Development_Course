@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-
 using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
@@ -24,9 +16,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_IsGameOver = value; }
         }
 
-        //private int k_NumOfPlayers = 2;
-
-        private Random m_Random;
         private PlayerIndex? m_Winner;
 
         public PlayerIndex? Winner
@@ -34,10 +23,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return m_Winner; }
         }
 
-        private Game m_Game;
+        private ISoundMananger m_SoundManager;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
-        private ISoundMananger m_SoundManager;
+        private Random m_Random;
+        private Game m_Game;
 
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
@@ -183,33 +173,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             Game.Services.AddService(typeof(ISpaceInvadersEngine), this);
         }
-
-//        public void ShowGameOverMessage()
-//        {
-//            string winner;
-
-//            if(this.m_Winner == null)
-//            {
-//                winner = "Tie";
-//            }
-//            else if(this.m_Winner == PlayerIndex.One)
-//            {
-//                winner = "player 1";
-//            }
-//            else
-//            {
-//                winner = "player 2";
-//            }
-
-//            System.Windows.Forms.MessageBox.Show(string.Format(
-//@"Game Over 
-//player 1 score is : {0}
-//Player 2 score is : {1}
-//The winner is : {2} !", 
-//this.Players[(int)PlayerIndex.One].Score.ToString(), 
-//this.Players[(int)PlayerIndex.Two].Score.ToString(), 
-//winner)); 
-//        }
 
         public void HandleHit(Bullet bullet, ICollidable i_Collidable)
         {
