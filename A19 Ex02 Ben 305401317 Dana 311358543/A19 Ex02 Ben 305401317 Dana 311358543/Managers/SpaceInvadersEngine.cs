@@ -28,6 +28,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private Random m_Random;
         private PlayerIndex? m_Winner;
+
+        public PlayerIndex? Winner
+        {
+            get { return m_Winner; }
+        }
+
         private Game m_Game;
         private IInputManager m_InputManager;
         private List<Player> m_Players;

@@ -18,6 +18,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         List<Player> Players { get; set; }
 
+        PlayerIndex? Winner { get; }
+
         bool IsGameOver { get; set; }
 
         void InitGameEngineForNewGame();

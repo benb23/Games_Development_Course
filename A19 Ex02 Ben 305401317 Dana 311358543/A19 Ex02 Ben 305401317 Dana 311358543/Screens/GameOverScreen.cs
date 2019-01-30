@@ -18,15 +18,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     {
         private Background m_Background;
         private MenuHeader m_GameOverHeader;
+        private MenuHeader m_Winner;
+        private MenuHeader m_ResultAnnouncement;
 
-        public GameOverScreen(Game i_Game) : base(i_Game)
+
+        public GameOverScreen(Game i_Game) : base(i_Game, 0f,100f, 15f)
         {
             this.IsUsingKeyboard = false;
+            this.m_ResultAnnouncement = new MenuHeader(this, @"Screens\GameOver\TheWinnerIs", -150f,250f);
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_Background.TintColor = Color.Red;
             this.m_GameOverHeader = new MenuHeader(this, @"Screens\GameOver\GameOverLogo");
 
             int index = 0;
+
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\GameOver\Restart", this, index++);
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
@@ -40,6 +45,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(mainMenuItem);
         }
 
+        public override void Initialize()
+        {
+            ISpaceInvadersEngine engine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            if(engine.Winner == null)
+            {
+                m_Winner = new MenuHeader(this, @"Screens\GameOver\Tie", -10f, 250f);
+            }
+            else
+            {
+                m_Winner = new MenuHeader(this, @"Screens\GameOver\Player12_114x66", -10f, 250f);
+            }
+            base.Initialize();
+        }
         private void OnQuitItemClicked(object sender, ScreenEventArgs args)
         {
             Game.Exit();

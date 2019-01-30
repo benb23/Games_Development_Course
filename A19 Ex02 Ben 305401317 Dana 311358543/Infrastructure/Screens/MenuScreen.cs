@@ -82,7 +82,7 @@ namespace Infrastructure
 
         private void initFirstItemePosition()
         {
-            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 3 - m_OffsetX, m_Game.Window.ClientBounds.Height / 2.5f - m_OffsetY);
+            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 3 - m_OffsetX, m_Game.Window.ClientBounds.Height / 2.5f + m_OffsetY);
         }
 
         private void initItemesPositions()
