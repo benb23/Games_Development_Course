@@ -241,6 +241,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.updatePlayerScoreAndSouls(i_Target.Owner);
                 if (player.CurrentSoulsNum == 0)
                 {
+                    
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.m_Players[(int)i_Target.Owner].destroyed_Finished);
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.player_Died);
                     player.SpaceShip.Animations["Destroy"].Restart();
@@ -249,7 +250,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 else
                 {
                     player.SpaceShip.Animations["LoosingSoul"].Restart();
+                    
                 }
+
+                m_SoundManager.GetSoundEffect("LifeDie").Play();
             }
             else if (i_Collidable is Enemy)
             {

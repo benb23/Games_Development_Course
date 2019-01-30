@@ -21,6 +21,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private GameScreen m_GameScreen;
         private Bullet.eBulletType m_BulletsType;
         private int m_ShootingDirection;
+        private string m_ShotSound;
+        private ISoundMananger m_SoundManager;
+
 
         public Gun(GameScreen i_GameScreen, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection)
         {
@@ -31,6 +34,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_ShootingDirection = i_ShootingDirection;
         }
 
+        public Gun(GameScreen i_GameScreen, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection, string i_ShotSound)
+        {
+            m_GameScreen = i_GameScreen;
+            k_MaxNumOfBullets = 100;// i_MaxNumOfBullets;
+            m_BulletsType = i_BulletType;
+            m_Bullets = new List<Bullet>(k_MaxNumOfBullets);
+            m_ShootingDirection = i_ShootingDirection;
+            m_ShotSound = i_ShotSound;
+            m_SoundManager = m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
+        }
+
+
         public void InitGunForNextLevel()
         {
             foreach(Bullet bullet in m_Bullets)
@@ -40,9 +55,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
+
+
+
         public void Shoot(Vector2 i_ShooterPosition)
         {
             Bullet bullet = getBullet(i_ShooterPosition);
+
+            if (m_ShotSound != string.Empty && m_SoundManager != null)
+            {
+                m_SoundManager.GetSoundEffect(m_ShotSound).Play();
+            }
         }
 
         private Bullet getBullet(Vector2 i_ShooterPosition)

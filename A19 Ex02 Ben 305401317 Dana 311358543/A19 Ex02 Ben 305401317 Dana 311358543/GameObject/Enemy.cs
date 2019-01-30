@@ -65,7 +65,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
-            m_Gun = new Gun(GameScreen, 1, Bullet.eBulletType.EnemyBullet, 1);
+            m_Gun = new Gun(GameScreen, 1, Bullet.eBulletType.EnemyBullet, 1, "EnemyGunShot");
             initPosition();
 
             initAnimations();

@@ -343,7 +343,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/EnemyGunShot.wav
+/build:Sounds/EnemyGunShot.wav;Sounds/SSGunShot.wav
 
 #begin Sounds/EnemyKill.wav
 /importer:WavImporter
@@ -385,7 +385,7 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sounds/SSGunShot.wav
+/build:Sounds/SSGunShot.wav;Sounds/EnemyGunShot.wav
 
 #begin Sprites/Barrier_44x32.png
 /importer:TextureImporter

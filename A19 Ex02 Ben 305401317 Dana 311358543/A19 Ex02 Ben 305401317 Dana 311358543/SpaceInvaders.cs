@@ -56,7 +56,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void LoadContent()
         {
-            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/SSGunShot"), "GunShot");
+            m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/SSGunShot"), "SSGunShot");
             m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/MotherShipKill"), "MotherShipKill");
             m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/MenuMove"), "MenuMove");
             m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/LifeDie"), "LifeDie");

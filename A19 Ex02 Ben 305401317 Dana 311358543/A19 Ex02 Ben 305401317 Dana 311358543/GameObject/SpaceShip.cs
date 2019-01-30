@@ -26,7 +26,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public SpaceShip(GameScreen i_GameScreen, string i_AssetName, Bullet.eBulletType i_GunBulletsType, PlayerIndex i_Owner)
             : base(i_AssetName, i_GameScreen)
         {
-            this.m_Gun = new Gun(i_GameScreen, 3, i_GunBulletsType, -1);
+            this.m_Gun = new Gun(i_GameScreen, 3, i_GunBulletsType, -1, "SSGunShot"); //TODO: const
             this.m_Owner = i_Owner;
         }
 
