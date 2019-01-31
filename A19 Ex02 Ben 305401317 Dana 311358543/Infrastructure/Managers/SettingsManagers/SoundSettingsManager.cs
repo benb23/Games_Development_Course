@@ -15,20 +15,7 @@ namespace Infrastructure
 {
     public class SoundSettingsManager : GameService, ISoundSettingsManager
     {
-
-
-        //private bool m_isGameSoundOn = true;
         ISoundMananger m_SoundManager;
-
-        //public bool IsGameSoundOn
-        //{
-        //    get { return m_isGameSoundOn; }
-        //}
-
-        //public int BackGroundVolume()
-        //{
-
-        //}
 
         protected override void RegisterAsService()
         {
@@ -56,19 +43,21 @@ namespace Infrastructure
         // TODO: cheak if we need to limit the volume 
         public void DecreaseBackgroundMusicVolume(object sender, EventArgs args)
         {
-            MediaPlayer.Volume += 0.1f;
+            MediaPlayer.Volume = MathHelper.Clamp(MediaPlayer.Volume - 0.1f, 0, 1); 
+
+           
         }
 
         public void IncreaseBackgroundMusicVolume(object sender, EventArgs args)
         {
-            MediaPlayer.Volume -= 0.1f;
+            MediaPlayer.Volume = MathHelper.Clamp(MediaPlayer.Volume + 0.1f, 0, 1);
         }
 
         public void DecreaseSoundEffectsVolume(object sender, EventArgs args)
         {
             foreach (SoundEffectInstance effect in m_SoundManager.SoundEffect.Values)
             {
-                effect.Volume -= 0.1f;
+                effect.Volume = MathHelper.Clamp(effect.Volume - 0.1f, 0, 1);
             }
         }
 
@@ -76,7 +65,8 @@ namespace Infrastructure
         {
             foreach (SoundEffectInstance effect in m_SoundManager.SoundEffect.Values)
             {
-                effect.Volume += 0.1f;
+                effect.Volume = MathHelper.Clamp(effect.Volume + 0.1f, 0, 1);
+
             }
         }
 
