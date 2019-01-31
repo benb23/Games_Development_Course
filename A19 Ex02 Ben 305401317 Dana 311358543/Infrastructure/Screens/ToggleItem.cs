@@ -23,10 +23,10 @@ namespace Infrastructure
         {
             GameScreen.SpriteBatch.Draw(this.Texture , this.Position, this.m_TextureRectangle, this.m_TintColor);
         }
-        public bool isMouseHover()
-        {
-            return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
-        }
+        //public bool isMouseHover()
+        //{
+        //    return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
+        //}
     }
 
     public class ToggleItem : MenuItem
@@ -136,13 +136,13 @@ namespace Infrastructure
                     UpdateToggleValue();
                 }
 
-                for (int i = 0; i < k_numOfOptions; i++) //todo : only if is active??
-                {
-                    if (m_Options[i].isMouseHover() && m_CurrToggleValue != i)
-                    {
-                            UpdateToggleValue();
-                    }
-                }
+                //for (int i = 0; i < k_numOfOptions; i++) //todo : only if is active??
+                //{
+                //    if (m_Options[i].isMouseHover() && m_CurrToggleValue != i)
+                //    {
+                //            UpdateToggleValue();
+                //    }
+                //}
             }
             base.Update(gameTime);  
         }

@@ -17,7 +17,6 @@ namespace Infrastructure
     public abstract class MenuScreen : GameScreen
     {
         Game m_Game;
-        //protected Dictionary<string, GameScreen> m_screens = new Dictionary<string, GameScreen>();
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
         private Vector2 m_firstItemPosition;
         float m_GapBetweenItems = 15f;
@@ -25,9 +24,12 @@ namespace Infrastructure
         float m_OffsetY;
 
 
-        int? m_currItemNumber;
+        private int? m_currItemNumber;
+        private int? m_PrevItemNumber;
 
         private bool m_IsUsingKeyboardArrows = true;
+
+        private bool m_IsUsingMouse = true;
 
         public MenuScreen(Game i_Game) : base(i_Game)
         {
@@ -50,18 +52,21 @@ namespace Infrastructure
 
         }
 
-
         public bool IsUsingKeyboard
         {
             set { m_IsUsingKeyboardArrows = value; }
         }
 
+        public bool IsUsingMouse
+        {
+            get { return m_IsUsingMouse; }
+            set { m_IsUsingMouse = value; }
+        }
+
         public override void Initialize()
         {
-            initFirstItemePosition();
-
             this.m_Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
-
+            initFirstItemePosition();
             initItemesPositions();
             base.Initialize();
         }
@@ -88,13 +93,12 @@ namespace Infrastructure
                     {
                         (item as ClickItem).IsUsingKeyboard = false;
                     }
-                    
-   
                 }
-
                 if (m_IsUsingKeyboardArrows)
                 {
                     m_currItemNumber = 0;
+                    m_MenuItems[(int)m_currItemNumber].IsActive = true;
+                    m_MenuItems[(int)m_currItemNumber].TintColor = Color.Red; // todo : change 
                 }
             }
         }
@@ -145,24 +149,37 @@ namespace Infrastructure
             {
                 useKeyboardToNavigateMenu();
             }
-            useMouseToNavigateMenu();
+            if (m_IsUsingMouse)
+            {
+                useMouseToNavigateMenu();
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
             updateCurrActiveItem();
-
-            if (m_currItemNumber != null)
+            if (m_PrevItemNumber != null && m_currItemNumber != m_PrevItemNumber)
             {
-                if (!m_MenuItems[(int)m_currItemNumber].isMouseHoverItem() && !m_IsUsingKeyboardArrows)
-                {
-                    m_MenuItems[(int)m_currItemNumber].IsActive = false;
-                }
-                else if(!m_MenuItems[(int)m_currItemNumber].IsActive)
+                m_MenuItems[(int)m_PrevItemNumber].IsActive = false;
+                if (m_currItemNumber != null)
                 {
                     m_MenuItems[(int)m_currItemNumber].IsActive = true;
                 }
             }
+
+            //if (m_currItemNumber != null)
+            //{
+            //    if (!m_MenuItems[(int)m_currItemNumber].isMouseHoverItem() && !m_IsUsingKeyboardArrows)
+            //    {
+            //        m_MenuItems[(int)m_currItemNumber].IsActive = false;
+            //    }
+            //    else if(!m_MenuItems[(int)m_currItemNumber].IsActive)
+            //    {
+            //        m_MenuItems[(int)m_currItemNumber].IsActive = true;
+            //    }
+            //}
+
+            m_PrevItemNumber = m_currItemNumber;
             base.Update(gameTime);
         }
 

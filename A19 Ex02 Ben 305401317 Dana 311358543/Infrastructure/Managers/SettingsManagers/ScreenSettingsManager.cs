@@ -24,7 +24,7 @@ namespace Infrastructure
             this.Game.Services.AddService(typeof(IScreenSettingsManager), this);
         }
 
-        public void ToggleMouseVisabilityConfig(object sender, EventArgs args)
+        public void ToggleMouseVisabilityConfig()
         {
             this.m_Game.IsMouseVisible = !this.m_Game.IsMouseVisible;
         }

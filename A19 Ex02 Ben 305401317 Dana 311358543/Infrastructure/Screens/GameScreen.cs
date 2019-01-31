@@ -171,6 +171,10 @@ namespace Infrastructure
             {
                 m_InputManager = m_DummyInputManager;
             }
+            else
+            {
+                m_InputManager.Initialize(); // todo : keep?
+            }
 
             base.Initialize();
         }

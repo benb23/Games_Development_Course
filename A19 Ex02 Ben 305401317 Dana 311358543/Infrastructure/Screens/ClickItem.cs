@@ -41,7 +41,8 @@ namespace Infrastructure
         {
             if (this.IsActive)
             {
-                if ((this.GameScreen.InputManager.KeyPressed(Keys.Enter) && this.m_IsUsingKeyboard)|| this.GameScreen.InputManager.ButtonReleased(eInputButtons.Left))
+                if ((this.GameScreen.InputManager.KeyReleased(Keys.Enter) && this.m_IsUsingKeyboard)|| 
+                     this.GameScreen.InputManager.ButtonReleased(eInputButtons.Left))
                 {
                     OnItemClicked(this, EventArgs.Empty);
                 }
