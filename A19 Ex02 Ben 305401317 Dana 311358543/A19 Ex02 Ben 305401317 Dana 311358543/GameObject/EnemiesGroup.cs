@@ -44,6 +44,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 AllEnemiesDied.Invoke(sender, args);
             }
         }
+
         public override void Update(GameTime i_GameTime)
         {
             if (this.isEnemiesGroupTouchTheBotton())
@@ -86,6 +87,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_AliveEnemiesByColum.Clear();
 
             this.m_Direction = 1f;
+
             foreach(Enemy enemy in m_EnemiesMatrix)
             {
                 enemy.Animations["CellAnimation"].Reset();
@@ -104,12 +106,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void updateScoreValueAndShootingFrequency(Enemy i_Enemy)
         {
-            if (m_GameEngine == null)
-            {
-                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            }
-
-            if (SpaceInvadersConfig.m_Level == SpaceInvadersConfig.eLevel.One)
+            if (SpaceInvadersConfig.m_LogicLevel == SpaceInvadersConfig.eLevel.One)
             {
                 i_Enemy.m_MaxRandomToShoot = i_Enemy.m_OriginalMaxRandomToShoot;
                 i_Enemy.ScoreValue = i_Enemy.OriginalScoreValue;
@@ -131,6 +128,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public override void Initialize()
         {
+            if (m_GameEngine == null)
+            {
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            }
+
             this.initEnemyGroup();
             this.initAliveEnemiesByColum();
             base.Initialize();
@@ -191,7 +193,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private bool isAllEnemiesDead()
         {
             bool isAllDead = m_AliveEnemiesByRow.Count == 0;
-
             return isAllDead;
         }
 

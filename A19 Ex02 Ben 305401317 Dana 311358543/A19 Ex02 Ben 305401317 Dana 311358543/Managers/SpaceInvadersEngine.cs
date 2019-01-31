@@ -16,12 +16,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_IsGameOver = value; }
         }
 
-        private PlayerIndex? m_Winner;
+        //private PlayerIndex? m_Winner;
 
-        public PlayerIndex? Winner
-        {
-            get { return m_Winner; }
-        }
+        //public PlayerIndex? Winner
+        //{
+        //    get { return m_Winner; }
+        //}
 
         private ISoundMananger m_SoundManager;
         private IInputManager m_InputManager;
@@ -38,7 +38,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void InitGameEngineForNewGame()
         {
-            SpaceInvadersConfig.m_Level = SpaceInvadersConfig.eLevel.One;
+            SpaceInvadersConfig.m_LogicLevel = SpaceInvadersConfig.eLevel.One;
             InitNewPlayers();
             this.IsGameOver = false;
         }
@@ -114,13 +114,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             }
 
-            if (this.m_IsGameOver && SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
-            {
-                m_Winner = getWinner();
-            }
+            //if (this.m_IsGameOver && SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
+            //{
+            //    m_Winner = getWinner();
+            //}
         }
         
-        private PlayerIndex? getWinner()
+        public PlayerIndex? getWinner()
         {
             PlayerIndex? winner;
 
@@ -128,13 +128,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 winner = PlayerIndex.One;
             }
-            else if(Players[(int)PlayerIndex.One].Score == Players[(int)PlayerIndex.Two].Score)
+            else if(Players[(int)PlayerIndex.One].Score < Players[(int)PlayerIndex.Two].Score)
             {
-                winner = null;
+                winner = PlayerIndex.Two;
             }
             else
             {
-                winner = PlayerIndex.Two;
+                winner = null;
             }
 
             return winner;
@@ -153,7 +153,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void InitGameEngineForNextLevel()
         {
             initPlayersForNextLevel();
-            SpaceInvadersConfig.m_Level = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.m_Level +1, 0, (int)SpaceInvadersConfig.eLevel.Six);
+            SpaceInvadersConfig.m_Level++;
+            SpaceInvadersConfig.m_LogicLevel = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.m_LogicLevel +1, 0, (int)SpaceInvadersConfig.eLevel.Six);
         }
 
         private void initPlayersForNextLevel()
@@ -260,11 +261,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             m_SoundManager.GetSoundEffect("MotherShipKill").Play();
-
-        }
-
-        private void initNewLevel()
-        {
 
         }
 

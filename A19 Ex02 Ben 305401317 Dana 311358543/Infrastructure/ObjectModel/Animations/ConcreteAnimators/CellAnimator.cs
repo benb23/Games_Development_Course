@@ -14,8 +14,13 @@ namespace Infrastructure
         private readonly int r_NumOfCells = 1;
         private int m_Direction = 1;
         private int m_OriginalDirection = 1;
-
         private bool isFliper = false;
+        private bool m_IsIncreasingProgression = true;
+
+        public bool IsIncreasingProgression
+        {
+            set { m_IsIncreasingProgression = value; }
+        }
 
         // CTORs
         public CellAnimator(TimeSpan i_CellTime, int i_NumOfCells, TimeSpan i_AnimationLength, int i_StartingSquareIndex)
@@ -43,7 +48,6 @@ namespace Infrastructure
             this.m_CellTime = i_CellTime;
             this.m_TimeLeftForCell = i_CellTime;
             this.r_NumOfCells = i_NumOfCells;
-
             m_Loop = i_AnimationLength == TimeSpan.Zero;
         }
 
@@ -62,7 +66,14 @@ namespace Infrastructure
             }
             else
             {
-                m_CurrCellIdx++;
+                if (m_IsIncreasingProgression)
+                {
+                    m_CurrCellIdx++;
+                }
+                else
+                {
+                    m_CurrCellIdx--;
+                }
 
                 if (m_CurrCellIdx >= r_NumOfCells)
                 {

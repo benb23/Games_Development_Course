@@ -30,12 +30,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(QuitItem);
         }
 
-        //public override void Initialize()
-        //{
-            
-        //    base.Initialize();
-        //}
-
         private void OnQuitItemClicked(object sender, ScreenEventArgs args)
         {
             Game.Exit();
@@ -43,7 +37,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
-            //MenuUtils.GoToScreen(this, m_screens[args.ScreenName]);
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
 

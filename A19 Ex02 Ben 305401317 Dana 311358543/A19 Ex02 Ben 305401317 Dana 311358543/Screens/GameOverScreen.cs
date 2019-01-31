@@ -12,7 +12,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         private Background m_Background;
         private MenuHeader m_GameOverHeader;
-        SpriteFont m_FontCalibri;
+        private SpriteFont m_FontCalibri;
         private string m_Result;
 
         public GameOverScreen(Game i_Game) : base(i_Game, 0f,50f, 15f)
@@ -62,21 +62,24 @@ m_GameEngine.Players[0].Score.ToString());
 
             base.Initialize();
         }
+
         private string setWinnerString()
         {
+            PlayerIndex? winnerIndex = m_GameEngine.getWinner();
             string winner;
 
-            if (m_GameEngine.Winner == null)
+            if (winnerIndex == null)
             {
                 winner = "Tie";
             }
             else
             {
-                winner = "Player " + m_GameEngine.Winner.ToString();
+                winner = "Player " + winnerIndex.ToString();
             }
 
             return winner;
         }
+
         private void OnQuitItemClicked(object sender, ScreenEventArgs args)
         {
             Game.Exit();
