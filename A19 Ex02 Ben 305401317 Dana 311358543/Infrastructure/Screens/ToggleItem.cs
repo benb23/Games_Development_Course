@@ -45,6 +45,7 @@ namespace Infrastructure
         {
             get { return m_CurrToggleValue; }
         }
+
         public event EventHandler<EventArgs> ToggleValueChanched;
 
         protected virtual void OnToggeleValueChanged(object sender, EventArgs args)

@@ -19,16 +19,23 @@ namespace Infrastructure
 
         private bool m_isGameSoundOn = true;
         ISoundMananger m_SoundManager;
-        public event EventHandler<EventArgs> ToggleGameSoundChanched;
 
         public bool IsGameSoundOn
         {
             get { return m_isGameSoundOn; }
         }
 
+        //public int BackGroundVolume()
+        //{
+
+        //}
+
+
         public SoundSettingsManager(Game i_Game) : base (i_Game)
         {
             m_SoundManager = i_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
+
+
         }
 
         public void ToggleGameSound(object sender, EventArgs args)
@@ -46,11 +53,6 @@ namespace Infrastructure
                 {
                     effect.Play();
                 }
-            }
-
-            if (ToggleGameSoundChanched != null)
-            {
-                ToggleGameSoundChanched.Invoke(sender, args);
             }
 
         }

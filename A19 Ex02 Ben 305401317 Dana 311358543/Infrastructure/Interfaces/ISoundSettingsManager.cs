@@ -12,8 +12,6 @@ namespace Infrastructure
 
         void ToggleGameSound(object sender, EventArgs args);
 
-        event EventHandler<EventArgs> ToggleGameSoundChanched;
-
         bool IsGameSoundOn { get; }
 
         // TODO: cheak if we need to limit the volume 
