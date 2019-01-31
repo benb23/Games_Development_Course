@@ -78,7 +78,7 @@ namespace Infrastructure
         {
             base.Draw(gameTime);
 
-           // this.GameScreen.SpriteBatch.DrawString(this.m_Font, m_SoundSettingsMngr..ToString(), this.Position + new Vector2(this.Width + 5, 0), Color.Green);
+           this.GameScreen.SpriteBatch.DrawString(this.m_Font, m_Volume.ToString(), this.Position + new Vector2(this.Width + 5, 0), Color.Green);
 
         }
 
@@ -104,21 +104,21 @@ namespace Infrastructure
         {
             base.Update(gameTime);
 
-            if (m_SoundMngr.IsGameSoundOn)
+            if (m_SoundMngr.IsGameSoundOn && this.IsActive)
             {
                 if (this.GameScreen.InputManager.KeyPressed(Keys.PageUp))
                 {
-                    m_Volume += 10;
-                    
+                    m_Volume = MathHelper.Clamp(m_Volume + 10, 0, 100);
+
                     this.OnVolumeIncrease(this, null);
                 }
                 else if (this.GameScreen.InputManager.KeyPressed(Keys.PageDown))
                 {
-                    m_Volume -= 10;
+                    m_Volume = MathHelper.Clamp(m_Volume - 10, 0, 100);
                     this.OnVolumeDecrease(this, null);
                 }
 
-                MathHelper.Clamp(m_Volume, 0, 100);
+                
             }
             base.Update(gameTime);
         }
