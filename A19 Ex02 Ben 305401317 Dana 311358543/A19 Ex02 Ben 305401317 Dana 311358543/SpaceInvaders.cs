@@ -24,10 +24,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             this.Services.AddService(typeof(Random), new Random());
 
+            m_SoundManager = new SoundManager(this);
             new ScreenSettingsManager(this);
+            new SoundSettingsManager(this);
             new CollisionsManager(this);
             new InputManager(this);
-            m_SoundManager = new SoundManager(this);
+            
             ScreensMananger screensMananger = new ScreensMananger(this);
             new SpaceInvadersEngine(this);
             GameScreen welcomeScreen = new WelcomeScreen(this);

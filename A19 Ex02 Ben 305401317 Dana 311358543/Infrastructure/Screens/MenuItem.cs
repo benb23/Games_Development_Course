@@ -82,9 +82,10 @@ namespace Infrastructure
                 this.TintColor = new Color(255, 74, 47);
                 if (m_isSoundOn)
                 {
-                    m_SoundManager.GetSoundEffect(m_SoundOnHover).Play();
+                    this.m_SoundManager.PlaySoundEffect(m_SoundOnHover);
+
                 }
-                
+
             }
             else
             {

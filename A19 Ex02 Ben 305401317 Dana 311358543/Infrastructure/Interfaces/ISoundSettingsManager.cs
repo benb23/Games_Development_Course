@@ -12,7 +12,7 @@ namespace Infrastructure
 
         void ToggleGameSound(object sender, EventArgs args);
 
-        bool IsGameSoundOn { get; }
+
 
         // TODO: cheak if we need to limit the volume 
         void DecreaseBackgroundMusicVolume(object sender, EventArgs args);

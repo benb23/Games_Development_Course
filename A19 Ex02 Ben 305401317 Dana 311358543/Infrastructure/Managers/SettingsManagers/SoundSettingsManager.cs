@@ -17,44 +17,35 @@ namespace Infrastructure
     {
 
 
-        private bool m_isGameSoundOn = true;
+        //private bool m_isGameSoundOn = true;
         ISoundMananger m_SoundManager;
 
-        public bool IsGameSoundOn
-        {
-            get { return m_isGameSoundOn; }
-        }
+        //public bool IsGameSoundOn
+        //{
+        //    get { return m_isGameSoundOn; }
+        //}
 
         //public int BackGroundVolume()
         //{
 
         //}
 
+        protected override void RegisterAsService()
+        {
+            this.Game.Services.AddService(typeof(ISoundSettingsManager), this);
+        }
+
 
         public SoundSettingsManager(Game i_Game) : base (i_Game)
         {
             m_SoundManager = i_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
-
-
         }
 
         public void ToggleGameSound(object sender, EventArgs args)
         {
             MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
-            m_isGameSoundOn = !m_isGameSoundOn;
-
-            foreach (SoundEffectInstance effect in m_SoundManager.SoundEffect.Values)
-            {
-                if (m_isGameSoundOn)
-                {
-                    effect.Pause();
-                }
-                else
-                {
-                    effect.Play();
-                }
-            }
-
+            
+            m_SoundManager.IsGameSoundOn = !m_SoundManager.IsGameSoundOn;
         }
 
         private void revertSoundVolumes()

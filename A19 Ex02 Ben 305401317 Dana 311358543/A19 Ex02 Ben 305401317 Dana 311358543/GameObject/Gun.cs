@@ -55,7 +55,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (m_ShotSound != string.Empty && m_SoundManager != null)
             {
-                m_SoundManager.GetSoundEffect(m_ShotSound).Play();
+                this.m_SoundManager.PlaySoundEffect(m_ShotSound);
             }
         }
 

@@ -23,7 +23,7 @@ namespace Infrastructure
         private Game m_Game;
         private string m_NumbersAsset;
         private SpriteFont m_Font;
-        private ISoundSettingsManager m_SoundSettingsMngr;
+        private ISoundMananger m_SoundMngr;
         private float m_Volume = 100;
         private float m_VolumeToRevert;
 
@@ -32,7 +32,7 @@ namespace Infrastructure
         {
            // this.m_NumbersAsset = i_NumbersAsset;
             this.m_Game = i_GameScreen.Game;
-            this.m_SoundSettingsMngr = this.m_Game.Services.GetService(typeof(ISoundSettingsManager)) as ISoundSettingsManager;
+            this.m_SoundMngr = this.m_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
         }
 
         protected override void LoadContent()
@@ -52,7 +52,7 @@ namespace Infrastructure
 
         private void volumeItem_ToggleGameSoundChanched(object sender, EventArgs e)
         {
-            if (m_SoundSettingsMngr.IsGameSoundOn)
+            if (m_SoundMngr.IsGameSoundOn)
             {
                 this.m_Volume = m_VolumeToRevert;
             }
@@ -104,7 +104,7 @@ namespace Infrastructure
         {
             base.Update(gameTime);
 
-            if (m_SoundSettingsMngr.IsGameSoundOn)
+            if (m_SoundMngr.IsGameSoundOn)
             {
                 if (this.GameScreen.InputManager.KeyPressed(Keys.PageUp))
                 {

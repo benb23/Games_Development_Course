@@ -222,8 +222,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     player.SpaceShip.Animations["LoosingSoul"].Restart();
                     
                 }
-                
-                m_SoundManager.GetSoundEffect("LifeDie").Play();
+                this.m_SoundManager.PlaySoundEffect("LifeDie");
             }
             else if (i_Collidable is Enemy)
             {
@@ -236,7 +235,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (i_Collidable is Bullet && (i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)
             {
                 i_Enemy.Animations["dyingEnemy"].Restart();
-                m_SoundManager.GetSoundEffect("EnemyKill").Play();
+                this.m_SoundManager.PlaySoundEffect("EnemyKill");
 
                 if ((i_Collidable as Bullet).Type == Bullet.eBulletType.PlayerOneBullet)
                 {
@@ -260,7 +259,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_Players[(int)PlayerIndex.Two].Score += i_MotherSpaceShip.ScoreValue;
             }
 
-            m_SoundManager.GetSoundEffect("MotherShipKill").Play();
+            this.m_SoundManager.PlaySoundEffect("MotherShipKill");
+
 
         }
 
@@ -269,7 +269,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (i_Collidable is Bullet && i_Wall.LastCollisionPixelsIndex.Count > 0)
             {
                 this.deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Collidable as CollidableSprite);
-                m_SoundManager.GetSoundEffect("BarrierHit").Play();
+                this.m_SoundManager.PlaySoundEffect("BarrierHit");
+
 
             }
             else if(i_Collidable is Enemy)

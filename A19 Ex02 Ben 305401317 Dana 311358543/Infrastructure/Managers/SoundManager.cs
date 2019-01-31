@@ -17,6 +17,14 @@ namespace Infrastructure
     {
         Dictionary<string, SoundEffectInstance> m_SoundsEffects = new Dictionary<string, SoundEffectInstance>();
         Dictionary<string, Song> m_Songs = new Dictionary<string, Song>();
+        private bool m_isGameSoundOn = true;
+
+        public bool IsGameSoundOn
+        {
+            get { return m_isGameSoundOn; }
+            set { m_isGameSoundOn = value; }
+        }
+
 
         public Dictionary<string, SoundEffectInstance> SoundEffect
         {
@@ -26,6 +34,15 @@ namespace Infrastructure
         public SoundManager(Game i_Game) : base(i_Game)
         {
 
+        }
+
+
+        public void PlaySoundEffect(string i_SoundEffect)
+        {
+            if (m_isGameSoundOn)
+            {
+                this.m_SoundsEffects[i_SoundEffect].Play();
+            }
         }
 
         protected override void RegisterAsService()

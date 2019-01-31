@@ -17,6 +17,11 @@ namespace Infrastructure
         Dictionary<string, SoundEffectInstance> SoundEffect { get; }
         void AddSoundEffect(SoundEffect i_SoundEffect, string i_SoundName);
         void AddSong(Song i_Song, string i_SongName);
+
+        void PlaySoundEffect(string i_SoundEffect);
+
+        bool IsGameSoundOn { get; set; }
+
         Song GetSong(string i_Name);
         SoundEffectInstance GetSoundEffect(string i_Name);
     }
