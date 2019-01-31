@@ -14,7 +14,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.IsUsingKeyboard = false;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
-            this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo", new Vector2(0.8f));
+            this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo", 0.8f);
 
             int index = 0;
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\Wellcome\PlayGame", this, index++);

@@ -18,17 +18,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_Background.TintColor = Color.Green;
-            this.m_Counter = new MenuHeader(this, @"Screens/Numbers_210x25");
-            this.m_Counter.OffsetX = 80;
-            this.m_Counter.OffsetY = Game.GraphicsDevice.Viewport.Height/2;
+            this.m_Counter = new MenuHeader(this, @"Screens/Numbers_210x25", new Vector2(Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height / 2));
+            //this.m_Counter.OffsetX = m_Counter.Width*2;// 80f;
+            //this.m_Counter.OffsetY = Game.GraphicsDevice.Viewport.Height/2;
 
         }
 
         public override void Initialize()
         {
             base.Initialize();
+            //m_Counter.Position = new Vector2(Game.GraphicsDevice.Viewport.Width/2, Game.GraphicsDevice.Viewport.Height/2);
             initAnimations();
+            //this.m_Counter.OffsetX = m_Counter.Width / 2;
             m_Counter.Animations.Restart();
+
         }
 
         public override void Update(GameTime i_GameTime)

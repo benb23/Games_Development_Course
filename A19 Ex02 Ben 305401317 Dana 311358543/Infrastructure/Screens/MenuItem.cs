@@ -35,7 +35,6 @@ namespace Infrastructure
             this.m_ItemNumber = i_ItemNumber;
         }
 
-
         public int ItemNumber
         {
             get { return m_ItemNumber; }
