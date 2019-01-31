@@ -12,10 +12,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private ISpaceInvadersEngine m_GameEngine;
         private Background m_Background;
         private MenuHeader m_GameOverHeader;
-        private SpriteFont m_FontCalibri;
+        private SpriteFont m_Font;
         private string m_Result;
 
-        public GameOverScreen(Game i_Game) : base(i_Game, 0f,50f, 15f)
+        public GameOverScreen(Game i_Game) : base(i_Game, 0f,100f, 15f)
         {
             this.IsUsingKeyboard = false;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
@@ -111,14 +111,14 @@ m_GameEngine.Players[0].Score.ToString());
         protected override void LoadContent()
         {
             base.LoadContent();
-            m_FontCalibri = ContentManager.Load<SpriteFont>(@"Fonts\Calibri");
+            m_Font = ContentManager.Load<SpriteFont>(@"Fonts\ERASDEMI");
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             SpriteBatch.Begin();
-            SpriteBatch.DrawString(m_FontCalibri, m_Result, new Vector2(200), Color.White);
+            SpriteBatch.DrawString(m_Font, m_Result, new Vector2(200), Color.Silver);
             SpriteBatch.End();
         }
 

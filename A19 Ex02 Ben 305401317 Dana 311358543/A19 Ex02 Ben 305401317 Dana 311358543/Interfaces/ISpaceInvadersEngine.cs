@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Infrastructure;
+using System;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
@@ -15,6 +16,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         PlayerIndex? getWinner();
 
         void InitGameEngineForNewGame();
+
+        void NumOfPlayersChanged(object sender, EventArgs args);
 
         void InitGameEngineForNextLevel();
 

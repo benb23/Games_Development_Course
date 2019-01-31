@@ -230,6 +230,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
+        public void NumOfPlayersChanged(object sender, EventArgs args)
+        {
+            if(SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.OnePlayer)
+            {
+                SpaceInvadersConfig.m_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.TwoPlayers;
+
+            }
+            else
+            {
+                SpaceInvadersConfig.m_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.OnePlayer;
+
+            }
+        }
+
         public void HandleHit(Enemy i_Enemy, ICollidable i_Collidable)
         {
             if (i_Collidable is Bullet && (i_Collidable as Bullet).Type != Bullet.eBulletType.EnemyBullet)

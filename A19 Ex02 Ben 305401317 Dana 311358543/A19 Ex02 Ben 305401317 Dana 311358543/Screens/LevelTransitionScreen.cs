@@ -11,7 +11,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private float m_TimeLeftForScreen = 3;
         private Background m_Background;
         private MenuHeader m_Counter;
-        private SpriteFont m_FontCalibri;
+        private SpriteFont m_Font;
 
         public LevelTransitionScreen(Game i_Game)
         : base(i_Game)
@@ -61,14 +61,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         protected override void LoadContent()
         {
             base.LoadContent();
-            m_FontCalibri = ContentManager.Load<SpriteFont>(@"Fonts\Calibri");
+            m_Font = ContentManager.Load<SpriteFont>(@"Fonts\ERASDEMI");
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             SpriteBatch.Begin();
-            SpriteBatch.DrawString(m_FontCalibri, string.Format(@"Level : {0}", SpaceInvadersConfig.m_Level), 
+            SpriteBatch.DrawString(m_Font, string.Format(@"Level : {0}", SpaceInvadersConfig.m_Level), 
                                    new Vector2(Game.GraphicsDevice.Viewport.Width / 2-50, Game.GraphicsDevice.Viewport.Height / 2-100),
                                    Color.White);
             SpriteBatch.End();

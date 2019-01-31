@@ -20,19 +20,19 @@
 /processorParam:TextureFormat=Compressed
 /build:Arial.spritefont
 
-#begin Fonts/Calibri.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Calibri.spritefont
-
 #begin Fonts/ComicSansMS.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/ComicSansMS.spritefont
+
+#begin Fonts/ERASDEMI.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/ERASDEMI.spritefont
 
 #begin Screens/blank.png
 /importer:TextureImporter
