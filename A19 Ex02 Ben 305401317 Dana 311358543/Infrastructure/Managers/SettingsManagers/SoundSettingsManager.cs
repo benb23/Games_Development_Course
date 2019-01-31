@@ -55,11 +55,6 @@ namespace Infrastructure
                 }
             }
 
-            if (ToggleGameSoundChanched != null)
-            {
-                ToggleGameSoundChanched.Invoke(sender, args);
-            }
-
         }
 
         private void revertSoundVolumes()
