@@ -86,9 +86,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnLevelEnded(object sender, EventArgs args)
         {
             this.m_SoundManager.PlaySoundEffect("LevelWin");
-
-
-
             MenuUtils.GoToScreen(this,this.ScreensManager.GetScreen("LevelTransitionScreen"));
             m_GameEngine.InitGameEngineForNextLevel();
             initSpritesForNewLevel();

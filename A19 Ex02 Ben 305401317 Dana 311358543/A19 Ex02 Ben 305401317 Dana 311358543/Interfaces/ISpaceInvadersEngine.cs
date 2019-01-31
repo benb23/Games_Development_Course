@@ -17,7 +17,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         void InitGameEngineForNewGame();
 
-        void NumOfPlayersChanged(object sender, EventArgs args);
+        void ChangeNumOfPlayers(GameScreen i_GameScreen);
 
         void InitGameEngineForNextLevel();
 
