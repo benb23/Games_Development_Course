@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class SoundSettingsScreen : GameScreen
+    public class SoundSettingsScreen : MenuScreen
     {
 
         private Background m_Background;
@@ -17,23 +18,34 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_MenuHeader = new MenuHeader(this, @"Screens\Settings\SoundSettingsLogo");
             this.m_SoundSettingManager = i_Game.Services.GetService(typeof(ISoundSettingsManager)) as ISoundSettingsManager;
 
-            ToggleItem toggleGameSound = new ToggleItem(@"Screens/Settings/ToggleSound", @"Screens\Settings\OnOff_53x52", this, index++);
-            //ToggleItem windowResizing = new ToggleItem(@"Screens\Settings\AllowResizing", @"Screens\Settings\OnOff_53x52", this, index++, 1);
-            //ToggleItem fullScreen = new ToggleItem(@"Screens\Settings\FullScreenMode", @"Screens\Settings\OnOff_53x52", this, index++, 1);
+            ToggleItem toggleGameSound = new ToggleItem(@"Screens\Settings\ToggleSound", @"Screens\Settings\OnOff_53x52", this, index++);
+            VolumeItem bgMusicVolume = new VolumeItem(@"Screens\Settings\BgMusic", this, index++);
+            VolumeItem soundEffectsVolume = new VolumeItem(@"Screens\Settings\SoundEffects", this, index++);
             ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
-            toggleGameSound.ToggleValueChanched += new EventHandler<EventArgs>(m_SoundSettingManager.ToggleMouseVisabilityConfig);
-            windowResizing.ToggleValueChanched += new EventHandler<EventArgs>(m_SoundSettingManager.ToggleAllowWindowResizingConfig);
-            fullScreen.ToggleValueChanched += new EventHandler<EventArgs>(m_SoundSettingManager.ToggleFullScreenModeConfig);
-            doneItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+            toggleGameSound.ToggleValueChanched += new EventHandler<EventArgs>(m_SoundSettingManager.ToggleGameSound);
+            bgMusicVolume.VolumeIncrease += new EventHandler<EventArgs>(m_SoundSettingManager.IncreaseBackgroundMusicVolume);
+            bgMusicVolume.VolumeDecrease += new EventHandler<EventArgs>(m_SoundSettingManager.DecreaseBackgroundMusicVolume);
+            soundEffectsVolume.VolumeIncrease += new EventHandler<EventArgs>(m_SoundSettingManager.IncreaseSoundEffectsVolume);
+            soundEffectsVolume.VolumeDecrease += new EventHandler<EventArgs>(m_SoundSettingManager.DecreaseSoundEffectsVolume);
 
-            AddMenuItem(mouseVisability);
-            AddMenuItem(windowResizing);
-            AddMenuItem(fullScreen);
+            //bgMusicVolume.VolumeChnged
+
+
+            //ToggleGameSound
+
+            doneItem.ItemClicked += OnItemClicked;
+
+            AddMenuItem(toggleGameSound);
+            AddMenuItem(bgMusicVolume);
+            AddMenuItem(soundEffectsVolume);
             AddMenuItem(doneItem);
         }
 
-
+        private void ToggleGameSound_ToggleValueChanched(object sender, System.EventArgs e)
+        {
+            m_SoundSettingManager.ToggleGameSound(sender, e);
+        }
 
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
