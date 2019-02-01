@@ -55,7 +55,7 @@ namespace Infrastructure
 
         public void DecreaseSoundEffectsVolume(object sender, EventArgs args)
         {
-            foreach (SoundEffectInstance effect in m_SoundManager.SoundEffect.Values)
+            foreach (SoundEffectInstance effect in m_SoundManager.SoundEffects.Values)
             {
                 effect.Volume = MathHelper.Clamp(effect.Volume - 0.1f, 0, 1);
             }
@@ -63,7 +63,7 @@ namespace Infrastructure
 
         public void IncreaseSoundEffectsVolume(object sender, EventArgs args)
         {
-            foreach (SoundEffectInstance effect in m_SoundManager.SoundEffect.Values)
+            foreach (SoundEffectInstance effect in m_SoundManager.SoundEffects.Values)
             {
                 effect.Volume = MathHelper.Clamp(effect.Volume + 0.1f, 0, 1);
 
