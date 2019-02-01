@@ -10,6 +10,24 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private float m_OffsetY = 20;
         private float m_OffsetX = 0;
 
+        public float OffsetY
+        {
+            set
+            {
+                m_OffsetY = value;
+                initDedaultPosition();
+            }
+        }
+
+        public float OffsetX
+        {
+            set
+            {
+                m_OffsetX = value;
+                initDedaultPosition();
+            }
+        }
+
 
         public MenuHeader(GameScreen i_GameScreen, string i_AssetName) : base(i_AssetName, i_GameScreen)
         {
@@ -40,15 +58,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Position = new Vector2(m_GameScreen.Game.Window.ClientBounds.Width / 2 + m_OffsetX, m_OffsetY);
         }
 
-        public float OffsetY
-        {
-            set { m_OffsetY = value; }
-        }
-
-        public float OffsetX
-        {
-            set { m_OffsetX = value; }
-        }
 
         public int SourceRecWidth
         {

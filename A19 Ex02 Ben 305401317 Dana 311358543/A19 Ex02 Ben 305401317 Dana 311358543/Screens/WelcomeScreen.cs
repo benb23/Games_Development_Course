@@ -16,6 +16,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo", 0.8f);
 
+
             int index = 0;
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\Wellcome\PlayGame", this, index++);
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
@@ -38,6 +39,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            m_MenuHeader.OffsetX = m_MenuHeader.Texture.Width / 10;
+
         }
 
         public override void Update(GameTime gameTime)
