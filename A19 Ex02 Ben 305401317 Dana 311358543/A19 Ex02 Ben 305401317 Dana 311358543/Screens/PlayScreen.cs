@@ -56,8 +56,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 OnGameOver();
             }
 
-            //if (this.m_State == eScreenState.Active)
-            //{
             if (m_GameEngine.IsGameOver)
             {
                 this.ExitScreen();
@@ -68,7 +66,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 ScreensManager.SetCurrentScreen(m_PauseScreenScreen);
             }
-            //}
         }
 
         public override void Initialize()

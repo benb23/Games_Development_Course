@@ -100,12 +100,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             ////test for level
             //m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            if (SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.One || SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.Two)
-            {
-                Visible = false;
-                Enabled = false;
-            }
-            /////////
+            //if (SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.One || 
+            //    SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.Two ||
+            //    SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.tree)
+            //{
+            //    Visible = false;
+            //    Enabled = false;
+            //}
+            ///////////
 
             int rnd = m_Random.Next(0, k_MaxRandomNumber);    
 

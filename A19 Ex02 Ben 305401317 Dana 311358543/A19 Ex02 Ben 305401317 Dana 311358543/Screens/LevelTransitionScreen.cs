@@ -24,7 +24,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
-            initAnimations();
+            if (!m_initialized)
+            {
+                initAnimations();
+                m_initialized = true;
+            }
             m_Counter.Animations.Restart();
         }
 

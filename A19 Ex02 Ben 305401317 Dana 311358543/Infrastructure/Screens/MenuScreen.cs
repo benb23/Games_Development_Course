@@ -158,27 +158,18 @@ namespace Infrastructure
         public override void Update(GameTime gameTime)
         {
             updateCurrActiveItem();
-            if (m_PrevItemNumber != null && m_currItemNumber != m_PrevItemNumber)
+
+            if (m_currItemNumber != m_PrevItemNumber)
             {
-                m_MenuItems[(int)m_PrevItemNumber].IsActive = false;
+                if (m_PrevItemNumber != null)
+                {
+                    m_MenuItems[(int)m_PrevItemNumber].IsActive = false;
+                }
                 if (m_currItemNumber != null)
                 {
                     m_MenuItems[(int)m_currItemNumber].IsActive = true;
                 }
             }
-
-            //if (m_currItemNumber != null)
-            //{
-            //    if (!m_MenuItems[(int)m_currItemNumber].isMouseHoverItem() && !m_IsUsingKeyboardArrows)
-            //    {
-            //        m_MenuItems[(int)m_currItemNumber].IsActive = false;
-            //    }
-            //    else if(!m_MenuItems[(int)m_currItemNumber].IsActive)
-            //    {
-            //        m_MenuItems[(int)m_currItemNumber].IsActive = true;
-            //    }
-            //}
-
             m_PrevItemNumber = m_currItemNumber;
             base.Update(gameTime);
         }

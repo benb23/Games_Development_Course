@@ -73,7 +73,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 if (SpaceInvadersConfig.m_LogicLevel != SpaceInvadersConfig.eLevel.One &&
                     SpaceInvadersConfig.m_LogicLevel != SpaceInvadersConfig.eLevel.Two) // not level 2 , todo : dana change
                 {
-                    wall.Velocity += wall.Velocity * new Vector2(SpaceInvadersConfig.k_WallsVelocitiyAdditionPercent * wall.Velocity.X, 0); // todo: const
+                    wall.Velocity += new Vector2(SpaceInvadersConfig.k_WallsVelocitiyAdditionPercent * wall.Velocity.X, 0); // todo: const
                 }
             }
         }

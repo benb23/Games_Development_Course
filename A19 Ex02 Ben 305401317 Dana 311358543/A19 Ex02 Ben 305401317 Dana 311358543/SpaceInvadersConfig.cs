@@ -38,7 +38,7 @@
 
         public const int k_EnemyScoreAddition = 120;
 
-        public const float k_WallsVelocitiyAdditionPercent = (float)-0.7;
+        public const float k_WallsVelocitiyAdditionPercent = (float)-0.07;
 
         public const int k_EnemyShootingFrequencyAddition = 5;
 
