@@ -21,7 +21,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             int index = 0;
             ToggleItem playersItem = new ToggleItem(@"Screens\MainMenu\PlayersWhite", @"Screens\MainMenu\PlayersOptions_70x50", this, index++);
-           // playersItem.ToggleValueChanched += new EventHandler<EventArgs>(m_GameEngine.NumOfPlayersChanged);
+            playersItem.ToggleValueChanched += new EventHandler<EventArgs>(OnNumOfPlayersChanged);
             AddMenuItem(playersItem);
 
             ClickItem SettingsScreenItem = new ClickItem("ScreenSettingsScreen", @"Screens\MainMenu\ScreenSettings", this, index++);
@@ -60,6 +60,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
+        }
+
+        private void OnNumOfPlayersChanged(object sender, EventArgs args)
+        {
+            if (m_GameEngine == null)
+            {
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            }
+
+            m_GameEngine.ChangeNumOfPlayers(this.m_ScreensManager.GetScreen("PlayScreen"));
         }
 
         public override string ToString()

@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-
+using Microsoft.Xna.Framework.Audio;
 using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
@@ -10,7 +10,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
     public class SpaceInvaders : Game
     {
         GraphicsDeviceManager m_GraphicsMgr;
+        InputManager m_InputManager;
         SoundManager m_SoundManager;
+
+        SoundSettingsManager m_SoundSettingsManager;    //TODO: delete
+
         public SpaceInvaders()
         {
             m_GraphicsMgr = new GraphicsDeviceManager(this);
@@ -26,9 +30,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             m_SoundManager = new SoundManager(this);
             new ScreenSettingsManager(this);
-            new SoundSettingsManager(this);
+            m_SoundSettingsManager = new SoundSettingsManager(this); // TODO: del sm
             new CollisionsManager(this);
-            new InputManager(this);
+            m_InputManager = new InputManager(this);
             
             ScreensMananger screensMananger = new ScreensMananger(this);
             new SpaceInvadersEngine(this);
@@ -49,6 +53,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             Content.RootDirectory = "Content";
         }
 
+        protected override void Update(GameTime gameTime)
+        {
+            if (m_InputManager.KeyPressed(Keys.M))
+            {
+                this.m_SoundSettingsManager.ToggleGameSound(this, null);
+            }
+
+            base.Update(gameTime);
+        }
         protected override void LoadContent()
         {
             m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/SSGunShot"), "SSGunShot");
@@ -67,7 +80,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             MediaPlayer.IsRepeating = true;
 
 
-            base.LoadContent(); 
+            //m_SoundSettingsManager.ToggleGameSound(this, null);//todo:delete
+
+            base.LoadContent();
         }
 
         protected override void Draw(GameTime i_GameTime)

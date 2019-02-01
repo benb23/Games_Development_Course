@@ -31,6 +31,7 @@ namespace Infrastructure
         
         public MenuItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen)
         {
+            //ActiveChanged += new EventHandler<EventArgs>(OnActiveChanged);
             this.m_GameScreen = i_GameScreen;
             this.m_ItemNumber = i_ItemNumber;
         }
@@ -56,10 +57,10 @@ namespace Infrastructure
 
         public override void Initialize()
         {
-            if (m_ItemNumber == 0)
-            {
-                m_IsActive = true;
-            }
+            //if (m_ItemNumber == 0)
+            //{
+            //    m_IsActive = true;
+            //}
 
             ActiveChanged += new EventHandler<EventArgs>(OnActiveChanged);
             if(m_isSoundOn)
@@ -83,9 +84,7 @@ namespace Infrastructure
                 if (m_isSoundOn)
                 {
                     this.m_SoundManager.PlaySoundEffect(m_SoundOnHover);
-
                 }
-
             }
             else
             {

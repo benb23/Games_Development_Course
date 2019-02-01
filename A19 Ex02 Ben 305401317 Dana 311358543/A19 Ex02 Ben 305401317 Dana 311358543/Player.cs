@@ -29,6 +29,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void InitSouls()
         {
+            this.m_CurrentSoulsNumber = k_NumOfSouls;
             foreach (Soul soul in this.m_Souls)
             {
                 soul.Enabled = true;

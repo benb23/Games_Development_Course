@@ -41,16 +41,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(doneItem);
         }
 
-        private void ToggleGameSound_ToggleValueChanched(object sender, System.EventArgs e)
-        {
-            m_SoundSettingManager.ToggleGameSound(sender, e);
-        }
-
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
             this.ExitScreen();
         }
-
 
         public override string ToString()
         {

@@ -38,5 +38,8 @@ namespace Infrastructure
         public Vector2 RightThumbDelta { get { return Vector2.Zero; } }
         public float LeftTrigerDelta { get { return 0; } }
         public float RightTrigerDelta { get { return 0; } }
+
+        public void Initialize() { } // todo: keep?
+
     }
 }

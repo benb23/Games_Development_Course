@@ -9,7 +9,7 @@ namespace Infrastructure
     public interface IScreenSettingsManager
     {
 
-        void ToggleMouseVisabilityConfig(object sender, EventArgs args);
+        void ToggleMouseVisabilityConfig();
 
         void ToggleAllowWindowResizingConfig(object sender, EventArgs args);
 

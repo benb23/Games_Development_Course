@@ -89,5 +89,7 @@ namespace Infrastructure
         float LeftTrigerDelta { get; }
 
         float RightTrigerDelta { get; }
+
+        void Initialize(); // todo : keep?
     }
 }

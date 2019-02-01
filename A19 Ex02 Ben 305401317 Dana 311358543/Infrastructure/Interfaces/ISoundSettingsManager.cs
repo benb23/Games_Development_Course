@@ -8,11 +8,7 @@ namespace Infrastructure
 {
     public interface ISoundSettingsManager
     {
-
-
         void ToggleGameSound(object sender, EventArgs args);
-
-
 
         // TODO: cheak if we need to limit the volume 
         void DecreaseBackgroundMusicVolume(object sender, EventArgs args);

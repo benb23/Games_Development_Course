@@ -45,7 +45,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void InitNewPlayers()
         {
-            for(int i=0 ; i<(int)SpaceInvadersConfig.m_NumOfPlayers; i++)
+            for (int i=0 ; i<(int)SpaceInvadersConfig.m_NumOfPlayers; i++)
             {
                 this.m_Players[i].InitSouls();
                 this.m_Players[i].Score = 0;
@@ -230,17 +230,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void NumOfPlayersChanged(object sender, EventArgs args)
+        public void ChangeNumOfPlayers(GameScreen i_GameScreen)
         {
             if(SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.OnePlayer)
             {
                 SpaceInvadersConfig.m_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.TwoPlayers;
 
+                if (this.m_Players != null && SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers &&
+                    this.m_Players.Count < (int)SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
+                {
+                    m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+                }
             }
             else
             {
                 SpaceInvadersConfig.m_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.OnePlayer;
-
             }
         }
 

@@ -14,7 +14,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private const int k_NumOfWalls = 4;
         private ISpaceInvadersEngine m_GameEngine;
         private ISoundMananger m_SoundManager;
-
         public const int k_MaxRandomNumber = 50000;
         private const string k_GameName = "Space Invaders";
         //public Random m_Random = new Random();
@@ -57,19 +56,19 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 OnGameOver();
             }
 
-            if (this.m_State == eScreenState.Active)
+            //if (this.m_State == eScreenState.Active)
+            //{
+            if (m_GameEngine.IsGameOver)
             {
-                if (m_GameEngine.IsGameOver)
-                {
-                    this.ExitScreen();
-                    this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
-                }
-
-                if (InputManager.KeyPressed(Keys.P))
-                {
-                    ScreensManager.SetCurrentScreen(m_PauseScreenScreen);
-                }
+                this.ExitScreen();
+                this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
             }
+
+            if (InputManager.KeyPressed(Keys.P))
+            {
+                ScreensManager.SetCurrentScreen(m_PauseScreenScreen);
+            }
+            //}
         }
 
         public override void Initialize()
@@ -86,9 +85,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private void OnLevelEnded(object sender, EventArgs args)
         {
             this.m_SoundManager.PlaySoundEffect("LevelWin");
-
-
-
             MenuUtils.GoToScreen(this,this.ScreensManager.GetScreen("LevelTransitionScreen"));
             m_GameEngine.InitGameEngineForNextLevel();
             initSpritesForNewLevel();
@@ -96,12 +92,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void OnGameOver()//TODO: CALL 
         {
-            //ExitScreen();
             this.m_SoundManager.PlaySoundEffect("GameOver");
             this.ScreensManager.SetCurrentScreen(this.ScreensManager.GetScreen("GameOverScreen"));
             this.m_GameEngine.InitGameEngineForNewGame();
             this.initSpritesForNewGame();
-            //this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
         }
 
         private void initSpritesForNewGame()
@@ -114,17 +108,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_EnemysGroup.InitEnemyGroupForNextLevel();
             m_WallsGroup.InitWallsForNextLevel();
             m_MotherSpaceShip.InitMotherShipForNextLevel();
-            //this.ScreensManager.SetCurrentScreen(new LevelTransitionScreen(this.Game));
 
         }
-
-        //private void initSoulsForNewGame()
-        //{
-        //    foreach (Player player in m_GameEngine.Players)
-        //    {
-        //        player.CreateSouls();
-        //    }
-        //}
 
         public override string ToString()
         {
