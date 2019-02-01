@@ -21,7 +21,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             int index = 0;
             ToggleItem playersItem = new ToggleItem(@"Screens\MainMenu\PlayersWhite", @"Screens\MainMenu\PlayersOptions_70x50", this, index++);
-            playersItem.ToggleValueChanched += new EventHandler<EventArgs>(m_GameEngine.NumOfPlayersChanged);
+           // playersItem.ToggleValueChanched += new EventHandler<EventArgs>(m_GameEngine.NumOfPlayersChanged);
             AddMenuItem(playersItem);
 
             ClickItem SettingsScreenItem = new ClickItem("ScreenSettingsScreen", @"Screens\MainMenu\ScreenSettings", this, index++);

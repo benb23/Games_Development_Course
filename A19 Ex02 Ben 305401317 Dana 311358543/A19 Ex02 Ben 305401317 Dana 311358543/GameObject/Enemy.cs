@@ -25,6 +25,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private float m_Gap;
         private TimeSpan m_TimeUntilNextStepInSec;
         public int m_Toggeler;
+        GameScreen m_GameSreen;
+
 
         public int Row
         {
@@ -48,6 +50,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_Colum = i_Colum;
             m_StartSqureIndex = i_StartSqureIndex;
             m_TintColor = i_Tint;
+            m_GameSreen = i_GameSreen;
         }
 
         public void LoadAsset()
@@ -58,7 +61,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
-            m_Gun = new Gun(GameScreen, 1, Bullet.eBulletType.EnemyBullet, 1, "EnemyGunShot");
+            m_Gun = new Gun(m_GameSreen, 1, Bullet.eBulletType.EnemyBullet, 1, "EnemyGunShot");
             initPosition();
 
             initAnimations();
@@ -67,19 +70,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void initPosition()
         {
             float halfEnemySize = this.Texture.Height / 2;
-            m_Position = new Vector2(halfEnemySize + m_Colum * (Texture.Height * 1.5f + m_Gap), this.Texture.Height * 3f + m_Row * (Texture.Height * 1.5f + m_Gap));
+            m_Position = new Vector2(halfEnemySize + m_Colum * (Texture.Height * 1.5f ), this.Texture.Height * 3f + m_Row * (Texture.Height * 1.5f ));
         }
 
         protected override void InitOrigins()
         {
             m_PositionOrigin = new Vector2(Texture.Height / 2, Texture.Height / 2);
             m_RotationOrigin = new Vector2(Texture.Height / 2, Texture.Height / 2);
-            base.InitOrigins();
         }
 
         protected override void InitSourceRectangle()
         {
-            base.InitSourceRectangle();
             m_WidthBeforeScale = m_WidthBeforeScale / k_NumOfTOtalFrames;
 
             this.SourceRectangle = new Rectangle(
@@ -99,12 +100,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             ////test for level
             //m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            //if (m_GameEngine.Level == SpaceInvadersEngine.eLevel.One || m_GameEngine.Level == SpaceInvadersEngine.eLevel.Two)
-            //{
-            //    Visible = false;
-            //    Enabled = false;
-            //}
-            ///////
+            if (SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.One || SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.Two)
+            {
+                Visible = false;
+                Enabled = false;
+            }
+            /////////
 
             int rnd = m_Random.Next(0, k_MaxRandomNumber);    
 

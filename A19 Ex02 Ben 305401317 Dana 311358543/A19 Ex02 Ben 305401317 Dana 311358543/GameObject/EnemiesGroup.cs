@@ -18,13 +18,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private const int k_EnemiesRows = 5;
         private const int k_EnemiesColumns = 9;
+        private int m_CurrentColumns = 9;
         private float m_Direction = 1f;
         private bool m_IncreaseVelocityWhen4Dead = false;
         private bool m_IsLastStepInRow = false;
         private float m_TimeCounter = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
         private float m_EnemiesGap;
-        private Enemy[,] m_EnemiesMatrix;
+        //private Enemy[,] m_EnemiesMatrix;
+        private List<List<Enemy>> m_EnemiesGroup = new List<List<Enemy>>(k_EnemiesRows);
+        //private List<List<Enemy>> m_ExtraEnemiesGroup = new List<List<Enemy>>(k_EnemiesRows);
+
         private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private ISpaceInvadersEngine m_GameEngine;
@@ -33,15 +37,204 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public EnemiesGroup(GameScreen i_GameScreen) : base(i_GameScreen.Game)
         {
             m_GameScreen = i_GameScreen;
-            this.m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
+            //this.m_EnemiesGroup = 
+            //this.m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
+            //m_CurrentEnemiesColumns = k_EnemiesColumns;
             i_GameScreen.Add(this);
         }
 
-        protected virtual void OnAllEnemiesDied(object sender, EventArgs args)
+
+
+
+        public void InitEnemyGroupForNextLevel()
         {
-            if (AllEnemiesDied != null)
+            m_AliveEnemiesByRow.Clear();
+            m_AliveEnemiesByColum.Clear();
+
+            this.m_Direction = 1f;
+
+
+            if (SpaceInvadersConfig.m_Level % 7 != 0)
             {
-                AllEnemiesDied.Invoke(sender, args);
+                addColumToEnemiesGroup();
+                m_CurrentColumns++;
+            }
+            else
+            {
+                revertEnemiesGroupToOriginalSize();
+                m_CurrentColumns = k_EnemiesColumns;
+            }
+            
+
+
+            foreach (List<Enemy> list in m_EnemiesGroup)
+            {
+                foreach (Enemy enemy in list)
+                {
+                    if (enemy.Colum < m_CurrentColumns)
+                    {
+                        enemy.Animations["CellAnimation"].Reset();
+                        enemy.Animations["CellAnimation"].Pause();
+                        updateScoreValueAndShootingFrequency(enemy);
+                        enemy.Enabled = true;
+                        enemy.Visible = true;
+                        enemy.initPosition();                    
+                        m_AliveEnemiesByRow.Add(enemy);
+                        enemy.Animations["CellAnimation"].Reset();
+                    }
+                }
+            }
+
+            m_TimeCounter = 0f;
+            initAliveEnemiesByColum();
+        }
+
+        private void revertEnemiesGroupToOriginalSize()
+        {
+            for (int colum = m_CurrentColumns; colum > k_EnemiesColumns; colum--)
+            {
+                removeColumToEnemyMantrix();
+            }
+        }
+
+        private void AddOrRemoveEnemiesGroupColum()
+        {
+            for (int row = 0; row < k_EnemiesRows; row++)
+            {
+                m_EnemiesGroup[row][m_CurrentColumns].Visible = !m_EnemiesGroup[row][m_CurrentColumns].Visible;
+                m_EnemiesGroup[row][m_CurrentColumns].Enabled = !m_EnemiesGroup[row][m_CurrentColumns].Enabled;
+            }
+        }
+
+        private void addColumToEnemiesGroup()
+        {
+            AddOrRemoveEnemiesGroupColum();
+        }
+
+        private void removeColumToEnemyMantrix()
+        {
+            AddOrRemoveEnemiesGroupColum();
+        }
+
+
+
+        public override void Initialize()
+        {
+            if (m_GameEngine == null)
+            {
+                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+            }
+
+
+
+            for (int i = 0; i < k_EnemiesRows; i++)
+            {
+                m_EnemiesGroup.Add(new List<Enemy>(k_EnemiesColumns));
+            }
+
+            this.initEnemyGroup();
+            this.initAliveEnemiesByColum();
+            base.Initialize();
+        }
+
+        private void initEnemyGroup()
+        {
+            Enemy newEnemy;
+
+            for (int row = 0; row < k_EnemiesRows; row++)
+            {
+                for (int colum = 0; colum < k_EnemiesColumns + 5; colum++)
+                {
+                    newEnemy = this.initEnemyByRow(row, colum);
+
+                    m_EnemiesGroup[row].Add(newEnemy);
+                    if (colum < k_EnemiesColumns)
+                    {
+                        m_AliveEnemiesByRow.Add(newEnemy);
+                    }
+                    else
+                    {
+                        newEnemy.Visible = false;
+                        newEnemy.Enabled = false;
+                    }
+                }
+            }
+
+            /// For calculating positions according to enemy texture width (generic)
+            this.m_EnemiesGroup[0][0].LoadAsset();
+            m_EnemiesGap = this.m_EnemiesGroup[0][0].Texture.Height * 0.6f;
+        }
+  
+
+        private Enemy initEnemyByRow(int i_Row, int i_Colum)
+        {
+            Enemy retEnemy = null;
+
+            switch (i_Row)
+            {
+                case 0:
+                    retEnemy = this.initEnemyByRowHelper(0, i_Colum, 0, Color.Pink, 1, SpaceInvadersConfig.eScoreValue.PinkEnemy);
+                    break;
+                case 1:
+                    retEnemy = this.initEnemyByRowHelper(1, i_Colum, 2, Color.LightBlue, 1, SpaceInvadersConfig.eScoreValue.BlueEnemy);
+                    break;
+                case 2:
+                    retEnemy = this.initEnemyByRowHelper(2, i_Colum, 3, Color.LightBlue, -1, SpaceInvadersConfig.eScoreValue.BlueEnemy);
+                    break;
+                case 3:
+                    retEnemy = this.initEnemyByRowHelper(3, i_Colum, 4, Color.LightYellow, 1, SpaceInvadersConfig.eScoreValue.YellowEnemy);
+                    break;
+                case 4:
+                    retEnemy = this.initEnemyByRowHelper(4, i_Colum, 5, Color.LightYellow, -1, SpaceInvadersConfig.eScoreValue.YellowEnemy);
+                    break;
+            }
+
+            return retEnemy;
+        }
+
+        private Enemy initEnemyByRowHelper(int i_Row, int i_Colum, int i_StartSqureIndex, Color i_Tint, int i_Toggeler, SpaceInvadersConfig.eScoreValue i_ScoreValue)
+        {
+            Enemy retEnemy = new Enemy(m_GameScreen, i_Tint, (int)i_ScoreValue, i_StartSqureIndex, i_Row, i_Colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
+            retEnemy.m_Toggeler = i_Toggeler;
+            retEnemy.VisibleChanged += this.updateAliveLists;
+            retEnemy.VisibleChanged += this.isFourEnemiesDead;
+
+            return retEnemy;
+        }
+
+        private void initAliveEnemiesByColum()
+        {
+            for (int colomn = 0; colomn < m_CurrentColumns; colomn++)
+            {
+                for (int row = 0; row < k_EnemiesRows; row++)
+                {
+                    m_AliveEnemiesByColum.Add(m_EnemiesGroup[row][colomn]);
+                }
+            } 
+        }
+
+
+        //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+        private void updateScoreValueAndShootingFrequency(Enemy i_Enemy)
+        {
+            if (SpaceInvadersConfig.m_LogicLevel == SpaceInvadersConfig.eLevel.One)
+            {
+                i_Enemy.m_MaxRandomToShoot = i_Enemy.m_OriginalMaxRandomToShoot;
+                i_Enemy.ScoreValue = i_Enemy.OriginalScoreValue;
+            }
+            else
+            {
+                i_Enemy.m_MaxRandomToShoot += SpaceInvadersConfig.k_EnemyShootingFrequencyAddition;
+                i_Enemy.ScoreValue += SpaceInvadersConfig.k_EnemyScoreAddition;
+            }
+        }
+
+        private void jump(Vector2 i_StepToJump)
+        {
+            foreach (Enemy enemy in m_AliveEnemiesByRow)
+            {
+                enemy.Position += i_StepToJump;
             }
         }
 
@@ -60,7 +253,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (m_IncreaseVelocityWhen4Dead)
             {
-               this.m_IncreaseVelocityWhen4Dead = false;
+                this.m_IncreaseVelocityWhen4Dead = false;
                 this.increaseVelocity(0.04f);
             }
 
@@ -81,113 +274,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        public void InitEnemyGroupForNextLevel()
+        protected virtual void OnAllEnemiesDied(object sender, EventArgs args)
         {
-            m_AliveEnemiesByRow.Clear();
-            m_AliveEnemiesByColum.Clear();
-
-            this.m_Direction = 1f;
-
-            foreach(Enemy enemy in m_EnemiesMatrix)
+            if (AllEnemiesDied != null)
             {
-                enemy.Animations["CellAnimation"].Reset();
-                enemy.Animations["CellAnimation"].Pause();
-                updateScoreValueAndShootingFrequency(enemy);
-                enemy.Enabled = true;
-                enemy.Visible = true;
-                enemy.initPosition();
-                m_AliveEnemiesByRow.Add(enemy);
-                enemy.Animations["CellAnimation"].Reset(); 
+                AllEnemiesDied.Invoke(sender, args);
             }
-            m_TimeUntilNextStepInSec = 0.5f;
-            m_TimeCounter = 0f;
-            initAliveEnemiesByColum();
-        }
-
-        private void updateScoreValueAndShootingFrequency(Enemy i_Enemy)
-        {
-            if (SpaceInvadersConfig.m_LogicLevel == SpaceInvadersConfig.eLevel.One)
-            {
-                i_Enemy.m_MaxRandomToShoot = i_Enemy.m_OriginalMaxRandomToShoot;
-                i_Enemy.ScoreValue = i_Enemy.OriginalScoreValue;
-            }
-            else
-            {
-                i_Enemy.m_MaxRandomToShoot += SpaceInvadersConfig.k_EnemyShootingFrequencyAddition; 
-                i_Enemy.ScoreValue += SpaceInvadersConfig.k_EnemyScoreAddition; 
-            }
-        }
-
-        private void jump(Vector2 i_StepToJump)
-        {
-            foreach (Enemy enemy in m_AliveEnemiesByRow)
-            {
-                enemy.Position += i_StepToJump;
-            }
-        }
-
-        public override void Initialize()
-        {
-            if (m_GameEngine == null)
-            {
-                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            }
-
-            this.initEnemyGroup();
-            this.initAliveEnemiesByColum();
-            base.Initialize();
-        }
-
-        private void initEnemyGroup()
-        {
-            for (int row = 0; row < k_EnemiesRows; row++)
-            {
-                switch (row)
-                {
-                    case 0:
-                        this.initEnemiesRow(0, 0, Color.Pink, 1, SpaceInvadersConfig.eScoreValue.PinkEnemy);
-                        break;
-                    case 1:
-                        this.initEnemiesRow(1, 2, Color.LightBlue, 1, SpaceInvadersConfig.eScoreValue.BlueEnemy);
-                        break;
-                    case 2:
-                        this.initEnemiesRow(2, 3, Color.LightBlue, -1, SpaceInvadersConfig.eScoreValue.BlueEnemy);
-                        break;
-                    case 3:
-                        this.initEnemiesRow(3, 4, Color.LightYellow, 1, SpaceInvadersConfig.eScoreValue.YellowEnemy);
-                        break;
-                    case 4:
-                        this.initEnemiesRow(4, 5, Color.LightYellow, -1, SpaceInvadersConfig.eScoreValue.YellowEnemy);
-                        break;
-                }
-            }
-
-            /// For calculating positions according to enemy texture width (generic)
-            this.m_EnemiesMatrix[0, 0].LoadAsset();
-            m_EnemiesGap = this.m_EnemiesMatrix[0, 0].Texture.Height * 0.6f;
-        }
-  
-        private void initEnemiesRow(int i_Row, int i_StartSqureIndex, Color i_Tint, int i_Toggeler, SpaceInvadersConfig.eScoreValue i_ScoreValue)
-        {
-            for (int colum = 0; colum < k_EnemiesColumns; colum++)
-            {
-                this.m_EnemiesMatrix[i_Row, colum] = new Enemy(m_GameScreen, i_Tint, (int)i_ScoreValue, i_StartSqureIndex, i_Row, colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
-                m_AliveEnemiesByRow.Add(m_EnemiesMatrix[i_Row, colum]);
-                m_EnemiesMatrix[i_Row, colum].m_Toggeler = i_Toggeler;
-                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.updateAliveLists;
-                this.m_EnemiesMatrix[i_Row, colum].VisibleChanged += this.isFourEnemiesDead;
-            }
-        }
-
-        private void initAliveEnemiesByColum()
-        {
-            for (int colomn = 0; colomn < k_EnemiesColumns; colomn++)
-            {
-                for (int row = 0; row < k_EnemiesRows; row++)
-                {
-                    m_AliveEnemiesByColum.Add(m_EnemiesMatrix[row, colomn]);
-                }
-            } 
         }
 
         private bool isAllEnemiesDead()
@@ -251,7 +343,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
             else
             {
-                jump(new Vector2(m_Direction * this.m_EnemiesMatrix[0, 0].Texture.Height / 2, 0));
+                jump(new Vector2(m_Direction * this.m_EnemiesGroup[0][0].Texture.Height / 2, 0));
             }
         }
 
@@ -261,7 +353,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (this.m_Direction ==(float)i_MoveDirection)
             {
-                isLastStep = i_LastStep < (this.m_EnemiesMatrix[0, 0].Texture.Height) && i_LastStep > 0;
+                isLastStep = i_LastStep < (this.m_EnemiesGroup[0][0].Texture.Height) && i_LastStep > 0;
             }
 
             return isLastStep;
@@ -269,7 +361,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void jumpDown()
         {
-            jump(new Vector2(0, this.m_EnemiesMatrix[0, 0].Texture.Height / 2));
+            jump(new Vector2(0, this.m_EnemiesGroup[0][0].Texture.Height / 2));
             this.increaseVelocity(0.08f);
         }
 

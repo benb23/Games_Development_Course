@@ -33,7 +33,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_Bullets = new List<Bullet>(k_MaxNumOfBullets);
             m_ShootingDirection = i_ShootingDirection;
             m_ShotSound = i_ShotSound;
-            m_SoundManager = m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
+            
         }
 
 
@@ -52,6 +52,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void Shoot(Vector2 i_ShooterPosition)
         {
             Bullet bullet = getBullet(i_ShooterPosition);
+
+            m_SoundManager = m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
 
             if (m_ShotSound != string.Empty && m_SoundManager != null)
             {
