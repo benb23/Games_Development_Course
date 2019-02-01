@@ -25,17 +25,20 @@ namespace Infrastructure
             set { m_isGameSoundOn = value; }
         }
 
-
-        public Dictionary<string, SoundEffectInstance> SoundEffect
+        public Dictionary<string, SoundEffectInstance> SoundEffects
         {
             get { return m_SoundsEffects; }
+        }
+
+        public Dictionary<string, Song> Songs
+        {
+            get { return m_Songs; }
         }
 
         public SoundManager(Game i_Game) : base(i_Game)
         {
 
         }
-
 
         public void PlaySoundEffect(string i_SoundEffect)
         {
@@ -60,6 +63,16 @@ namespace Infrastructure
             m_Songs.Add(i_SongName, i_Song);
         }
 
+        public void RemoveSoundEffect(string i_SoundName)
+        {
+            m_SoundsEffects.Remove(i_SoundName);
+        }
+
+        public void RemoveSong(string i_SongName)
+        {
+            m_Songs.Remove(i_SongName);
+        }
+        
         public Song GetSong(string i_Name)
         {
             return m_Songs[i_Name];
@@ -69,5 +82,6 @@ namespace Infrastructure
         {
             return m_SoundsEffects[i_Name];
         }
+        
     }
 }
