@@ -38,7 +38,7 @@ namespace Infrastructure
         protected override void LoadContent()
         {
             base.LoadContent();
-            this.m_Font = this.Game.Content.Load<SpriteFont>(@"Fonts\ComicSansMS");
+            this.m_Font = this.Game.Content.Load<SpriteFont>(@"Fonts\ERASDEMI");
             //initVolumePosition();
         }
 
@@ -77,9 +77,18 @@ namespace Infrastructure
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            Color colorToDraw;
+            if (IsActive)
+            {
+                colorToDraw = Color.Yellow;
+            }
+            else
+            {
+                colorToDraw = Color.White;
+            }
 
-           this.GameScreen.SpriteBatch.DrawString(this.m_Font, m_Volume.ToString(), this.Position + new Vector2(this.Width + 5, 0), Color.Green);
-
+           this.GameScreen.SpriteBatch.DrawString(this.m_Font, m_Volume.ToString(), this.Position + new Vector2(this.Width + 5, -3), colorToDraw);
+            
         }
 
 

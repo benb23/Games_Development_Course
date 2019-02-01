@@ -28,11 +28,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             soundEffectsVolume.VolumeIncrease += new EventHandler<EventArgs>(m_SoundSettingManager.IncreaseSoundEffectsVolume);
             soundEffectsVolume.VolumeDecrease += new EventHandler<EventArgs>(m_SoundSettingManager.DecreaseSoundEffectsVolume);
 
-            //bgMusicVolume.VolumeChnged
-
-
-            //ToggleGameSound
-
             doneItem.ItemClicked += OnItemClicked;
 
             AddMenuItem(toggleGameSound);
