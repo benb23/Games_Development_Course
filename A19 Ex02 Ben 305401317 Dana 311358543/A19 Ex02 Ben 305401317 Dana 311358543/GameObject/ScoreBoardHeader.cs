@@ -42,12 +42,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             this.m_GameScreen.SpriteBatch.Begin();
-            this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, String.Format("P1 Score: {0}", playerOneScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.One * 15)), new Color(46, 145, 232));
+            drawPlayerString((int)PlayerIndex.One, playerOneScore, new Color(46, 145, 232));
+
+            //this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, String.Format("P1 Score: {0}", playerOneScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.One * 15)), new Color(46, 145, 232));
             if (SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
             {
-                this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, String.Format("P2 Score: {0}", playerTwoScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.Two * 15)), new Color(55, 232, 46));
+                drawPlayerString((int)PlayerIndex.Two, playerTwoScore, new Color(55, 232, 46));
+                //this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, String.Format("P2 Score: {0}", playerTwoScore.ToString()), new Vector2(2, (1 + (int)PlayerIndex.Two * 15)), new Color(55, 232, 46));
             }
             this.m_GameScreen.SpriteBatch.End();
         }
+
+        private void drawPlayerString(int i_PlayerIndex, int i_PlayerScore, Color i_Color)
+        {
+            this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, String.Format("P{0} Score: {1}", i_PlayerIndex + 1, i_PlayerScore.ToString()), new Vector2(2, (1 + (i_PlayerIndex) * 15)), i_Color);
+        }
+
     }
 }
