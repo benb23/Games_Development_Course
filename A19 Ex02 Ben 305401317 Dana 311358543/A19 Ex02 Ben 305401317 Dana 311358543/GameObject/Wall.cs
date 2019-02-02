@@ -20,11 +20,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        protected override void LoadContent()
-        {
-            base.LoadContent();
-        }
-
         public override void Update(GameTime gameTime)
         {
             if(!this.m_Initialize)
@@ -57,18 +52,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if(this.CurrTexture == null)
             {
                 this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
-                //Color[] texturePixels = new Color[Texture.Width * Texture.Height];
                 this.CurrTexture.SetData(OriginalPixels);
             }
 
             this.m_GameEngine.HandleHit(this, i_Collidable);
         }
-
-        //public void createNewTexture()
-        //{
-        //    this.CurrTexture = new Texture2D(Game.GraphicsDevice, Texture.Width, Texture.Height);
-        //    //Color[] texturePixels = new Color[Texture.Width * Texture.Height];
-        //    this.CurrTexture.SetData(OriginalPixels);
-        //}
     }
 }

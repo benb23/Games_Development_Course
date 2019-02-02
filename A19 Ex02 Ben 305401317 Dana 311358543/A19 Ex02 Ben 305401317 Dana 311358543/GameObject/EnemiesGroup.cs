@@ -54,14 +54,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Direction = 1f;
 
 
-            if (SpaceInvadersConfig.m_Level % 7 != 0)
+            if (SpaceInvadersConfig.m_Level % 7 != 0)//todo : not consistent
             {
                 addColumToEnemiesGroup();
                 m_CurrentColumns++;
             }
             else
             {
-                revertEnemiesGroupToOriginalSize();
+                ////revertEnemiesGroupToOriginalSize();
                 m_CurrentColumns = k_EnemiesColumns;
             }
             

@@ -61,7 +61,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             initWallsPositions();
             foreach(Wall wall in m_Walls)
             {
-                wall.Pixels = wall.OriginalPixels;
+                wall.Pixels =(Color[])wall.OriginalPixels.Clone();
                 if (wall.CurrTexture != null)
                 {
                     wall.CurrTexture.SetData(wall.Pixels);
