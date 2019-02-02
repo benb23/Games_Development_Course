@@ -38,12 +38,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return m_Colum; }
         }
 
-        public Enemy(GameScreen i_GameSreen, Color i_Tint,int i_ScoreValue, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec) 
+        public Enemy(GameScreen i_GameSreen, Color i_Tint, int i_ScoreValue, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec)
             : base(k_AssteName, i_GameSreen)
         {
             //m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            m_OriginalScoreValue= m_ScoreValue = i_ScoreValue; //+ (int)m_GameEngine.Level*120; // todo : dana  const?
-            m_Random = Game.Services.GetService(typeof(Random)) as Random; 
+            m_OriginalScoreValue = m_ScoreValue = i_ScoreValue; //+ (int)m_GameEngine.Level*120; // todo : dana  const?
+            m_Random = Game.Services.GetService(typeof(Random)) as Random;
             m_TimeUntilNextStepInSec = TimeSpan.FromSeconds(i_TimeUntilNextStepInSec);
             m_Gap = i_Gap;
             m_Row = i_Row;
@@ -51,6 +51,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_StartSqureIndex = i_StartSqureIndex;
             m_TintColor = i_Tint;
             m_GameSreen = i_GameSreen;
+        }
+
+        public TimeSpan TimeUntilNextStepInSec
+        {
+            set { m_TimeUntilNextStepInSec = value; }
         }
 
         public void LoadAsset()
@@ -111,10 +116,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             int rnd = m_Random.Next(0, k_MaxRandomNumber);    
 
-            if (rnd <= m_MaxRandomToShoot && m_Gun.PermitionToShoot())
-            {
-                shoot();
-            }
+            //if (rnd <= m_MaxRandomToShoot && m_Gun.PermitionToShoot())
+            //{
+            //    shoot();
+            //}
 
             base.Update(i_GameTime);
         }

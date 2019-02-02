@@ -62,13 +62,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
             
 
-
             foreach (List<Enemy> list in m_EnemiesGroup)
             {
                 foreach (Enemy enemy in list)
                 {
                     if (enemy.Colum < m_CurrentColumns)
                     {
+                        enemy.TimeUntilNextStepInSec = TimeSpan.FromSeconds(this.m_TimeUntilNextStepInSec);
                         enemy.Animations["CellAnimation"].Reset();
                         enemy.Animations["CellAnimation"].Pause();
                         updateScoreValueAndShootingFrequency(enemy);

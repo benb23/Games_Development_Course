@@ -333,7 +333,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 for (int senderColomn = 0; senderColomn < i_Sender.Texture.Width; senderColomn++)
                 {
                     if (i_Sender.Pixels[senderColomn + (senderRow * i_Sender.Texture.Width)].A != 0 &&
-                       (targetColomn + (targetRow * i_Target.Texture.Width)) < i_Target.Pixels.Length)
+                       (targetColomn + (targetRow * i_Target.Texture.Width)) < i_Target.Pixels.Length &&
+                        targetColomn + (targetRow * i_Target.Texture.Width ) > 0)
                     {
                         i_Target.Pixels[targetColomn + (targetRow * i_Target.Texture.Width)] = new Color(0, 0, 0, 0);
                     }
@@ -371,11 +372,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
-            int wallColomn = MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_HittenSprite.Texture.Height);
+            //int wallColomn = MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_HittenSprite.Texture.Height);
+            int wallColomn = (int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].Y;
 
             if (i_Sender.Velocity.Y < 0)
             {
-                wallColomn -= MathHelper.Clamp((int)(SpaceInvadersConfig.m_sizeOfBulletHitEffect * i_Sender.Texture.Height), 0, wallColomn);
+                //wallColomn -= MathHelper.Clamp((int)(SpaceInvadersConfig.m_sizeOfBulletHitEffect * i_Sender.Texture.Height), 0, wallColomn);
+                wallColomn -= (int)(SpaceInvadersConfig.m_sizeOfBulletHitEffect * i_Sender.Texture.Height);
             }
 
             return wallColomn;
