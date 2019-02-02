@@ -38,7 +38,18 @@ namespace Infrastructure
         {
             this.m_GraphicDeviceManager.IsFullScreen = !this.m_GraphicDeviceManager.IsFullScreen;
 
-            if (!this.m_GraphicDeviceManager.IsFullScreen)
+            //if (!this.m_GraphicDeviceManager.IsFullScreen)
+            //{
+            //    this.m_GraphicDeviceManager.PreferredBackBufferWidth = 800;
+            //    this.m_GraphicDeviceManager.PreferredBackBufferHeight = 600;
+            //}
+
+            if (this.m_GraphicDeviceManager.IsFullScreen)
+            {
+                this.m_GraphicDeviceManager.PreferredBackBufferWidth = m_Game.GraphicsDevice.DisplayMode.Width;
+                this.m_GraphicDeviceManager.PreferredBackBufferHeight = m_Game.GraphicsDevice.DisplayMode.Height;
+            }
+            else
             {
                 this.m_GraphicDeviceManager.PreferredBackBufferWidth = 800;
                 this.m_GraphicDeviceManager.PreferredBackBufferHeight = 600;
