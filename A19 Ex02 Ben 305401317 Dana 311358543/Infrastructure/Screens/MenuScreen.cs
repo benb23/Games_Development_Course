@@ -130,16 +130,24 @@ namespace Infrastructure
 
         private void useMouseToNavigateMenu()
         {
+            bool fountActiveItem = false;
+
             foreach (MenuItem item in m_MenuItems)
             {
                 if (item.isMouseHoverItem())
                 {
                     m_currItemNumber = item.ItemNumber;
+                    fountActiveItem = true;
+                    break;
                 }
-                else if (item.IsActive == true && m_currItemNumber!= item.ItemNumber)
+                else if (item.IsActive == true && m_currItemNumber != item.ItemNumber)
                 {
                     item.IsActive = false;
                 }
+            }
+            if (!fountActiveItem)
+            {
+                m_currItemNumber = null;
             }
         }
 
@@ -158,6 +166,14 @@ namespace Infrastructure
         public override void Update(GameTime gameTime)
         {
             updateCurrActiveItem();
+
+            //if(!this.m_IsUsingKeyboardArrows && this.m_PrevItemNumber != null)
+            //{
+            //    if (m_currItemNumber == null)
+            //    {
+            //        m_MenuItems[(int)m_PrevItemNumber].IsActive = false;
+            //    }
+            //}
 
             if (m_currItemNumber != m_PrevItemNumber)
             {

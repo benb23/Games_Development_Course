@@ -48,6 +48,7 @@
     <Compile Include="Managers\DummyInputManager.cs" />
     <Compile Include="Managers\ScreenManager.cs" />
     <Compile Include="Managers\SoundManager.cs" />
+    <Compile Include="ObjectModel\Animations\ConcreteAnimators\PulseAnimator.cs" />
     <Compile Include="ObjectModel\CollidableSprite.cs" />
     <Compile Include="Interfaces\ICollidable.cs" />
     <Compile Include="Interfaces\ICollisionsManager.cs" />

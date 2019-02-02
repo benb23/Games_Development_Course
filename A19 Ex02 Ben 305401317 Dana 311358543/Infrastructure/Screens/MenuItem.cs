@@ -57,18 +57,15 @@ namespace Infrastructure
 
         public override void Initialize()
         {
-            //if (m_ItemNumber == 0)
-            //{
-            //    m_IsActive = true;
-            //}
+            base.Initialize();
 
             ActiveChanged += new EventHandler<EventArgs>(OnActiveChanged);
+
             if(m_isSoundOn)
             {
                 m_SoundManager = m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
             }
-
-            base.Initialize();
+            initAnimations();
         }
 
         public bool isMouseHoverItem()
@@ -76,11 +73,23 @@ namespace Infrastructure
             return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
         }
 
+        private void initAnimations()
+        {
+            PulseAnimator pulsAnimator = new PulseAnimator("ActiveItem", TimeSpan.Zero, (float)1.3 ,2);
+            this.Animations.Add(pulsAnimator);
+        }
+
         private void OnActiveChanged(object sender, EventArgs e)
         {
             if (m_IsActive)
             {
+                if (!this.Animations["ActiveItem"].Enabled)
+                {
+                    this.Animations["ActiveItem"].Restart();
+                }
+
                 this.TintColor = new Color(255, 74, 47);
+
                 if (m_isSoundOn)
                 {
                     this.m_SoundManager.PlaySoundEffect(m_SoundOnHover);
@@ -88,6 +97,11 @@ namespace Infrastructure
             }
             else
             {
+                if (this.Animations["ActiveItem"].Enabled)
+                {
+                    this.Animations["ActiveItem"].Pause();
+                    this.Animations["ActiveItem"].Reset();
+                }
                 this.TintColor = Color.White;
             }
         }

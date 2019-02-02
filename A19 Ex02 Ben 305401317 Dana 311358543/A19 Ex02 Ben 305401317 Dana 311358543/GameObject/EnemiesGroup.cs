@@ -28,7 +28,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         //private Enemy[,] m_EnemiesMatrix;
         private List<List<Enemy>> m_EnemiesGroup = new List<List<Enemy>>(k_EnemiesRows);
         //private List<List<Enemy>> m_ExtraEnemiesGroup = new List<List<Enemy>>(k_EnemiesRows);
-
         private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
         private ISpaceInvadersEngine m_GameEngine;
@@ -42,9 +41,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             //m_CurrentEnemiesColumns = k_EnemiesColumns;
             i_GameScreen.Add(this);
         }
-
-
-
 
         public void InitEnemyGroupForNextLevel()
         {
@@ -116,8 +112,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddOrRemoveEnemiesGroupColum();
         }
 
-
-
         public override void Initialize()
         {
             if (m_GameEngine == null)
@@ -165,7 +159,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             m_EnemiesGap = this.m_EnemiesGroup[0][0].Texture.Height * 0.6f;
         }
   
-
         private Enemy initEnemyByRow(int i_Row, int i_Colum)
         {
             Enemy retEnemy = null;
@@ -212,7 +205,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 }
             } 
         }
-
 
         //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 

@@ -41,6 +41,5 @@
         public const float k_WallsVelocitiyAdditionPercent = (float)-0.07;
 
         public const int k_EnemyShootingFrequencyAddition = 5;
-
     }
 }
