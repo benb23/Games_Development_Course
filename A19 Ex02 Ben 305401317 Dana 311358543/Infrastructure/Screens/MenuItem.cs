@@ -75,7 +75,7 @@ namespace Infrastructure
 
         private void initAnimations()
         {
-            PulseAnimator pulsAnimator = new PulseAnimator("ActiveItem", TimeSpan.Zero, (float)1.3 ,2);
+            PulseAnimator pulsAnimator = new PulseAnimator("ActiveItem", TimeSpan.Zero, (float)1.1 ,1);
             this.Animations.Add(pulsAnimator);
         }
 
