@@ -15,6 +15,15 @@ namespace Infrastructure
 {
     public class CollidableSprite : Sprite
     {
+        protected int m_ScoreValue; 
+
+        public int ScoreValue
+        {
+            get { return this.m_ScoreValue; }
+            set { this.m_ScoreValue = value; }
+        }
+
+
         private Texture2D m_CurrTexture;
         
         public Texture2D CurrTexture

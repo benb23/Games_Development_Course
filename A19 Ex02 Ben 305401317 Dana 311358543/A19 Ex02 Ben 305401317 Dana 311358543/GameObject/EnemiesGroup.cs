@@ -14,31 +14,24 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             right = 1,
         }
 
+        private ISpaceInvadersEngine m_GameEngine;
         public event EventHandler<EventArgs> AllEnemiesDied;
-
-        private const int k_EnemiesRows = 5;
-        private const int k_EnemiesColumns = 9;
         private int m_CurrentColumns = 9;
         private float m_Direction = 1f;
-        private bool m_IncreaseVelocityWhen4Dead = false;
-        private bool m_IsLastStepInRow = false;
         private float m_TimeCounter = 0f;
         private float m_TimeUntilNextStepInSec = 0.5f;
+        private float k_TimeUntilNextStepInSec = 0.5f;
+        private bool m_IncreaseVelocityWhen4Dead = false;
+        private bool m_IsLastStepInRow = false;
         private float m_EnemiesGap;
-        //private Enemy[,] m_EnemiesMatrix;
-        private List<List<Enemy>> m_EnemiesGroup = new List<List<Enemy>>(k_EnemiesRows);
-        //private List<List<Enemy>> m_ExtraEnemiesGroup = new List<List<Enemy>>(k_EnemiesRows);
-        private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
-        private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(k_EnemiesRows * k_EnemiesColumns);
-        private ISpaceInvadersEngine m_GameEngine;
+        private List<List<Enemy>> m_EnemiesGroup = new List<List<Enemy>>(SpaceInvadersConfig.k_NumOfEnemiesRows);
+        private List<Enemy> m_AliveEnemiesByColum = new List<Enemy>(SpaceInvadersConfig.k_NumOfEnemiesRows * SpaceInvadersConfig.k_NumOfEnemiesColumns);
+        private List<Enemy> m_AliveEnemiesByRow = new List<Enemy>(SpaceInvadersConfig.k_NumOfEnemiesRows * SpaceInvadersConfig.k_NumOfEnemiesColumns);
         private GameScreen m_GameScreen;
 
         public EnemiesGroup(GameScreen i_GameScreen) : base(i_GameScreen.Game)
         {
             m_GameScreen = i_GameScreen;
-            //this.m_EnemiesGroup = 
-            //this.m_EnemiesMatrix = new Enemy[k_EnemiesRows, k_EnemiesColumns];
-            //m_CurrentEnemiesColumns = k_EnemiesColumns;
             i_GameScreen.Add(this);
         }
 
@@ -50,17 +43,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Direction = 1f;
 
 
-            if (SpaceInvadersConfig.m_Level % 7 != 0)//todo : not consistent
+            if (SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.One)
             {
                 addColumToEnemiesGroup();
                 m_CurrentColumns++;
             }
             else
             {
-                ////revertEnemiesGroupToOriginalSize();
-                m_CurrentColumns = k_EnemiesColumns;
+                revertEnemiesGroupToOriginalSize();
+                m_CurrentColumns = SpaceInvadersConfig.k_NumOfEnemiesColumns;
             }
-            
+
+            m_TimeUntilNextStepInSec = this.k_TimeUntilNextStepInSec;
 
             foreach (List<Enemy> list in m_EnemiesGroup)
             {
@@ -68,7 +62,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     if (enemy.Colum < m_CurrentColumns)
                     {
-                        enemy.TimeUntilNextStepInSec = TimeSpan.FromSeconds(this.m_TimeUntilNextStepInSec);
+                        enemy.TimeUntilNextStepInSec = TimeSpan.FromSeconds(this.k_TimeUntilNextStepInSec);
                         enemy.Animations["CellAnimation"].Reset();
                         enemy.Animations["CellAnimation"].Pause();
                         updateScoreValueAndShootingFrequency(enemy);
@@ -85,9 +79,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             initAliveEnemiesByColum();
         }
 
+        // TODO: DEBUG CASE LEVEL 7
         private void revertEnemiesGroupToOriginalSize()
         {
-            for (int colum = m_CurrentColumns; colum > k_EnemiesColumns; colum--)
+            for (int colum = m_CurrentColumns; colum > SpaceInvadersConfig.k_NumOfEnemiesColumns; colum--)
             {
                 removeColumToEnemyMantrix();
             }
@@ -95,7 +90,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void AddOrRemoveEnemiesGroupColum()
         {
-            for (int row = 0; row < k_EnemiesRows; row++)
+            for (int row = 0; row < SpaceInvadersConfig.k_NumOfEnemiesRows; row++)
             {
                 m_EnemiesGroup[row][m_CurrentColumns].Visible = !m_EnemiesGroup[row][m_CurrentColumns].Visible;
                 m_EnemiesGroup[row][m_CurrentColumns].Enabled = !m_EnemiesGroup[row][m_CurrentColumns].Enabled;
@@ -121,9 +116,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
 
 
-            for (int i = 0; i < k_EnemiesRows; i++)
+            for (int i = 0; i < SpaceInvadersConfig.k_NumOfEnemiesRows; i++)
             {
-                m_EnemiesGroup.Add(new List<Enemy>(k_EnemiesColumns));
+                m_EnemiesGroup.Add(new List<Enemy>(SpaceInvadersConfig.k_NumOfEnemiesColumns));
             }
 
             this.initEnemyGroup();
@@ -135,14 +130,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             Enemy newEnemy;
 
-            for (int row = 0; row < k_EnemiesRows; row++)
+            for (int row = 0; row < SpaceInvadersConfig.k_NumOfEnemiesRows; row++)
             {
-                for (int colum = 0; colum < k_EnemiesColumns + 5; colum++)
+                for (int colum = 0; colum < SpaceInvadersConfig.k_NumOfEnemiesColumns + 5; colum++)
                 {
                     newEnemy = this.initEnemyByRow(row, colum);
 
                     m_EnemiesGroup[row].Add(newEnemy);
-                    if (colum < k_EnemiesColumns)
+                    if (colum < SpaceInvadersConfig.k_NumOfEnemiesColumns)
                     {
                         m_AliveEnemiesByRow.Add(newEnemy);
                     }
@@ -188,7 +183,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Enemy initEnemyByRowHelper(int i_Row, int i_Colum, int i_StartSqureIndex, Color i_Tint, int i_Toggeler, SpaceInvadersConfig.eScoreValue i_ScoreValue)
         {
             Enemy retEnemy = new Enemy(m_GameScreen, i_Tint, (int)i_ScoreValue, i_StartSqureIndex, i_Row, i_Colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
-            retEnemy.m_Toggeler = i_Toggeler;
+            retEnemy.Toggeler = i_Toggeler;
             retEnemy.VisibleChanged += this.updateAliveLists;
             retEnemy.VisibleChanged += this.isFourEnemiesDead;
 
@@ -199,18 +194,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             for (int colomn = 0; colomn < m_CurrentColumns; colomn++)
             {
-                for (int row = 0; row < k_EnemiesRows; row++)
+                for (int row = 0; row < SpaceInvadersConfig.k_NumOfEnemiesRows; row++)
                 {
                     m_AliveEnemiesByColum.Add(m_EnemiesGroup[row][colomn]);
                 }
             } 
         }
 
-        //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
         private void updateScoreValueAndShootingFrequency(Enemy i_Enemy)
         {
-            if (SpaceInvadersConfig.m_LogicLevel == SpaceInvadersConfig.eLevel.One)
+            if (SpaceInvadersConfig.s_LogicLevel == SpaceInvadersConfig.eLevel.One)
             {
                 i_Enemy.m_MaxRandomToShoot = i_Enemy.m_OriginalMaxRandomToShoot;
                 i_Enemy.ScoreValue = i_Enemy.OriginalScoreValue;

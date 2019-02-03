@@ -53,9 +53,6 @@
     <Compile Include="Interfaces\ICollidable.cs" />
     <Compile Include="Interfaces\ICollisionsManager.cs" />
     <Compile Include="Interfaces\IInputManager.cs" />
-    <Compile Include="Interfaces\IScoreable.cs" />
-    <Compile Include="Interfaces\IScoreManager.cs" />
-    <Compile Include="Interfaces\IValuable.cs" />
     <Compile Include="ObjectModel\Animations\CompositeAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\BlinkAnimator.cs" />
     <Compile Include="ObjectModel\Animations\ConcreteAnimators\CellAnimator.cs" />

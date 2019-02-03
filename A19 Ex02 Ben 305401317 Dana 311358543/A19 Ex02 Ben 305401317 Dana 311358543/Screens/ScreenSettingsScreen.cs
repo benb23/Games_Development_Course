@@ -22,7 +22,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             ToggleItem fullScreen = new ToggleItem(@"Screens\Settings\FullScreenMode", @"Screens\Settings\OnOff_53x52", this, index++, 1);
             ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
-            //mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleMouseVisabilityConfig);
             mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(mouseVisabilityChanged);
             windowResizing.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleAllowWindowResizingConfig);
             fullScreen.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleFullScreenModeConfig);

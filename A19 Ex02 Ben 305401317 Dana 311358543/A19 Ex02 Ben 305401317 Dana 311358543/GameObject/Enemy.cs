@@ -9,24 +9,35 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Enemy : CollidableSprite, IRectangleCollidable, IPixelsCollidable
     {
-        private List<Bullet> m_Bullets = new List<Bullet>(5);
-        private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
-        private Gun m_Gun;
-        public int m_OriginalMaxRandomToShoot = 10;
-        public int m_MaxRandomToShoot = 10;
-        public const int k_MaxRandomNumber = 50000;
-        private ISpaceInvadersEngine m_GameEngine;
-        private int k_NumOfTOtalFrames = 6;
-        public int k_NumOfFrames = 2;
-        private Random m_Random;
-        public int m_StartSqureIndex;
+        private const int r_MaxNumOfBullets = 5;
+        private const int k_MaxRandomNumber = 50000;
+        private int k_NumOfTotalFrames = 6;
+        private int m_StartSqureIndex;
         private int m_Row;
         private int m_Colum;
         private float m_Gap;
+        private ISpaceInvadersEngine m_GameEngine;
+        private Random m_Random;
+        private Gun m_Gun;
         private TimeSpan m_TimeUntilNextStepInSec;
-        public int m_Toggeler;
-        GameScreen m_GameSreen;
+        private List<Bullet> m_Bullets = new List<Bullet>(r_MaxNumOfBullets);
+        private const string k_AssteName = @"Sprites\EnemiesSheet_192x32";
+        public int m_OriginalMaxRandomToShoot = 10;
+        public int m_MaxRandomToShoot = 10;
+        private int m_Toggeler;
 
+        public int Toggeler
+        {
+            get { return m_Toggeler; }
+            set { m_Toggeler = value; }
+        }
+
+        protected int m_OriginalScoreValue;
+
+        public int OriginalScoreValue
+        {
+            get { return this.m_OriginalScoreValue; }
+        }
 
         public int Row
         {
@@ -38,19 +49,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return m_Colum; }
         }
 
-        public Enemy(GameScreen i_GameSreen, Color i_Tint, int i_ScoreValue, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec)
-            : base(k_AssteName, i_GameSreen)
+        public Enemy(GameScreen i_GameScreen, Color i_Tint, int i_ScoreValue, int i_StartSqureIndex, int i_Row, int i_Colum, float i_Gap, float i_TimeUntilNextStepInSec)
+            : base(k_AssteName, i_GameScreen)
         {
-            //m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            m_OriginalScoreValue = m_ScoreValue = i_ScoreValue; //+ (int)m_GameEngine.Level*120; // todo : dana  const?
-            m_Random = Game.Services.GetService(typeof(Random)) as Random;
-            m_TimeUntilNextStepInSec = TimeSpan.FromSeconds(i_TimeUntilNextStepInSec);
-            m_Gap = i_Gap;
-            m_Row = i_Row;
-            m_Colum = i_Colum;
-            m_StartSqureIndex = i_StartSqureIndex;
-            m_TintColor = i_Tint;
-            m_GameSreen = i_GameSreen;
+            this.m_OriginalScoreValue = m_ScoreValue = i_ScoreValue;
+            this.m_Random = Game.Services.GetService(typeof(Random)) as Random;
+            this.m_TimeUntilNextStepInSec = TimeSpan.FromSeconds(i_TimeUntilNextStepInSec);
+            this.m_Gap = i_Gap;
+            this.m_Row = i_Row;
+            this.m_Colum = i_Colum;
+            this.m_StartSqureIndex = i_StartSqureIndex;
+            this.m_TintColor = i_Tint;
+            this.m_GameScreen = i_GameScreen;
         }
 
         public TimeSpan TimeUntilNextStepInSec
@@ -66,7 +76,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
-            m_Gun = new Gun(m_GameSreen, 1, Bullet.eBulletType.EnemyBullet, 1, "EnemyGunShot");
+            m_Gun = new Gun(this.GameScreen, 1, Bullet.eBulletType.EnemyBullet, 1, "EnemyGunShot");
             initPosition();
 
             initAnimations();
@@ -86,7 +96,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected override void InitSourceRectangle()
         {
-            m_WidthBeforeScale = m_WidthBeforeScale / k_NumOfTOtalFrames;
+            m_WidthBeforeScale = m_WidthBeforeScale / k_NumOfTotalFrames;
 
             this.SourceRectangle = new Rectangle(
                 (int)m_WidthBeforeScale * m_StartSqureIndex,
@@ -114,12 +124,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             //}
             ///////////
 
-            int rnd = m_Random.Next(0, k_MaxRandomNumber);    
+            int rnd = m_Random.Next(0, k_MaxRandomNumber);
 
-            //if (rnd <= m_MaxRandomToShoot && m_Gun.PermitionToShoot())
-            //{
-            //    shoot();
-            //}
+            if (rnd <= m_MaxRandomToShoot && m_Gun.PermitionToShoot())
+            {
+                shoot();
+            }
 
             base.Update(i_GameTime);
         }
@@ -144,7 +154,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void dyingEnemy_Finished(object sender, EventArgs e)
         {
-            //this.Animations.Enabled = false;
             this.Visible = false;
             this.Enabled = false;
         }

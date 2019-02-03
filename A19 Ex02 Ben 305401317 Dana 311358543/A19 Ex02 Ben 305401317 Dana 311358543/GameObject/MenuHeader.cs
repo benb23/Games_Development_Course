@@ -6,7 +6,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class MenuHeader : Sprite
     {
-        GameScreen m_GameScreen;
         private float m_OffsetY = 20;
         private float m_OffsetX = 0;
 
@@ -28,17 +27,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-
         public MenuHeader(GameScreen i_GameScreen, string i_AssetName) : base(i_AssetName, i_GameScreen)
         {
             this.m_GameScreen = i_GameScreen;
             initDedaultPosition();
-        }
-
-        public MenuHeader(GameScreen i_GameScreen, string i_AssetName, Vector2 i_Position) : base(i_AssetName, i_GameScreen)
-        {
-            this.m_GameScreen = i_GameScreen;
-            this.Position = i_Position;
         }
 
         public MenuHeader(GameScreen i_GameScreen, string i_AssetName, float i_Scale) : base(i_AssetName, i_GameScreen)

@@ -10,20 +10,16 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class PlayScreen : GameScreen
     {
-        private const int k_NumOfPlayers = 2;
-        private const int k_NumOfWalls = 4;
         private ISpaceInvadersEngine m_GameEngine;
         private ISoundMananger m_SoundManager;
-        public const int k_MaxRandomNumber = 50000;
         private const string k_GameName = "Space Invaders";
-        //public Random m_Random = new Random();
         private MotherSpaceShip m_MotherSpaceShip;
         private EnemiesGroup m_EnemysGroup;
         private Background m_Background;
         private List<Player> m_Players;
         private WallsGroup m_WallsGroup;
         private ScoreBoardHeader m_ScoreBoard;
-        PauseScreen m_PauseScreenScreen;
+        private PauseScreen m_PauseScreenScreen;
 
         public PlayScreen(Game i_Game)
             : base(i_Game)
@@ -36,7 +32,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
             this.m_EnemysGroup = new EnemiesGroup(this);
-            this.m_WallsGroup = new WallsGroup(this, k_NumOfWalls);
+            this.m_WallsGroup = new WallsGroup(this, SpaceInvadersConfig.k_NumOfWalls);
             m_PauseScreenScreen = new PauseScreen(this.Game);
         }
 
@@ -87,7 +83,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             initSpritesForNewLevel();
         }
 
-        private void OnGameOver()//TODO: CALL 
+        private void OnGameOver()
         {
             this.m_SoundManager.PlaySoundEffect("GameOver");
             this.ScreensManager.SetCurrentScreen(this.ScreensManager.GetScreen("GameOverScreen"));

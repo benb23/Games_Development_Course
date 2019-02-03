@@ -25,6 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public SpaceShip(GameScreen i_GameScreen, string i_AssetName, Bullet.eBulletType i_GunBulletsType, PlayerIndex i_Owner)
             : base(i_AssetName, i_GameScreen)
         {
+            this.ScoreValue = (int)SpaceInvadersConfig.eScoreValue.Soul;
             this.m_Gun = new Gun(i_GameScreen, 3, i_GunBulletsType, -1, "SSGunShot"); //TODO: const
             this.m_Owner = i_Owner;
         }
@@ -71,7 +72,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             RoataterAnimator roataterAnimator = new RoataterAnimator(4, TimeSpan.FromSeconds(2.5));
             FadeAnimator fadeAnimator = new FadeAnimator(TimeSpan.FromSeconds(2.5));
             CompositeAnimator DestroyAnimator = new CompositeAnimator("Destroy", TimeSpan.FromSeconds(2.5), this, fadeAnimator, roataterAnimator);
-            //DestroyAnimator.ResetAfterFinish = false;
             this.Animations.Add(DestroyAnimator);
         }
 

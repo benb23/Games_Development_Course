@@ -9,7 +9,14 @@ namespace Infrastructure
     public class ToggleOption : Sprite
     {
         private Rectangle m_TextureRectangle;
-        private GameScreen m_GameScreen;
+        private Color m_SelectedColor = Color.Yellow;
+
+        public Color SelectedColor
+        {
+            get { return m_SelectedColor; }
+            set { m_SelectedColor = value; }
+        }
+
 
         public ToggleOption(GameScreen i_GameScreen,string i_AssetName, Rectangle i_Rec, Vector2 i_Position) 
             : base(i_AssetName, i_GameScreen)
@@ -23,15 +30,11 @@ namespace Infrastructure
         {
             GameScreen.SpriteBatch.Draw(this.Texture , this.Position, this.m_TextureRectangle, this.m_TintColor);
         }
-        //public bool isMouseHover()
-        //{
-        //    return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
-        //}
     }
 
     public class ToggleItem : MenuItem
     {
-        private int m_CurrToggleValue; //defult is 0
+        private int m_CurrToggleValue;
         private const int k_numOfOptions = 2;
         private Texture2D m_SeperatorTexture;
         private Vector2 m_SeperatorPosition;
@@ -75,7 +78,7 @@ namespace Infrastructure
         {
             base.LoadContent();
             this.m_SeperatorTexture = Game.Content.Load<Texture2D>(this.m_SeperatorAsset);
-            this.m_OptionsTexture = Game.Content.Load<Texture2D>(this.m_OptionsAssetName);//??
+            this.m_OptionsTexture = Game.Content.Load<Texture2D>(this.m_OptionsAssetName);
             initOptions();
         }
 
@@ -101,7 +104,6 @@ namespace Infrastructure
 
         private void initOptions()
         {
-
             m_Options = new List<ToggleOption>(k_numOfOptions);
 
             for (int i = 0; i < k_numOfOptions; i++)
@@ -111,14 +113,7 @@ namespace Infrastructure
                     new Vector2(this.Position.X + this.Texture.Width + 5 + i * (m_OptionsTexture.Width + m_SeperatorTexture.Width), this.Position.Y)));
             }
             m_SeperatorPosition = new Vector2(m_Options[0].Position.X + m_OptionsTexture.Width, m_Options[0].Position.Y);
-            m_Options[m_CurrToggleValue].TintColor = Color.Yellow;//default
-
-            //for (int i = 0; i < k_numOfOptions; i++)
-            //{
-            //    m_Options.Add(new ToggleOption(this.GameScreen, this.m_OptionsAssetName, new Rectangle(0, i * m_OptionsTexture.Height / 2, m_OptionsTexture.Width, m_OptionsTexture.Height / 2)));
-            //}
-            //m_Options[m_CurrToggleValue].TintColor = Color.Yellow;//default
-            //initOptionsPositions();
+            m_Options[m_CurrToggleValue].TintColor = m_Options[m_CurrToggleValue].SelectedColor;
         }
 
         public override void Draw(GameTime gameTime)
@@ -135,14 +130,6 @@ namespace Infrastructure
                 {
                     UpdateToggleValue();
                 }
-
-                //for (int i = 0; i < k_numOfOptions; i++) //todo : only if is active??
-                //{
-                //    if (m_Options[i].isMouseHover() && m_CurrToggleValue != i)
-                //    {
-                //            UpdateToggleValue();
-                //    }
-                //}
             }
             base.Update(gameTime);  
         }
@@ -151,7 +138,7 @@ namespace Infrastructure
         {
             m_Options[m_CurrToggleValue].TintColor = Color.White;
             m_CurrToggleValue = (1 - m_CurrToggleValue) % k_numOfOptions;
-            m_Options[m_CurrToggleValue].TintColor = Color.Yellow;
+            m_Options[m_CurrToggleValue].TintColor = m_Options[m_CurrToggleValue].SelectedColor;
             OnToggeleValueChanged(this, EventArgs.Empty);
         }
 

@@ -6,7 +6,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
     public class Wall : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
-        private const int k_NumOfWalls = 4;
         private const string k_AssteName = @"Sprites\Barrier_44x32";
         private ISpaceInvadersEngine m_GameEngine;
         private Vector2 m_StartingPosition;
@@ -27,7 +26,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_StartingPosition = this.Position;
                 this.m_Initialize = true;
             }
-            if (SpaceInvadersConfig.m_LogicLevel != SpaceInvadersConfig.eLevel.One)
+            if (SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.One)
             {
                 moveWall();
             }

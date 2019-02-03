@@ -39,7 +39,7 @@ namespace Infrastructure
         public float LeftTrigerDelta { get { return 0; } }
         public float RightTrigerDelta { get { return 0; } }
 
-        public void Initialize() { } // todo: keep?
+        public void Initialize() { } 
 
     }
 }

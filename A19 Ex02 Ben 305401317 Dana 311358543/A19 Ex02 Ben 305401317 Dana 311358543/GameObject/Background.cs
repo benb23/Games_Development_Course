@@ -20,7 +20,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
-            this.m_Scales = new Vector2(this.m_Game.Window.ClientBounds.Width / 800f, this.m_Game.Window.ClientBounds.Height / 600f);
+            this.m_Scales = new Vector2(this.m_Game.Window.ClientBounds.Width / SpaceInvadersConfig.k_DefaultWindowSize.X, this.m_Game.Window.ClientBounds.Height / SpaceInvadersConfig.k_DefaultWindowSize.Y);
             this.m_Game.Window.ClientSizeChanged += Window_ClientSizeChanged1;
         }
 
@@ -33,12 +33,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (m_GraphicDeviceMng.IsFullScreen)
             {
-
+                //todo : const?
                 this.m_Scales = new Vector2(m_Game.GraphicsDevice.DisplayMode.Width / 1024f, m_Game.GraphicsDevice.DisplayMode.Height / 768f);
             }
             else
             {
-                this.m_Scales = new Vector2(this.m_Game.Window.ClientBounds.Width / 800f, this.m_Game.Window.ClientBounds.Height / 600f);
+                this.m_Scales = new Vector2(this.m_Game.Window.ClientBounds.Width / SpaceInvadersConfig.k_DefaultWindowSize.X, this.m_Game.Window.ClientBounds.Height / SpaceInvadersConfig.k_DefaultWindowSize.Y);
             }
             
         }

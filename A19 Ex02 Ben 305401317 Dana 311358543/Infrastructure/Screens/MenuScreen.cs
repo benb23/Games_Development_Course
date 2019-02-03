@@ -19,9 +19,9 @@ namespace Infrastructure
         Game m_Game;
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
         private Vector2 m_firstItemPosition;
-        float m_GapBetweenItems = 15f;
-        float m_OffsetX;
-        float m_OffsetY;
+        private float m_GapBetweenItems = 15f;
+        private float m_OffsetX;
+        private float m_OffsetY;
 
 
         private int? m_currItemNumber;
@@ -98,12 +98,11 @@ namespace Infrastructure
                 {
                     m_currItemNumber = 0;
                     m_MenuItems[(int)m_currItemNumber].IsActive = true;
-                    m_MenuItems[(int)m_currItemNumber].TintColor = Color.Red; // todo : change 
+                    m_MenuItems[(int)m_currItemNumber].TintColor = m_MenuItems[(int)m_currItemNumber].ActiveColor;
                 }
             }
         }
 
-        // TODO: change the way that item added to list
         public void AddMenuItem(MenuItem i_Item)        
         {
             m_MenuItems.Add(i_Item);
@@ -181,7 +180,5 @@ namespace Infrastructure
             m_PrevItemNumber = m_currItemNumber;
             base.Update(gameTime);
         }
-
-        // mutual menuScreens methods
     }
 }

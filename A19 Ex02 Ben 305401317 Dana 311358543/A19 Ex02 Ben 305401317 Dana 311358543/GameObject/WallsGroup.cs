@@ -19,10 +19,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             get { return m_Position; }
             set { m_Position = value; }
         }
-        public float WallsYShift
-        {
-            set { this.m_GroupYShift = value; }
-        }
  
         public WallsGroup(GameScreen i_GameScreen, int i_numOfWalls) : base(i_GameScreen.Game)
         {
@@ -66,14 +62,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     wall.CurrTexture.SetData(wall.Pixels);
                 }
-                if(SpaceInvadersConfig.m_LogicLevel == SpaceInvadersConfig.eLevel.Two)
+                if(SpaceInvadersConfig.s_LogicLevel == SpaceInvadersConfig.eLevel.Two)
                 {
                     wall.Velocity = new Vector2(45, 0);
                 }
-                if (SpaceInvadersConfig.m_LogicLevel != SpaceInvadersConfig.eLevel.One &&
-                    SpaceInvadersConfig.m_LogicLevel != SpaceInvadersConfig.eLevel.Two) // not level 2 , todo : dana change
+                if (SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.One &&
+                    SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.Two)
                 {
-                    wall.Velocity += new Vector2(SpaceInvadersConfig.k_WallsVelocitiyAdditionPercent * wall.Velocity.X, 0); // todo: const
+                    wall.Velocity += new Vector2(SpaceInvadersConfig.k_WallsVelocitiyAdditionPercent * wall.Velocity.X, 0); 
                 }
             }
         }

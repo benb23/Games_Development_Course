@@ -41,7 +41,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
 
-            if (SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
+            if (SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
             {
                 string winner = setWinnerString();
 
@@ -87,7 +87,7 @@ m_GameEngine.Players[0].Score.ToString());
 
         private void OnItemClicked(object sender, ScreenEventArgs args)
         {
-            MenuUtils.GoToScreenAndExitCurrent(this, this.m_ScreensManager.GetScreen(args.ScreenName));
+            MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
 
         public override void Update(GameTime gameTime)

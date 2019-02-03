@@ -13,25 +13,24 @@ namespace Infrastructure
             VolumeButton
         }
 
-        private GameScreen m_GameScreen;
         public event EventHandler<EventArgs> ActiveChanged;
         protected ISoundMananger m_SoundManager;
         private bool m_isSoundOn = true;
         private string m_SoundOnHover = "MenuMove";
-
-        public bool IsSoundOn
-        {
-            set { m_isSoundOn = value; }
-        }
-
-        // private eMenuItemType m_ItemType;
         private int m_ItemNumber;
-        bool m_IsActive;
-        //bool m_IsMouseHover;
+        private bool m_IsActive;
+        private Color m_ActiveColor = new Color(255, 74, 47);
+
+
+
+        public Color  ActiveColor
+        {
+            get { return m_ActiveColor;  }
+            set { m_ActiveColor = value; }
+        }
         
         public MenuItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen)
         {
-            //ActiveChanged += new EventHandler<EventArgs>(OnActiveChanged);
             this.m_GameScreen = i_GameScreen;
             this.m_ItemNumber = i_ItemNumber;
         }
@@ -88,7 +87,7 @@ namespace Infrastructure
                     this.Animations["ActiveItem"].Restart();
                 }
 
-                this.TintColor = new Color(255, 74, 47);
+                this.TintColor = m_ActiveColor;
 
                 if (m_isSoundOn)
                 {
@@ -105,6 +104,5 @@ namespace Infrastructure
                 this.TintColor = Color.White;
             }
         }
-
     }
 }

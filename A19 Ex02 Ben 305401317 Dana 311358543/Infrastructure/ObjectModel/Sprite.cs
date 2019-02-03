@@ -6,22 +6,8 @@ namespace Infrastructure
 {
     public class Sprite : LoadableDrawableComponent
     {
-        protected int m_ScoreValue; // todo : dana , in sprite?
-        protected int m_OriginalScoreValue; // todo : dana , in sprite?
-
-        public int ScoreValue
-        {
-            get { return this.m_ScoreValue; }
-            set { this.m_ScoreValue = value; }
-        }
-
-        public int OriginalScoreValue
-        {
-            get { return this.m_OriginalScoreValue; }
-        }
-
+        protected GameScreen m_GameScreen;
         protected bool m_Initialize;
-        private GameScreen m_GameScreen;
         protected GameScreen GameScreen
         {
             get { return m_GameScreen; }

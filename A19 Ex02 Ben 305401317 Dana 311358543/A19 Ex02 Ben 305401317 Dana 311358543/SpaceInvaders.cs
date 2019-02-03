@@ -12,8 +12,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         GraphicsDeviceManager m_GraphicsMgr;
         InputManager m_InputManager;
         SoundManager m_SoundManager;
-
-        SoundSettingsManager m_SoundSettingsManager;    //TODO: delete
+        SoundSettingsManager m_SoundSettingsManager; 
 
         public SpaceInvaders()
         {
@@ -29,8 +28,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.Services.AddService(typeof(Random), new Random());
 
             m_SoundManager = new SoundManager(this);
-            new ScreenSettingsManager(this);
-            m_SoundSettingsManager = new SoundSettingsManager(this); // TODO: del sm
+            new ScreenSettingsManager(this, SpaceInvadersConfig.k_DefaultWindowSize);
+            m_SoundSettingsManager = new SoundSettingsManager(this); 
             new CollisionsManager(this);
             m_InputManager = new InputManager(this);
             
@@ -62,6 +61,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             base.Update(gameTime);
         }
+
         protected override void LoadContent()
         {
             m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/SSGunShot"), "SSGunShot");
@@ -78,9 +78,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             MediaPlayer.Play(m_SoundManager.GetSong("BGMusic"));
             MediaPlayer.IsRepeating = true;
-
-
-            //m_SoundSettingsManager.ToggleGameSound(this, null);//todo:delete
 
             base.LoadContent();
         }

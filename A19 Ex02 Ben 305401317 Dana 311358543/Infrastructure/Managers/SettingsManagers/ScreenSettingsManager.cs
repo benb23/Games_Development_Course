@@ -10,11 +10,13 @@ namespace Infrastructure
 {
     public class ScreenSettingsManager : GameService, IScreenSettingsManager
     {
-        Game m_Game;
-        GraphicsDeviceManager m_GraphicDeviceManager;
+        private Game m_Game;
+        private GraphicsDeviceManager m_GraphicDeviceManager;
+        private Vector2 m_DefaultWindowSize;
 
-        public ScreenSettingsManager(Game i_Game) : base(i_Game)
+        public ScreenSettingsManager(Game i_Game, Vector2 i_DefaultWindowSize) : base(i_Game)
         {
+            this.m_DefaultWindowSize = i_DefaultWindowSize;
             this.m_Game = i_Game;
             this.m_GraphicDeviceManager = m_Game.Services.GetService(typeof(IGraphicsDeviceManager)) as GraphicsDeviceManager;
         }
@@ -38,12 +40,6 @@ namespace Infrastructure
         {
             this.m_GraphicDeviceManager.IsFullScreen = !this.m_GraphicDeviceManager.IsFullScreen;
 
-            //if (!this.m_GraphicDeviceManager.IsFullScreen)
-            //{
-            //    this.m_GraphicDeviceManager.PreferredBackBufferWidth = 800;
-            //    this.m_GraphicDeviceManager.PreferredBackBufferHeight = 600;
-            //}
-
             if (this.m_GraphicDeviceManager.IsFullScreen)
             {
                 this.m_GraphicDeviceManager.PreferredBackBufferWidth = m_Game.GraphicsDevice.DisplayMode.Width;
@@ -51,8 +47,8 @@ namespace Infrastructure
             }
             else
             {
-                this.m_GraphicDeviceManager.PreferredBackBufferWidth = 800;
-                this.m_GraphicDeviceManager.PreferredBackBufferHeight = 600;
+                this.m_GraphicDeviceManager.PreferredBackBufferWidth = (int)m_DefaultWindowSize.X;
+                this.m_GraphicDeviceManager.PreferredBackBufferHeight = (int)m_DefaultWindowSize.Y;
             }
 
             this.m_GraphicDeviceManager.ApplyChanges();

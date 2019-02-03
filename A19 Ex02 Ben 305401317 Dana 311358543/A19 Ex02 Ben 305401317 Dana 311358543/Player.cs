@@ -6,7 +6,7 @@ using Infrastructure;
 
 namespace A19_Ex02_Ben_305401317_Dana_311358543
 {
-    public class Player : GameComponent, IScoreable
+    public class Player : GameComponent
     {
         private const int k_NumOfSouls = 3;
         private GameScreen m_GameScreen;
@@ -17,15 +17,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Keys m_ShootKey;
         private PlayerIndex m_PlayerType;
         private SpaceShip m_SpaceShip;
-        private List<Soul> m_Souls = new List<Soul>(3);
+        private List<Soul> m_Souls = new List<Soul>(k_NumOfSouls);
         private bool m_Initialized = false;
         private int m_Score;
         private int m_CurrentSoulsNumber;
-
-        public List<Soul> Souls
-        {
-            get { return m_Souls; }
-        }
 
         public void InitSouls()
         {
@@ -53,7 +48,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_Score = value; }
         }
 
-        // TODO: move createSpaceShip & createSouls out from ctor
         public Player(GameScreen i_GameScreen, PlayerIndex i_PlayerType, Keys i_LeftKey, Keys i_RightKey, Keys i_ShootKey, bool i_IsAllowdToUseMouse, Vector2 initialPosition)
             : base(i_GameScreen.Game)
         {
@@ -98,7 +92,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 m_SpaceShip.Shoot();
             }
 
-            //m_CurrentSoulsNumber = getNumOfSouls();
             m_SpaceShip.Position = new Vector2(MathHelper.Clamp(m_SpaceShip.Position.X, m_SpaceShip.Texture.Width / 2, Game.GraphicsDevice.Viewport.Width - (m_SpaceShip.Texture.Width / 2)), m_SpaceShip.Position.Y);
         }
 
@@ -122,21 +115,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             m_CurrentSoulsNumber--;
         }
-        //private int getNumOfSouls()
-        //{
-        //    int numOfSouls = 0;
-
-        //    foreach(Soul soul in this.m_Souls)
-        //    {
-        //        if(soul.Enabled)
-        //        {
-        //            numOfSouls++;
-        //        }
-        //    }
-
-        //    return numOfSouls;
-        //}
-
+     
         private bool isPlayerAskedToShoot(Keys i_shootKey)
         {
             bool isPlayerAskedToShoot = false;
@@ -170,7 +149,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void initPlayerForForNextLevel()
         {
             this.m_SpaceShip.initSpaceShipForNextLevel();
-            m_Initialized = false; //todo: dana , change
+            m_Initialized = false;
         }
 
         private void createSpaceShip(PlayerIndex i_PlayerType)

@@ -18,19 +18,18 @@ namespace Infrastructure
         public event EventHandler<EventArgs> VolumeIncrease;
         public event EventHandler<EventArgs> VolumeDecrease;
 
-
-
         private Game m_Game;
-        private string m_NumbersAsset;
         private SpriteFont m_Font;
         private ISoundMananger m_SoundMngr;
         private float m_Volume = 100;
         private float m_VolumeToRevert;
+        private const int k_MaxVolume = 100;
+        private const int k_VolumeAddition = 10;
+
 
 
         public VolumeItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen, i_ItemNumber)
         {
-           // this.m_NumbersAsset = i_NumbersAsset;
             this.m_Game = i_GameScreen.Game;
             this.m_SoundMngr = this.m_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
         }
@@ -39,39 +38,6 @@ namespace Infrastructure
         {
             base.LoadContent();
             this.m_Font = this.Game.Content.Load<SpriteFont>(@"Fonts\ERASDEMI");
-            //initVolumePosition();
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            this.m_Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
-            //this.m_SoundSettingsMngr.ToggleGameSoundChanched += new EventHandler<EventArgs>(volumeItem_ToggleGameSoundChanched);
-        }
-
-
-        private void volumeItem_ToggleGameSoundChanched(object sender, EventArgs e)
-        {
-            if (m_SoundMngr.IsGameSoundOn)
-            {
-                this.m_Volume = m_VolumeToRevert;
-            }
-            else
-            {
-                m_VolumeToRevert = m_Volume;
-                this.m_Volume = 0f;
-            }
-        }
-
-        private void Window_ClientSizeChanged(object sender, EventArgs e)
-        {
-            //initVolumePosition();
-        }
-
-        // TODO: implement
-        private void initVolumePosition()
-        {
-            throw new NotImplementedException();
         }
 
         public override void Draw(GameTime gameTime)
@@ -117,13 +83,13 @@ namespace Infrastructure
             {
                 if (this.GameScreen.InputManager.KeyPressed(Keys.PageUp))
                 {
-                    m_Volume = MathHelper.Clamp(m_Volume + 10, 0, 100);
+                    m_Volume = MathHelper.Clamp(m_Volume + k_VolumeAddition, 0, k_MaxVolume);
 
                     this.OnVolumeIncrease(this, null);
                 }
                 else if (this.GameScreen.InputManager.KeyPressed(Keys.PageDown))
                 {
-                    m_Volume = MathHelper.Clamp(m_Volume - 10, 0, 100);
+                    m_Volume = MathHelper.Clamp(m_Volume - k_VolumeAddition, 0, k_MaxVolume);
                     this.OnVolumeDecrease(this, null);
                 }
 
@@ -133,5 +99,6 @@ namespace Infrastructure
         }
 
     }
+
 
 }

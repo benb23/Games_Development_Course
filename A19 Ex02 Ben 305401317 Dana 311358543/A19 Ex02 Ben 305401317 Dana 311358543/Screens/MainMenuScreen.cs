@@ -9,8 +9,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private Background m_Background;
         private MenuHeader m_MenuHeader;
         private ISpaceInvadersEngine m_GameEngine;
-        //private 
-
 
         public MainMenuScreen(Game i_Game) : base(i_Game)
         {
@@ -39,18 +37,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(playItem);
             AddMenuItem(QuitItem);
         }
-
-        //public override void Initialize()
-        //{
-        //    base.Initialize();
-
-            
-
-        //    //m_MenuHeader.Scales *= 0.8f;
-        //    //m_MenuHeader.Position = new Vector2(GraphicsDevice.Viewport.Width / 10, 20);
-
-            
-        //}
 
         private void OnQuitItemClicked(object sender, ScreenEventArgs args)
         {

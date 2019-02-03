@@ -173,7 +173,7 @@ namespace Infrastructure
             }
             else
             {
-                m_InputManager.Initialize(); // todo : keep?
+                m_InputManager.Initialize();
             }
 
             base.Initialize();
@@ -226,7 +226,7 @@ namespace Infrastructure
             }
         }
 
-        public void ExitScreen() //  todo: was protected
+        protected void ExitScreen() 
         {
             this.State = eScreenState.Closing;
             if (DeactivationLength == TimeSpan.Zero)

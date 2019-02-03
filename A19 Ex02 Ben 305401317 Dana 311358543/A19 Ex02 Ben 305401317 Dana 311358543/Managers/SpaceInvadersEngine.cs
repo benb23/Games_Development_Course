@@ -16,13 +16,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             set { m_IsGameOver = value; }
         }
 
-        //private PlayerIndex? m_Winner;
-
-        //public PlayerIndex? Winner
-        //{
-        //    get { return m_Winner; }
-        //}
-
         private ISoundMananger m_SoundManager;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
@@ -33,19 +26,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_Game = i_Game;
             this.m_SoundManager = i_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
-            //m_ScoreBoard = new ScoreBoardHeader(i_GameScreen);
         }
 
         public void InitGameEngineForNewGame()
         {
-            SpaceInvadersConfig.m_LogicLevel = SpaceInvadersConfig.eLevel.One;
+            SpaceInvadersConfig.s_LogicLevel = SpaceInvadersConfig.eLevel.One;
             InitNewPlayers();
             this.IsGameOver = false;
         }
 
         private void InitNewPlayers()
         {
-            for (int i=0 ; i<(int)SpaceInvadersConfig.m_NumOfPlayers; i++)
+            for (int i=0 ; i<(int)SpaceInvadersConfig.s_NumOfPlayers; i++)
             {
                 this.m_Players[i].InitSouls();
                 this.m_Players[i].Score = 0;
@@ -60,9 +52,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if (m_Players == null)
             {
-                m_Players = new List<Player>((int)SpaceInvadersConfig.m_NumOfPlayers);
+                m_Players = new List<Player>((int)SpaceInvadersConfig.s_NumOfPlayers);
                 m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
-                if (SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
+                if (SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
                 {
                     m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
                 }
@@ -113,11 +105,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                     break;
                 }
             }
-
-            //if (this.m_IsGameOver && SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
-            //{
-            //    m_Winner = getWinner();
-            //}
         }
         
         public PlayerIndex? getWinner()
@@ -144,17 +131,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             Player player = m_Players[(int)i_PlayerIndex];
 
-            player.Score = (int)MathHelper.Clamp(player.Score + player.Souls[0].ScoreValue, 0, float.PositiveInfinity);
+            player.Score = (int)MathHelper.Clamp(player.Score + player.SpaceShip.ScoreValue, 0, float.PositiveInfinity);
             player.KillSoul(player);
-
-            //player.Souls.Remove(player.Souls.First());
         }
 
         public void InitGameEngineForNextLevel()
         {
             initPlayersForNextLevel();
             SpaceInvadersConfig.m_Level++;
-            SpaceInvadersConfig.m_LogicLevel = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.m_LogicLevel +1, 0, (int)SpaceInvadersConfig.eLevel.Six);
+            SpaceInvadersConfig.s_LogicLevel = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.s_LogicLevel +1, 0, (int)SpaceInvadersConfig.eLevel.Six);
         }
 
         private void initPlayersForNextLevel()
@@ -165,7 +150,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
         }
 
-        private void updatePlayerScoreAfterHitEnemy(IScoreable i_Player, Enemy i_Enemy)
+        private void updatePlayerScoreAfterHitEnemy(Player i_Player, Enemy i_Enemy)
         {
             i_Player.Score += i_Enemy.ScoreValue;
         }
@@ -232,11 +217,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void ChangeNumOfPlayers(GameScreen i_GameScreen)
         {
-            if(SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.OnePlayer)
+            if(SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.OnePlayer)
             {
-                SpaceInvadersConfig.m_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.TwoPlayers;
+                SpaceInvadersConfig.s_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.TwoPlayers;
 
-                if (this.m_Players != null && SpaceInvadersConfig.m_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers &&
+                if (this.m_Players != null && SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers &&
                     this.m_Players.Count < (int)SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
                 {
                     m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
@@ -244,7 +229,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
             else
             {
-                SpaceInvadersConfig.m_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.OnePlayer;
+                SpaceInvadersConfig.s_NumOfPlayers = SpaceInvadersConfig.eNumOfPlayers.OnePlayer;
             }
         }
 
@@ -316,11 +301,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             if (i_Sender.Velocity.Y < 0) 
             {
                 senderMinY = 0;
-                senderMaxY = (int)(SpaceInvadersConfig.m_sizeOfBulletHitEffect * i_Sender.Texture.Height) + 1;
+                senderMaxY = (int)(SpaceInvadersConfig.k_sizeOfBulletHitEffect * i_Sender.Texture.Height) + 1;
             }
             else
             {
-                senderMinY = (int)((1 - SpaceInvadersConfig.m_sizeOfBulletHitEffect) * i_Sender.Texture.Height);
+                senderMinY = (int)((1 - SpaceInvadersConfig.k_sizeOfBulletHitEffect) * i_Sender.Texture.Height);
                 senderMaxY = i_Sender.Texture.Height;
             }
 
@@ -372,13 +357,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private int getHittenSpritesRowInPixelsArray(CollidableSprite i_HittenSprite, CollidableSprite i_Sender)
         {
-            //int wallColomn = MathHelper.Clamp((int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].Y, 0, i_HittenSprite.Texture.Height);
             int wallColomn = (int)(i_HittenSprite as CollidableSprite).LastCollisionPixelsIndex[0].Y;
 
             if (i_Sender.Velocity.Y < 0)
             {
-                //wallColomn -= MathHelper.Clamp((int)(SpaceInvadersConfig.m_sizeOfBulletHitEffect * i_Sender.Texture.Height), 0, wallColomn);
-                wallColomn -= (int)(SpaceInvadersConfig.m_sizeOfBulletHitEffect * i_Sender.Texture.Height);
+                wallColomn -= (int)(SpaceInvadersConfig.k_sizeOfBulletHitEffect * i_Sender.Texture.Height);
             }
 
             return wallColomn;

@@ -35,17 +35,9 @@ namespace Infrastructure
             m_SoundManager.IsGameSoundOn = !m_SoundManager.IsGameSoundOn;
         }
 
-        private void revertSoundVolumes()
-        {
-            throw new NotImplementedException();
-        }
-
-        // TODO: cheak if we need to limit the volume 
         public void DecreaseBackgroundMusicVolume(object sender, EventArgs args)
         {
             MediaPlayer.Volume = MathHelper.Clamp(MediaPlayer.Volume - 0.1f, 0, 1); 
-
-           
         }
 
         public void IncreaseBackgroundMusicVolume(object sender, EventArgs args)
@@ -66,7 +58,6 @@ namespace Infrastructure
             foreach (SoundEffectInstance effect in m_SoundManager.SoundEffects.Values)
             {
                 effect.Volume = MathHelper.Clamp(effect.Volume + 0.1f, 0, 1);
-
             }
         }
 

@@ -15,16 +15,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private string m_ShotSound;
         private ISoundMananger m_SoundManager;
 
-
-        public Gun(GameScreen i_GameScreen, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection)
-        {
-            m_GameScreen = i_GameScreen;
-            k_MaxNumOfBullets = 100;// i_MaxNumOfBullets;
-            m_BulletsType = i_BulletType;
-            m_Bullets = new List<Bullet>(k_MaxNumOfBullets);
-            m_ShootingDirection = i_ShootingDirection;
-        }
-
         public Gun(GameScreen i_GameScreen, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection, string i_ShotSound)
         {
             m_GameScreen = i_GameScreen;
@@ -36,7 +26,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             
         }
 
-
         public void InitGunForNextLevel()
         {
             foreach(Bullet bullet in m_Bullets)
@@ -45,9 +34,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 bullet.Visible = false;
             }
         }
-
-
-
 
         public void Shoot(Vector2 i_ShooterPosition)
         {
