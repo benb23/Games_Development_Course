@@ -165,7 +165,6 @@ namespace Infrastructure
                     }
                 }
             }
-
             return isPixelsCollided;
         }
     }

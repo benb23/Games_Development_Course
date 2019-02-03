@@ -23,12 +23,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
             toggleGameSound.ToggleValueChanched += new EventHandler<EventArgs>(m_SoundSettingManager.ToggleGameSound);
-            bgMusicVolume.VolumeIncrease += new EventHandler<EventArgs>(m_SoundSettingManager.IncreaseBackgroundMusicVolume);
-            bgMusicVolume.VolumeDecrease += new EventHandler<EventArgs>(m_SoundSettingManager.DecreaseBackgroundMusicVolume);
-            soundEffectsVolume.VolumeIncrease += new EventHandler<EventArgs>(m_SoundSettingManager.IncreaseSoundEffectsVolume);
-            soundEffectsVolume.VolumeDecrease += new EventHandler<EventArgs>(m_SoundSettingManager.DecreaseSoundEffectsVolume);
+            bgMusicVolume.IncreaseVolumeButtonClicked += new EventHandler<EventArgs>(m_SoundSettingManager.IncreaseBackgroundMusicVolume);
+            bgMusicVolume.DecreaseVolumeButtonClicked += new EventHandler<EventArgs>(m_SoundSettingManager.DecreaseBackgroundMusicVolume);
+            soundEffectsVolume.IncreaseVolumeButtonClicked += new EventHandler<EventArgs>(m_SoundSettingManager.IncreaseSoundEffectsVolume);
+            soundEffectsVolume.DecreaseVolumeButtonClicked += new EventHandler<EventArgs>(m_SoundSettingManager.DecreaseSoundEffectsVolume);
 
-            doneItem.ItemClicked += OnItemClicked;
+            doneItem.ItemClicked += handleItemClicked;
 
             AddMenuItem(toggleGameSound);
             AddMenuItem(bgMusicVolume);
@@ -36,7 +36,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             AddMenuItem(doneItem);
         }
 
-        private void OnItemClicked(object sender, ScreenEventArgs args)
+        private void handleItemClicked(object sender, ScreenEventArgs args)
         {
             this.ExitScreen();
         }

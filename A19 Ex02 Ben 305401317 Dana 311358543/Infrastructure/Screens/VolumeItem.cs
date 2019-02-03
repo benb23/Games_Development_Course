@@ -1,28 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace Infrastructure
 {
     public class VolumeItem : MenuItem
     {
 
-        public event EventHandler<EventArgs> VolumeIncrease;
-        public event EventHandler<EventArgs> VolumeDecrease;
+        public event EventHandler<EventArgs> IncreaseVolumeButtonClicked;
+        public event EventHandler<EventArgs> DecreaseVolumeButtonClicked;
 
         private Game m_Game;
         private SpriteFont m_Font;
         private ISoundMananger m_SoundMngr;
         private float m_Volume = 100;
-        private float m_VolumeToRevert;
         private const int k_MaxVolume = 100;
         private const int k_VolumeAddition = 10;
 
@@ -58,19 +50,19 @@ namespace Infrastructure
         }
 
 
-        private void OnVolumeIncrease(object sender, EventArgs args)
+        private void OnIncreaseVolumeButtonClicked(object sender, EventArgs args)
         {
-            if (VolumeIncrease != null)
+            if (IncreaseVolumeButtonClicked != null)
             {
-                VolumeIncrease.Invoke(sender, args);
+                IncreaseVolumeButtonClicked.Invoke(sender, args);
             }
         }
 
-        private void OnVolumeDecrease(object sender, EventArgs args)
+        private void OnDecreaseVolumeButtonClicked(object sender, EventArgs args)
         {
-            if (VolumeDecrease != null)
+            if (DecreaseVolumeButtonClicked != null)
             {
-                VolumeDecrease.Invoke(sender, args);
+                DecreaseVolumeButtonClicked.Invoke(sender, args);
             }
         }
 
@@ -85,12 +77,12 @@ namespace Infrastructure
                 {
                     m_Volume = MathHelper.Clamp(m_Volume + k_VolumeAddition, 0, k_MaxVolume);
 
-                    this.OnVolumeIncrease(this, null);
+                    this.OnIncreaseVolumeButtonClicked(this, null);
                 }
                 else if (this.GameScreen.InputManager.KeyPressed(Keys.PageDown))
                 {
                     m_Volume = MathHelper.Clamp(m_Volume - k_VolumeAddition, 0, k_MaxVolume);
-                    this.OnVolumeDecrease(this, null);
+                    this.OnIncreaseVolumeButtonClicked(this, null);
                 }
 
                 

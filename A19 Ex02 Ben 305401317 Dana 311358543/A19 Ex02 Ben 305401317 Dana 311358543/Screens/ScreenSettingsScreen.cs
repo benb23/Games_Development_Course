@@ -25,7 +25,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(mouseVisabilityChanged);
             windowResizing.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleAllowWindowResizingConfig);
             fullScreen.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleFullScreenModeConfig);
-            doneItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+            doneItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
 
             AddMenuItem(mouseVisability);
             AddMenuItem(windowResizing);
@@ -39,7 +39,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.IsUsingMouse = !this.IsUsingMouse;
         }
 
-        private void OnItemClicked(object sender, ScreenEventArgs args)
+        private void handleItemClicked(object sender, ScreenEventArgs args)
         {
             this.ExitScreen();
         }

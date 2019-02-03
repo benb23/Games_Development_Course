@@ -28,9 +28,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\GameOver\Restart", this, index++);
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
 
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnQuitItemClicked);
-            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
-            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.quit);
+            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
+            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
 
             AddMenuItem(QuitItem);
             AddMenuItem(playItem);
@@ -80,12 +80,12 @@ m_GameEngine.Players[0].Score.ToString());
             return winner;
         }
 
-        private void OnQuitItemClicked(object sender, ScreenEventArgs args)
+        private void quit(object sender, ScreenEventArgs args)
         {
             Game.Exit();
         }
 
-        private void OnItemClicked(object sender, ScreenEventArgs args)
+        private void handleItemClicked(object sender, ScreenEventArgs args)
         {
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
@@ -94,15 +94,15 @@ m_GameEngine.Players[0].Score.ToString());
         {
             if (InputManager.KeyPressed(Keys.Escape))
             {
-                OnQuitItemClicked(this, null);
+                quit(this, null);
             }
             else if(InputManager.KeyPressed(Keys.Home))
             {
-                OnItemClicked(this, new ScreenEventArgs("PlayScreen"));
+                handleItemClicked(this, new ScreenEventArgs("PlayScreen"));
             }
             else if (InputManager.KeyPressed(Keys.T))
             {
-                OnItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
+                handleItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
             }
             
             base.Update(gameTime);

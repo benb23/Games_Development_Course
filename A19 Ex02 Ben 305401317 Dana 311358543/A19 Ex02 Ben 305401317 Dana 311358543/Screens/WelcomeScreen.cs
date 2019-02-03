@@ -22,21 +22,21 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
 
-            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
-            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnItemClicked);
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(OnQuitItemClicked);
+            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
+            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(quit);
 
             AddMenuItem(playItem);
             AddMenuItem(mainMenuItem);
             AddMenuItem(QuitItem);
         }
 
-        private void OnQuitItemClicked(object sender, ScreenEventArgs args)
+        private void quit(object sender, ScreenEventArgs args)
         {
             Game.Exit();
         }
 
-        private void OnItemClicked(object sender, ScreenEventArgs args)
+        private void handleItemClicked(object sender, ScreenEventArgs args)
         {
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
@@ -52,15 +52,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if (InputManager.KeyPressed(Keys.Enter))
             {
-                OnItemClicked(this, new ScreenEventArgs("PlayScreen"));
+                handleItemClicked(this, new ScreenEventArgs("PlayScreen"));
             }
             else if(InputManager.KeyPressed(Keys.T))
             {
-                OnItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
+                handleItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
             }
             else if (InputManager.KeyPressed(Keys.Escape))
             {
-                OnQuitItemClicked(this,null);
+                quit(this,null);
             }
 
             base.Update(gameTime);

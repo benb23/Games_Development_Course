@@ -49,7 +49,7 @@ namespace Infrastructure
 
                 if (ActiveChanged != null)
                 {
-                    OnActiveChanged(this, null);
+                    ItemActiveChanged(this, null);
                 }
             }
         }
@@ -58,7 +58,7 @@ namespace Infrastructure
         {
             base.Initialize();
 
-            ActiveChanged += new EventHandler<EventArgs>(OnActiveChanged);
+            ActiveChanged += new EventHandler<EventArgs>(ItemActiveChanged);
 
             if(m_isSoundOn)
             {
@@ -78,7 +78,7 @@ namespace Infrastructure
             this.Animations.Add(pulsAnimator);
         }
 
-        private void OnActiveChanged(object sender, EventArgs e)
+        private void ItemActiveChanged(object sender, EventArgs e)
         {
             if (m_IsActive)
             {

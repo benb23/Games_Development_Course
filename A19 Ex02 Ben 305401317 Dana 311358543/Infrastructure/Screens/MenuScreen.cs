@@ -65,19 +65,19 @@ namespace Infrastructure
 
         public override void Initialize()
         {
-            this.m_Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
-            initFirstItemePosition();
+            this.m_Game.Window.ClientSizeChanged += updatePositionsAfterWindowSizeChanged;
+            initFirstItemPosition();
             initItemesPositions();
             base.Initialize();
         }
 
-        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        private void updatePositionsAfterWindowSizeChanged(object sender, EventArgs e)
         {
-            initFirstItemePosition();
+            initFirstItemPosition();
             initItemesPositions();
         }
 
-        private void initFirstItemePosition()
+        private void initFirstItemPosition()
         {
             m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 3 - m_OffsetX, m_Game.Window.ClientBounds.Height / 2.5f + m_OffsetY);
         }
