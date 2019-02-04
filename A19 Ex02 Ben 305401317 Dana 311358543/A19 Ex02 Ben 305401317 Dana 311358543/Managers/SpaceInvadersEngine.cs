@@ -4,23 +4,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class SpaceInvadersEngine : GameService, ISpaceInvadersEngine
     {
         private bool m_IsGameOver = false;
-
-        public bool IsGameOver
-        {
-            get { return m_IsGameOver; }
-            set { m_IsGameOver = value; }
-        }
-
         private ISoundMananger m_SoundManager;
         private IInputManager m_InputManager;
         private List<Player> m_Players;
         private Random m_Random;
         private Game m_Game;
+
+        public bool IsGameOver
+        {
+            get { return this.m_IsGameOver; }
+            set { this.m_IsGameOver = value; }
+        }
 
         public SpaceInvadersEngine(Game i_Game) : base(i_Game)
         {
@@ -31,13 +30,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public void InitGameEngineForNewGame()
         {
             SpaceInvadersConfig.s_LogicLevel = SpaceInvadersConfig.eLevel.One;
-            InitNewPlayers();
+            this.initNewPlayers();
             this.IsGameOver = false;
         }
 
-        private void InitNewPlayers()
+        private void initNewPlayers()
         {
-            for (int i=0 ; i<(int)SpaceInvadersConfig.s_NumOfPlayers; i++)
+            for (int i = 0; i < (int)SpaceInvadersConfig.s_NumOfPlayers; i++)
             {
                 this.m_Players[i].InitSouls();
                 this.m_Players[i].Score = 0;
@@ -45,32 +44,34 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_Players[i].SpaceShip.Enabled = true;
                 this.m_Players[i].SpaceShip.Visible = true;
             }
-            initPlayersForNextLevel();
+
+            this.initPlayersForNextLevel();
         }
 
         public void CreatePlayers(GameScreen i_GameScreen)
         {
-            if (m_Players == null)
+            if (this.m_Players == null)
             {
-                m_Players = new List<Player>((int)SpaceInvadersConfig.s_NumOfPlayers);
-                m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
+                this.m_Players = new List<Player>((int)SpaceInvadersConfig.s_NumOfPlayers);
+                this.m_Players.Add(new Player(i_GameScreen, PlayerIndex.One, Keys.H, Keys.K, Keys.U, true, new Vector2(0, 0)));
                 if (SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
                 {
-                    m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+                    this.m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
                 }
             }
             else
             {
-                InitNewPlayers();
+                this.initNewPlayers();
             }
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (IsPlayerAskToExit())
+
+            if (this.IsPlayerAskToExit())
             {
-                Game.Exit();
+                this.Game.Exit();
             }
         }
 
@@ -78,30 +79,30 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             bool IsPlayerAskToExit;
 
-            if (m_InputManager == null)
+            if (this.m_InputManager == null)
             {
-                m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
+                this.m_InputManager = this.Game.Services.GetService(typeof(IInputManager)) as IInputManager;
             }
 
-            IsPlayerAskToExit = m_InputManager.KeyboardState.IsKeyDown(Keys.Escape);
+            IsPlayerAskToExit = this.m_InputManager.KeyboardState.IsKeyDown(Keys.Escape);
           
             return IsPlayerAskToExit;
         }
 
         public List<Player> Players
         {
-            get { return m_Players; }
-            set { m_Players = value; }
+            get { return this.m_Players; }
+            set { this.m_Players = value; }
         }
 
         private void player_Died(object sender, EventArgs e)
         {
             this.m_IsGameOver = true;
-            foreach(Player player in m_Players)
+            foreach(Player player in this.m_Players)
             {
                 if(player.CurrentSoulsNum != 0)
                 {
-                    m_IsGameOver = false;
+                    this.m_IsGameOver = false;
                     break;
                 }
             }
@@ -111,11 +112,11 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             PlayerIndex? winner;
 
-            if(Players[(int)PlayerIndex.One].Score > Players[(int)PlayerIndex.Two].Score)
+            if(this.Players[(int)PlayerIndex.One].Score > this.Players[(int)PlayerIndex.Two].Score)
             {
                 winner = PlayerIndex.One;
             }
-            else if(Players[(int)PlayerIndex.One].Score < Players[(int)PlayerIndex.Two].Score)
+            else if(this.Players[(int)PlayerIndex.One].Score < this.Players[(int)PlayerIndex.Two].Score)
             {
                 winner = PlayerIndex.Two;
             }
@@ -129,7 +130,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void updatePlayerScoreAndSouls(PlayerIndex i_PlayerIndex)
         {
-            Player player = m_Players[(int)i_PlayerIndex];
+            Player player = this.m_Players[(int)i_PlayerIndex];
 
             player.Score = (int)MathHelper.Clamp(player.Score + player.SpaceShip.ScoreValue, 0, float.PositiveInfinity);
             player.KillSoul(player);
@@ -137,14 +138,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void InitGameEngineForNextLevel()
         {
-            initPlayersForNextLevel();
+            this.initPlayersForNextLevel();
             SpaceInvadersConfig.m_Level++;
-            SpaceInvadersConfig.s_LogicLevel = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.s_LogicLevel +1, 0, (int)SpaceInvadersConfig.eLevel.Six);
+            SpaceInvadersConfig.s_LogicLevel = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.s_LogicLevel + 1, 0, (int)SpaceInvadersConfig.eLevel.Six);
         }
 
         private void initPlayersForNextLevel()
         {
-            foreach (Player player in m_Players)
+            foreach (Player player in this.m_Players)
             {
                 player.initPlayerForForNextLevel();
             }
@@ -190,23 +191,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             Player player = this.m_Players[(int)i_Target.Owner];
             
-
             if (i_Collidable is Bullet)
             {
                 this.updatePlayerScoreAndSouls(i_Target.Owner);
                 if (player.CurrentSoulsNum == 0)
                 {
-                    
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.m_Players[(int)i_Target.Owner].destroyed_Finished);
                     player.SpaceShip.Animations["Destroy"].Finished += new EventHandler(this.player_Died);
-                    player.SpaceShip.Animations["Destroy"].Restart();
-                    
+                    player.SpaceShip.Animations["Destroy"].Restart(); 
                 }
                 else
                 {
                     player.SpaceShip.Animations["LoosingSoul"].Restart();
-                    
                 }
+
                 this.m_SoundManager.PlaySoundEffect("LifeDie");
             }
             else if (i_Collidable is Enemy)
@@ -224,7 +222,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 if (this.m_Players != null && SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers &&
                     this.m_Players.Count < (int)SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
                 {
-                    m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
+                    this.m_Players.Add(new Player(i_GameScreen, PlayerIndex.Two, Keys.A, Keys.D, Keys.W, false, new Vector2(1, 0)));
                 }
             }
             else
@@ -263,8 +261,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             this.m_SoundManager.PlaySoundEffect("MotherShipKill");
-
-
         }
 
         public void HandleHit(Wall i_Wall, ICollidable i_Collidable)
@@ -273,8 +269,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             {
                 this.deletePixelsInVerticalDirection(i_Wall as CollidableSprite, i_Collidable as CollidableSprite);
                 this.m_SoundManager.PlaySoundEffect("BarrierHit");
-
-
             }
             else if(i_Collidable is Enemy)
             {

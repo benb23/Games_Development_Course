@@ -3,92 +3,92 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class MotherSpaceShip : CollidableSprite, IRectangleCollidable
     {
         private const string k_AssteName = @"Sprites\MotherShip_32x120";
-        private Random m_Random;
         private const int k_MaxRandomNumToDrawMotherShip = 70;
         public const int k_MaxRandomNumber = 50000;
+        private Random m_Random;
         private ISpaceInvadersEngine m_GameEngine;
         private bool m_OnMove = false;
 
         public MotherSpaceShip(GameScreen i_GameScreen) : base(k_AssteName, i_GameScreen)
 		{
-            m_ScoreValue =(int)SpaceInvadersConfig.eScoreValue.MotherShip;
+            this.m_ScoreValue = (int)SpaceInvadersConfig.eScoreValue.MotherShip;
             this.m_TintColor = Color.Red;
             this.Velocity = new Vector2(40, 0);
-            Visible = false;
+            this.Visible = false;
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            initAnimations();
+            this.initAnimations();
         }
 
         public void InitMotherShipForNextLevel()
         {
-            m_Initialize = false;
-            m_OnMove = false;
+            this.m_Initialize = false;
+            this.m_OnMove = false;
         }
 
         public override void Update(GameTime i_GameTime)
         {
-            if (!m_Initialize)
+            if (!this.m_Initialize)
             {
-                InitPosition();
-                m_Initialize = true;
+                this.initPosition();
+                this.m_Initialize = true;
             }
 
-            if(m_Random == null)
+            if(this.m_Random == null)
             {
-                m_Random = Game.Services.GetService(typeof(Random)) as Random;
+                this.m_Random = this.Game.Services.GetService(typeof(Random)) as Random;
             }
 
-            if (!m_OnMove)
+            if (!this.m_OnMove)
             {
-                if (m_Random.Next(0, k_MaxRandomNumber) <= k_MaxRandomNumToDrawMotherShip)
+                if (this.m_Random.Next(0, k_MaxRandomNumber) <= k_MaxRandomNumToDrawMotherShip)
                 {
-                    Visible = true;
-                    m_OnMove = true;
+                    this.Visible = true;
+                    this.m_OnMove = true;
                 }
             }
             else
             {
                 base.Update(i_GameTime);
-                if (m_Position.X >= GraphicsDevice.Viewport.Width)
+                if (this.m_Position.X >= this.GraphicsDevice.Viewport.Width)
                 {
-                    Visible = false;
-                    m_OnMove = false;
-                    m_Initialize = false;
+                    this.Visible = false;
+                    this.m_OnMove = false;
+                    this.m_Initialize = false;
                 }
             }
         }
 
-        private void InitPosition()
+        private void initPosition()
         {
             this.Position = new Vector2(-Texture.Width, Texture.Height);
         }
 
         void ICollidable.Collided(ICollidable i_Collidable)
         {
-            if (!Animations["DestroyMother"].Enabled)
+            if (!this.Animations["DestroyMother"].Enabled)
             {
-                if (m_GameEngine == null)
+                if (this.m_GameEngine == null)
                 {
-                    m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+                    this.m_GameEngine = this.Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
                 }
 
-                Animations["DestroyMother"].Restart();
-                m_GameEngine.HandleHit(this, i_Collidable as Bullet);
+                this.Animations["DestroyMother"].Restart();
+                this.m_GameEngine.HandleHit(this, i_Collidable as Bullet);
             }
         }
 
         protected override void InitOrigins()
         {
-            m_PositionOrigin = new Vector2(Texture.Width / 2, 0);
+            this.m_PositionOrigin = new Vector2(this.Texture.Width / 2, 0);
             base.InitOrigins();
         }
 
@@ -105,17 +105,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void destroyed_Finished(object sender, EventArgs e)
         {
-            InitPosition();
-            m_OnMove = false;
+            this.initPosition();
+            this.m_OnMove = false;
         }
         
         public override void Draw(GameTime gameTime)
         {
-            m_SpriteBatch.End();
-            m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-            DrawWithAllParameters();
-            m_SpriteBatch.End();
-            m_SpriteBatch.Begin();
+            this.m_SpriteBatch.End();
+            this.m_SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            this.DrawWithAllParameters();
+            this.m_SpriteBatch.End();
+            this.m_SpriteBatch.Begin();
         }
     }
 }

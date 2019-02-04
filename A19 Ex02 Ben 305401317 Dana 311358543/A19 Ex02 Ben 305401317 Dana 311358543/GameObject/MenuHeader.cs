@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class MenuHeader : Sprite
     {
@@ -13,8 +13,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             set
             {
-                m_OffsetY = value;
-                initDedaultPosition();
+                this.m_OffsetY = value;
+                this.initDedaultPosition();
             }
         }
 
@@ -22,52 +22,50 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             set
             {
-                m_OffsetX = value;
-                initDedaultPosition();
+                this.m_OffsetX = value;
+                this.initDedaultPosition();
             }
         }
 
         public MenuHeader(GameScreen i_GameScreen, string i_AssetName) : base(i_AssetName, i_GameScreen)
         {
             this.m_GameScreen = i_GameScreen;
-            initDedaultPosition();
+            this.initDedaultPosition();
         }
 
         public MenuHeader(GameScreen i_GameScreen, string i_AssetName, float i_Scale) : base(i_AssetName, i_GameScreen)
         {
             this.m_GameScreen = i_GameScreen;
-            initDedaultPosition();
+            this.initDedaultPosition();
             this.m_Scales = new Vector2(i_Scale);
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            this.Position = new Vector2(m_GameScreen.Game.Window.ClientBounds.Width / 2 + m_OffsetX, m_OffsetY);
+            this.Position = new Vector2((this.m_GameScreen.Game.Window.ClientBounds.Width / 2) + this.m_OffsetX, this.m_OffsetY);
         }
 
         private void initDedaultPosition()
         {
-            this.Position = new Vector2(m_GameScreen.Game.Window.ClientBounds.Width / 2 + m_OffsetX, m_OffsetY);
+            this.Position = new Vector2((this.m_GameScreen.Game.Window.ClientBounds.Width / 2) + this.m_OffsetX, this.m_OffsetY);
         }
-
 
         public int SourceRecWidth
         {
-            set { m_SourceRectangle.Width = value; }
+            set { this.m_SourceRectangle.Width = value; }
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            InitOrigins();
-            this.m_GameScreen.Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
+            this.InitOrigins();
+            this.m_GameScreen.Game.Window.ClientSizeChanged += this.Window_ClientSizeChanged;
         }
 
         protected override void InitOrigins()
         {
-            this.PositionOrigin = new Vector2(this.Texture.Width/2, 0);
+            this.PositionOrigin = new Vector2(this.Texture.Width / 2, 0);
             base.InitOrigins();
         }
     }
 }
-

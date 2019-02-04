@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen © 2008-2011 ***//
+﻿////*** Guy Ronen © 2008-2011 ***//
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace Infrastructure
         where ComponentType : IGameComponent
     {
         // the entire collection, for general collection methods (count, foreach, etc.):
-        Collection<ComponentType> m_Components = new Collection<ComponentType>();
+        private Collection<ComponentType> m_Components = new Collection<ComponentType>();
 
         #region Selective Collections
         // selective holders for specific operations each frame:
@@ -30,20 +30,23 @@ namespace Infrastructure
         #endregion //Selective Collections
 
         #region Events
+
         public event EventHandler<GameComponentEventArgs<ComponentType>> ComponentAdded;
+
         public event EventHandler<GameComponentEventArgs<ComponentType>> ComponentRemoved;
+
         #endregion //Events
 
         #region Add/Remove
         protected virtual void OnComponentAdded(GameComponentEventArgs<ComponentType> e)
         {
-            if (m_IsInitialized)
+            if (this.m_IsInitialized)
             {
-                InitializeComponent(e.GameComponent);
+                this.InitializeComponent(e.GameComponent);
             }
             else
             {
-                m_UninitializedComponents.Add(e.GameComponent);
+                this.m_UninitializedComponents.Add(e.GameComponent);
             }
 
             // If the new component implements IUpdateable:
@@ -52,8 +55,8 @@ namespace Infrastructure
             IUpdateable updatable = e.GameComponent as IUpdateable;
             if (updatable != null)
             {
-                insertSorted(updatable);
-                updatable.UpdateOrderChanged += new EventHandler<EventArgs>(childUpdateOrderChanged);
+                this.insertSorted(updatable);
+                updatable.UpdateOrderChanged += new EventHandler<EventArgs>(this.childUpdateOrderChanged);
             }
 
             // If the new component implements IDrawable:
@@ -62,52 +65,51 @@ namespace Infrastructure
             IDrawable drawable = e.GameComponent as IDrawable;
             if (drawable != null)
             {
-                insertSorted(drawable);
-                drawable.DrawOrderChanged += new EventHandler<EventArgs>(childDrawOrderChanged);
+                this.insertSorted(drawable);
+                drawable.DrawOrderChanged += new EventHandler<EventArgs>(this.childDrawOrderChanged);
             }
 
             // raise the Added event:
-            if (ComponentAdded != null)
+            if (this.ComponentAdded != null)
             {
-                ComponentAdded(this, e);
+                this.ComponentAdded(this, e);
             }
         }
 
         protected virtual void OnComponentRemoved(GameComponentEventArgs<ComponentType> e)
         {
-            if (!m_IsInitialized)
+            if (!this.m_IsInitialized)
             {
-                m_UninitializedComponents.Remove(e.GameComponent);
+                this.m_UninitializedComponents.Remove(e.GameComponent);
             }
 
             IUpdateable updatable = e.GameComponent as IUpdateable;
             if (updatable != null)
             {
-                m_UpdateableComponents.Remove(updatable);
-                updatable.UpdateOrderChanged -= childUpdateOrderChanged;
+                this.m_UpdateableComponents.Remove(updatable);
+                updatable.UpdateOrderChanged -= this.childUpdateOrderChanged;
             }
 
             Sprite sprite = e.GameComponent as Sprite;
             if (sprite != null)
             {
-                m_Sprites.Remove(sprite);
-                sprite.DrawOrderChanged -= childDrawOrderChanged;
+                this.m_Sprites.Remove(sprite);
+                sprite.DrawOrderChanged -= this.childDrawOrderChanged;
             }
-
             else
             {
                 IDrawable drawable = e.GameComponent as IDrawable;
                 if (drawable != null)
                 {
-                    m_DrawableComponents.Remove(drawable);
-                    drawable.DrawOrderChanged -= childDrawOrderChanged;
+                    this.m_DrawableComponents.Remove(drawable);
+                    drawable.DrawOrderChanged -= this.childDrawOrderChanged;
                 }
             }
 
             // raise the Removed event:
-            if (ComponentRemoved != null)
+            if (this.ComponentRemoved != null)
             {
-                ComponentRemoved(this, e);
+                this.ComponentRemoved(this, e);
             }
         }
 
@@ -118,9 +120,8 @@ namespace Infrastructure
         private void childUpdateOrderChanged(object sender, EventArgs e)
         {
             IUpdateable updatable = sender as IUpdateable;
-            m_UpdateableComponents.Remove(updatable);
-
-            insertSorted(updatable);
+            this.m_UpdateableComponents.Remove(updatable);
+            this.insertSorted(updatable);
         }
 
         /// <summary>
@@ -134,28 +135,30 @@ namespace Infrastructure
             Sprite sprite = sender as Sprite;
             if (sprite != null)
             {
-                m_Sprites.Remove(sprite);
+                this.m_Sprites.Remove(sprite);
             }
             else
             {
-                m_DrawableComponents.Remove(drawable);
+                this.m_DrawableComponents.Remove(drawable);
             }
 
-            insertSorted(drawable);
+            this.insertSorted(drawable);
         }
 
         public CompositeDrawableComponent(Game i_Game)
             : base(i_Game)
-        { }
+        {
+        }
 
         private void insertSorted(IUpdateable i_Updatable)
         {
-            int idx = m_UpdateableComponents.BinarySearch(i_Updatable, UpdateableComparer.Default);
+            int idx = this.m_UpdateableComponents.BinarySearch(i_Updatable, UpdateableComparer.Default);
             if (idx < 0)
             {
                 idx = ~idx;
             }
-            m_UpdateableComponents.Insert(idx, i_Updatable);
+
+            this.m_UpdateableComponents.Insert(idx, i_Updatable);
         }
 
         private void insertSorted(IDrawable i_Drawable)
@@ -163,21 +166,23 @@ namespace Infrastructure
             Sprite sprite = i_Drawable as Sprite;
             if (sprite != null)
             {
-                int idx = m_Sprites.BinarySearch(sprite, DrawableComparer<Sprite>.Default);
+                int idx = this.m_Sprites.BinarySearch(sprite, DrawableComparer<Sprite>.Default);
                 if (idx < 0)
                 {
                     idx = ~idx;
                 }
-                m_Sprites.Insert(idx, sprite);
+
+                this.m_Sprites.Insert(idx, sprite);
             }
             else
             {
-                int idx = m_DrawableComponents.BinarySearch(i_Drawable, DrawableComparer<IDrawable>.Default);
+                int idx = this.m_DrawableComponents.BinarySearch(i_Drawable, DrawableComparer<IDrawable>.Default);
                 if (idx < 0)
                 {
                     idx = ~idx;
                 }
-                m_DrawableComponents.Insert(idx, i_Drawable);
+
+                this.m_DrawableComponents.Insert(idx, i_Drawable);
             }
         }
         #endregion //Add/Remove
@@ -191,17 +196,16 @@ namespace Infrastructure
         /// </summary>
         public override void Initialize()
         {
-            if (!m_IsInitialized)
+            if (!this.m_IsInitialized)
             {
                 // Initialize any un-initialized game components
-                while (m_UninitializedComponents.Count > 0)
+                while (this.m_UninitializedComponents.Count > 0)
                 {
-                    InitializeComponent(m_UninitializedComponents[0]);
+                    this.InitializeComponent(this.m_UninitializedComponents[0]);
                 }
 
                 base.Initialize();
-
-                m_IsInitialized = true;
+                this.m_IsInitialized = true;
             }
         }
 
@@ -209,30 +213,29 @@ namespace Infrastructure
         {
             if (i_Component is Sprite)
             {
-                (i_Component as Sprite).SpriteBatch = m_SpriteBatch;
+                (i_Component as Sprite).SpriteBatch = this.m_SpriteBatch;
             }
 
             i_Component.Initialize();
-            m_UninitializedComponents.Remove(i_Component);
+            this.m_UninitializedComponents.Remove(i_Component);
         }
 
         protected override void LoadContent()
         {
             base.LoadContent();
+            this.m_SpriteBatch = new SpriteBatch(this.GraphicsDevice);
 
-            m_SpriteBatch = new SpriteBatch(this.GraphicsDevice);
-
-            foreach (Sprite sprite in m_Sprites)
+            foreach (Sprite sprite in this.m_Sprites)
             {
-                sprite.SpriteBatch = m_SpriteBatch;
+                sprite.SpriteBatch = this.m_SpriteBatch;
             }
         }
 
         public override void Update(GameTime gameTime)
         {
-            for (int i = 0; i < m_UpdateableComponents.Count; i++)
+            for (int i = 0; i < this.m_UpdateableComponents.Count; i++)
             {
-                IUpdateable updatable = m_UpdateableComponents[i];
+                IUpdateable updatable = this.m_UpdateableComponents[i];
                 if (updatable.Enabled)
                 {
                     updatable.Update(gameTime);
@@ -242,20 +245,26 @@ namespace Infrastructure
 
         public override void Draw(GameTime gameTime)
         {
-            m_SpriteBatch.Begin(
-                this.SpritesSortMode, this.BlendState, this.SamplerState,
-                this.DepthStencilState, this.RasterizerState, this.Shader, this.TransformMatrix);
+            this.m_SpriteBatch.Begin(
+                                this.SpritesSortMode, 
+                                this.BlendState, 
+                                this.SamplerState,
+                                this.DepthStencilState, 
+                                this.RasterizerState, 
+                                this.Shader, 
+                                this.TransformMatrix);
 
-            foreach (Sprite sprite in m_Sprites)
+            foreach (Sprite sprite in this.m_Sprites)
             {
                 if (sprite.Visible)
                 {
                     sprite.Draw(gameTime);
                 }
             }
-            m_SpriteBatch.End();
 
-            foreach (IDrawable drawable in m_DrawableComponents) //todo : was first
+            this.m_SpriteBatch.End();
+
+            foreach (IDrawable drawable in this.m_DrawableComponents)
             {
                 if (drawable.Visible)
                 {
@@ -269,9 +278,9 @@ namespace Infrastructure
             if (disposing)
             {
                 // Dispose of components in this manager
-                for (int i = 0; i < Count; i++)
+                for (int i = 0; i < this.Count; i++)
                 {
-                    IDisposable disposable = m_Components[i] as IDisposable;
+                    IDisposable disposable = this.m_Components[i] as IDisposable;
                     if (disposable != null)
                     {
                         disposable.Dispose();
@@ -287,47 +296,47 @@ namespace Infrastructure
 
         public virtual void Add(ComponentType i_Component)
         {
-            this.InsertItem(m_Components.Count, i_Component);
+            this.InsertItem(this.m_Components.Count, i_Component);
         }
 
         protected virtual void InsertItem(int i_Idx, ComponentType i_Component)
         {
-            if (m_Components.IndexOf(i_Component) != -1)
+            if (this.m_Components.IndexOf(i_Component) != -1)
             {
                 throw new ArgumentException("Duplicate components are not allowed in the same GameComponentManager.");
             }
 
             if (i_Component != null)
             {
-                m_Components.Insert(i_Idx, i_Component);
+                this.m_Components.Insert(i_Idx, i_Component);
 
-                OnComponentAdded(new GameComponentEventArgs<ComponentType>(i_Component));
+                this.OnComponentAdded(new GameComponentEventArgs<ComponentType>(i_Component));
             }
         }
 
         public void Clear()
         {
-            for (int i = 0; i < Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
-                OnComponentRemoved(new GameComponentEventArgs<ComponentType>(m_Components[i]));
+                this.OnComponentRemoved(new GameComponentEventArgs<ComponentType>(this.m_Components[i]));
             }
 
-            m_Components.Clear();
+            this.m_Components.Clear();
         }
 
         public bool Contains(ComponentType i_Component)
         {
-            return m_Components.Contains(i_Component);
+            return this.m_Components.Contains(i_Component);
         }
 
         public void CopyTo(ComponentType[] io_ComponentsArray, int i_ArrayIndex)
         {
-            m_Components.CopyTo(io_ComponentsArray, i_ArrayIndex);
+            this.m_Components.CopyTo(io_ComponentsArray, i_ArrayIndex);
         }
 
         public int Count
         {
-            get { return m_Components.Count; }
+            get { return this.m_Components.Count; }
         }
 
         public bool IsReadOnly
@@ -337,11 +346,11 @@ namespace Infrastructure
 
         public virtual bool Remove(ComponentType i_Component)
         {
-            bool removed = m_Components.Remove(i_Component);
+            bool removed = this.m_Components.Remove(i_Component);
 
             if (i_Component != null && removed)
             {
-                OnComponentRemoved(new GameComponentEventArgs<ComponentType>(i_Component));
+                this.OnComponentRemoved(new GameComponentEventArgs<ComponentType>(i_Component));
             }
 
             return removed;
@@ -349,71 +358,79 @@ namespace Infrastructure
 
         public IEnumerator<ComponentType> GetEnumerator()
         {
-            return m_Components.GetEnumerator();
+            return this.m_Components.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)m_Components).GetEnumerator();
+            return ((IEnumerable)this.m_Components).GetEnumerator();
         }
 
         #endregion ICollection<ComponentType> Implementations
 
         #region SpriteBatch Advanced Support
         protected SpriteBatch m_SpriteBatch;
+
         public SpriteBatch SpriteBatch
         {
-            get { return m_SpriteBatch; }
-            set { m_SpriteBatch = value; }
+            get { return this.m_SpriteBatch; }
+            set { this.m_SpriteBatch = value; }
         }
 
         protected BlendState m_BlendState = BlendState.AlphaBlend;
+
         public BlendState BlendState
         {
-            get { return m_BlendState; }
-            set { m_BlendState = value; }
+            get { return this.m_BlendState; }
+            set { this.m_BlendState = value; }
         }
 
         protected SpriteSortMode m_SpritesSortMode = SpriteSortMode.Deferred;
+
         public SpriteSortMode SpritesSortMode
         {
-            get { return m_SpritesSortMode; }
-            set { m_SpritesSortMode = value; }
+            get { return this.m_SpritesSortMode; }
+            set { this.m_SpritesSortMode = value; }
         }
 
         protected SamplerState m_SamplerState = null;
+
         public SamplerState SamplerState
         {
-            get { return m_SamplerState; }
-            set { m_SamplerState = value; }
+            get { return this.m_SamplerState; }
+            set { this.m_SamplerState = value; }
         }
 
         protected DepthStencilState m_DepthStencilState = null;
+
         public DepthStencilState DepthStencilState
         {
-            get { return m_DepthStencilState; }
-            set { m_DepthStencilState = value; }
+            get { return this.m_DepthStencilState; }
+            set { this.m_DepthStencilState = value; }
         }
 
         protected RasterizerState m_RasterizerState = null;
+
         public RasterizerState RasterizerState
         {
-            get { return m_RasterizerState; }
-            set { m_RasterizerState = value; }
+            get { return this.m_RasterizerState; }
+            set { this.m_RasterizerState = value; }
         }
 
         protected Effect m_Shader = null;
+
         public Effect Shader
         {
-            get { return m_Shader; }
-            set { m_Shader = value; }
+            get { return this.m_Shader; }
+            set { this.m_Shader = value; }
         }
 
         protected Matrix m_TransformMatrix = Matrix.Identity;
+
         public Matrix TransformMatrix
         {
-            get { return m_TransformMatrix; }
-            set { m_TransformMatrix = value; }
+            get { return this.m_TransformMatrix; }
+            set { this.m_TransformMatrix = value; }
         }
         #endregion SpriteBatch Advanced Support
 
@@ -443,8 +460,14 @@ namespace Infrastructure
         /// </summary>
         public static readonly UpdateableComparer Default;
 
-        static UpdateableComparer() { Default = new UpdateableComparer(); }
-        private UpdateableComparer() { }
+        static UpdateableComparer()
+        {
+            Default = new UpdateableComparer();
+        }
+
+        private UpdateableComparer()
+        {
+        }
 
         public int Compare(IUpdateable x, IUpdateable y)
         {
@@ -477,7 +500,6 @@ namespace Infrastructure
             return retCompareResult;
         }
     }
-
     /// <summary>
     /// A comparer designed to assist with sorting IDrawable interfaces.
     /// </summary>
@@ -486,11 +508,17 @@ namespace Infrastructure
     {
         /// <summary>
         /// A static copy of the comparer to avoid the GC.
-        /// </summary>
+        /// </summary>   
         public static readonly DrawableComparer<TDrawble> Default;
 
-        static DrawableComparer() { Default = new DrawableComparer<TDrawble>(); }
-        private DrawableComparer() { }
+        static DrawableComparer()
+        {
+            Default = new DrawableComparer<TDrawble>();
+        }
+
+        private DrawableComparer()
+        {
+        }
 
         #region IComparer<IDrawable> Members
 
@@ -539,12 +567,12 @@ namespace Infrastructure
 
         public GameComponentEventArgs(ComponentType gameComponent)
         {
-            m_Component = gameComponent;
+            this.m_Component = gameComponent;
         }
 
         public ComponentType GameComponent
         {
-            get { return m_Component; }
+            get { return this.m_Component; }
         }
     }
 }

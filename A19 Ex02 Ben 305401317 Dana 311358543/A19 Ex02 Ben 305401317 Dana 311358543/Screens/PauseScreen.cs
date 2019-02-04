@@ -2,8 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using Infrastructure;
 
-
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class PauseScreen : GameScreen
     {
@@ -17,7 +16,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.BlackTintAlpha = 0.4f;
             this.m_PauseMsg = new MenuHeader(this, @"Screens\Pause\PausedMessage");
             this.m_PauseMsg.OffsetY = 250;
-
         }
 
         public override void Update(GameTime gameTime)
@@ -26,7 +24,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if (InputManager.KeyPressed(Keys.R))
             {
-                ExitScreen();
+                this.ExitScreen();
             }
         }
 

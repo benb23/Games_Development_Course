@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class WelcomeScreen : MenuScreen
     {
@@ -16,19 +16,18 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\Wellcome\SpaceInvadersLogo", 0.8f);
 
-
             int index = 0;
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\Wellcome\PlayGame", this, index++);
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
 
-            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
-            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(quit);
+            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
+            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.quit);
 
-            AddMenuItem(playItem);
-            AddMenuItem(mainMenuItem);
-            AddMenuItem(QuitItem);
+            this.AddMenuItem(playItem);
+            this.AddMenuItem(mainMenuItem);
+            this.AddMenuItem(QuitItem);
         }
 
         private void quit(object sender, ScreenEventArgs args)
@@ -44,23 +43,22 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             base.Initialize();
-            m_MenuHeader.OffsetX = m_MenuHeader.Texture.Width / 10;
-
+            this.m_MenuHeader.OffsetX = this.m_MenuHeader.Texture.Width / 10;
         }
 
         public override void Update(GameTime gameTime)
         {
             if (InputManager.KeyPressed(Keys.Enter))
             {
-                handleItemClicked(this, new ScreenEventArgs("PlayScreen"));
+                this.handleItemClicked(this, new ScreenEventArgs("PlayScreen"));
             }
             else if(InputManager.KeyPressed(Keys.T))
             {
-                handleItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
+                this.handleItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
             }
             else if (InputManager.KeyPressed(Keys.Escape))
             {
-                quit(this,null);
+                this.quit(this, null);
             }
 
             base.Update(gameTime);

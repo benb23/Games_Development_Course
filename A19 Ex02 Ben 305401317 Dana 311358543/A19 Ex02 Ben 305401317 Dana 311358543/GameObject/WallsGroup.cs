@@ -2,11 +2,11 @@
 using Microsoft.Xna.Framework;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class WallsGroup : GameComponent
     {
-        ISpaceInvadersEngine m_GameEngine;
+        private ISpaceInvadersEngine m_GameEngine;
         private bool m_Initialize;
         private int m_NumOfWalls;
         private List<Wall> m_Walls;
@@ -15,8 +15,8 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public Vector2 Position
         {
-            get { return m_Position; }
-            set { m_Position = value; }
+            get { return this.m_Position; }
+            set { this.m_Position = value; }
         }
  
         public WallsGroup(GameScreen i_GameScreen, int i_numOfWalls) : base(i_GameScreen.Game)
@@ -31,7 +31,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             for (int i = 0; i < this.m_NumOfWalls; i++)
             {
-                this.m_Walls.Add(new Wall(m_GameScreen));
+                this.m_Walls.Add(new Wall(this.m_GameScreen));
             }
 
             base.Initialize();
@@ -39,7 +39,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initWallsPositions()
         {
-            this.m_Position.X = Game.GraphicsDevice.Viewport.Width / 3 - this.m_Walls[0].Texture.Width / 2;
+            this.m_Position.X = (this.Game.GraphicsDevice.Viewport.Width / 3) - (this.m_Walls[0].Texture.Width / 2);
 
             for (int i = 0; i < this.m_NumOfWalls; i++)
             {
@@ -54,18 +54,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_GameEngine = this.Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
-            initWallsPositions();
-            foreach(Wall wall in m_Walls)
+            this.initWallsPositions();
+            foreach(Wall wall in this.m_Walls)
             {
-                wall.Pixels =(Color[])wall.OriginalPixels.Clone();
+                wall.Pixels = (Color[])wall.OriginalPixels.Clone();
                 if (wall.CurrTexture != null)
                 {
                     wall.CurrTexture.SetData(wall.Pixels);
                 }
+
                 if(SpaceInvadersConfig.s_LogicLevel == SpaceInvadersConfig.eLevel.Two)
                 {
                     wall.Velocity = new Vector2(45, 0);
                 }
+
                 if (SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.One &&
                     SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.Two)
                 {

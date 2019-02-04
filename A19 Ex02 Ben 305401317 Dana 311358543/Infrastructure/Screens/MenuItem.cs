@@ -5,7 +5,6 @@ namespace Infrastructure
 {
     public class MenuItem : Sprite 
     {
-        
         private enum eMenuItemType
         {
             RegularButton,
@@ -14,6 +13,7 @@ namespace Infrastructure
         }
 
         public event EventHandler<EventArgs> ActiveChanged;
+
         protected ISoundMananger m_SoundManager;
         private bool m_isSoundOn = true;
         private string m_SoundOnHover = "MenuMove";
@@ -21,12 +21,10 @@ namespace Infrastructure
         private bool m_IsActive;
         private Color m_ActiveColor = new Color(255, 74, 47);
 
-
-
-        public Color  ActiveColor
+        public Color ActiveColor
         {
-            get { return m_ActiveColor;  }
-            set { m_ActiveColor = value; }
+            get { return this.m_ActiveColor;  }
+            set { this.m_ActiveColor = value; }
         }
         
         public MenuItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen)
@@ -37,19 +35,19 @@ namespace Infrastructure
 
         public int ItemNumber
         {
-            get { return m_ItemNumber; }
+            get { return this.m_ItemNumber; }
         }
 
         public bool IsActive
         {
-            get { return m_IsActive; }
+            get { return this.m_IsActive; }
             set
             {
-                m_IsActive = value;
+                this.m_IsActive = value;
 
-                if (ActiveChanged != null)
+                if (this.ActiveChanged != null)
                 {
-                    ItemActiveChanged(this, null);
+                    this.ItemActiveChanged(this, null);
                 }
             }
         }
@@ -58,40 +56,41 @@ namespace Infrastructure
         {
             base.Initialize();
 
-            ActiveChanged += new EventHandler<EventArgs>(ItemActiveChanged);
+            this.ActiveChanged += new EventHandler<EventArgs>(this.ItemActiveChanged);
 
-            if(m_isSoundOn)
+            if(this.m_isSoundOn)
             {
-                m_SoundManager = m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
+                this.m_SoundManager = this.m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
             }
-            initAnimations();
+
+            this.initAnimations();
         }
 
         public bool isMouseHoverItem()
         {
-            return this.Bounds.Contains(new Vector2(m_GameScreen.InputManager.MouseState.X, m_GameScreen.InputManager.MouseState.Y));
+            return this.Bounds.Contains(new Vector2(this.m_GameScreen.InputManager.MouseState.X, this.m_GameScreen.InputManager.MouseState.Y));
         }
 
         private void initAnimations()
         {
-            PulseAnimator pulsAnimator = new PulseAnimator("ActiveItem", TimeSpan.Zero, (float)1.1 ,1);
+            PulseAnimator pulsAnimator = new PulseAnimator("ActiveItem", TimeSpan.Zero, (float)1.1, 1);
             this.Animations.Add(pulsAnimator);
         }
 
         private void ItemActiveChanged(object sender, EventArgs e)
         {
-            if (m_IsActive)
+            if (this.m_IsActive)
             {
                 if (!this.Animations["ActiveItem"].Enabled)
                 {
                     this.Animations["ActiveItem"].Restart();
                 }
 
-                this.TintColor = m_ActiveColor;
+                this.TintColor = this.m_ActiveColor;
 
-                if (m_isSoundOn)
+                if (this.m_isSoundOn)
                 {
-                    this.m_SoundManager.PlaySoundEffect(m_SoundOnHover);
+                    this.m_SoundManager.PlaySoundEffect(this.m_SoundOnHover);
                 }
             }
             else
@@ -101,6 +100,7 @@ namespace Infrastructure
                     this.Animations["ActiveItem"].Pause();
                     this.Animations["ActiveItem"].Reset();
                 }
+
                 this.TintColor = Color.White;
             }
         }

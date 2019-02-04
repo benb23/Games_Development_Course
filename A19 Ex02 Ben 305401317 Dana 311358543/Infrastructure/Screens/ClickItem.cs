@@ -21,14 +21,14 @@ namespace Infrastructure
 
         public bool IsUsingKeyboard
         {
-            set { m_IsUsingKeyboard = value; }
+            set { this.m_IsUsingKeyboard = value; }
         }
 
         protected virtual void OnItemClicked(object sender, EventArgs args)
         {
-            if (ItemClicked != null)
+            if (this.ItemClicked != null)
             {
-                ItemClicked.Invoke(sender, new ScreenEventArgs(m_ItemName));
+                this.ItemClicked.Invoke(sender, new ScreenEventArgs(this.m_ItemName));
             }
         }
 
@@ -41,12 +41,13 @@ namespace Infrastructure
         {
             if (this.IsActive)
             {
-                if ((this.GameScreen.InputManager.KeyReleased(Keys.Enter) && this.m_IsUsingKeyboard)|| 
+                if ((this.GameScreen.InputManager.KeyReleased(Keys.Enter) && this.m_IsUsingKeyboard) || 
                      this.GameScreen.InputManager.ButtonReleased(eInputButtons.Left))
                 {
-                    OnItemClicked(this, EventArgs.Empty);
+                    this.OnItemClicked(this, EventArgs.Empty);
                 }
             }
+
             base.Update(gameTime);
         }
     }

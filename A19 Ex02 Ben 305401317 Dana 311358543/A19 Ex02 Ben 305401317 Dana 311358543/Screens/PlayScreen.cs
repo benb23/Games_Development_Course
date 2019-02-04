@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Infrastructure;
 
-
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class PlayScreen : GameScreen
     {
+        private const string k_GameName = "Space Invaders";
         private ISpaceInvadersEngine m_GameEngine;
         private ISoundMananger m_SoundManager;
-        private const string k_GameName = "Space Invaders";
         private MotherSpaceShip m_MotherSpaceShip;
         private EnemiesGroup m_EnemysGroup;
         private Background m_Background;
@@ -24,7 +22,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         public PlayScreen(Game i_Game)
             : base(i_Game)
         {
-            m_ScoreBoard = new ScoreBoardHeader(this);
+            this.m_ScoreBoard = new ScoreBoardHeader(this);
             this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             this.m_SoundManager = Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
 
@@ -33,13 +31,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             this.m_MotherSpaceShip = new MotherSpaceShip(this);
             this.m_EnemysGroup = new EnemiesGroup(this);
             this.m_WallsGroup = new WallsGroup(this, SpaceInvadersConfig.k_NumOfWalls);
-            m_PauseScreenScreen = new PauseScreen(this.Game);
+            this.m_PauseScreenScreen = new PauseScreen(this.Game);
         }
 
         protected override void OnActivated()
         {
             base.OnActivated();
-            // we want to fade in only uppon first activation:
+            //// we want to fade in only uppon first activation:
             this.ActivationLength = TimeSpan.Zero;
         }
 
@@ -47,40 +45,39 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             base.Update(gameTime);
 
-            if(m_GameEngine.IsGameOver)
+            if(this.m_GameEngine.IsGameOver)
             {
-                OnGameOver();
+                this.OnGameOver();
             }
 
-            if (m_GameEngine.IsGameOver)
+            if (this.m_GameEngine.IsGameOver)
             {
                 this.ExitScreen();
                 this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
             }
 
-            if (InputManager.KeyPressed(Keys.P))
+            if (this.InputManager.KeyPressed(Keys.P))
             {
-                ScreensManager.SetCurrentScreen(m_PauseScreenScreen);
+                this.ScreensManager.SetCurrentScreen(this.m_PauseScreenScreen);
             }
         }
 
         public override void Initialize()
         {
             this.m_GameEngine.CreatePlayers(this);
-            m_Players = m_GameEngine.Players;
+            this.m_Players = this.m_GameEngine.Players;
             this.Game.Window.Title = k_GameName;
             base.Initialize();
-            m_WallsGroup.Position = new Vector2(m_WallsGroup.Position.X, GraphicsDevice.Viewport.Height - (2 * m_Players[(int)PlayerIndex.One].SpaceShip.Texture.Height));
-            m_EnemysGroup.AllEnemiesDied += new EventHandler<EventArgs>(levelChanged);
-
+            this.m_WallsGroup.Position = new Vector2(this.m_WallsGroup.Position.X, this.GraphicsDevice.Viewport.Height - (2 * this.m_Players[(int)PlayerIndex.One].SpaceShip.Texture.Height));
+            this.m_EnemysGroup.AllEnemiesDied += new EventHandler<EventArgs>(this.levelChanged);
         }
 
         private void levelChanged(object sender, EventArgs args)
         {
             this.m_SoundManager.PlaySoundEffect("LevelWin");
-            MenuUtils.GoToScreen(this,this.ScreensManager.GetScreen("LevelTransitionScreen"));
-            m_GameEngine.InitGameEngineForNextLevel();
-            initSpritesForNewLevel();
+            MenuUtils.GoToScreen(this, this.ScreensManager.GetScreen("LevelTransitionScreen"));
+            this.m_GameEngine.InitGameEngineForNextLevel();
+            this.initSpritesForNewLevel();
         }
 
         private void OnGameOver()
@@ -93,15 +90,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initSpritesForNewGame()
         {
-            initSpritesForNewLevel();
+            this.initSpritesForNewLevel();
         }
 
         private void initSpritesForNewLevel()
         {
-            m_EnemysGroup.InitEnemyGroupForNextLevel();
-            m_WallsGroup.InitWallsForNextLevel();
-            m_MotherSpaceShip.InitMotherShipForNextLevel();
-
+            this.m_EnemysGroup.InitEnemyGroupForNextLevel();
+            this.m_WallsGroup.InitWallsForNextLevel();
+            this.m_MotherSpaceShip.InitMotherShipForNextLevel();
         }
 
         public override string ToString()
@@ -110,4 +106,3 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         }
     }
 }
-

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class SpaceShip : CollidableSprite, IRectangleCollidable
     {
@@ -26,7 +26,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             : base(i_AssetName, i_GameScreen)
         {
             this.ScoreValue = (int)SpaceInvadersConfig.eScoreValue.Soul;
-            this.m_Gun = new Gun(i_GameScreen, 3, i_GunBulletsType, -1, "SSGunShot"); //TODO: const
+            this.m_Gun = new Gun(i_GameScreen, 3, i_GunBulletsType, -1, "SSGunShot"); 
             this.m_Owner = i_Owner;
         }
 
