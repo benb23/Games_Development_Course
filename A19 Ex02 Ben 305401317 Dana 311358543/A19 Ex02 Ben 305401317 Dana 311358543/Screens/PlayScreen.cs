@@ -50,11 +50,6 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
                 this.OnGameOver();
             }
 
-            if (this.m_GameEngine.IsGameOver)
-            {
-                this.ExitScreen();
-                this.ScreensManager.SetCurrentScreen(new GameOverScreen(this.Game));
-            }
 
             if (this.InputManager.KeyPressed(Keys.P))
             {

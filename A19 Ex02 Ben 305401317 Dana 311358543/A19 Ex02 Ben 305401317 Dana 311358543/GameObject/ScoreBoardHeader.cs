@@ -53,7 +53,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
         private void drawPlayerString(int i_PlayerIndex, int i_PlayerScore, Color i_Color)
         {
-            this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, string.Format("P{0} Score: {1}", i_PlayerIndex + 1, i_PlayerScore.ToString()), new Vector2(2, (1 + i_PlayerIndex) * 15), i_Color);
+            this.m_GameScreen.SpriteBatch.DrawString(this.m_Font, string.Format("P{0} Score: {1}", i_PlayerIndex + 1, i_PlayerScore.ToString()), new Vector2(2, (i_PlayerIndex) * 15), i_Color);
         }
     }
 }

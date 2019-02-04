@@ -39,7 +39,10 @@ namespace Infrastructure
         }
 
         protected List<Vector2> m_CollidedPixelsPositions;
+
         protected List<Vector2> m_CollidedPixelsIndex;
+
+        public Rectangle m_LastCollisionRectangle;
 
         public List<Vector2> LastCollisionPixelsPositions
         {
@@ -144,6 +147,9 @@ namespace Infrastructure
             int bottom = Math.Min(Bounds.Bottom, i_Source.Bounds.Bottom);
             int left = Math.Max(Bounds.Left, i_Source.Bounds.Left);
             int right = Math.Min(Bounds.Right, i_Source.Bounds.Right);
+
+            m_LastCollisionRectangle = new Rectangle(left, top, right - left, bottom - top);
+            (i_Source as CollidableSprite).m_LastCollisionRectangle = new Rectangle(top, left, right - left, top - bottom); ;
 
             for (int y = top; y < bottom; y++)
             {

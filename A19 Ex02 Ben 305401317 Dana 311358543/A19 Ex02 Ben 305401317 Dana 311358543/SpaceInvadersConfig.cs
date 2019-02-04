@@ -44,7 +44,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         // Configurations for level up
         public static eLevel s_LogicLevel = eLevel.One;
         public static int m_Level = 1;
-        public const float k_WallsVelocitiyAdditionPercent = (float)-0.07;
+        public const float k_WallsVelocitiyAdditionPercent = (float)(-0.07);
         public const int k_EnemyScoreAddition = 120;
         public const int k_EnemyShootingFrequencyAddition = 5;
     }

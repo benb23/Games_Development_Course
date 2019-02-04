@@ -278,9 +278,13 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
         private void HandleWallAndEnemyHit(Wall i_wall, Enemy i_Enemy)
         {
-            foreach(Vector2 Pixel in i_wall.LastCollisionPixelsIndex)
+
+            for (int y = i_wall.m_LastCollisionRectangle.Top ; y < i_wall.m_LastCollisionRectangle.Bottom ; y++)
             {
-                i_wall.Pixels[(int)(Pixel.X + (Pixel.Y * i_wall.Texture.Width))] = new Color(0, 0, 0, 0);
+                for (int x = i_wall.m_LastCollisionRectangle.Left; x < i_wall.m_LastCollisionRectangle.Right; x++)
+                {
+                    i_wall.Pixels[(x - i_wall.Bounds.Left) + ((y - i_wall.Bounds.Top) * i_wall.Bounds.Width)] = new Color(0, 0, 0, 0);
+                }
             }
 
             i_wall.CurrTexture.SetData(i_wall.Pixels);

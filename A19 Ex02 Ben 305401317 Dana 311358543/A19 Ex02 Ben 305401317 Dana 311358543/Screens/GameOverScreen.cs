@@ -15,6 +15,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         private SpriteFont m_Font;
         private string m_Result;
 
+
         public GameOverScreen(Game i_Game) : base(i_Game, 0f, 100f, 15f)
         {
             this.IsUsingKeyboard = false;
@@ -40,25 +41,6 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         public override void Initialize()
         {
             this.m_GameEngine = this.Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-
-            if (SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
-            {
-                string winner = this.setWinnerString();
-
-this.m_Result = string.Format(
-@"player 1 score is : {0}
-Player 2 score is : {1}
-The winner is : {2} !",
-this.m_GameEngine.Players[0].Score.ToString(),
-this.m_GameEngine.Players[1].Score.ToString(),
-winner);
-            }
-            else
-            {
-this.m_Result = string.Format(
-@"player score is : {0}",
-this.m_GameEngine.Players[0].Score.ToString());
-            }
 
             base.Initialize();
         }
@@ -92,6 +74,8 @@ this.m_GameEngine.Players[0].Score.ToString());
 
         public override void Update(GameTime gameTime)
         {
+            setResultString();
+
             if (InputManager.KeyPressed(Keys.Escape))
             {
                 this.quit(this, null);
@@ -108,6 +92,28 @@ this.m_GameEngine.Players[0].Score.ToString());
             base.Update(gameTime);
         }
 
+        private void setResultString()
+        {
+
+            if (SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
+            {
+                string winner = this.setWinnerString();
+
+                this.m_Result = string.Format(
+@"player 1 score is : {0}
+Player 2 score is : {1}
+The winner is : {2} !",
+                this.m_GameEngine.Players[0].Score.ToString(),
+                this.m_GameEngine.Players[1].Score.ToString(),
+                winner);
+            }
+            else
+            {
+                this.m_Result = string.Format(
+@"player score is : {0}",
+                this.m_GameEngine.Players[0].Score.ToString());
+            }
+        }
         protected override void LoadContent()
         {
             base.LoadContent();
