@@ -9,120 +9,117 @@ namespace Infrastructure
     {
         public ScreenEventArgs(string i_String)
         {
-            ScreenName = i_String;
+            this.ScreenName = i_String;
         }
+
         public string ScreenName { get; set; }
     }
 
     public abstract class MenuScreen : GameScreen
     {
-        Game m_Game;
+        private Game m_Game;
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
         private Vector2 m_firstItemPosition;
         private float m_GapBetweenItems = 15f;
         private float m_OffsetX;
         private float m_OffsetY;
-
-
         private int? m_currItemNumber;
         private int? m_PrevItemNumber;
-
         private bool m_IsUsingKeyboardArrows = true;
-
         private bool m_IsUsingMouse = true;
 
         public MenuScreen(Game i_Game) : base(i_Game)
         {
-            m_Game = i_Game;
+            this.m_Game = i_Game;
         }
 
         public MenuScreen(Game i_Game, float i_OffsetX, float i_GapBetweenItems) : base(i_Game)
         {
-            m_Game = i_Game;
+            this.m_Game = i_Game;
             this.m_GapBetweenItems = i_GapBetweenItems;
             this.m_OffsetX = i_OffsetX;
         }
 
         public MenuScreen(Game i_Game, float i_OffsetX, float i_OffsetY, float i_GapBetweenItems) : base(i_Game)
         {
-            m_Game = i_Game;
+            this.m_Game = i_Game;
             this.m_GapBetweenItems = i_GapBetweenItems;
             this.m_OffsetX = i_OffsetX;
             this.m_OffsetY = i_OffsetY;
-
         }
 
         public bool IsUsingKeyboard
         {
-            set { m_IsUsingKeyboardArrows = value; }
+            set { this.m_IsUsingKeyboardArrows = value; }
         }
 
         public bool IsUsingMouse
         {
-            get { return m_IsUsingMouse; }
-            set { m_IsUsingMouse = value; }
+            get { return this.m_IsUsingMouse; }
+            set { this.m_IsUsingMouse = value; }
         }
 
         public override void Initialize()
         {
-            this.m_Game.Window.ClientSizeChanged += updatePositionsAfterWindowSizeChanged;
-            initFirstItemPosition();
-            initItemesPositions();
+            this.m_Game.Window.ClientSizeChanged += this.updatePositionsAfterWindowSizeChanged;
+            this.initFirstItemPosition();
+            this.initItemesPositions();
             base.Initialize();
         }
 
         private void updatePositionsAfterWindowSizeChanged(object sender, EventArgs e)
         {
-            initFirstItemPosition();
-            initItemesPositions();
+            this.initFirstItemPosition();
+            this.initItemesPositions();
         }
 
         private void initFirstItemPosition()
         {
-            m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 3 - m_OffsetX, m_Game.Window.ClientBounds.Height / 2.5f + m_OffsetY);
+            this.m_firstItemPosition = new Vector2((this.m_Game.Window.ClientBounds.Width / 3) - this.m_OffsetX, (this.m_Game.Window.ClientBounds.Height / 2.5f) + this.m_OffsetY);
         }
 
         private void initItemesPositions()
         {
-            if (m_MenuItems != null)
+            if (this.m_MenuItems != null)
             {
-                foreach (MenuItem item in m_MenuItems)
+                foreach (MenuItem item in this.m_MenuItems)
                 {
-                    item.Position = m_firstItemPosition + item.ItemNumber * (new Vector2(0, m_GapBetweenItems + 33));   //TODO: change 33
-                    if (!m_IsUsingKeyboardArrows && item is ClickItem)
+                    item.Position = this.m_firstItemPosition + (item.ItemNumber * (new Vector2(0, this.m_GapBetweenItems + 33)));   //TODO: change 33
+                    if (!this.m_IsUsingKeyboardArrows && item is ClickItem)
                     {
                         (item as ClickItem).IsUsingKeyboard = false;
                     }
                 }
-                if (m_IsUsingKeyboardArrows)
+
+                if (this.m_IsUsingKeyboardArrows)
                 {
-                    m_currItemNumber = 0;
-                    m_MenuItems[(int)m_currItemNumber].IsActive = true;
-                    m_MenuItems[(int)m_currItemNumber].TintColor = m_MenuItems[(int)m_currItemNumber].ActiveColor;
+                    this.m_currItemNumber = 0;
+                    this.m_MenuItems[(int)this.m_currItemNumber].IsActive = true;
+                    this.m_MenuItems[(int)this.m_currItemNumber].TintColor = this.m_MenuItems[(int)this.m_currItemNumber].ActiveColor;
                 }
             }
         }
 
         public void AddMenuItem(MenuItem i_Item)        
         {
-            m_MenuItems.Add(i_Item);
+            this.m_MenuItems.Add(i_Item);
         }
 
         private void useKeyboardToNavigateMenu()
         {
             if (InputManager.KeyPressed(Keys.Down))
             {
-                m_currItemNumber = (m_currItemNumber + 1) % m_MenuItems.Count;
+                this.m_currItemNumber = (this.m_currItemNumber + 1) % this.m_MenuItems.Count;
             }
             else if (InputManager.KeyPressed(Keys.Up))
             {
-                if (m_currItemNumber == 0)
+                if (this.m_currItemNumber == 0)
                 {
-                    m_currItemNumber = m_MenuItems.Count - 1;
+                    this.m_currItemNumber = this.m_MenuItems.Count - 1;
                 }
                 else
                 {
-                    m_currItemNumber = (m_currItemNumber - 1) % m_MenuItems.Count;
+                    this.m_currItemNumber = (this.m_currItemNumber - 1) % this.m_MenuItems.Count;
                 }
             }
         }
@@ -131,53 +128,57 @@ namespace Infrastructure
         {
             bool foundActiveItem = false;
 
-            foreach (MenuItem item in m_MenuItems)
+            foreach (MenuItem item in this.m_MenuItems)
             {
                 if (item.isMouseHoverItem())
                 {
-                    m_currItemNumber = item.ItemNumber;
+                    this.m_currItemNumber = item.ItemNumber;
                     foundActiveItem = true;
                     break;
                 }
-                else if (item.IsActive == true && m_currItemNumber != item.ItemNumber)
+                else if (item.IsActive == true && this.m_currItemNumber != item.ItemNumber)
                 {
                     item.IsActive = false;
                 }
             }
-            if (!foundActiveItem && !m_IsUsingKeyboardArrows)
+
+            if (!foundActiveItem && !this.m_IsUsingKeyboardArrows)
             {
-                m_currItemNumber = null;
+                this.m_currItemNumber = null;
             }
         }
 
         private void updateCurrActiveItem()
         {
-            if (m_IsUsingKeyboardArrows)
+            if (this.m_IsUsingKeyboardArrows)
             {
-                useKeyboardToNavigateMenu();
+                this.useKeyboardToNavigateMenu();
             }
-            if (m_IsUsingMouse)
+
+            if (this.m_IsUsingMouse)
             {
-                useMouseToNavigateMenu();
+                this.useMouseToNavigateMenu();
             }
         }
 
         public override void Update(GameTime gameTime)
         {
-            updateCurrActiveItem();
+            this.updateCurrActiveItem();
 
-            if (m_currItemNumber != m_PrevItemNumber)
+            if (this.m_currItemNumber != this.m_PrevItemNumber)
             {
-                if (m_PrevItemNumber != null)
+                if (this.m_PrevItemNumber != null)
                 {
-                    m_MenuItems[(int)m_PrevItemNumber].IsActive = false;
+                    this.m_MenuItems[(int)this.m_PrevItemNumber].IsActive = false;
                 }
-                if (m_currItemNumber != null)
+
+                if (this.m_currItemNumber != null)
                 {
-                    m_MenuItems[(int)m_currItemNumber].IsActive = true;
+                    this.m_MenuItems[(int)this.m_currItemNumber].IsActive = true;
                 }
             }
-            m_PrevItemNumber = m_currItemNumber;
+
+            this.m_PrevItemNumber = this.m_currItemNumber;
             base.Update(gameTime);
         }
     }

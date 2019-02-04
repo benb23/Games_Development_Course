@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class ScreenSettingsScreen : MenuScreen
     {
@@ -22,20 +22,20 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             ToggleItem fullScreen = new ToggleItem(@"Screens\Settings\FullScreenMode", @"Screens\Settings\OnOff_53x52", this, index++, 1);
             ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
-            mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(mouseVisabilityChanged);
-            windowResizing.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleAllowWindowResizingConfig);
-            fullScreen.ToggleValueChanched += new EventHandler<EventArgs>(m_ScreenSettingMng.ToggleFullScreenModeConfig);
-            doneItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
+            mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(this.mouseVisabilityChanged);
+            windowResizing.ToggleValueChanched += new EventHandler<EventArgs>(this.m_ScreenSettingMng.ToggleAllowWindowResizingConfig);
+            fullScreen.ToggleValueChanched += new EventHandler<EventArgs>(this.m_ScreenSettingMng.ToggleFullScreenModeConfig);
+            doneItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
 
-            AddMenuItem(mouseVisability);
-            AddMenuItem(windowResizing);
-            AddMenuItem(fullScreen);
-            AddMenuItem(doneItem);
+            this.AddMenuItem(mouseVisability);
+            this.AddMenuItem(windowResizing);
+            this.AddMenuItem(fullScreen);
+            this.AddMenuItem(doneItem);
         }
 
         private void mouseVisabilityChanged(object sender, EventArgs args)
         {
-            m_ScreenSettingMng.ToggleMouseVisabilityConfig();
+            this.m_ScreenSettingMng.ToggleMouseVisabilityConfig();
             this.IsUsingMouse = !this.IsUsingMouse;
         }
 
@@ -48,6 +48,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             return "ScreenSettingsScreen";
         }
-
     }
 }

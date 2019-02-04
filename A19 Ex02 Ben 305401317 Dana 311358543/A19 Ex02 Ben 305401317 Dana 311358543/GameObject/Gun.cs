@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework;
 
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class Gun
     {
+        private readonly int r_MaxNumOfBullets;
         private List<Bullet> m_Bullets;
-        private int k_MaxNumOfBullets;
         private GameScreen m_GameScreen;
         private Bullet.eBulletType m_BulletsType;
         private int m_ShootingDirection;
@@ -17,18 +17,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public Gun(GameScreen i_GameScreen, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection, string i_ShotSound)
         {
-            m_GameScreen = i_GameScreen;
-            k_MaxNumOfBullets = 100;// i_MaxNumOfBullets;
-            m_BulletsType = i_BulletType;
-            m_Bullets = new List<Bullet>(k_MaxNumOfBullets);
-            m_ShootingDirection = i_ShootingDirection;
-            m_ShotSound = i_ShotSound;
-            
+            this.m_GameScreen = i_GameScreen;
+            this.r_MaxNumOfBullets = 100; // i_MaxNumOfBullets;
+            this.m_BulletsType = i_BulletType;
+            this.m_Bullets = new List<Bullet>(this.r_MaxNumOfBullets);
+            this.m_ShootingDirection = i_ShootingDirection;
+            this.m_ShotSound = i_ShotSound; 
         }
 
         public void InitGunForNextLevel()
         {
-            foreach(Bullet bullet in m_Bullets)
+            foreach(Bullet bullet in this.m_Bullets)
             {
                 bullet.Enabled = false;
                 bullet.Visible = false;
@@ -37,13 +36,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public void Shoot(Vector2 i_ShooterPosition)
         {
-            Bullet bullet = getBullet(i_ShooterPosition);
+            Bullet bullet = this.getBullet(i_ShooterPosition);
 
-            m_SoundManager = m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
+            this.m_SoundManager = this.m_GameScreen.Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
 
-            if (m_ShotSound != string.Empty && m_SoundManager != null)
+            if (this.m_ShotSound != string.Empty && this.m_SoundManager != null)
             {
-                this.m_SoundManager.PlaySoundEffect(m_ShotSound);
+                this.m_SoundManager.PlaySoundEffect(this.m_ShotSound);
             }
         }
 
@@ -52,13 +51,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             Bullet bullet = null;
             bool foundBullet = false;
 
-            foreach (Bullet currBullet in m_Bullets)
+            foreach (Bullet currBullet in this.m_Bullets)
             {
                 if(!currBullet.Visible)
                 {
                     bullet = currBullet;
                     foundBullet = true;
-                    bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * ((bullet.Texture.Height / 2) + 1));
+                    bullet.Position = i_ShooterPosition + new Vector2(0, this.m_ShootingDirection * ((bullet.Texture.Height / 2) + 1));
                     bullet.Enabled = true;
                     bullet.Visible = true;
                 }
@@ -71,18 +70,13 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             if(!foundBullet)
             {
-                if(m_Bullets.Count < k_MaxNumOfBullets)
+                if(this.m_Bullets.Count < this.r_MaxNumOfBullets)
                 {
-                    bullet = new Bullet(m_GameScreen, m_BulletsType);
-                    bullet.Position = i_ShooterPosition + new Vector2(0, m_ShootingDirection * (bullet.Texture.Height / 2 + 1));
-                    m_Bullets.Add(bullet);
+                    bullet = new Bullet(this.m_GameScreen, this.m_BulletsType);
+                    bullet.Position = i_ShooterPosition + new Vector2(0, this.m_ShootingDirection * ((bullet.Texture.Height / 2) + 1));
+                    this.m_Bullets.Add(bullet);
                 }
             }
-
-            //if(bullet == null)
-            //{
-            //    bullet = null;
-            //}
 
             return bullet;
         }
@@ -91,14 +85,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             bool PermitionToShoot = false;
 
-            if (m_Bullets.Count < k_MaxNumOfBullets)
+            if (this.m_Bullets.Count < this.r_MaxNumOfBullets)
             {
                 PermitionToShoot = true;
             }
 
             if(!PermitionToShoot)
             {
-                foreach(Bullet currBullet in m_Bullets)
+                foreach(Bullet currBullet in this.m_Bullets)
                 {
                     if(!currBullet.Visible)
                     {

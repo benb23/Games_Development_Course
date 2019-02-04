@@ -4,9 +4,9 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
-    class EnemiesGroup : GameComponent
+    public class EnemiesGroup : GameComponent
     {
         public enum eDirection
         {
@@ -14,8 +14,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             right = 1,
         }
 
-        private ISpaceInvadersEngine m_GameEngine;
         public event EventHandler<EventArgs> AllEnemiesDied;
+
+        private ISpaceInvadersEngine m_GameEngine;
         private int m_CurrentColumns = 9;
         private float m_Direction = 1f;
         private float m_TimeCounter = 0f;
@@ -31,60 +32,59 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public EnemiesGroup(GameScreen i_GameScreen) : base(i_GameScreen.Game)
         {
-            m_GameScreen = i_GameScreen;
+            this.m_GameScreen = i_GameScreen;
             i_GameScreen.Add(this);
         }
 
         public void InitEnemyGroupForNextLevel()
         {
-            m_AliveEnemiesByRow.Clear();
-            m_AliveEnemiesByColum.Clear();
+            this.m_AliveEnemiesByRow.Clear();
+            this.m_AliveEnemiesByColum.Clear();
 
             this.m_Direction = 1f;
 
-
             if (SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.One)
             {
-                addColumToEnemiesGroup();
-                m_CurrentColumns++;
+                this.addColumToEnemiesGroup();
+                this.m_CurrentColumns++;
             }
             else
             {
-                revertEnemiesGroupToOriginalSize();
-                m_CurrentColumns = SpaceInvadersConfig.k_NumOfEnemiesColumns;
+                this.revertEnemiesGroupToOriginalSize();
+                this.m_CurrentColumns = SpaceInvadersConfig.k_NumOfEnemiesColumns;
             }
 
-            m_TimeUntilNextStepInSec = this.k_TimeUntilNextStepInSec;
+            this.m_TimeUntilNextStepInSec = this.k_TimeUntilNextStepInSec;
 
-            foreach (List<Enemy> list in m_EnemiesGroup)
+            foreach (List<Enemy> list in this.m_EnemiesGroup)
             {
                 foreach (Enemy enemy in list)
                 {
-                    if (enemy.Colum < m_CurrentColumns)
+                    if (enemy.Colum < this.m_CurrentColumns)
                     {
                         enemy.TimeUntilNextStepInSec = TimeSpan.FromSeconds(this.k_TimeUntilNextStepInSec);
                         enemy.Animations["CellAnimation"].Reset();
                         enemy.Animations["CellAnimation"].Pause();
-                        updateScoreValueAndShootingFrequency(enemy);
+                        this.updateScoreValueAndShootingFrequency(enemy);
                         enemy.Enabled = true;
                         enemy.Visible = true;
-                        enemy.initPosition();                    
-                        m_AliveEnemiesByRow.Add(enemy);
+                        enemy.initPosition();
+                        this.m_AliveEnemiesByRow.Add(enemy);
                         enemy.Animations["CellAnimation"].Reset();
                     }
                 }
             }
 
-            m_TimeCounter = 0f;
-            initAliveEnemiesByColum();
+            this.m_TimeCounter = 0f;
+            this.initAliveEnemiesByColum();
         }
 
         // TODO: DEBUG CASE LEVEL 7
         private void revertEnemiesGroupToOriginalSize()
         {
-            for (int colum = m_CurrentColumns; colum > SpaceInvadersConfig.k_NumOfEnemiesColumns; colum--)
+            for (int colum = this.m_CurrentColumns; colum > SpaceInvadersConfig.k_NumOfEnemiesColumns; colum--)
             {
-                removeColumToEnemyMantrix();
+                this.removeColumToEnemyMantrix();
             }
         }
 
@@ -92,33 +92,31 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             for (int row = 0; row < SpaceInvadersConfig.k_NumOfEnemiesRows; row++)
             {
-                m_EnemiesGroup[row][m_CurrentColumns].Visible = !m_EnemiesGroup[row][m_CurrentColumns].Visible;
-                m_EnemiesGroup[row][m_CurrentColumns].Enabled = !m_EnemiesGroup[row][m_CurrentColumns].Enabled;
+                this.m_EnemiesGroup[row][this.m_CurrentColumns].Visible = !this.m_EnemiesGroup[row][this.m_CurrentColumns].Visible;
+                this.m_EnemiesGroup[row][this.m_CurrentColumns].Enabled = !this.m_EnemiesGroup[row][this.m_CurrentColumns].Enabled;
             }
         }
 
         private void addColumToEnemiesGroup()
         {
-            AddOrRemoveEnemiesGroupColum();
+            this.AddOrRemoveEnemiesGroupColum();
         }
 
         private void removeColumToEnemyMantrix()
         {
-            AddOrRemoveEnemiesGroupColum();
+            this.AddOrRemoveEnemiesGroupColum();
         }
 
         public override void Initialize()
         {
-            if (m_GameEngine == null)
+            if (this.m_GameEngine == null)
             {
-                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+                this.m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
-
-
 
             for (int i = 0; i < SpaceInvadersConfig.k_NumOfEnemiesRows; i++)
             {
-                m_EnemiesGroup.Add(new List<Enemy>(SpaceInvadersConfig.k_NumOfEnemiesColumns));
+                this.m_EnemiesGroup.Add(new List<Enemy>(SpaceInvadersConfig.k_NumOfEnemiesColumns));
             }
 
             this.initEnemyGroup();
@@ -136,10 +134,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 {
                     newEnemy = this.initEnemyByRow(row, colum);
 
-                    m_EnemiesGroup[row].Add(newEnemy);
+                    this.m_EnemiesGroup[row].Add(newEnemy);
                     if (colum < SpaceInvadersConfig.k_NumOfEnemiesColumns)
                     {
-                        m_AliveEnemiesByRow.Add(newEnemy);
+                        this.m_AliveEnemiesByRow.Add(newEnemy);
                     }
                     else
                     {
@@ -151,7 +149,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
             /// For calculating positions according to enemy texture width (generic)
             this.m_EnemiesGroup[0][0].LoadAsset();
-            m_EnemiesGap = this.m_EnemiesGroup[0][0].Texture.Height * 0.6f;
+            this.m_EnemiesGap = this.m_EnemiesGroup[0][0].Texture.Height * 0.6f;
         }
   
         private Enemy initEnemyByRow(int i_Row, int i_Colum)
@@ -182,7 +180,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private Enemy initEnemyByRowHelper(int i_Row, int i_Colum, int i_StartSqureIndex, Color i_Tint, int i_Toggeler, SpaceInvadersConfig.eScoreValue i_ScoreValue)
         {
-            Enemy retEnemy = new Enemy(m_GameScreen, i_Tint, (int)i_ScoreValue, i_StartSqureIndex, i_Row, i_Colum, m_EnemiesGap, m_TimeUntilNextStepInSec);
+            Enemy retEnemy = new Enemy(this.m_GameScreen, i_Tint, (int)i_ScoreValue, i_StartSqureIndex, i_Row, i_Colum, this.m_EnemiesGap, this.m_TimeUntilNextStepInSec);
             retEnemy.Toggeler = i_Toggeler;
             retEnemy.VisibleChanged += this.updateAliveLists;
             retEnemy.VisibleChanged += this.isFourEnemiesDead;
@@ -192,15 +190,14 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void initAliveEnemiesByColum()
         {
-            for (int colomn = 0; colomn < m_CurrentColumns; colomn++)
+            for (int colomn = 0; colomn < this.m_CurrentColumns; colomn++)
             {
                 for (int row = 0; row < SpaceInvadersConfig.k_NumOfEnemiesRows; row++)
                 {
-                    m_AliveEnemiesByColum.Add(m_EnemiesGroup[row][colomn]);
+                    this.m_AliveEnemiesByColum.Add(this.m_EnemiesGroup[row][colomn]);
                 }
             } 
         }
-
 
         private void updateScoreValueAndShootingFrequency(Enemy i_Enemy)
         {
@@ -218,7 +215,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void jump(Vector2 i_StepToJump)
         {
-            foreach (Enemy enemy in m_AliveEnemiesByRow)
+            foreach (Enemy enemy in this.m_AliveEnemiesByRow)
             {
                 enemy.Position += i_StepToJump;
             }
@@ -228,16 +225,17 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             if (this.isEnemiesGroupTouchTheBotton())
             {
-                m_GameEngine.IsGameOver = true;
+                this.m_GameEngine.IsGameOver = true;
             }
+
             if (this.isAllEnemiesDead())
             {
-                OnAllEnemiesDied(this, EventArgs.Empty);
+                this.OnAllEnemiesDied(this, EventArgs.Empty);
             }
 
             this.m_TimeCounter += (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
-            if (m_IncreaseVelocityWhen4Dead)
+            if (this.m_IncreaseVelocityWhen4Dead)
             {
                 this.m_IncreaseVelocityWhen4Dead = false;
                 this.increaseVelocity(0.04f);
@@ -262,15 +260,15 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         protected virtual void OnAllEnemiesDied(object sender, EventArgs args)
         {
-            if (AllEnemiesDied != null)
+            if (this.AllEnemiesDied != null)
             {
-                AllEnemiesDied.Invoke(sender, args);
+                this.AllEnemiesDied.Invoke(sender, args);
             }
         }
 
         private bool isAllEnemiesDead()
         {
-            bool isAllDead = m_AliveEnemiesByRow.Count == 0;
+            bool isAllDead = this.m_AliveEnemiesByRow.Count == 0;
             return isAllDead;
         }
 
@@ -278,58 +276,59 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             bool isEnemiesGroupTouchTheBotton = false;
 
-            if (m_AliveEnemiesByRow.Count > 0)
+            if (this.m_AliveEnemiesByRow.Count > 0)
             {
-                isEnemiesGroupTouchTheBotton = this.getBottomGroupBorder() >= Game.GraphicsDevice.Viewport.Height;
+                isEnemiesGroupTouchTheBotton = this.getBottomGroupBorder() >= this.Game.GraphicsDevice.Viewport.Height;
             }
+
             return isEnemiesGroupTouchTheBotton;
         }
 
         private float getRightGroupBorder()
         {
-            return m_AliveEnemiesByColum.Last().Position.X + m_AliveEnemiesByColum.Last().HeightBeforeScale / 2;
+            return this.m_AliveEnemiesByColum.Last().Position.X + (this.m_AliveEnemiesByColum.Last().HeightBeforeScale / 2);
         }
 
         private float getLeftGroupBorder()
         {
-            return m_AliveEnemiesByColum.First().Position.X - m_AliveEnemiesByColum.First().HeightBeforeScale / 2;
+            return this.m_AliveEnemiesByColum.First().Position.X - (this.m_AliveEnemiesByColum.First().HeightBeforeScale / 2);
         }
 
         private float getBottomGroupBorder()
         {
-            return m_AliveEnemiesByRow.Last().Position.Y + (m_AliveEnemiesByRow.Last().HeightBeforeScale / 2);
+            return this.m_AliveEnemiesByRow.Last().Position.Y + (this.m_AliveEnemiesByRow.Last().HeightBeforeScale / 2);
         }
 
         private void updateAliveLists(object sender, EventArgs args)
         {
-            m_AliveEnemiesByRow.Remove((sender as Enemy));
-            m_AliveEnemiesByColum.Remove((sender as Enemy));
+            this.m_AliveEnemiesByRow.Remove(sender as Enemy);
+            this.m_AliveEnemiesByColum.Remove(sender as Enemy);
         }
 
         private void isFourEnemiesDead(object sender, EventArgs args)
         {
-            int numOfDeadEnemies = m_AliveEnemiesByRow.Capacity - m_AliveEnemiesByRow.Count;
-            m_IncreaseVelocityWhen4Dead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
+            int numOfDeadEnemies = this.m_AliveEnemiesByRow.Capacity - this.m_AliveEnemiesByRow.Count;
+            this.m_IncreaseVelocityWhen4Dead = numOfDeadEnemies % 4 == 0 && numOfDeadEnemies != 0;
         }
 
         private void jumpHorizontalStep(GameTime i_GameTime)
         {
-            float lastRightJump = Game.GraphicsDevice.Viewport.Width - this.getRightGroupBorder();
+            float lastRightJump = this.Game.GraphicsDevice.Viewport.Width - this.getRightGroupBorder();
             float lastLeftJump = this.getLeftGroupBorder();
 
-            if (isLastStep(lastRightJump, eDirection.right))
+            if (this.isLastStep(lastRightJump, eDirection.right))
             {
                 this.m_IsLastStepInRow = true;
-                jump(new Vector2(m_Direction * lastRightJump, 0));
+                this.jump(new Vector2(this.m_Direction * lastRightJump, 0));
             }
-            else if (isLastStep(lastLeftJump, eDirection.left))
+            else if (this.isLastStep(lastLeftJump, eDirection.left))
             {
                 this.m_IsLastStepInRow = true;
-                jump(new Vector2(m_Direction * lastLeftJump, 0));
+                this.jump(new Vector2(this.m_Direction * lastLeftJump, 0));
             }
             else
             {
-                jump(new Vector2(m_Direction * this.m_EnemiesGroup[0][0].Texture.Height / 2, 0));
+                this.jump(new Vector2(this.m_Direction * this.m_EnemiesGroup[0][0].Texture.Height / 2, 0));
             }
         }
 
@@ -337,9 +336,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             bool isLastStep = false;
 
-            if (this.m_Direction ==(float)i_MoveDirection)
+            if (this.m_Direction == (float)i_MoveDirection)
             {
-                isLastStep = i_LastStep < (this.m_EnemiesGroup[0][0].Texture.Height) && i_LastStep > 0;
+                isLastStep = i_LastStep < this.m_EnemiesGroup[0][0].Texture.Height && i_LastStep > 0;
             }
 
             return isLastStep;
@@ -347,7 +346,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void jumpDown()
         {
-            jump(new Vector2(0, this.m_EnemiesGroup[0][0].Texture.Height / 2));
+            this.jump(new Vector2(0, this.m_EnemiesGroup[0][0].Texture.Height / 2));
             this.increaseVelocity(0.08f);
         }
 
@@ -355,6 +354,5 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             this.m_TimeUntilNextStepInSec -= this.m_TimeUntilNextStepInSec * i_TimeToIncrease;
         }
-
     }
 }

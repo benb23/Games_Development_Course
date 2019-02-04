@@ -1,7 +1,7 @@
 ﻿ ///*** Guy Ronen © 2008-2011 ***//
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
 
 namespace Infrastructure
 {
@@ -11,16 +11,16 @@ namespace Infrastructure
 
         protected virtual void OnDisposed(object sender, EventArgs args)
         {
-            if (Disposed != null)
+            if (this.Disposed != null)
             {
-                Disposed.Invoke(sender, args);
+                this.Disposed.Invoke(sender, args);
             }
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            OnDisposed(this, EventArgs.Empty);
+            this.OnDisposed(this, EventArgs.Empty);
         }
 
         protected string m_AssetName;
@@ -35,9 +35,9 @@ namespace Infrastructure
 
         protected virtual void OnPositionChanged()
         {
-            if (PositionChanged != null)
+            if (this.PositionChanged != null)
             {
-                PositionChanged(this, EventArgs.Empty);
+                this.PositionChanged(this, EventArgs.Empty);
             }
         }
 
@@ -45,16 +45,16 @@ namespace Infrastructure
 
         protected virtual void OnSizeChanged()
         {
-            if (SizeChanged != null)
+            if (this.SizeChanged != null)
             {
-                SizeChanged(this, EventArgs.Empty);
+                this.SizeChanged(this, EventArgs.Empty);
             }
         }
 
         public string AssetName
         {
-            get { return m_AssetName; }
-            set { m_AssetName = value; }
+            get { return this.m_AssetName; }
+            set { this.m_AssetName = value; }
         }
 
         public LoadableDrawableComponent(
@@ -69,8 +69,8 @@ namespace Infrastructure
             i_GameScreen.Add(this);
         }
 
-        //composite member
-        public LoadableDrawableComponent(string i_AssetName, Game i_Game): base(i_Game)
+        //// composite member
+        public LoadableDrawableComponent(string i_AssetName, Game i_Game) : base(i_Game)
         {
             this.AssetName = i_AssetName;
         }
@@ -99,7 +99,7 @@ namespace Infrastructure
                 }
             }
 
-            InitBounds(); 
+            this.InitBounds(); 
         }
 
 #if DEBUG
@@ -110,15 +110,15 @@ namespace Infrastructure
 
         public bool ShowBoundingBox
         {
-            get { return m_ShowBoundingBox; }
-            set { m_ShowBoundingBox = value; }
+            get { return this.m_ShowBoundingBox; }
+            set { this.m_ShowBoundingBox = value; }
         }
 
         protected abstract void InitBounds();
 
         public override void Draw(GameTime gameTime)
         {
-            DrawBoundingBox();
+            this.DrawBoundingBox();
             base.Draw(gameTime);
         }
 

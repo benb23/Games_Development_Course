@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen © 2008-2011 ***//
+﻿////*** Guy Ronen © 2008-2011 ***//
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,36 +21,34 @@ namespace Infrastructure
 
         public eScreenState PrevState
         {
-            get { return m_PrevState; }
-            set { m_PrevState = value; }
+            get { return this.m_PrevState; }
+            set { this.m_PrevState = value; }
         }
 
         protected eScreenState m_CurrentState;
 
         public eScreenState CurrentState
         {
-            get { return m_CurrentState; }
-            set { m_CurrentState = value; }
+            get { return this.m_CurrentState; }
+            set { this.m_CurrentState = value; }
         }
 
         public StateChangedEventArgs()
         {
-
         }
 
         public StateChangedEventArgs(eScreenState i_PrevState, eScreenState i_CurrState)
         {
-            m_PrevState = i_PrevState;
-            m_CurrentState = i_CurrState;
+            this.m_PrevState = i_PrevState;
+            this.m_CurrentState = i_CurrState;
         }
     }
 
     public abstract class GameScreen : CompositeDrawableComponent<IGameComponent>
     {
-
         protected bool m_initialized;
 
-        //CTOR:
+        ////CTOR:
         public GameScreen(Game i_Game)
             : base(i_Game)
         {
@@ -58,34 +56,33 @@ namespace Infrastructure
             this.Visible = false;
         }
 
-        
-
         protected eScreenState m_State = eScreenState.Inactive;
 
         public eScreenState State
         {
-            get { return m_State; }
+            get { return this.m_State; }
             set
             {
-                if (m_State != value)
+                if (this.m_State != value)
                 {
-                    StateChangedEventArgs args = new StateChangedEventArgs(m_State, value);
-                    m_State = value;
-                    OnStateChanged(args);
+                    StateChangedEventArgs args = new StateChangedEventArgs(this.m_State, value);
+                    this.m_State = value;
+                    this.OnStateChanged(args);
                 }
             }
         }
 
         public event EventHandler<StateChangedEventArgs> StateChanged;
+
         private void OnStateChanged(StateChangedEventArgs args)
         {
             switch (args.CurrentState)
             {
                 case eScreenState.Activating:
-                    OnActivating();
+                    this.OnActivating();
                     break;
                 case eScreenState.Active:
-                    OnActivated();
+                    this.OnActivated();
                     break;
                 case eScreenState.Deactivating:
                     break;
@@ -93,66 +90,72 @@ namespace Infrastructure
                     break;
                 case eScreenState.Inactive:
                 case eScreenState.Closed:
-                    OnDeactivated();
+                    this.OnDeactivated();
                     break;
                 default:
                     break;
             }
 
-            if (StateChanged != null)
+            if (this.StateChanged != null)
             {
-                StateChanged(this, args);
+                this.StateChanged(this, args);
             }
         }
 
-        //PROPS:
+        ////PROPS:
         protected IScreensMananger m_ScreensManager;
+
         public IScreensMananger ScreensManager
         {
-            get { return m_ScreensManager; }
-            set { m_ScreensManager = value; }
+            get { return this.m_ScreensManager; }
+            set { this.m_ScreensManager = value; }
         }
 
         protected bool m_IsModal = true;
+
         public bool IsModal // background screen should not be updated
         {
-            get { return m_IsModal; }
-            set { m_IsModal = value; }
+            get { return this.m_IsModal; }
+            set { this.m_IsModal = value; }
         }
 
         protected bool m_IsOverlayed;
+
         public bool IsOverlayed // background screen should be drawn
         {
-            get { return m_IsOverlayed; }
-            set { m_IsOverlayed = value; }
+            get { return this.m_IsOverlayed; }
+            set { this.m_IsOverlayed = value; }
         }
 
         protected GameScreen m_PreviousScreen;
+
         public GameScreen PreviousScreen
         {
-            get { return m_PreviousScreen; }
-            set { m_PreviousScreen = value; }
+            get { return this.m_PreviousScreen; }
+            set { this.m_PreviousScreen = value; }
         }
 
         protected bool m_HasFocus;
+
         public bool HasFocus // should handle input
         {
-            get { return m_HasFocus; }
-            set { m_HasFocus = value; }
+            get { return this.m_HasFocus; }
+            set { this.m_HasFocus = value; }
         }
 
         protected float m_BlackTintAlpha = 0;
+
         public float BlackTintAlpha
         {
-            get { return m_BlackTintAlpha; }
+            get { return this.m_BlackTintAlpha; }
             set
             {
-                if (m_BlackTintAlpha < 0 || m_BlackTintAlpha > 1)
+                if (this.m_BlackTintAlpha < 0 || this.m_BlackTintAlpha > 1)
                 {
                     throw new ArgumentException("value must be between 0 and 1", "BackgroundDarkness");
                 }
 
-                m_BlackTintAlpha = value;
+                this.m_BlackTintAlpha = value;
             }
         }
 
@@ -161,19 +164,19 @@ namespace Infrastructure
 
         public IInputManager InputManager
         {
-            get { return this.HasFocus ? m_InputManager : m_DummyInputManager; }
+            get { return this.HasFocus ? this.m_InputManager : this.m_DummyInputManager; }
         }
 
         public override void Initialize()
         {
-            m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
-            if (m_InputManager == null)
+            this.m_InputManager = Game.Services.GetService(typeof(IInputManager)) as IInputManager;
+            if (this.m_InputManager == null)
             {
-                m_InputManager = m_DummyInputManager;
+                this.m_InputManager = this.m_DummyInputManager;
             }
             else
             {
-                m_InputManager.Initialize();
+                this.m_InputManager.Initialize();
             }
 
             base.Initialize();
@@ -188,7 +191,7 @@ namespace Infrastructure
             {
                 this.State = eScreenState.Activating;
 
-                if (m_ActivationLength == TimeSpan.Zero)
+                if (this.m_ActivationLength == TimeSpan.Zero)
                 {
                     this.State = eScreenState.Active;
                 }
@@ -204,12 +207,12 @@ namespace Infrastructure
 
         protected virtual void OnActivated()
         {
-            if (PreviousScreen != null)
+            if (this.PreviousScreen != null)
             {
-                PreviousScreen.HasFocus = !this.HasFocus;
+                this.PreviousScreen.HasFocus = !this.HasFocus;
             }
 
-            m_TransitionPosition = 1;
+            this.m_TransitionPosition = 1;
         }
 
         protected internal virtual void Deactivate()
@@ -219,7 +222,7 @@ namespace Infrastructure
             {
                 this.State = eScreenState.Deactivating;
 
-                if (m_DeactivationLength == TimeSpan.Zero)
+                if (this.m_DeactivationLength == TimeSpan.Zero)
                 {
                     this.State = eScreenState.Inactive;
                 }
@@ -229,7 +232,7 @@ namespace Infrastructure
         protected void ExitScreen() 
         {
             this.State = eScreenState.Closing;
-            if (DeactivationLength == TimeSpan.Zero)
+            if (this.DeactivationLength == TimeSpan.Zero)
             {
                 this.State = eScreenState.Closed;
             }
@@ -241,33 +244,34 @@ namespace Infrastructure
             this.Visible = false;
             this.HasFocus = false;
 
-            m_TransitionPosition = 0;
+            this.m_TransitionPosition = 0;
         }
 
-        Texture2D m_GradientTexture;
-        Texture2D m_BlankTexture;
+        private Texture2D m_GradientTexture;
+        private Texture2D m_BlankTexture;
+
         protected override void LoadContent()
         {
             base.LoadContent();
 
-            m_GradientTexture = this.ContentManager.Load<Texture2D>(@"Screens\gradient");
-            m_BlankTexture = this.ContentManager.Load<Texture2D>(@"Screens\blank");
+            this.m_GradientTexture = this.ContentManager.Load<Texture2D>(@"Screens\gradient");
+            this.m_BlankTexture = this.ContentManager.Load<Texture2D>(@"Screens\blank");
         }
 
         public override void Draw(GameTime gameTime)
         {
-            bool fading = UseFadeTransition
-                && TransitionPosition > 0
-                && TransitionPosition < 1;
+            bool fading = this.UseFadeTransition
+                && this.TransitionPosition > 0
+                && this.TransitionPosition < 1;
 
-            if (PreviousScreen != null
-                && IsOverlayed)
+            if (this.PreviousScreen != null
+                && this.IsOverlayed)
             {
-                PreviousScreen.Draw(gameTime);
+                this.PreviousScreen.Draw(gameTime);
 
-                if (!fading && (BlackTintAlpha > 0 || UseGradientBackground))
+                if (!fading && (this.BlackTintAlpha > 0 || this.UseGradientBackground))
                 {
-                    FadeBackBufferToBlack((byte)(m_BlackTintAlpha * byte.MaxValue));
+                    this.FadeBackBufferToBlack((byte)(this.m_BlackTintAlpha * byte.MaxValue));
                 }
             }
 
@@ -275,7 +279,7 @@ namespace Infrastructure
 
             if (fading)
             {
-                FadeBackBufferToBlack(TransitionAlpha);
+                this.FadeBackBufferToBlack(this.TransitionAlpha);
             }
         }
 
@@ -283,21 +287,22 @@ namespace Infrastructure
 
         public bool UseGradientBackground
         {
-            get { return m_UseGradientBackground; }
-            set { m_UseGradientBackground = value; }
+            get { return this.m_UseGradientBackground; }
+            set { this.m_UseGradientBackground = value; }
         }
 
         public void FadeBackBufferToBlack(byte i_Alpha)
         {
             Viewport viewport = this.GraphicsDevice.Viewport;
 
-            Texture2D background = UseGradientBackground ? m_GradientTexture : m_BlankTexture;
+            Texture2D background = this.UseGradientBackground ? this.m_GradientTexture : this.m_BlankTexture;
 
-            SpriteBatch.Begin();
-            SpriteBatch.Draw(background,
+            this.SpriteBatch.Begin();
+            this.SpriteBatch.Draw(
+                             background,
                              new Rectangle(0, 0, viewport.Width, viewport.Height),
                              new Color((byte)0, (byte)0, (byte)0, i_Alpha));
-            SpriteBatch.End();
+            this.SpriteBatch.End();
         }
 
         #region Transitions Support
@@ -307,9 +312,10 @@ namespace Infrastructure
         /// </summary>
         public TimeSpan ActivationLength
         {
-            get { return m_ActivationLength; }
-            protected set { m_ActivationLength = value; }
+            get { return this.m_ActivationLength; }
+            protected set { this.m_ActivationLength = value; }
         }
+
         private TimeSpan m_ActivationLength = TimeSpan.Zero;
 
         /// <summary>
@@ -318,23 +324,23 @@ namespace Infrastructure
         /// </summary>
         public TimeSpan DeactivationLength
         {
-            get { return m_DeactivationLength; }
-            protected set { m_DeactivationLength = value; }
+            get { return this.m_DeactivationLength; }
+            protected set { this.m_DeactivationLength = value; }
         }
-        private TimeSpan m_DeactivationLength = TimeSpan.Zero;
 
+        private TimeSpan m_DeactivationLength = TimeSpan.Zero;
 
         private float m_TransitionPosition = 0;
         /// <summary>
         /// Gets the current position of the screen transition, ranging
         /// from 0 (deactive, no transition) to 1 (active, no transition).
         /// </summary>
+        
         public float TransitionPosition
         {
-            get { return m_TransitionPosition; }
-            protected set { m_TransitionPosition = value; }
+            get { return this.m_TransitionPosition; }
+            protected set { this.m_TransitionPosition = value; }
         }
-
         /// <summary>
         /// There are two possible reasons why a screen might be transitioning
         /// off. It could be temporarily going away to make room for another
@@ -343,10 +349,11 @@ namespace Infrastructure
         /// if set, the screen will automatically remove itself as soon as the
         /// transition finishes.
         /// </summary>
+        
         public bool IsClosing
         {
-            get { return m_IsClosing; }
-            protected internal set { m_IsClosing = value; }
+            get { return this.m_IsClosing; }
+            protected internal set { this.m_IsClosing = value; }
         }
 
         private bool m_IsClosing = false;
@@ -359,7 +366,7 @@ namespace Infrastructure
                 case eScreenState.Activating:
                 case eScreenState.Deactivating:
                 case eScreenState.Closing:
-                    UpdateTransition(gameTime);
+                    this.UpdateTransition(gameTime);
                     break;
                 case eScreenState.Active:
                     break;
@@ -375,22 +382,23 @@ namespace Infrastructure
             {
                 base.Update(gameTime);
 
-                if (PreviousScreen != null && !this.IsModal)
+                if (this.PreviousScreen != null && !this.IsModal)
                 {
-                    PreviousScreen.Update(gameTime);
+                    this.PreviousScreen.Update(gameTime);
                 }
             }
         }
+
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>
-        void UpdateTransition(GameTime i_GameTime)
+        private void UpdateTransition(GameTime i_GameTime)
         {
             bool transionEnded = false;
 
             int direction = this.State == eScreenState.Activating ? 1 : -1;
 
-            TimeSpan transitionLength = this.State == eScreenState.Activating ? m_ActivationLength : m_DeactivationLength;
+            TimeSpan transitionLength = this.State == eScreenState.Activating ? this.m_ActivationLength : this.m_DeactivationLength;
 
             // How much should we move by?
             float transitionDelta;
@@ -407,19 +415,19 @@ namespace Infrastructure
             }
 
             // Update the transition position.
-            m_TransitionPosition += transitionDelta * direction;
+            this.m_TransitionPosition += transitionDelta * direction;
 
             // Did we reach the end of the transition?
-            if (((direction < 0) && (m_TransitionPosition <= 0)) ||
-                ((direction > 0) && (m_TransitionPosition >= 1)))
+            if (((direction < 0) && (this.m_TransitionPosition <= 0)) ||
+                ((direction > 0) && (this.m_TransitionPosition >= 1)))
             {
-                m_TransitionPosition = MathHelper.Clamp(m_TransitionPosition, 0, 1);
+                this.m_TransitionPosition = MathHelper.Clamp(this.m_TransitionPosition, 0, 1);
                 transionEnded = true;
             }
 
             if (transionEnded)
             {
-                OnTransitionEnded();
+                this.OnTransitionEnded();
             }
         }
 
@@ -443,15 +451,15 @@ namespace Infrastructure
 
         protected byte TransitionAlpha
         {
-            get { return (byte)(Byte.MaxValue * m_TransitionPosition * m_BlackTintAlpha); }
+            get { return (byte)(byte.MaxValue * this.m_TransitionPosition * this.m_BlackTintAlpha); }
         }
 
         protected bool m_UseFadeTransition = true;
 
         public bool UseFadeTransition
         {
-            get { return m_UseFadeTransition; }
-            set { m_UseFadeTransition = value; }
+            get { return this.m_UseFadeTransition; }
+            set { this.m_UseFadeTransition = value; }
         }
 
         #endregion Transitions Support

@@ -15,24 +15,22 @@ namespace Infrastructure
 {
     public class SoundSettingsManager : GameService, ISoundSettingsManager
     {
-        ISoundMananger m_SoundManager;
+        private ISoundMananger m_SoundManager;
 
         protected override void RegisterAsService()
         {
             this.Game.Services.AddService(typeof(ISoundSettingsManager), this);
         }
 
-
-        public SoundSettingsManager(Game i_Game) : base (i_Game)
+        public SoundSettingsManager(Game i_Game) : base(i_Game)
         {
-            m_SoundManager = i_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
+            this.m_SoundManager = i_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
         }
 
         public void ToggleGameSound(object sender, EventArgs args)
         {
             MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
-            
-            m_SoundManager.IsGameSoundOn = !m_SoundManager.IsGameSoundOn;
+            this.m_SoundManager.IsGameSoundOn = !this.m_SoundManager.IsGameSoundOn;
         }
 
         public void DecreaseBackgroundMusicVolume(object sender, EventArgs args)
@@ -47,7 +45,7 @@ namespace Infrastructure
 
         public void DecreaseSoundEffectsVolume(object sender, EventArgs args)
         {
-            foreach (SoundEffectInstance effect in m_SoundManager.SoundEffects.Values)
+            foreach (SoundEffectInstance effect in this.m_SoundManager.SoundEffects.Values)
             {
                 effect.Volume = MathHelper.Clamp(effect.Volume - 0.1f, 0, 1);
             }
@@ -55,11 +53,10 @@ namespace Infrastructure
 
         public void IncreaseSoundEffectsVolume(object sender, EventArgs args)
         {
-            foreach (SoundEffectInstance effect in m_SoundManager.SoundEffects.Values)
+            foreach (SoundEffectInstance effect in this.m_SoundManager.SoundEffects.Values)
             {
                 effect.Volume = MathHelper.Clamp(effect.Volume + 0.1f, 0, 1);
             }
         }
-
     }
 }

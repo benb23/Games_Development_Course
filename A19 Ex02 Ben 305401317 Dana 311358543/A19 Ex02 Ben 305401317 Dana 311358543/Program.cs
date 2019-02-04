@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
 #if WINDOWS || LINUX
     /// <summary>
@@ -12,7 +12,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             using (var game = new SpaceInvaders())
             { 

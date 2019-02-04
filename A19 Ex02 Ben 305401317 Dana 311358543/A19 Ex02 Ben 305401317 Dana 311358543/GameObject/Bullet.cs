@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class Bullet : CollidableSprite, IPixelsCollidable, IRectangleCollidable
     {
@@ -54,7 +54,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private bool isBulletHitTheScreenBorder()
         {
-            bool isBulletHit = this.m_Position.Y + this.Texture.Height / 2 <= 0 || this.m_Position.Y - this.Texture.Height / 2 >= this.Game.GraphicsDevice.Viewport.Height;
+            bool isBulletHit = ((this.m_Position.Y + this.Texture.Height) / 2) <= 0 || ((this.m_Position.Y - this.Texture.Height) / 2) >= this.Game.GraphicsDevice.Viewport.Height;
 
             return isBulletHit;
         }

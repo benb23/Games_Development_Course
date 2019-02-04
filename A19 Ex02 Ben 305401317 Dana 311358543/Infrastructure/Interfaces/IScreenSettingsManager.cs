@@ -8,12 +8,10 @@ namespace Infrastructure
 {
     public interface IScreenSettingsManager
     {
-
         void ToggleMouseVisabilityConfig();
 
         void ToggleAllowWindowResizingConfig(object sender, EventArgs args);
 
         void ToggleFullScreenModeConfig(object sender, EventArgs args);
-
     }
 }

@@ -1,4 +1,4 @@
-﻿//*** Guy Ronen © 2008-2015 ***//
+﻿////*** Guy Ronen © 2008-2015 ***//
 using System;
 using System.Collections.Generic;
 using Infrastructure;
@@ -16,23 +16,21 @@ namespace Infrastructure
 
         protected Dictionary<string, GameScreen> m_screens = new Dictionary<string, GameScreen>();
 
-
         public GameScreen GetScreen(string i_ScreenName)
         {
-            return m_screens[i_ScreenName];
+            return this.m_screens[i_ScreenName];
         }
 
         private Stack<GameScreen> m_ScreensStack = new Stack<GameScreen>();
 
         public GameScreen ActiveScreen
         {
-            get { return m_ScreensStack.Count > 0 ? m_ScreensStack.Peek() : null; }
+            get { return this.m_ScreensStack.Count > 0 ? this.m_ScreensStack.Peek() : null; }
         }
 
         public void SetCurrentScreen(GameScreen i_GameScreen)
         {
-            Push(i_GameScreen);
-
+            this.Push(i_GameScreen);
             i_GameScreen.Activate();
         }
 
@@ -46,26 +44,26 @@ namespace Infrastructure
                 this.Add(i_GameScreen);
 
                 // let me know when you are closed, so i can pop you from the stack:
-                i_GameScreen.StateChanged += Screen_StateChanged;
+                i_GameScreen.StateChanged += this.Screen_StateChanged;
             }
 
-            if (ActiveScreen != i_GameScreen)
+            if (this.ActiveScreen != i_GameScreen)
             {
-                if (ActiveScreen != null)
+                if (this.ActiveScreen != null)
                 {
                     // connect each new screen to the previous one:
-                    i_GameScreen.PreviousScreen = ActiveScreen;
+                    i_GameScreen.PreviousScreen = this.ActiveScreen;
 
-                    ActiveScreen.Deactivate();
+                    this.ActiveScreen.Deactivate();
                 }
             }
 
-            if (ActiveScreen != i_GameScreen)
+            if (this.ActiveScreen != i_GameScreen)
             {
-                m_ScreensStack.Push(i_GameScreen);
+                this.m_ScreensStack.Push(i_GameScreen);
             }
 
-            i_GameScreen.DrawOrder = m_ScreensStack.Count;
+            i_GameScreen.DrawOrder = this.m_ScreensStack.Count;
         }
 
         private void Screen_StateChanged(object sender, StateChangedEventArgs e)
@@ -79,28 +77,28 @@ namespace Infrastructure
                 case eScreenState.Deactivating:
                     break;
                 case eScreenState.Closing:
-                    Pop(sender as GameScreen);
+                    this.Pop(sender as GameScreen);
                     break;
                 case eScreenState.Inactive:
                     break;
                 case eScreenState.Closed:
-                    Remove(sender as GameScreen);
+                    this.Remove(sender as GameScreen);
                     break;
                 default:
                     break;
             }
 
-            OnScreenStateChanged(sender, e);
+            this.OnScreenStateChanged(sender, e);
         }
 
         private void Pop(GameScreen i_GameScreen)
         {
-            m_ScreensStack.Pop();
+            this.m_ScreensStack.Pop();
 
-            if (m_ScreensStack.Count > 0)
+            if (this.m_ScreensStack.Count > 0)
             {
                 // when one is popped, the previous becomes the active one
-                ActiveScreen.Activate();
+                this.ActiveScreen.Activate();
             }
         }
 
@@ -116,15 +114,16 @@ namespace Infrastructure
 
         public void AddScreen(GameScreen i_Screen)
         {
-            m_screens.Add(i_Screen.ToString(), i_Screen);
+            this.m_screens.Add(i_Screen.ToString(), i_Screen);
         }
 
         public event EventHandler<StateChangedEventArgs> ScreenStateChanged;
+
         protected virtual void OnScreenStateChanged(object sender, StateChangedEventArgs e)
         {
-            if (ScreenStateChanged != null)
+            if (this.ScreenStateChanged != null)
             {
-                ScreenStateChanged(sender, e);
+                this.ScreenStateChanged(sender, e);
             }
         }
 
@@ -132,18 +131,17 @@ namespace Infrastructure
         {
             base.OnComponentRemoved(e);
 
-            e.GameComponent.StateChanged -= Screen_StateChanged;
+            e.GameComponent.StateChanged -= this.Screen_StateChanged;
 
-            if (m_ScreensStack.Count == 0)
+            if (this.m_ScreensStack.Count == 0)
             {
-                Game.Exit();
+                this.Game.Exit();
             }
         }
 
         public override void Initialize()
         {
-            Game.Services.AddService(typeof(IScreensMananger), this);
-
+            this.Game.Services.AddService(typeof(IScreensMananger), this);
             base.Initialize();
         }
     }

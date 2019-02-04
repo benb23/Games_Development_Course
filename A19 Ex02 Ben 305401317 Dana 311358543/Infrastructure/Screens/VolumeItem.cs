@@ -7,8 +7,8 @@ namespace Infrastructure
 {
     public class VolumeItem : MenuItem
     {
-
         public event EventHandler<EventArgs> IncreaseVolumeButtonClicked;
+
         public event EventHandler<EventArgs> DecreaseVolumeButtonClicked;
 
         private Game m_Game;
@@ -17,8 +17,6 @@ namespace Infrastructure
         private float m_Volume = 100;
         private const int k_MaxVolume = 100;
         private const int k_VolumeAddition = 10;
-
-
 
         public VolumeItem(string i_AssetName, GameScreen i_GameScreen, int i_ItemNumber) : base(i_AssetName, i_GameScreen, i_ItemNumber)
         {
@@ -36,7 +34,7 @@ namespace Infrastructure
         {
             base.Draw(gameTime);
             Color colorToDraw;
-            if (IsActive)
+            if (this.IsActive)
             {
                 colorToDraw = Color.Yellow;
             }
@@ -45,52 +43,45 @@ namespace Infrastructure
                 colorToDraw = Color.White;
             }
 
-           this.GameScreen.SpriteBatch.DrawString(this.m_Font, m_Volume.ToString(), this.Position + new Vector2(this.Width + 5, -3), colorToDraw);
-            
+           this.GameScreen.SpriteBatch.DrawString(this.m_Font, this.m_Volume.ToString(), this.Position + new Vector2(this.Width + 5, -3), colorToDraw);            
         }
-
 
         private void OnIncreaseVolumeButtonClicked(object sender, EventArgs args)
         {
-            if (IncreaseVolumeButtonClicked != null)
+            if (this.IncreaseVolumeButtonClicked != null)
             {
-                IncreaseVolumeButtonClicked.Invoke(sender, args);
+                this.IncreaseVolumeButtonClicked.Invoke(sender, args);
             }
         }
 
         private void OnDecreaseVolumeButtonClicked(object sender, EventArgs args)
         {
-            if (DecreaseVolumeButtonClicked != null)
+            if (this.DecreaseVolumeButtonClicked != null)
             {
-                DecreaseVolumeButtonClicked.Invoke(sender, args);
+                this.DecreaseVolumeButtonClicked.Invoke(sender, args);
             }
         }
-
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (m_SoundMngr.IsGameSoundOn && this.IsActive)
+            if (this.m_SoundMngr.IsGameSoundOn && this.IsActive)
             {
                 if (this.GameScreen.InputManager.KeyPressed(Keys.PageUp))
                 {
-                    m_Volume = MathHelper.Clamp(m_Volume + k_VolumeAddition, 0, k_MaxVolume);
+                    this.m_Volume = MathHelper.Clamp(this.m_Volume + k_VolumeAddition, 0, k_MaxVolume);
 
                     this.OnIncreaseVolumeButtonClicked(this, null);
                 }
                 else if (this.GameScreen.InputManager.KeyPressed(Keys.PageDown))
                 {
-                    m_Volume = MathHelper.Clamp(m_Volume - k_VolumeAddition, 0, k_MaxVolume);
+                    this.m_Volume = MathHelper.Clamp(this.m_Volume - k_VolumeAddition, 0, k_MaxVolume);
                     this.OnIncreaseVolumeButtonClicked(this, null);
                 }
-
-                
             }
+
             base.Update(gameTime);
         }
-
     }
-
-
 }

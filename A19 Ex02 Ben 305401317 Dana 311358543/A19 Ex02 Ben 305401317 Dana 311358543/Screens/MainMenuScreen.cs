@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public class MainMenuScreen : MenuScreen
     {
@@ -12,35 +12,35 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         public MainMenuScreen(Game i_Game) : base(i_Game)
         {
-            IsUsingKeyboard = true;
+            this.IsUsingKeyboard = true;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
             this.m_MenuHeader = new MenuHeader(this, @"Screens\MainMenu\MainMenuLogo");
             this.m_MenuHeader.OffsetX = 20;
 
             int index = 0;
             ToggleItem playersItem = new ToggleItem(@"Screens\MainMenu\PlayersWhite", @"Screens\MainMenu\PlayersOptions_70x50", this, index++);
-            playersItem.ToggleValueChanched += new EventHandler<EventArgs>(numOfPlayersChanged);
-            AddMenuItem(playersItem);
+            playersItem.ToggleValueChanched += new EventHandler<EventArgs>(this.numOfPlayersChanged);
+            this.AddMenuItem(playersItem);
 
             ClickItem SettingsScreenItem = new ClickItem("ScreenSettingsScreen", @"Screens\MainMenu\ScreenSettings", this, index++);
             ClickItem SoundSettingsItem = new ClickItem("SoundSettingsScreen", @"Screens\MainMenu\SoundSettings", this, index++);
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\MainMenu\PlayGameWhite", this, index++);
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
 
-            SettingsScreenItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
-            SoundSettingsItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
-            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(handleItemClicked);
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(quit);
+            SettingsScreenItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
+            SoundSettingsItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
+            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.quit);
 
-            AddMenuItem(SettingsScreenItem);
-            AddMenuItem(SoundSettingsItem);
-            AddMenuItem(playItem);
-            AddMenuItem(QuitItem);
+            this.AddMenuItem(SettingsScreenItem);
+            this.AddMenuItem(SoundSettingsItem);
+            this.AddMenuItem(playItem);
+            this.AddMenuItem(QuitItem);
         }
 
         private void quit(object sender, ScreenEventArgs args)
         {
-            Game.Exit();
+            this.Game.Exit();
         }
 
         private void handleItemClicked(object sender, ScreenEventArgs args)
@@ -50,12 +50,12 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
 
         private void numOfPlayersChanged(object sender, EventArgs args)
         {
-            if (m_GameEngine == null)
+            if (this.m_GameEngine == null)
             {
-                m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
+                this.m_GameEngine = this.Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
             }
 
-            m_GameEngine.ChangeNumOfPlayers(this.m_ScreensManager.GetScreen("PlayScreen"));
+            this.m_GameEngine.ChangeNumOfPlayers(this.m_ScreensManager.GetScreen("PlayScreen"));
         }
 
         public override string ToString()

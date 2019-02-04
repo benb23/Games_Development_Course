@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Infrastructure;
 
-namespace A19_Ex02_Ben_305401317_Dana_311358543
+namespace A19_Ex03_Ben_305401317_Dana_311358543
 {
     public static class SpaceInvadersConfig
     {
@@ -16,7 +16,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             Four,
             Five,
             Six
-        };
+        }
 
         public enum eScoreValue
         {
@@ -31,10 +31,9 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         {
             OnePlayer = 1,
             TwoPlayers = 2
-        };
+        }
 
         public static Vector2 k_DefaultWindowSize = new Vector2(800f, 600f);
-
         public const int k_NumOfWalls = 4;
         public const int k_NumOfEnemiesRows = 5;
         public const int k_NumOfEnemiesColumns = 9;
