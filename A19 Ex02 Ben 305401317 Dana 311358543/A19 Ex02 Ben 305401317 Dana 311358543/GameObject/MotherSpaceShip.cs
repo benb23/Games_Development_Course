@@ -30,7 +30,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
         public void InitMotherShipForNextLevel()
         {
-            this.m_Initialize = false;
+            this.initPosition();
             this.m_OnMove = false;
         }
 

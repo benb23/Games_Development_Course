@@ -16,14 +16,12 @@ namespace Infrastructure
 
     public abstract class MenuScreen : GameScreen
     {
-        Game m_Game;
+        private Game m_Game;
         private List<MenuItem> m_MenuItems = new List<MenuItem>();
         private Vector2 m_firstItemPosition;
         private float m_GapBetweenItems = 15f;
         private float m_OffsetX;
         private float m_OffsetY;
-
-
         private int? m_currItemNumber;
         private int? m_PrevItemNumber;
 
@@ -49,7 +47,6 @@ namespace Infrastructure
             this.m_GapBetweenItems = i_GapBetweenItems;
             this.m_OffsetX = i_OffsetX;
             this.m_OffsetY = i_OffsetY;
-
         }
 
         public bool IsUsingKeyboard
@@ -75,6 +72,7 @@ namespace Infrastructure
             initMenu();
             base.LoadContent();
         }
+
         private void updatePositionsAfterWindowSizeChanged(object sender, EventArgs e)
         {
             initFirstItemPosition();
