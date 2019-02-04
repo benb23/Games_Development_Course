@@ -15,7 +15,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         private SpriteFont m_Font;
         private string m_Result;
 
-        public GameOverScreen(Game i_Game) : base(i_Game, 0f, 100f, 15f)
+        public GameOverScreen(Game i_Game) : base(i_Game, 100f, 20f, 15f)
         {
             this.IsUsingKeyboard = false;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);
@@ -23,7 +23,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.m_GameOverHeader = new MenuHeader(this, @"Screens\GameOver\GameOverLogo");
 
             int index = 0;
-
+            
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\GameOver\Restart", this, index++);
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
