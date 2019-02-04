@@ -126,6 +126,7 @@ namespace Infrastructure
             if(!m_Initialize)
             {
                 initOptions();
+                m_Initialize = true;
             }
 
             if (IsActive)

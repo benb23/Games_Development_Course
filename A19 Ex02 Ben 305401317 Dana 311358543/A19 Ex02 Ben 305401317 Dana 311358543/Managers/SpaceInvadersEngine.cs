@@ -290,8 +290,10 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
             }
 
             i_wall.CurrTexture.SetData(i_wall.Pixels);
+            this.clearCollisionData(i_wall, i_Enemy);
+
         }
-        
+
         private void deletePixelsInVerticalDirection(CollidableSprite i_Target, CollidableSprite i_Sender)
         {
             int targetStartColomn = this.getHittenSpritesColomnInPixelsArray(i_Target, i_Sender);

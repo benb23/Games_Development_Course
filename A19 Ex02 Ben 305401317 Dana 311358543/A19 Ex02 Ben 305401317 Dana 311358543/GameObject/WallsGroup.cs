@@ -11,7 +11,6 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
         private int m_NumOfWalls;
         private List<Wall> m_Walls;
         private Vector2 m_Position;
-        private float m_GroupYShift;
         private GameScreen m_GameScreen;
 
         public Vector2 Position
@@ -47,6 +46,7 @@ namespace A19_Ex02_Ben_305401317_Dana_311358543
                 this.m_Walls[i].Position = this.m_Position + new Vector2(this.m_Walls[i].Texture.Width * 2 * i, 0);
             }
         }
+
         public void InitWallsForNextLevel()
         {
             if (this.m_GameEngine == null)
