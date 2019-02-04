@@ -79,7 +79,6 @@ namespace Infrastructure
             base.LoadContent();
             this.m_SeperatorTexture = Game.Content.Load<Texture2D>(this.m_SeperatorAsset);
             this.m_OptionsTexture = Game.Content.Load<Texture2D>(this.m_OptionsAssetName);
-            initOptions();
         }
 
         public override void Initialize()
@@ -124,6 +123,11 @@ namespace Infrastructure
 
         public override void Update(GameTime gameTime)
         {
+            if(!m_Initialize)
+            {
+                initOptions();
+            }
+
             if (IsActive)
             {
                 if (this.GameScreen.InputManager.KeyPressed(Keys.PageDown) || this.GameScreen.InputManager.KeyPressed(Keys.PageUp))

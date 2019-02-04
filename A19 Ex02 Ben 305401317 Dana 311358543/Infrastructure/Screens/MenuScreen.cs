@@ -67,14 +67,18 @@ namespace Infrastructure
         {
             this.m_Game.Window.ClientSizeChanged += updatePositionsAfterWindowSizeChanged;
             initFirstItemPosition();
-            initItemesPositions();
             base.Initialize();
         }
 
+        protected override void LoadContent()
+        {
+            initMenu();
+            base.LoadContent();
+        }
         private void updatePositionsAfterWindowSizeChanged(object sender, EventArgs e)
         {
             initFirstItemPosition();
-            initItemesPositions();
+            initItemsPositions();
         }
 
         private void initFirstItemPosition()
@@ -82,27 +86,36 @@ namespace Infrastructure
             m_firstItemPosition = new Vector2(m_Game.Window.ClientBounds.Width / 3 - m_OffsetX, m_Game.Window.ClientBounds.Height / 2.5f + m_OffsetY);
         }
 
-        private void initItemesPositions()
+        private void initMenu()
+        {
+            initItemsPositions();
+            updateFirstItemAsActive();
+        }
+
+        private void initItemsPositions()
         {
             if (m_MenuItems != null)
             {
                 foreach (MenuItem item in m_MenuItems)
                 {
-                    item.Position = m_firstItemPosition + item.ItemNumber * (new Vector2(0, m_GapBetweenItems + 33));   //TODO: change 33
+                    item.Position = m_firstItemPosition + item.ItemNumber * (new Vector2(0, m_GapBetweenItems + item.Texture.Height));
                     if (!m_IsUsingKeyboardArrows && item is ClickItem)
                     {
                         (item as ClickItem).IsUsingKeyboard = false;
                     }
                 }
-                if (m_IsUsingKeyboardArrows)
-                {
-                    m_currItemNumber = 0;
-                    m_MenuItems[(int)m_currItemNumber].IsActive = true;
-                    m_MenuItems[(int)m_currItemNumber].TintColor = m_MenuItems[(int)m_currItemNumber].ActiveColor;
-                }
             }
         }
 
+        private void updateFirstItemAsActive()
+        {
+            if (m_MenuItems != null && m_IsUsingKeyboardArrows)
+            {
+                    m_currItemNumber = 0;
+                    m_MenuItems[(int)m_currItemNumber].IsActive = true;
+                    m_MenuItems[(int)m_currItemNumber].TintColor = m_MenuItems[(int)m_currItemNumber].ActiveColor;
+            }
+        }
         public void AddMenuItem(MenuItem i_Item)        
         {
             m_MenuItems.Add(i_Item);
