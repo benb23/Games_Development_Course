@@ -45,7 +45,14 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             base.Update(gameTime);
 
-            if(this.m_GameEngine.IsGameOver)
+            if (!m_initialized)
+            {
+                this.m_GameEngine.InitGameEngineForNewGame();
+                this.initSpritesForNewGame();
+                m_initialized = true;
+            }
+
+            if (this.m_GameEngine.IsGameOver)
             {
                 this.OnGameOver();
             }
@@ -79,8 +86,9 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             this.m_SoundManager.PlaySoundEffect("GameOver");
             this.ScreensManager.SetCurrentScreen(this.ScreensManager.GetScreen("GameOverScreen"));
-            this.m_GameEngine.InitGameEngineForNewGame();
-            this.initSpritesForNewGame();
+            //this.m_GameEngine.InitGameEngineForNewGame();
+            this.m_initialized = false;
+            //this.initSpritesForNewGame();
         }
 
         private void initSpritesForNewGame()
