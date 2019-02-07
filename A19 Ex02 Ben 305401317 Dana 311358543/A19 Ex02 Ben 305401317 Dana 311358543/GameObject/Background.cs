@@ -22,10 +22,10 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             base.Initialize();
             this.m_Scales = new Vector2(this.m_Game.Window.ClientBounds.Width / SpaceInvadersConfig.k_DefaultWindowSize.X, this.m_Game.Window.ClientBounds.Height / SpaceInvadersConfig.k_DefaultWindowSize.Y);
-            this.m_Game.Window.ClientSizeChanged += this.Window_ClientSizeChanged1;
+            this.m_Game.Window.ClientSizeChanged += this.WindowClientSize_Changed;
         }
 
-        private void Window_ClientSizeChanged1(object sender, System.EventArgs e)
+        private void WindowClientSize_Changed(object sender, System.EventArgs e)
         {
             if (this.m_GraphicDeviceMng == null)
             {

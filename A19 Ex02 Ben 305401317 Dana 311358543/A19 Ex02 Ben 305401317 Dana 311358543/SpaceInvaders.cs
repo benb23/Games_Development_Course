@@ -54,7 +54,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             if (this.m_InputManager.KeyPressed(Keys.M))
             {
-                this.m_SoundSettingsManager.ToggleGameSound(this, null);
+                this.m_SoundSettingsManager.ToggleGameSound_Clicked(this, null);
             }
 
             base.Update(gameTime);
