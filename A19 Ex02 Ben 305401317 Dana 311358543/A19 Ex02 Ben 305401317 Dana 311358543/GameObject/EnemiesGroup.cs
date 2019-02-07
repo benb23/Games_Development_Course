@@ -46,11 +46,11 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             if (SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.One)
             {
                 this.addColumToEnemiesGroup();
-                m_CurrentColumns++;
+                this.m_CurrentColumns++;
             }
             else
             {
-                m_CurrentColumns--;
+                this.m_CurrentColumns--;
                 this.revertEnemiesGroupToOriginalSize();
                 this.m_CurrentColumns = SpaceInvadersConfig.k_NumOfEnemiesColumns;
             }

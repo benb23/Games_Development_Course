@@ -148,8 +148,8 @@ namespace Infrastructure
             int left = Math.Max(Bounds.Left, i_Source.Bounds.Left);
             int right = Math.Min(Bounds.Right, i_Source.Bounds.Right);
 
-            m_LastCollisionRectangle = new Rectangle(left, top, right - left, bottom - top);
-            (i_Source as CollidableSprite).m_LastCollisionRectangle = new Rectangle(top, left, right - left, top - bottom); ;
+            this.m_LastCollisionRectangle = new Rectangle(left, top, right - left, bottom - top);
+            (i_Source as CollidableSprite).m_LastCollisionRectangle = new Rectangle(top, left, right - left, top - bottom);
 
             for (int y = top; y < bottom; y++)
             {

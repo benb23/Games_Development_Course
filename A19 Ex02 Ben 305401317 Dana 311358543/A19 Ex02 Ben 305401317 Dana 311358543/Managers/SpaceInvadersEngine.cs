@@ -140,7 +140,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             this.initPlayersForNextLevel();
             SpaceInvadersConfig.m_Level++;
-            SpaceInvadersConfig.s_LogicLevel =(SpaceInvadersConfig.eLevel)(SpaceInvadersConfig.m_Level % ((int)SpaceInvadersConfig.eLevel.Six + 1));
+            SpaceInvadersConfig.s_LogicLevel = (SpaceInvadersConfig.eLevel)(SpaceInvadersConfig.m_Level % ((int)SpaceInvadersConfig.eLevel.Six + 1));
         }
 
         private void initPlayersForNextLevel()
@@ -278,8 +278,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
         private void HandleWallAndEnemyHit(Wall i_wall, Enemy i_Enemy)
         {
-
-            for (int y = i_wall.m_LastCollisionRectangle.Top ; y < i_wall.m_LastCollisionRectangle.Bottom ; y++)
+            for (int y = i_wall.m_LastCollisionRectangle.Top; y < i_wall.m_LastCollisionRectangle.Bottom; y++)
             {
                 for (int x = i_wall.m_LastCollisionRectangle.Left; x < i_wall.m_LastCollisionRectangle.Right; x++)
                 {
@@ -289,7 +288,6 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
             i_wall.CurrTexture.SetData(i_wall.Pixels);
             this.clearCollisionData(i_wall, i_Enemy);
-
         }
 
         private void deletePixelsInVerticalDirection(CollidableSprite i_Target, CollidableSprite i_Sender)

@@ -15,7 +15,6 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         private SpriteFont m_Font;
         private string m_Result;
 
-
         public GameOverScreen(Game i_Game) : base(i_Game, 70f, 85f, 15f)
         {
             this.IsUsingKeyboard = false;
@@ -74,7 +73,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
         public override void Update(GameTime gameTime)
         {
-            setResultString();
+            this.setResultString();
 
             if (InputManager.KeyPressed(Keys.Escape))
             {
@@ -94,7 +93,6 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
         private void setResultString()
         {
-
             if (SpaceInvadersConfig.s_NumOfPlayers == SpaceInvadersConfig.eNumOfPlayers.TwoPlayers)
             {
                 string winner = this.setWinnerString();
@@ -114,6 +112,7 @@ The winner is : {2} !",
                 this.m_GameEngine.Players[0].Score.ToString());
             }
         }
+
         protected override void LoadContent()
         {
             base.LoadContent();

@@ -24,13 +24,15 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             set { this.m_SoulIndx = value; }
         }
+
         public override void Update(GameTime gameTime)
         {
-            if(!m_Initialize)
+            if(!this.m_Initialize)
             {
                 this.initPosition();
-                m_Initialize = true;
+                this.m_Initialize = true;
             }
+
             base.Update(gameTime);
         }
 

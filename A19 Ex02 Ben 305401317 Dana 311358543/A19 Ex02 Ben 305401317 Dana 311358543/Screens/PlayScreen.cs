@@ -45,18 +45,17 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             base.Update(gameTime);
 
-            if (!m_initialized)
+            if (!this.m_initialized)
             {
                 this.m_GameEngine.InitGameEngineForNewGame();
                 this.initSpritesForNewGame();
-                m_initialized = true;
+                this.m_initialized = true;
             }
 
             if (this.m_GameEngine.IsGameOver)
             {
                 this.OnGameOver();
             }
-
 
             if (this.InputManager.KeyPressed(Keys.P))
             {
