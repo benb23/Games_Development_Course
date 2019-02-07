@@ -70,10 +70,10 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.Game.Window.Title = k_GameName;
             base.Initialize();
             this.m_WallsGroup.Position = new Vector2(this.m_WallsGroup.Position.X, this.GraphicsDevice.Viewport.Height - (2 * this.m_Players[(int)PlayerIndex.One].SpaceShip.Texture.Height));
-            this.m_EnemysGroup.AllEnemiesDied += new EventHandler<EventArgs>(this.levelChanged);
+            this.m_EnemysGroup.AllEnemiesDied += new EventHandler<EventArgs>(this.level_Changed);
         }
 
-        private void levelChanged(object sender, EventArgs args)
+        private void level_Changed(object sender, EventArgs args)
         {
             this.m_SoundManager.PlaySoundEffect("LevelWin");
             MenuUtils.GoToScreen(this, this.ScreensManager.GetScreen("LevelTransitionScreen"));

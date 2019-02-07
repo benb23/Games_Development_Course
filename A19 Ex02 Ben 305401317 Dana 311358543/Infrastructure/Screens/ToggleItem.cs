@@ -83,10 +83,10 @@ namespace Infrastructure
         public override void Initialize()
         {
             base.Initialize();
-            this.m_Game.Window.ClientSizeChanged += this.updatePositionsAfterWindowSizeChanged;
+            this.m_Game.Window.ClientSizeChanged += this.WindowSize_Changed;
         }
 
-        private void updatePositionsAfterWindowSizeChanged(object sender, EventArgs e)
+        private void WindowSize_Changed(object sender, EventArgs e)
         {
             this.initOptionsPositions();
         }

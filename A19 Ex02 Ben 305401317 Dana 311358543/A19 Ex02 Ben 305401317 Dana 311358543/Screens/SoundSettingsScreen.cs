@@ -22,7 +22,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             VolumeItem soundEffectsVolume = new VolumeItem(@"Screens\Settings\SoundEffects", this, index++);
             ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
-            toggleGameSound.ToggleValueChanched += new EventHandler<EventArgs>(this.m_SoundSettingManager.ToggleGameSound_Clicked);
+            toggleGameSound.ToggleValueChanched += new EventHandler<EventArgs>(this.m_SoundSettingManager.ToggleGameSound_Click);
             bgMusicVolume.IncreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.IncreaseBackgroundMusic_Click);
             bgMusicVolume.DecreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.DecreaseBackgroundMusic_Click);
             soundEffectsVolume.IncreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.IncreaseSoundEffects_Click);

@@ -4,7 +4,7 @@ namespace Infrastructure
 {
     public interface ISoundSettingsManager
     {
-        void ToggleGameSound_Clicked(object sender, EventArgs args);
+        void ToggleGameSound_Click(object sender, EventArgs args);
 
         void DecreaseBackgroundMusic_Click(object sender, EventArgs args);
 

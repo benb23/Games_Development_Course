@@ -56,7 +56,7 @@ namespace Infrastructure
             if (updatable != null)
             {
                 this.insertSorted(updatable);
-                updatable.UpdateOrderChanged += new EventHandler<EventArgs>(this.childUpdateOrderChanged);
+                updatable.UpdateOrderChanged += new EventHandler<EventArgs>(this.childUpdateOrder_Changed);
             }
 
             // If the new component implements IDrawable:
@@ -66,7 +66,7 @@ namespace Infrastructure
             if (drawable != null)
             {
                 this.insertSorted(drawable);
-                drawable.DrawOrderChanged += new EventHandler<EventArgs>(this.childDrawOrderChanged);
+                drawable.DrawOrderChanged += new EventHandler<EventArgs>(this.childDrawOrder_Changed);
             }
 
             // raise the Added event:
@@ -87,14 +87,14 @@ namespace Infrastructure
             if (updatable != null)
             {
                 this.m_UpdateableComponents.Remove(updatable);
-                updatable.UpdateOrderChanged -= this.childUpdateOrderChanged;
+                updatable.UpdateOrderChanged -= this.childUpdateOrder_Changed;
             }
 
             Sprite sprite = e.GameComponent as Sprite;
             if (sprite != null)
             {
                 this.m_Sprites.Remove(sprite);
-                sprite.DrawOrderChanged -= this.childDrawOrderChanged;
+                sprite.DrawOrderChanged -= this.childDrawOrder_Changed;
             }
             else
             {
@@ -102,7 +102,7 @@ namespace Infrastructure
                 if (drawable != null)
                 {
                     this.m_DrawableComponents.Remove(drawable);
-                    drawable.DrawOrderChanged -= this.childDrawOrderChanged;
+                    drawable.DrawOrderChanged -= this.childDrawOrder_Changed;
                 }
             }
 
@@ -117,7 +117,7 @@ namespace Infrastructure
         /// When the update order of a component in this manager changes, will need to find a new place for it
         /// on the list of updateable components.
         /// </summary>
-        private void childUpdateOrderChanged(object sender, EventArgs e)
+        private void childUpdateOrder_Changed(object sender, EventArgs e)
         {
             IUpdateable updatable = sender as IUpdateable;
             this.m_UpdateableComponents.Remove(updatable);
@@ -128,7 +128,7 @@ namespace Infrastructure
         /// When the draw order of a component in this manager changes, will need to find a new place for it
         /// on the list of drawable components.
         /// </summary>
-        private void childDrawOrderChanged(object sender, EventArgs e)
+        private void childDrawOrder_Changed(object sender, EventArgs e)
         {
             IDrawable drawable = sender as IDrawable;
 

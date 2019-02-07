@@ -54,7 +54,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             if (this.m_InputManager.KeyPressed(Keys.M))
             {
-                this.m_SoundSettingsManager.ToggleGameSound_Clicked(this, null);
+                this.m_SoundSettingsManager.ToggleGameSound_Click(this, null);
             }
 
             base.Update(gameTime);
@@ -72,7 +72,6 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/EnemyGunShot"), "EnemyGunShot");
             this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/BarrierHit"), "BarrierHit");
             this.m_SoundManager.AddSong(this.Content.Load<Song>(@"c:/temp/XNA_Assets/Ex03/Sounds/BGMusic"), "BGMusic");
-
             MediaPlayer.Play(this.m_SoundManager.GetSong("BGMusic"));
             MediaPlayer.IsRepeating = true;
 

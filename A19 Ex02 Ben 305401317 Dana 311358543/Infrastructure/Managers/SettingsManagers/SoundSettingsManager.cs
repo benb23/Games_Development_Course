@@ -27,7 +27,7 @@ namespace Infrastructure
             this.m_SoundManager = i_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
         }
 
-        public void ToggleGameSound_Clicked(object sender, EventArgs args)
+        public void ToggleGameSound_Click(object sender, EventArgs args)
         {
             MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
             this.m_SoundManager.IsGameSoundOn = !this.m_SoundManager.IsGameSoundOn;
