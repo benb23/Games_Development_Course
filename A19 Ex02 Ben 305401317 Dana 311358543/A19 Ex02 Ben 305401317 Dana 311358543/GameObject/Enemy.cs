@@ -112,17 +112,6 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
                 this.Animations["CellAnimation"].Restart();
             }
 
-            ////test for level
-            //m_GameEngine = Game.Services.GetService(typeof(ISpaceInvadersEngine)) as ISpaceInvadersEngine;
-            //if (SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.One || 
-            //    SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.Two ||
-            //    SpaceInvadersConfig.m_Level == (int)SpaceInvadersConfig.eLevel.tree)
-            //{
-            //    Visible = false;
-            //    Enabled = false;
-            //}
-            ///////////
-
             int rnd = this.m_Random.Next(0, k_MaxRandomNumber);
 
             if (rnd <= this.m_MaxRandomToShoot && this.m_Gun.PermitionToShoot())

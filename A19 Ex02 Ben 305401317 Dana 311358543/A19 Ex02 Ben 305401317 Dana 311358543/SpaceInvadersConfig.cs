@@ -37,13 +37,13 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         public const int k_NumOfWalls = 4;
         public const int k_NumOfEnemiesRows = 5;
         public const int k_NumOfEnemiesColumns = 9;
-        public static eNumOfPlayers s_NumOfPlayers = eNumOfPlayers.OnePlayer; // default
+        public static eNumOfPlayers s_NumOfPlayers = eNumOfPlayers.OnePlayer;
 
         public const double k_sizeOfBulletHitEffect = 0.7;
 
         // Configurations for level up
         public static eLevel s_LogicLevel = eLevel.One;
-        public static int m_Level = 1;
+        public static int m_Level = 0;
         public const float k_WallsVelocitiyAdditionPercent = (float)(-0.07);
         public const int k_EnemyScoreAddition = 120;
         public const int k_EnemyShootingFrequencyAddition = 5;

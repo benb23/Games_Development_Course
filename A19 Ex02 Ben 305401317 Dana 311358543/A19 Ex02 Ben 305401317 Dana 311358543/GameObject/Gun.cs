@@ -18,7 +18,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         public Gun(GameScreen i_GameScreen, int i_MaxNumOfBullets, Bullet.eBulletType i_BulletType, int i_ShootingDirection, string i_ShotSound)
         {
             this.m_GameScreen = i_GameScreen;
-            this.r_MaxNumOfBullets = 100; // i_MaxNumOfBullets;
+            this.r_MaxNumOfBullets = i_MaxNumOfBullets;
             this.m_BulletsType = i_BulletType;
             this.m_Bullets = new List<Bullet>(this.r_MaxNumOfBullets);
             this.m_ShootingDirection = i_ShootingDirection;

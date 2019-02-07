@@ -46,10 +46,11 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             if (SpaceInvadersConfig.s_LogicLevel != SpaceInvadersConfig.eLevel.One)
             {
                 this.addColumToEnemiesGroup();
-                this.m_CurrentColumns++;
+                m_CurrentColumns++;
             }
             else
             {
+                m_CurrentColumns--;
                 this.revertEnemiesGroupToOriginalSize();
                 this.m_CurrentColumns = SpaceInvadersConfig.k_NumOfEnemiesColumns;
             }
@@ -79,7 +80,6 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.initAliveEnemiesByColum();
         }
 
-        // TODO: DEBUG CASE LEVEL 7
         private void revertEnemiesGroupToOriginalSize()
         {
             for (int colum = this.m_CurrentColumns; colum > SpaceInvadersConfig.k_NumOfEnemiesColumns; colum--)

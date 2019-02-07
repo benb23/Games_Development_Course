@@ -16,7 +16,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         private string m_Result;
 
 
-        public GameOverScreen(Game i_Game) : base(i_Game, 70f, 30f, 15f)
+        public GameOverScreen(Game i_Game) : base(i_Game, 70f, 85f, 15f)
         {
             this.IsUsingKeyboard = false;
             this.m_Background = new Background(this, @"Sprites\BG_Space01_1024x768", 1);

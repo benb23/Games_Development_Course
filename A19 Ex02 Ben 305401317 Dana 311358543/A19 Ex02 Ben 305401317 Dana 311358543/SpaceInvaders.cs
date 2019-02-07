@@ -62,16 +62,17 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
         protected override void LoadContent()
         {
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/SSGunShot"), "SSGunShot");
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/MotherShipKill"), "MotherShipKill");
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/MenuMove"), "MenuMove");
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/LifeDie"), "LifeDie");
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/LevelWin"), "LevelWin");
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/GameOver"), "GameOver");
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/EnemyKill"), "EnemyKill");
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/EnemyGunShot"), "EnemyGunShot");
-            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"Sounds/BarrierHit"), "BarrierHit");
-            this.m_SoundManager.AddSong(this.Content.Load<Song>(@"Sounds/BGMusic"), "BGMusic");
+            
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/SSGunShot"), "SSGunShot");
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/MotherShipKill"), "MotherShipKill");
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/MenuMove"), "MenuMove");
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/LifeDie"), "LifeDie");
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/LevelWin"), "LevelWin");
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/GameOver"), "GameOver");
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/EnemyKill"), "EnemyKill");
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/EnemyGunShot"), "EnemyGunShot");
+            this.m_SoundManager.AddSoundEffect(this.Content.Load<SoundEffect>(@"c:/temp/XNA_Assets/Ex03/Sounds/BarrierHit"), "BarrierHit");
+            this.m_SoundManager.AddSong(this.Content.Load<Song>(@"c:/temp/XNA_Assets/Ex03/Sounds/BGMusic"), "BGMusic");
 
             MediaPlayer.Play(this.m_SoundManager.GetSong("BGMusic"));
             MediaPlayer.IsRepeating = true;

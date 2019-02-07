@@ -140,7 +140,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             this.initPlayersForNextLevel();
             SpaceInvadersConfig.m_Level++;
-            SpaceInvadersConfig.s_LogicLevel = (SpaceInvadersConfig.eLevel)MathHelper.Clamp((int)SpaceInvadersConfig.s_LogicLevel + 1, 0, (int)SpaceInvadersConfig.eLevel.Six);
+            SpaceInvadersConfig.s_LogicLevel =(SpaceInvadersConfig.eLevel)(SpaceInvadersConfig.m_Level % ((int)SpaceInvadersConfig.eLevel.Six + 1));
         }
 
         private void initPlayersForNextLevel()

@@ -68,7 +68,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             base.Draw(gameTime);
             this.SpriteBatch.Begin();
-            this.SpriteBatch.DrawString(this.m_Font, string.Format(@"Level : {0}", SpaceInvadersConfig.m_Level), this.m_TextPosition, Color.White);
+            this.SpriteBatch.DrawString(this.m_Font, string.Format(@"Level : {0}", SpaceInvadersConfig.m_Level + 1 ), this.m_TextPosition, Color.White);
             this.SpriteBatch.End();
         }
 

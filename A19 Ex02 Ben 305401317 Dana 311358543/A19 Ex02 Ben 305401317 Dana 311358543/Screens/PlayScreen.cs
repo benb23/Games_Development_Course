@@ -86,9 +86,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             this.m_SoundManager.PlaySoundEffect("GameOver");
             this.ScreensManager.SetCurrentScreen(this.ScreensManager.GetScreen("GameOverScreen"));
-            //this.m_GameEngine.InitGameEngineForNewGame();
             this.m_initialized = false;
-            //this.initSpritesForNewGame();
         }
 
         private void initSpritesForNewGame()
