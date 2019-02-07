@@ -19,7 +19,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
             int index = 0;
             ToggleItem playersItem = new ToggleItem(@"Screens\MainMenu\PlayersWhite", @"Screens\MainMenu\PlayersOptions_70x50", this, index++);
-            playersItem.ToggleValueChanched += new EventHandler<EventArgs>(this.numOfPlayersChanged);
+            playersItem.ToggleValueChanched += new EventHandler<EventArgs>(this.numOfPlayers_Changed);
             this.AddMenuItem(playersItem);
 
             ClickItem SettingsScreenItem = new ClickItem("ScreenSettingsScreen", @"Screens\MainMenu\ScreenSettings", this, index++);
@@ -27,10 +27,10 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\MainMenu\PlayGameWhite", this, index++);
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
 
-            SettingsScreenItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
-            SoundSettingsItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
-            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.quit);
+            SettingsScreenItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.menuItem_Click);
+            SoundSettingsItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.menuItem_Click);
+            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.menuItem_Click);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.buttonQuit_click);
 
             this.AddMenuItem(SettingsScreenItem);
             this.AddMenuItem(SoundSettingsItem);
@@ -38,17 +38,17 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.AddMenuItem(QuitItem);
         }
 
-        private void quit(object sender, ScreenEventArgs args)
+        private void buttonQuit_click(object sender, ScreenEventArgs args)
         {
             this.Game.Exit();
         }
 
-        private void handleItemClicked(object sender, ScreenEventArgs args)
+        private void menuItem_Click(object sender, ScreenEventArgs args)
         {
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
 
-        private void numOfPlayersChanged(object sender, EventArgs args)
+        private void numOfPlayers_Changed(object sender, EventArgs args)
         {
             if (this.m_GameEngine == null)
             {

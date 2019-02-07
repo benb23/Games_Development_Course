@@ -22,10 +22,10 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             ToggleItem fullScreen = new ToggleItem(@"Screens\Settings\FullScreenMode", @"Screens\Settings\OnOff_53x52", this, index++, 1);
             ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
-            mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(this.mouseVisabilityChanged);
-            windowResizing.ToggleValueChanched += new EventHandler<EventArgs>(this.m_ScreenSettingMng.ToggleAllowWindowResizingConfig);
-            fullScreen.ToggleValueChanched += new EventHandler<EventArgs>(this.m_ScreenSettingMng.ToggleFullScreenModeConfig);
-            doneItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
+            mouseVisability.ToggleValueChanched += new EventHandler<EventArgs>(this.mouseVisability_Changed);
+            windowResizing.ToggleValueChanched += new EventHandler<EventArgs>(this.m_ScreenSettingMng.AllowWindowResizingConfigToggle_Click);
+            fullScreen.ToggleValueChanched += new EventHandler<EventArgs>(this.m_ScreenSettingMng.FullScreenModeConfigToggle_Click);
+            doneItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.menuItem_Click);
 
             this.AddMenuItem(mouseVisability);
             this.AddMenuItem(windowResizing);
@@ -33,13 +33,13 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.AddMenuItem(doneItem);
         }
 
-        private void mouseVisabilityChanged(object sender, EventArgs args)
+        private void mouseVisability_Changed(object sender, EventArgs args)
         {
             this.m_ScreenSettingMng.ToggleMouseVisabilityConfig();
             this.IsUsingMouse = !this.IsUsingMouse;
         }
 
-        private void handleItemClicked(object sender, ScreenEventArgs args)
+        private void menuItem_Click(object sender, ScreenEventArgs args)
         {
             this.ExitScreen();
         }

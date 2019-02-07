@@ -22,13 +22,13 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             VolumeItem soundEffectsVolume = new VolumeItem(@"Screens\Settings\SoundEffects", this, index++);
             ClickItem doneItem = new ClickItem("Done", @"Screens\Settings\Done", this, index++);
 
-            toggleGameSound.ToggleValueChanched += new EventHandler<EventArgs>(this.m_SoundSettingManager.ToggleGameSound);
-            bgMusicVolume.IncreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.IncreaseBackgroundMusicVolume);
-            bgMusicVolume.DecreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.DecreaseBackgroundMusicVolume);
-            soundEffectsVolume.IncreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.IncreaseSoundEffectsVolume);
-            soundEffectsVolume.DecreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.DecreaseSoundEffectsVolume);
+            toggleGameSound.ToggleValueChanched += new EventHandler<EventArgs>(this.m_SoundSettingManager.ToggleGameSound_Clicked);
+            bgMusicVolume.IncreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.IncreaseBackgroundMusic_Click);
+            bgMusicVolume.DecreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.DecreaseBackgroundMusic_Click);
+            soundEffectsVolume.IncreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.IncreaseSoundEffects_Click);
+            soundEffectsVolume.DecreaseVolumeButtonClicked += new EventHandler<EventArgs>(this.m_SoundSettingManager.DecreaseSoundEffects_Click);
 
-            doneItem.ItemClicked += this.handleItemClicked;
+            doneItem.ItemClicked += this.menuItem_Click;
 
             this.AddMenuItem(toggleGameSound);
             this.AddMenuItem(bgMusicVolume);
@@ -36,7 +36,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.AddMenuItem(doneItem);
         }
 
-        private void handleItemClicked(object sender, ScreenEventArgs args)
+        private void menuItem_Click(object sender, ScreenEventArgs args)
         {
             this.ExitScreen();
         }

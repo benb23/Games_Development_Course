@@ -21,21 +21,21 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
             ClickItem QuitItem = new ClickItem("Quit", @"Screens\Wellcome\QuitGame", this, index++);
 
-            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
-            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.quit);
+            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.menuItem_Click);
+            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.menuItem_Click);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.buttonQuit_click);
 
             this.AddMenuItem(playItem);
             this.AddMenuItem(mainMenuItem);
             this.AddMenuItem(QuitItem);
         }
 
-        private void quit(object sender, ScreenEventArgs args)
+        private void buttonQuit_click(object sender, ScreenEventArgs args)
         {
             Game.Exit();
         }
 
-        private void handleItemClicked(object sender, ScreenEventArgs args)
+        private void menuItem_Click(object sender, ScreenEventArgs args)
         {
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
@@ -50,15 +50,15 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             if (InputManager.KeyPressed(Keys.Enter))
             {
-                this.handleItemClicked(this, new ScreenEventArgs("PlayScreen"));
+                this.menuItem_Click(this, new ScreenEventArgs("PlayScreen"));
             }
             else if(InputManager.KeyPressed(Keys.T))
             {
-                this.handleItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
+                this.menuItem_Click(this, new ScreenEventArgs("MainMenuScreen"));
             }
             else if (InputManager.KeyPressed(Keys.Escape))
             {
-                this.quit(this, null);
+                this.buttonQuit_click(this, null);
             }
 
             base.Update(gameTime);

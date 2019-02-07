@@ -27,23 +27,23 @@ namespace Infrastructure
             this.m_SoundManager = i_Game.Services.GetService(typeof(ISoundMananger)) as ISoundMananger;
         }
 
-        public void ToggleGameSound(object sender, EventArgs args)
+        public void ToggleGameSound_Clicked(object sender, EventArgs args)
         {
             MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
             this.m_SoundManager.IsGameSoundOn = !this.m_SoundManager.IsGameSoundOn;
         }
 
-        public void DecreaseBackgroundMusicVolume(object sender, EventArgs args)
+        public void DecreaseBackgroundMusic_Click(object sender, EventArgs args)
         {
             MediaPlayer.Volume = MathHelper.Clamp(MediaPlayer.Volume - 0.1f, 0, 1); 
         }
 
-        public void IncreaseBackgroundMusicVolume(object sender, EventArgs args)
+        public void IncreaseBackgroundMusic_Click(object sender, EventArgs args)
         {
             MediaPlayer.Volume = MathHelper.Clamp(MediaPlayer.Volume + 0.1f, 0, 1);
         }
 
-        public void DecreaseSoundEffectsVolume(object sender, EventArgs args)
+        public void DecreaseSoundEffects_Click(object sender, EventArgs args)
         {
             foreach (SoundEffectInstance effect in this.m_SoundManager.SoundEffects.Values)
             {
@@ -51,7 +51,7 @@ namespace Infrastructure
             }
         }
 
-        public void IncreaseSoundEffectsVolume(object sender, EventArgs args)
+        public void IncreaseSoundEffects_Click(object sender, EventArgs args)
         {
             foreach (SoundEffectInstance effect in this.m_SoundManager.SoundEffects.Values)
             {

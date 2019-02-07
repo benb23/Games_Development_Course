@@ -151,13 +151,13 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             }
         }
 
-        private void dyingEnemyFinished(object sender, EventArgs e)
+        private void dyingEnemy_Finished(object sender, EventArgs e)
         {
             this.Visible = false;
             this.Enabled = false;
         }
 
-        private void cellAnimationPositionChanged(object sender, EventArgs e)
+        private void cellAnimationPosition_Changed(object sender, EventArgs e)
         {
             (this.m_Animations["CellAnimation"] as CellAnimator).CellTime = this.m_TimeUntilNextStepInSec;
         }
@@ -172,8 +172,8 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.Animations.Add(enemyCellAnimation);
             this.Animations.Add(dyingEnemy);
 
-            this.PositionChanged += new EventHandler<EventArgs>(this.cellAnimationPositionChanged);
-            dyingEnemy.Finished += new EventHandler(this.dyingEnemyFinished);
+            this.PositionChanged += new EventHandler<EventArgs>(this.cellAnimationPosition_Changed);
+            dyingEnemy.Finished += new EventHandler(this.dyingEnemy_Finished);
             this.Animations.Enabled = true; 
         }
     }

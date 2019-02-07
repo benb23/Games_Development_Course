@@ -40,7 +40,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             this.m_Scales = new Vector2(i_Scale);
         }
 
-        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        private void WindowClientSize_Changed(object sender, EventArgs e)
         {
             this.Position = new Vector2((this.m_GameScreen.Game.Window.ClientBounds.Width / 2) + this.m_OffsetX, this.m_OffsetY);
         }
@@ -59,7 +59,7 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
         {
             base.Initialize();
             this.InitOrigins();
-            this.m_GameScreen.Game.Window.ClientSizeChanged += this.Window_ClientSizeChanged;
+            this.m_GameScreen.Game.Window.ClientSizeChanged += this.WindowClientSize_Changed;
         }
 
         protected override void InitOrigins()

@@ -31,12 +31,12 @@ namespace Infrastructure
             this.m_Game.IsMouseVisible = !this.m_Game.IsMouseVisible;
         }
 
-        public void ToggleAllowWindowResizingConfig(object sender, EventArgs args)
+        public void AllowWindowResizingConfigToggle_Click(object sender, EventArgs args)
         {
             this.m_Game.Window.AllowUserResizing = !this.m_Game.Window.AllowUserResizing;
         }
 
-        public void ToggleFullScreenModeConfig(object sender, EventArgs args)
+        public void FullScreenModeConfigToggle_Click(object sender, EventArgs args)
         {
             this.m_GraphicDeviceManager.IsFullScreen = !this.m_GraphicDeviceManager.IsFullScreen;
 

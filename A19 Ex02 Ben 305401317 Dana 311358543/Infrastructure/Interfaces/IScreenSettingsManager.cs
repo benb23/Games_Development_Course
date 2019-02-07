@@ -10,8 +10,8 @@ namespace Infrastructure
     {
         void ToggleMouseVisabilityConfig();
 
-        void ToggleAllowWindowResizingConfig(object sender, EventArgs args);
+        void AllowWindowResizingConfigToggle_Click(object sender, EventArgs args);
 
-        void ToggleFullScreenModeConfig(object sender, EventArgs args);
+        void FullScreenModeConfigToggle_Click(object sender, EventArgs args);
     }
 }

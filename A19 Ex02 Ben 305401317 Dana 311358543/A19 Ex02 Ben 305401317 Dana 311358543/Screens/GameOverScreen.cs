@@ -29,9 +29,9 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             ClickItem playItem = new ClickItem("PlayScreen", @"Screens\GameOver\Restart", this, index++);
             ClickItem mainMenuItem = new ClickItem("MainMenuScreen", @"Screens\Wellcome\MainMenu", this, index++);
 
-            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.quit);
-            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
-            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.handleItemClicked);
+            QuitItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.buttonQuit_Click);
+            playItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.menuItem_Click);
+            mainMenuItem.ItemClicked += new EventHandler<ScreenEventArgs>(this.menuItem_Click);
 
             this.AddMenuItem(QuitItem);
             this.AddMenuItem(playItem);
@@ -62,12 +62,12 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
             return winner;
         }
 
-        private void quit(object sender, ScreenEventArgs args)
+        private void buttonQuit_Click(object sender, ScreenEventArgs args)
         {
             Game.Exit();
         }
 
-        private void handleItemClicked(object sender, ScreenEventArgs args)
+        private void menuItem_Click(object sender, ScreenEventArgs args)
         {
             MenuUtils.GoToScreen(this, this.m_ScreensManager.GetScreen(args.ScreenName));
         }
@@ -78,15 +78,15 @@ namespace A19_Ex03_Ben_305401317_Dana_311358543
 
             if (InputManager.KeyPressed(Keys.Escape))
             {
-                this.quit(this, null);
+                this.buttonQuit_Click(this, null);
             }
             else if(InputManager.KeyPressed(Keys.Home))
             {
-                this.handleItemClicked(this, new ScreenEventArgs("PlayScreen"));
+                this.menuItem_Click(this, new ScreenEventArgs("PlayScreen"));
             }
             else if (InputManager.KeyPressed(Keys.T))
             {
-                this.handleItemClicked(this, new ScreenEventArgs("MainMenuScreen"));
+                this.menuItem_Click(this, new ScreenEventArgs("MainMenuScreen"));
             }
             
             base.Update(gameTime);
