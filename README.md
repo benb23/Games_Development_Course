@@ -1,2 +1,2 @@
-# Games_Development_Course
-2D &amp; 3D Game development course projects
+# Space Invaders
+2D Space Invaders game developed using Monogame framework.
